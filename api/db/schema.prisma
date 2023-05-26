@@ -1,0 +1,132 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = "native"
+}
+
+// Define your own datamodels here and run `yarn redwood prisma migrate dev`
+// to create migrations for them and apply to your dev DB.
+
+model Patient {
+  id                Int        @id @default(autoincrement())
+  name              String
+  age               Int
+  phone_no          String
+  gender            String
+  address           String?
+  did               DoctorFee? @relation(fields: [doctorFeeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  doctorFeeId       Int?
+  date_of_admission DateTime?
+  created_at        DateTime   @default(now())
+  updated_at        DateTime   @updatedAt
+}
+
+model DoctorFee {
+  id         Int       @id @default(autoincrement())
+  type       String
+  amount     Float
+  did        User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId     Int
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  Patient    Patient[]
+}
+
+model Distributer {
+  id                Int                @id @default(autoincrement())
+  name              String
+  phoneNo           String
+  gstNo             String?
+  dlNo              String?
+  created_at        DateTime           @default(now())
+  updated_at        DateTime           @updatedAt
+  purchase_medicine PurchaseMedicine[]
+}
+
+model Manufacturer {
+  id         Int       @id @default(autoincrement())
+  name       String
+  Product    Product[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model Composition {
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  created_at           DateTime               @default(now())
+  updated_at           DateTime               @updatedAt
+  ProductToComposition ProductToComposition[]
+}
+
+model ProductToComposition {
+  id            Int         @id @default(autoincrement())
+  cid           Composition @relation(fields: [compositionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  compositionId Int
+  pid           Product     @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productId     Int
+
+  @@unique([compositionId, productId])
+}
+
+model Product {
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  mid                  Manufacturer           @relation(fields: [manufacturerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  manufacturerId       Int
+  created_at           DateTime               @default(now())
+  updated_at           DateTime               @updatedAt
+  Medicine             Medicine[]
+  ProductToComposition ProductToComposition[]
+}
+
+model PurchaseMedicine {
+  id            Int         @id @default(autoincrement())
+  invoiceNo     String
+  did           Distributer @relation(fields: [distributerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  distributerId Int
+  date          DateTime
+  medicine      Json
+  total         Float
+  discount      Float
+  sgst          Float
+  cgst          Float
+  grand_total   Float
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+}
+
+model Medicine {
+  id         Int      @id @default(autoincrement())
+  quantity   Int
+  pid        Product  @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productId  Int
+  batch      String
+  exp        DateTime
+  mrp        Float
+  sgst       Float
+  cgst       Float
+  discount   Float
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([productId, batch])
+}
+
+model User {
+  id                  Int         @id @default(autoincrement())
+  name                String?
+  email               String      @unique
+  hashedPassword      String
+  salt                String
+  resetToken          String?
+  resetTokenExpiresAt DateTime?
+  roles               String
+  DoctorFee           DoctorFee[]
+  created_at          DateTime    @default(now())
+  updated_at          DateTime    @updatedAt
+}
