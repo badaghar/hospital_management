@@ -3,15 +3,15 @@ export const standard = defineScenario({
     one: {
       data: {
         type: 'String',
-        amount: 9582147.337582557,
-        updated_at: '2023-05-21T14:27:22.487Z',
+        amount: 9590107.509412434,
+        updated_at: '2023-05-26T18:13:28.243Z',
         did: {
           create: {
-            email: 'String8746027',
+            email: 'String570471',
             hashedPassword: 'String',
             salt: 'String',
             roles: 'String',
-            updated_at: '2023-05-21T14:27:22.487Z',
+            updated_at: '2023-05-26T18:13:28.243Z',
           },
         },
       },
@@ -19,15 +19,15 @@ export const standard = defineScenario({
     two: {
       data: {
         type: 'String',
-        amount: 7146199.405646662,
-        updated_at: '2023-05-21T14:27:22.487Z',
+        amount: 9291267.413926212,
+        updated_at: '2023-05-26T18:13:28.243Z',
         did: {
           create: {
-            email: 'String2340812',
+            email: 'String4155037',
             hashedPassword: 'String',
             salt: 'String',
             roles: 'String',
-            updated_at: '2023-05-21T14:27:22.487Z',
+            updated_at: '2023-05-26T18:13:28.243Z',
           },
         },
       },

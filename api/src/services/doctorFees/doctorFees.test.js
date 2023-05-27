@@ -29,16 +29,16 @@ describe('doctorFees', () => {
     const result = await createDoctorFee({
       input: {
         type: 'String',
-        amount: 5983421.16680213,
+        amount: 4619083.965771264,
         userId: scenario.doctorFee.two.userId,
-        updated_at: '2023-05-21T14:27:22.478Z',
+        updated_at: '2023-05-26T18:13:28.213Z',
       },
     })
 
     expect(result.type).toEqual('String')
-    expect(result.amount).toEqual(5983421.16680213)
+    expect(result.amount).toEqual(4619083.965771264)
     expect(result.userId).toEqual(scenario.doctorFee.two.userId)
-    expect(result.updated_at).toEqual(new Date('2023-05-21T14:27:22.478Z'))
+    expect(result.updated_at).toEqual(new Date('2023-05-26T18:13:28.213Z'))
   })
 
   scenario('updates a doctorFee', async (scenario) => {

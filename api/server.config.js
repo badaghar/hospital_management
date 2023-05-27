@@ -20,6 +20,7 @@ const config = {
     // the default non-development level to `info`
     level: process.env.NODE_ENV === 'development' ? 'debug' : 'warn',
   },
+  logging: true,
 }
 
 /**

@@ -67,7 +67,8 @@ const NewPurchaseMedicineTable = (props) => {
       'net_amount':parseFloat(total_net_amount),
     }
 
-    let oneMedPrice = parseFloat(mrp) * ((parseFloat(cgst)+parseFloat(sgst)) / (100 +(parseFloat(cgst)+parseFloat(sgst))))
+    // let oneMedPrice = parseFloat(mrp) * ((parseFloat(cgst)+parseFloat(sgst)) / (100 +(parseFloat(cgst)+parseFloat(sgst))))
+    let oneMedPrice = parseFloat(mrp)
 
     // const dateString = "2023-05-25";
 const date = new Date(exp);
@@ -152,15 +153,11 @@ const date = new Date(exp);
       return
     }
     props.setManufacturerList((ml)=>{
-      const updatedList = [...ml]; // Create a new array with the existing values
-
-      // Update the desired element
+      const updatedList = [...ml];
       updatedList[props.value] = {id:name[0].id,name:name[0].name};
 
       return updatedList;
     })
-    // // console.log(name)
-    // Manufacturer = {id:name[0].id,name:name[0].name}
   }
   const modifyProducts = (name) =>{
     if(name.length===0){

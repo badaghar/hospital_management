@@ -12,17 +12,18 @@ generator client {
 // to create migrations for them and apply to your dev DB.
 
 model Patient {
-  id                Int        @id @default(autoincrement())
+  id                Int            @id @default(autoincrement())
   name              String
   age               Int
   phone_no          String
   gender            String
   address           String?
-  did               DoctorFee? @relation(fields: [doctorFeeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  did               DoctorFee?     @relation(fields: [doctorFeeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   doctorFeeId       Int?
   date_of_admission DateTime?
-  created_at        DateTime   @default(now())
-  updated_at        DateTime   @updatedAt
+  created_at        DateTime       @default(now())
+  updated_at        DateTime       @updatedAt
+  SaleMedicine      SaleMedicine[]
 }
 
 model DoctorFee {
@@ -115,6 +116,22 @@ model Medicine {
   updated_at DateTime @updatedAt
 
   @@unique([productId, batch])
+}
+
+model SaleMedicine {
+  id          Int      @id @default(autoincrement())
+  billNo      String
+  date        DateTime
+  medicine    Json
+  total       Float
+  discount    Float
+  sgst        Float
+  cgst        Float
+  grand_total Float
+  patient     Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  patientId   Int
 }
 
 model User {

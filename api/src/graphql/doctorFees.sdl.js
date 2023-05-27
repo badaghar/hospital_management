@@ -19,12 +19,16 @@ export const schema = gql`
     type: String!
     amount: Float!
     userId: Int!
+    created_at: DateTime!
+    updated_at: DateTime!
   }
 
   input UpdateDoctorFeeInput {
     type: String
     amount: Float
     userId: Int
+    created_at: DateTime
+    updated_at: DateTime
   }
 
   type Mutation {

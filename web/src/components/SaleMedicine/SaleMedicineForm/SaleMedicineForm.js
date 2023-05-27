@@ -4,16 +4,16 @@ import {
   FieldError,
   Label,
   TextField,
-  NumberField,
   DatetimeLocalField,
   TextAreaField,
+  NumberField,
   Submit,
   DateField,
 } from '@redwoodjs/forms'
-import Multiselect from 'multiselect-react-dropdown'
-import NewPurchaseMedicineTable from '../NewPurchaseMedicineTable/NewPurchaseMedicineTable'
+import NewSaleMedicineTable from '../NewSaleMedicineTable/NewSaleMedicineTable'
 import { useEffect, useState } from 'react'
-
+import Multiselect from 'multiselect-react-dropdown'
+import { Link, routes } from '@redwoodjs/router'
 
 const formatDatetime = (value) => {
   if (value) {
@@ -21,40 +21,30 @@ const formatDatetime = (value) => {
   }
 }
 
-const PurchaseMedicineForm = (props) => {
+const SaleMedicineForm = (props) => {
+
 
   const [no_of_medicine, setNoOfMedicine] = useState(0)
   const [show_medicine_heading, setShowMedicineHeading] = useState(false)
-  const [manufacturersList, setManufacturerList] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const [productList, setProductList] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const [total_amount_list, set_total_amount_list] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [total_dis_amount_list, set_total_dis_amount_list] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const [total_sgst_amount_list, set_total_sgst_amount_list] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const [total_cgst_amount_list, set_total_cgst_amount_list] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const [medicineObj, setmedicineObj] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const [permedicineObj, setPermedicineObj] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
   const [total_amount, set_total_amount] = useState(0)
-  const [total_dis_amount, set_total_dis_amount] = useState(0)
+  // const [total_dis_amount, set_total_dis_amount] = useState(0)
   const [total_sgst_amount, set_total_sgst_amount] = useState(0)
   const [total_cgst_amount, set_total_cgst_amount] = useState(0)
   const [grand_total, set_grand_total] = useState(0)
+  const [discount, setDiscount] = useState(0)
+  const [discountamt, setDiscountAmt] = useState(0)
+  const [patientId, setPatientId] = useState(0)
 
-  const [Distributers, setDistributers] = useState(0)
 
-  const modifiyDistributer = (name) => {
-    if (name.length === 0) {
-      return
-    }
-    // console.log(name)
-    // Distributers = name[0].id
-    setDistributers(name[0].id)
-  }
+
   const onSubmit = (data) => {
-    data['DistributerId'] = Distributers
-    console.log("here")
-
-    // console.log(medicineObj)
     const newmedicine = medicineObj.filter((val) => {
       return val !== 0
     })
@@ -62,26 +52,24 @@ const PurchaseMedicineForm = (props) => {
     const newperMedicine = permedicineObj.filter((val) => {
       return val !== 0
     })
+
     let input = {}
     input = {
-      'invoiceNo': data['invoiceNo'],
-
-      'distributerId': Distributers,
+      'billNo': data['billNo'],
       'date': data['date'],
       'medicine': newmedicine,
-      'total': total_amount,
-      'discount': total_dis_amount,
-      'sgst': total_sgst_amount,
-      'cgst': total_cgst_amount,
+      'total':  parseFloat(total_amount.toFixed(5)),
+      'discount': parseFloat(discountamt.toFixed(5)),
+      'sgst': parseFloat(total_sgst_amount.toFixed(5)),
+      'cgst': parseFloat(total_cgst_amount.toFixed(5)),
       'grand_total': grand_total,
+      'patientId':patientId,
       'permedicine': newperMedicine
     }
 
-    // medInput = newperMedicine
-
     console.log(input)
 
-    props.onSave(input, props?.purchaseMedicine?.id)
+    props.onSave(input, props?.saleMedicine?.id)
 
   }
 
@@ -97,6 +85,32 @@ const PurchaseMedicineForm = (props) => {
     }
   }
 
+  useEffect(() => {
+    // console.log("manufacturer :-",manufacturersList,"product List :- ",productList)
+    let tamt = 0
+    let sgstamt = 0
+    let cgstamt = 0
+    // console.log(total_amount_list,total_sgst_amount_list,total_cgst_amount_list)
+    for (let i = 0; i < no_of_medicine; i++) {
+      tamt += total_amount_list[i]
+
+      sgstamt += total_sgst_amount_list[i]
+      cgstamt += total_cgst_amount_list[i]
+    }
+
+    set_grand_total(Math.round(tamt + sgstamt + cgstamt))
+    set_total_amount(tamt)
+    set_total_sgst_amount(sgstamt)
+    set_total_cgst_amount(cgstamt)
+  }, [total_amount_list, total_cgst_amount_list, total_sgst_amount_list])
+
+  useEffect(() => {
+    let dis = total_amount * parseFloat(discount) / 100.0
+    setDiscountAmt(dis)
+    // console.log("here")
+  }, [discount])
+
+
   const ShowHeadMedicine = () => {
     if (show_medicine_heading) {
       return <MedicineTableHeading />
@@ -104,46 +118,33 @@ const PurchaseMedicineForm = (props) => {
       return <></>
     }
   }
-  useEffect(() => {
-    // console.log("manufacturer :-",manufacturersList,"product List :- ",productList)
-  }, [productList, manufacturersList])
-  useEffect(() => {
-    // console.log("manufacturer :-",manufacturersList,"product List :- ",productList)
-    let tamt = 0
-    let damt = 0
-    let sgstamt = 0
-    let cgstamt = 0
-    for (let i = 0; i < no_of_medicine; i++) {
-      tamt += total_amount_list[i]
-      damt += total_dis_amount_list[i]
-      sgstamt += total_sgst_amount_list[i]
-      cgstamt += total_cgst_amount_list[i]
-    }
-
-    set_grand_total(tamt + sgstamt + cgstamt - damt)
-    set_total_amount(tamt)
-    set_total_dis_amount(damt)
-    set_total_sgst_amount(sgstamt)
-    set_total_cgst_amount(cgstamt)
-  }, [total_amount_list, total_dis_amount_list, total_cgst_amount_list, total_sgst_amount_list])
 
   var medicineRows = []
   for (var i = 0; i < no_of_medicine; i++) {
-    medicineRows.push(<NewPurchaseMedicineTable key={'purchase_' + i} value={i}
-      manufacturers={props.manufacturers} manufacturersList={manufacturersList} products={props.products} productList={productList}
-      setManufacturerList={setManufacturerList} setProductList={setProductList}
+    medicineRows.push(<NewSaleMedicineTable key={'sale_' + i} value={i}
+      patients={props.patients} productList={productList}
+      setProductList={setProductList}
       set_total_amount_list={set_total_amount_list}
-      set_total_dis_amount_list={set_total_dis_amount_list}
       set_total_sgst_amount_list={set_total_sgst_amount_list}
       set_total_cgst_amount_list={set_total_cgst_amount_list}
       setmedicineObj={setmedicineObj}
       setPermedicineObj={setPermedicineObj}
+      medicines={props.medicines}
 
     />)
   }
 
+  const modifyPatient = (name) =>{
+    if(name.length===0){
+      return
+    }
+    setPatientId(name[0].id)
+    // // console.log(name)
+    // Manufacturer = name[0].id
+  }
+
   return (
-    <div className="rw-form-wrapper text-xs">
+    <div className="rw-form-wrapper">
       <Form onSubmit={onSubmit} error={props.error}>
         <FormError
           error={props.error}
@@ -152,57 +153,88 @@ const PurchaseMedicineForm = (props) => {
           listClassName="rw-form-error-list"
         />
 
+
         <div className='flex items-center mt-3  gap-x-4'>
           <Label
-            name="invoiceNo"
+            name="billNo"
             className="rw-label mt-0"
-            errorClassName="rw-label mt-0 rw-label-error"
+            errorClassName="rw-label rw-label-error"
           >
-            Invoice no
+            Bill no
           </Label>
           <div className="flex">
             <TextField
-              name="invoiceNo"
-              defaultValue={props.purchaseMedicine?.invoiceNo}
+              name="billNo"
+              defaultValue={props.saleMedicine?.billNo}
               className="rw-input mt-0"
-              errorClassName="rw-input mt-0 rw-input-error"
+              errorClassName="rw-input rw-input-error"
               validation={{ required: true }}
             />
           </div>
-          <FieldError name="invoiceNo" className="rw-field-error" />
-          <Label
-            className="rw-label mt-0"
-          >
-            Distributer Name
-          </Label>
-          <div className="flex-1">
-            <Multiselect
-              options={props.distributers} // Options to display in the dropdown
-              // selectedValues={props?.defaultDistributer}
-              onSelect={(event) => modifiyDistributer(event)} // Function will trigger on select event
-              onRemove={(event) => modifiyDistributer(event)} // Function will trigger on remove event
-              selectionLimit={1}
-              displayValue="name" // Property name to display in the dropdown options
-            />
-          </div>
+          <FieldError name="billNo" className="rw-field-error" />
           <Label
             name="date"
             className="rw-label mt-0"
-            errorClassName="rw-label mt-0 rw-label-error"
+            errorClassName="rw-label rw-label-error"
           >
             Date
           </Label>
           <div className="flex">
             <DateField
               name="date"
-              defaultValue={formatDatetime(props.purchaseMedicine?.date)}
+              defaultValue={formatDatetime(props.saleMedicine?.date)}
               className="rw-input mt-0"
-              errorClassName="rw-input mt-0 rw-input-error"
+              errorClassName="rw-input rw-input-error"
               validation={{ required: true }}
             />
           </div>
+
           <FieldError name="date" className="rw-field-error" />
+
+
+          <Label
+            name="patientId"
+            className="rw-label mt-0"
+            errorClassName="rw-label rw-label-error"
+          >
+            Patient id
+          </Label>
+
+          <div className=" flex-1">
+
+
+            {/* <NumberField
+          name="patientId"
+          defaultValue={props.saleMedicine?.patientId}
+          className="rw-input mt-0"
+          errorClassName="rw-input rw-input-error"
+          validation={{ required: true }}
+          /> */}
+            <Multiselect
+              className="rw-input mt-0  "
+              name={"patientId"}
+              options={props.patients} // Options to display in the dropdown
+              onSelect={(event) => modifyPatient(event)} // Function will trigger on select event
+              onRemove={(event) => modifyPatient(event)} // Function will trigger on remove event
+              selectionLimit={1}
+
+              displayValue={'name'}// Property name to display in the dropdown options
+            />
+
+          </div>
+
+
+
+          <FieldError name="patientId" className="rw-field-error" />
+
+          <div>
+          <Link to={routes.newPatient()} className="rw-button rw-button-green">
+          <div className="rw-button-icon">+</div> {"New Patient"}
+        </Link>
+          </div>
+
         </div>
+
 
         <Label
           name="no_of_medicine"
@@ -221,10 +253,8 @@ const PurchaseMedicineForm = (props) => {
         />
 
         <FieldError name="no_of_medicine" className="rw-field-error" />
-
-
         <div className="p-2 w-full shadow-sm bg-white ">
-          <div className=" grid grid-cols-18 grid-flow-row gap-x-2 gap-y-2">
+          <div className=" grid grid-cols-12 grid-flow-row gap-x-2 gap-y-2">
 
             {ShowHeadMedicine()}
 
@@ -244,65 +274,105 @@ const PurchaseMedicineForm = (props) => {
           <div className="flex">
             <TextField
               name="total"
-              defaultValue={props.purchaseMedicine?.total}
+              defaultValue={props.saleMedicine?.total}
               className="rw-input mt-0"
-              errorClassName="rw-input mt-0 rw-input-error"
+              errorClassName="rw-input rw-input-error"
+              // validation={{ valueAsNumber: true, required: true }}
               disabled={true}
               value={total_amount}
-            // validation={{ valueAsNumber: true, required: true }}
             />
           </div>
           <FieldError name="total" className="rw-field-error" />
         </div>
 
         <div className='flex items-center mt-3 justify-end gap-x-4'>
+
+
           <Label
             name="discount"
-            className="rw-label"
+            className="rw-label mt-0"
             errorClassName="rw-label rw-label-error"
           >
-            Discount
+            Discount % :-
           </Label>
-          <div className="flex">
+
+          <div className='flex'>
+
+
             <TextField
               name="discount"
-              defaultValue={props.purchaseMedicine?.discount}
-              className="rw-input"
+              defaultValue={props.saleMedicine?.discount}
+              className="rw-input mt-0"
               errorClassName="rw-input rw-input-error"
-              disabled={true}
-              value={total_dis_amount}
+              value={discount}
+              onChange={(e) => setDiscount(e.target.value)}
             // validation={{ valueAsNumber: true, required: true }}
             />
           </div>
+
           <FieldError name="discount" className="rw-field-error" />
+          <Label
+            name="discountamt"
+            className="rw-label mt-0"
+            errorClassName="rw-label rw-label-error"
+          >
+            Discount Amount :-
+          </Label>
+
+          <div className='flex'>
+
+
+            <TextField
+              name="discountamt"
+              defaultValue={props.saleMedicine?.discount}
+              className="rw-input mt-0"
+              errorClassName="rw-input rw-input-error"
+              value={discountamt}
+              disabled={true}
+            // value=
+            />
+          </div>
+
+          <FieldError name="discountamt" className="rw-field-error" />
         </div>
 
+
         <div className='flex items-center mt-3 justify-end gap-x-4'>
+
+
           <Label
             name="sgst"
-            className="rw-label"
+            className="rw-label mt-0"
             errorClassName="rw-label rw-label-error"
           >
             Sgst
           </Label>
+
           <div className="flex">
+
+
+
             <TextField
               name="sgst"
-              defaultValue={props.purchaseMedicine?.sgst}
+              defaultValue={props.saleMedicine?.sgst}
               className="rw-input mt-0"
-              errorClassName="rw-input mt-0 rw-input-error"
+              errorClassName="rw-input rw-input-error"
+              // validation={{ valueAsNumber: true, required: true }}
               disabled={true}
               value={total_sgst_amount}
-            // validation={{ valueAsNumber: true, required: true }}
             />
           </div>
+
           <FieldError name="sgst" className="rw-field-error" />
+
         </div>
+
+
 
         <div className='flex items-center mt-3 justify-end gap-x-4'>
           <Label
             name="cgst"
-            className="rw-label"
+            className="rw-label mt-0"
             errorClassName="rw-label rw-label-error"
           >
             Cgst
@@ -310,21 +380,24 @@ const PurchaseMedicineForm = (props) => {
           <div className="flex">
             <TextField
               name="cgst"
-              defaultValue={props.purchaseMedicine?.cgst}
-              className="rw-input"
+              defaultValue={props.saleMedicine?.cgst}
+              className="rw-input mt-0"
               errorClassName="rw-input rw-input-error"
+              // validation={{ valueAsNumber: true, required: true }}
               disabled={true}
               value={total_cgst_amount}
-            // validation={{ valueAsNumber: true, required: true }}
             />
           </div>
+
           <FieldError name="cgst" className="rw-field-error" />
         </div>
+
+
 
         <div className='flex items-center mt-3 justify-end gap-x-4'>
           <Label
             name="grand_total"
-            className="rw-label"
+            className="rw-label mt-0"
             errorClassName="rw-label rw-label-error"
           >
             Grand total
@@ -332,16 +405,17 @@ const PurchaseMedicineForm = (props) => {
           <div className="flex">
             <TextField
               name="grand_total"
-              defaultValue={props.purchaseMedicine?.grand_total}
-              className="rw-input"
+              defaultValue={props.saleMedicine?.grand_total}
+              className="rw-input mt-0"
               errorClassName="rw-input rw-input-error"
+              // validation={{ valueAsNumber: true, required: true }}
               disabled={true}
               value={grand_total}
-            // validation={{ valueAsNumber: true, required: true }}
             />
           </div>
           <FieldError name="grand_total" className="rw-field-error" />
         </div>
+
 
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">
@@ -357,22 +431,15 @@ function MedicineTableHeading() {
   return (
     <>
 
-      <div className="flex col-span-3 justify-center">Mfr</div>
-      <div className="flex col-span-3 justify-center">Product Name</div>
-      <div className="flex col-span-1 justify-center">Batch</div>
-      <div className="flex col-span-1 justify-center">Paid Qty</div>
-      <div className="flex col-span-1 justify-center">Free Qty</div>
-      <div className="flex col-span-1 justify-center">Pack</div>
-      <div className="flex col-span-1 justify-center">Exp</div>
+      <div className="flex col-span-4 justify-center">Medicine Name</div>
+      <div className="flex col-span-3 justify-center">Batch No</div>
+      <div className="flex col-span-1 justify-center">Expiry Date</div>
       <div className="flex col-span-1 justify-center">M.R.P</div>
-      <div className="flex col-span-1 justify-center">Rate</div>
-      <div className="flex col-span-1 justify-center">Dis</div>
-      <div className="flex col-span-1 justify-center">SGST</div>
-      <div className="flex col-span-1 justify-center">CGST</div>
+      <div className="flex col-span-1 justify-center">Quantity</div>
+      <div className="flex col-span-1 justify-center">CGST/SGST</div>
       <div className="flex col-span-1 justify-center">Amount</div>
-      <div className="flex col-span-1 justify-center">Net Amount</div>
     </>
   )
 }
 
-export default PurchaseMedicineForm
+export default SaleMedicineForm

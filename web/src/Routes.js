@@ -17,6 +17,9 @@ import DashboardLayout from './layouts/DashboardLayout/DashboardLayout'
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
+
+      <Route path="/ha1" page={Ha1Page} name="ha1" />
+
       <Route path="/download-purchase-medicine" page={DownloadsDownloadPurchaseMedicinePage} name="downloadPurchaseMedicine" />
       <Route path="/h9" page={H9Page} name="h9" />
       <Route path="/h8" page={H8Page} name="h8" />
@@ -35,6 +38,12 @@ const Routes = () => {
 
         <Set wrap={DashboardLayout}>
           <Route path="/" page={HomePage} name="home" />
+          <Set wrap={ScaffoldLayout} title="SaleMedicines" titleTo="saleMedicines" buttonLabel="New SaleMedicine" buttonTo="newSaleMedicine">
+        <Route path="/sale-medicines/new" page={SaleMedicineNewSaleMedicinePage} name="newSaleMedicine" />
+        <Route path="/sale-medicines/{id:Int}/edit" page={SaleMedicineEditSaleMedicinePage} name="editSaleMedicine" />
+        <Route path="/sale-medicines/{id:Int}" page={SaleMedicineSaleMedicinePage} name="saleMedicine" />
+        <Route path="/sale-medicines" page={SaleMedicineSaleMedicinesPage} name="saleMedicines" />
+      </Set>
           <Set wrap={ScaffoldLayout} title="Users" titleTo="users" buttonLabel="New User" buttonTo="newUser">
             <Route path="/users/new" page={UserNewUserPage} name="newUser" />
             <Route path="/users/{id:Int}/edit" page={UserEditUserPage} name="editUser" />
