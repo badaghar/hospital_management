@@ -14,6 +14,9 @@ export const QUERY = gql`
       discount
       created_at
       updated_at
+      pid{
+        name
+      }
     }
   }
 `

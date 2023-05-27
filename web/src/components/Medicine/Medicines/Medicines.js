@@ -39,34 +39,31 @@ const MedicinesList = ({ medicines }) => {
       <table className="rw-table">
         <thead>
           <tr>
-            <th>Id</th>
             <th>Quantity</th>
-            <th>Product id</th>
+            <th>Product Name</th>
             <th>Batch</th>
             <th>Exp</th>
             <th>Mrp</th>
             <th>Sgst</th>
             <th>Cgst</th>
             <th>Discount</th>
-            <th>Created at</th>
-            <th>Updated at</th>
+
             <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           {medicines.map((medicine) => (
             <tr key={medicine.id}>
-              <td>{truncate(medicine.id)}</td>
+
               <td>{truncate(medicine.quantity)}</td>
-              <td>{truncate(medicine.productId)}</td>
+              <td>{truncate(medicine.pid.name)}</td>
               <td>{truncate(medicine.batch)}</td>
               <td>{timeTag(medicine.exp)}</td>
               <td>{truncate(medicine.mrp)}</td>
               <td>{truncate(medicine.sgst)}</td>
               <td>{truncate(medicine.cgst)}</td>
               <td>{truncate(medicine.discount)}</td>
-              <td>{timeTag(medicine.created_at)}</td>
-              <td>{timeTag(medicine.updated_at)}</td>
+
               <td>
                 <nav className="rw-table-actions">
                   <Link

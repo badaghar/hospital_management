@@ -48,8 +48,8 @@ const Medicine = ({ medicine }) => {
               <td>{medicine.quantity}</td>
             </tr>
             <tr>
-              <th>Product id</th>
-              <td>{medicine.productId}</td>
+              <th>Product Name</th>
+              <td>{medicine.pid.name}</td>
             </tr>
             <tr>
               <th>Batch</th>
