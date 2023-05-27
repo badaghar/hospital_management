@@ -78,6 +78,13 @@ const SaleMedicinesList = ({ saleMedicines }) => {
                   >
                     Show
                   </Link>
+                  <Link
+                    to={routes.viewSaleMedicine({ id: saleMedicine.id })}
+                    title={'Print saleMedicine ' + saleMedicine.id + ' detail'}
+                    className="rw-button rw-button-small"
+                  >
+                    Print
+                  </Link>
                   {/* <Link
                     to={routes.editSaleMedicine({ id: saleMedicine.id })}
                     title={'Edit saleMedicine ' + saleMedicine.id}

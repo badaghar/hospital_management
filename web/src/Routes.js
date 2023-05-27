@@ -18,18 +18,13 @@ const Routes = () => {
   return (
     <Router useAuth={useAuth}>
 
-      <Route path="/ha1" page={Ha1Page} name="ha1" />
+
+
 
       <Route path="/download-purchase-medicine" page={DownloadsDownloadPurchaseMedicinePage} name="downloadPurchaseMedicine" />
-      <Route path="/h9" page={H9Page} name="h9" />
-      <Route path="/h8" page={H8Page} name="h8" />
-      <Route path="/h7" page={H7Page} name="h7" />
-      <Route path="/h6" page={H6Page} name="h6" />
-      <Route path="/h5" page={H5Page} name="h5" />
-      <Route path="/h4" page={H4Page} name="h4" />
-      <Route path="/h3" page={H3Page} name="h3" />
-      <Route path="/h2" page={H2Page} name="h2" />
-      <Route path="/h1" page={H1Page} name="h1" />
+
+      <Route path="/download-sale-medicine/{id:Int}" page={DownloadsDownloadSaleMedicinePage} name="downloadSaleMedicine" />
+
       <Route path="/login" page={LoginPage} name="login" />
       <Route path="/signup" page={SignupPage} name="signup" />
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
@@ -37,7 +32,12 @@ const Routes = () => {
       <Private unauthenticated='login' >
 
         <Set wrap={DashboardLayout}>
+
+
+
           <Route path="/" page={HomePage} name="home" />
+      <Route path="/view-sale-medicine/{id:Int}" page={ViewSaleMedicinePage} name="viewSaleMedicine" />
+
           <Set wrap={ScaffoldLayout} title="SaleMedicines" titleTo="saleMedicines" buttonLabel="New SaleMedicine" buttonTo="newSaleMedicine">
         <Route path="/sale-medicines/new" page={SaleMedicineNewSaleMedicinePage} name="newSaleMedicine" />
         <Route path="/sale-medicines/{id:Int}/edit" page={SaleMedicineEditSaleMedicinePage} name="editSaleMedicine" />

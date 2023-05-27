@@ -17,7 +17,7 @@ export const schema = gql`
 
   type Query {
     saleMedicines: [SaleMedicine!]! @requireAuth
-    saleMedicine(id: Int!): SaleMedicine @requireAuth
+    saleMedicine(id: Int!): SaleMedicine  @skipAuth
   }
 
   input CreateSaleMedicineInput {
