@@ -69,14 +69,14 @@ const ManufacturersList = ({ manufacturers }) => {
                   >
                     Edit
                   </Link>
-                  <button
+                  {/* <button
                     type="button"
                     title={'Delete manufacturer ' + manufacturer.id}
                     className="rw-button rw-button-small rw-button-red"
                     onClick={() => onDeleteClick(manufacturer.id)}
                   >
                     Delete
-                  </button>
+                  </button> */}
                 </nav>
               </td>
             </tr>

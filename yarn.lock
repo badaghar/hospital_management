@@ -19113,6 +19113,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"number-to-words@npm:^1.2.4":
+  version: 1.2.4
+  resolution: "number-to-words@npm:1.2.4"
+  checksum: 4859a7870a40d5fcd1d0f5e80b8bb2073d96b085e3c1a17bc9fdb29a1b1837348e1a3d0ef7be7e73ce92bb06c733493eb2aba88f918d9133a7df903d0bf9559d
+  languageName: node
+  linkType: hard
+
 "nwsapi@npm:^2.2.2":
   version: 2.2.4
   resolution: "nwsapi@npm:2.2.4"
@@ -22173,6 +22180,7 @@ __metadata:
     "@redwoodjs/core": 5.2.1
     axios: ^1.4.0
     multiselect-react-dropdown: ^2.0.25
+    number-to-words: ^1.2.4
     prettier-plugin-tailwindcss: ^0.3.0
     puppeteer: ^20.4.0
     react-spinners: ^0.13.8

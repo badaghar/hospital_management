@@ -38,16 +38,28 @@ const SaleMedicineForm = (props) => {
   const [total_sgst_amount, set_total_sgst_amount] = useState(0)
   const [total_cgst_amount, set_total_cgst_amount] = useState(0)
   const [grand_total, set_grand_total] = useState(0)
+  const [actual_grand_total, set_actual_grand_total] = useState(0)
   const [discount, setDiscount] = useState(0)
   const [discountamt, setDiscountAmt] = useState(0)
   const [patientId, setPatientId] = useState(0)
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const [defaultDate, setDefaultDate] = useState(formatDate(new Date()));
 
 
 
   const onSubmit = (data) => {
+
+
     const newmedicine = medicineObj.filter((val) => {
       return val !== 0
     })
+
 
     const newperMedicine = permedicineObj.filter((val) => {
       return val !== 0
@@ -55,15 +67,15 @@ const SaleMedicineForm = (props) => {
 
     let input = {}
     input = {
-      'billNo': data['billNo'],
+      // 'billNo': data['billNo'],
       'date': data['date'],
       'medicine': newmedicine,
-      'total':  parseFloat(total_amount.toFixed(5)),
-      'discount': parseFloat(discountamt.toFixed(5)),
-      'sgst': parseFloat(total_sgst_amount.toFixed(5)),
-      'cgst': parseFloat(total_cgst_amount.toFixed(5)),
-      'grand_total': grand_total,
-      'patientId':patientId,
+      'total': parseFloat(total_amount.toFixed(2)),
+      'discount': parseFloat(discountamt.toFixed(2)),
+      'sgst': parseFloat(total_sgst_amount.toFixed(2)),
+      'cgst': parseFloat(total_cgst_amount.toFixed(2)),
+      'grand_total': parseFloat(actual_grand_total),
+      'patientId': patientId,
       'permedicine': newperMedicine
     }
 
@@ -105,9 +117,11 @@ const SaleMedicineForm = (props) => {
   }, [total_amount_list, total_cgst_amount_list, total_sgst_amount_list])
 
   useEffect(() => {
-    let dis = total_amount * parseFloat(discount) / 100.0
+    let dis = grand_total * parseFloat(discount) / 100.0
     setDiscountAmt(dis)
+    // set_grand_total(grand_total-dis)
     // console.log("here")
+    set_actual_grand_total(parseFloat(grand_total-dis).toFixed(2))
   }, [discount])
 
 
@@ -134,8 +148,8 @@ const SaleMedicineForm = (props) => {
     />)
   }
 
-  const modifyPatient = (name) =>{
-    if(name.length===0){
+  const modifyPatient = (name) => {
+    if (name.length === 0) {
       return
     }
     setPatientId(name[0].id)
@@ -155,7 +169,7 @@ const SaleMedicineForm = (props) => {
 
 
         <div className='flex items-center mt-3  gap-x-4'>
-          <Label
+          {/* <Label
             name="billNo"
             className="rw-label mt-0"
             errorClassName="rw-label rw-label-error"
@@ -171,7 +185,7 @@ const SaleMedicineForm = (props) => {
               validation={{ required: true }}
             />
           </div>
-          <FieldError name="billNo" className="rw-field-error" />
+          <FieldError name="billNo" className="rw-field-error" /> */}
           <Label
             name="date"
             className="rw-label mt-0"
@@ -182,8 +196,10 @@ const SaleMedicineForm = (props) => {
           <div className="flex">
             <DateField
               name="date"
-              defaultValue={formatDatetime(props.saleMedicine?.date)}
+              // defaultValue={formatDatetime(props.saleMedicine?.date)}
               className="rw-input mt-0"
+              defaultValue={defaultDate}
+
               errorClassName="rw-input rw-input-error"
               validation={{ required: true }}
             />
@@ -228,31 +244,36 @@ const SaleMedicineForm = (props) => {
           <FieldError name="patientId" className="rw-field-error" />
 
           <div>
-          <Link to={routes.newPatient()} className="rw-button rw-button-green">
-          <div className="rw-button-icon">+</div> {"New Patient"}
-        </Link>
+            <Link to={routes.newPatient()} className="rw-button rw-button-green">
+              <div className="rw-button-icon">+</div> {"New Patient"}
+            </Link>
           </div>
 
         </div>
 
 
-        <Label
-          name="no_of_medicine"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          No Of Medicine
-        </Label>
+        <div className='flex items-center mt-3  gap-x-4'>
+          <Label
+            name="no_of_medicine"
+            className="rw-label mt-0"
+            errorClassName="rw-label rw-label-error"
+          >
+            No Of Medicine
+          </Label>
 
-        <NumberField
-          name="no_of_medicine"
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-          onChange={updateMedicineTable}
-        />
 
-        <FieldError name="no_of_medicine" className="rw-field-error" />
+          <div className=" flex">
+            <NumberField
+              name="no_of_medicine"
+              className="rw-input mt-0"
+              errorClassName="rw-input rw-input-error"
+              validation={{ required: true }}
+              onChange={updateMedicineTable}
+            />
+          </div>
+
+          <FieldError name="no_of_medicine" className="rw-field-error" />
+        </div>
         <div className="p-2 w-full shadow-sm bg-white ">
           <div className=" grid grid-cols-12 grid-flow-row gap-x-2 gap-y-2">
 
@@ -261,6 +282,7 @@ const SaleMedicineForm = (props) => {
             {medicineRows}
           </div>
         </div>
+
 
 
         <div className='flex items-center mt-3 justify-end gap-x-4'>
@@ -279,7 +301,7 @@ const SaleMedicineForm = (props) => {
               errorClassName="rw-input rw-input-error"
               // validation={{ valueAsNumber: true, required: true }}
               disabled={true}
-              value={total_amount}
+              value={parseFloat(total_amount.toFixed(2))}
             />
           </div>
           <FieldError name="total" className="rw-field-error" />
@@ -327,7 +349,7 @@ const SaleMedicineForm = (props) => {
               defaultValue={props.saleMedicine?.discount}
               className="rw-input mt-0"
               errorClassName="rw-input rw-input-error"
-              value={discountamt}
+              value={parseFloat(discountamt.toFixed(2))}
               disabled={true}
             // value=
             />
@@ -359,7 +381,7 @@ const SaleMedicineForm = (props) => {
               errorClassName="rw-input rw-input-error"
               // validation={{ valueAsNumber: true, required: true }}
               disabled={true}
-              value={total_sgst_amount}
+              value={parseFloat(total_sgst_amount.toFixed(2))}
             />
           </div>
 
@@ -385,7 +407,7 @@ const SaleMedicineForm = (props) => {
               errorClassName="rw-input rw-input-error"
               // validation={{ valueAsNumber: true, required: true }}
               disabled={true}
-              value={total_cgst_amount}
+              value={parseFloat(total_cgst_amount.toFixed(2))}
             />
           </div>
 
@@ -410,7 +432,7 @@ const SaleMedicineForm = (props) => {
               errorClassName="rw-input rw-input-error"
               // validation={{ valueAsNumber: true, required: true }}
               disabled={true}
-              value={grand_total}
+              value={actual_grand_total}
             />
           </div>
           <FieldError name="grand_total" className="rw-field-error" />

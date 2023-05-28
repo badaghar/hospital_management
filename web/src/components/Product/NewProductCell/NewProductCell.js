@@ -5,7 +5,7 @@ import { toast } from '@redwoodjs/web/toast'
 import ProductForm from 'src/components/Product/ProductForm'
 
 export const QUERY = gql`
-  query FindCompositions {
+  query FindCompositions1 {
     compositions {
       id
       name

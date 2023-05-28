@@ -26,6 +26,7 @@
   "dependencies": {
     "axios": "^1.4.0",
     "multiselect-react-dropdown": "^2.0.25",
+    "number-to-words": "^1.2.4",
     "puppeteer": "^20.4.0",
     "react-spinners": "^0.13.8",
     "react-table-6": "^6.11.0",

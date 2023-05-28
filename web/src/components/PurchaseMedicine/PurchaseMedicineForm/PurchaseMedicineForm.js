@@ -120,7 +120,7 @@ const PurchaseMedicineForm = (props) => {
       cgstamt += total_cgst_amount_list[i]
     }
 
-    set_grand_total(tamt + sgstamt + cgstamt - damt)
+    set_grand_total( Math.round(tamt + sgstamt + cgstamt - damt))
     set_total_amount(tamt)
     set_total_dis_amount(damt)
     set_total_sgst_amount(sgstamt)

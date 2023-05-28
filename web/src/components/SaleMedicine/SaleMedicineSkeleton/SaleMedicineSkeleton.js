@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import { jsonTruncate, timeTag,truncate } from 'src/lib/formatters'
-
+const converter = require('number-to-words');
 const SaleMedicineSkeleton = ({ saleMedicine }) => {
 
   const [pages, setPages] = useState([])
   const [chunks,setChunks] = useState([])
   let count = 0
+  const [formatedDate,setFormatedDate] = useState("")
   useEffect(() => {
     const noOfPage = Math.ceil(saleMedicine.medicine.length / 10)
     // setPages(noOfPage)
@@ -16,6 +17,10 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
     }
     setPages(page)
     console.log(saleMedicine.date.split('T00:00:00.000Z')[0])
+    const date = new Date("2023-05-31");
+    let fD = `${("0" + (date.getMonth() + 1)).slice(-2)}-${date.getFullYear()}`;
+    // console.log(formattedDate);
+    setFormatedDate(fD)
 
     const array = saleMedicine.medicine;
 
@@ -84,23 +89,23 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
                   style={{ width: '19.6cm', height: '7cm' ,padding:'0.1cm 0cm' }}
                 >
 
-                  <div className="grid grid-cols-8 text-center font-bold">
+                  <div className="grid grid-cols-8  font-bold">
                     <span className="col-span-2">Medicine Name</span>
                     <span>Batch No</span>
-                    <span>Expiry Date</span>
+                    <span>Exp Date</span>
                     <span>MRP</span>
                     <span>Quantity</span>
                     <span>CGST/SGST</span>
                     <span>Amount (₹)</span>
                   </div>
-                  <div className="text-sm grid grid-cols-8 text-center">
+                  <div className="text-sm grid grid-cols-8 ">
                     {
                       chunks[item].map((med)=>{
                         return(
                           <>
                           <span className="col-span-2">{med['medicine Name']}</span>
                           <span>{med['batch No']}</span>
-                          <span>{med['Expiry Date'].split('T')[0]}</span>
+                          <span>{formatedDate}</span>
                           <span>{med['mrp']}</span>
                           <span>{med['quantity']}</span>
                           <span>{med['cgst/sgst']}</span>
@@ -125,9 +130,14 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
                   style={{ width: '19.6cm' }}
                 >
 
-                  <div className="grid grid-cols-4  justify-between ">
-                    <div className=" col-span-3">
-
+                  <div className="grid grid-cols-4  justify-between  ">
+                    <div className=" col-span-3 grid grid-cols-3 relative">
+                      <div className="col-span-2 p-5">
+                          {/* Rs. {converter.toWords(saleMedicine.grand_total)} Only */}
+                      </div>
+                      <div className=" absolute bottom-1 right-4 ">
+                        Authorised Signatory
+                      </div>
                     </div>
                     <div className="border-l  border-black text-sm pl-3 grid grid-cols-2">
                     <span className="font-bold">SUB TOTAL</span> <span>{saleMedicine.total}</span>

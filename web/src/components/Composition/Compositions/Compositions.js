@@ -69,14 +69,14 @@ const CompositionsList = ({ compositions }) => {
                   >
                     Edit
                   </Link>
-                  <button
+                  {/* <button
                     type="button"
                     title={'Delete composition ' + composition.id}
                     className="rw-button rw-button-small rw-button-red"
                     onClick={() => onDeleteClick(composition.id)}
                   >
                     Delete
-                  </button>
+                  </button> */}
                 </nav>
               </td>
             </tr>

@@ -14,7 +14,18 @@ export const saleMedicine = ({ id }) => {
 export const createSaleMedicine = async ({ input }) => {
   const {permedicine,...data} =  input
 
+  const lastRow = await db.saleMedicine.findFirst({
+    orderBy: {
+      id: 'desc'
+    }
+  });
+
+  const no = lastRow ? parseInt(lastRow.id) + 1 : 1;
+
+  const start = 'SVPH632'+no
+  data['billNo'] = start
   const med = await db.saleMedicine.create({
+
     data: data,
   })
 

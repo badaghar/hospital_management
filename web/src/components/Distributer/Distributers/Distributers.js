@@ -75,14 +75,14 @@ const DistributersList = ({ distributers }) => {
                   >
                     Edit
                   </Link>
-                  <button
+                  {/* <button
                     type="button"
                     title={'Delete distributer ' + distributer.id}
                     className="rw-button rw-button-small rw-button-red"
                     onClick={() => onDeleteClick(distributer.id)}
                   >
                     Delete
-                  </button>
+                  </button> */}
                 </nav>
               </td>
             </tr>

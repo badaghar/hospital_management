@@ -65,13 +65,13 @@ const Manufacturer = ({ manufacturer }) => {
         >
           Edit
         </Link>
-        <button
+        {/* <button
           type="button"
           className="rw-button rw-button-red"
           onClick={() => onDeleteClick(manufacturer.id)}
         >
           Delete
-        </button>
+        </button> */}
       </nav>
     </>
   )

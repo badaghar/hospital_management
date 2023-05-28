@@ -71,14 +71,14 @@ const ProductsList = ({ products }) => {
                   >
                     Edit
                   </Link>
-                  <button
+                  {/* <button
                     type="button"
                     title={'Delete product ' + product.id}
                     className="rw-button rw-button-small rw-button-red"
                     onClick={() => onDeleteClick(product.id)}
                   >
                     Delete
-                  </button>
+                  </button> */}
                 </nav>
               </td>
             </tr>

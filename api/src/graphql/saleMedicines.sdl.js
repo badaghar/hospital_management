@@ -21,7 +21,7 @@ export const schema = gql`
   }
 
   input CreateSaleMedicineInput {
-    billNo: String!
+    # billNo: String!
     date: DateTime!
     medicine: JSON!
     total: Float!

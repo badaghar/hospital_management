@@ -65,13 +65,13 @@ const Composition = ({ composition }) => {
         >
           Edit
         </Link>
-        <button
+        {/* <button
           type="button"
           className="rw-button rw-button-red"
           onClick={() => onDeleteClick(composition.id)}
         >
           Delete
-        </button>
+        </button> */}
       </nav>
     </>
   )
