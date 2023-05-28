@@ -1,8 +1,10 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useState } from 'react'
 
 import { QUERY } from 'src/components/Distributer/DistributersCell'
+import SearchTable from 'src/components/SearchTable/SearchTable'
 import { timeTag, truncate } from 'src/lib/formatters'
 
 const DELETE_DISTRIBUTER_MUTATION = gql`
@@ -14,6 +16,8 @@ const DELETE_DISTRIBUTER_MUTATION = gql`
 `
 
 const DistributersList = ({ distributers }) => {
+  const [search_data, setSearch_data] = useState(distributers)
+  const [rows_count, setRows_count] = useState(distributers.length <= 5 ? 5 : 10)
   const [deleteDistributer] = useMutation(DELETE_DISTRIBUTER_MUTATION, {
     onCompleted: () => {
       toast.success('Distributer deleted')
@@ -33,63 +37,142 @@ const DistributersList = ({ distributers }) => {
       deleteDistributer({ variables: { id } })
     }
   }
+  const change = (search)=>{
+    const search_val = search.target.value
+
+    let filterData = distributers.filter((val) => {
+      return (
+        val.name
+          .toString()
+          .toLowerCase()
+          .includes(search_val.toLowerCase())
+      )
+    })
+    setRows_count(filterData.length <= 5 ? 5 : 10)
+    setSearch_data(filterData)
+  }
+  const columns = [
+    {
+      Header: 'ID',
+      accessor: 'id',
+    },
+    {
+      Header: 'Name',
+      accessor: 'name',
+    },
+    {
+      Header: 'Phone no',
+      accessor: 'phoneNo',
+    },
+    {
+      Header: 'Gst no',
+      accessor: 'gstNo',
+    },
+    {
+      Header: 'Dl no',
+      accessor: 'dlNo',
+    },
+    {
+      Header: 'Action',
+      accessor: 'actionColumn',
+      disableSortBy: true,
+      Cell: ({ original }) => (
+        <nav className="rw-table-actions">
+        <Link
+          to={routes.distributer({ id: original.id })}
+          title={'Show distributer ' + original.id + ' detail'}
+          className="rw-button rw-button-small"
+        >
+          Show
+        </Link>
+        <Link
+          to={routes.editDistributer({ id: original.id })}
+          title={'Edit distributer ' + original.id}
+          className="rw-button rw-button-small rw-button-blue"
+        >
+          Edit
+        </Link>
+        {/* <button
+          type="button"
+          title={'Delete distributer ' + distributer.id}
+          className="rw-button rw-button-small rw-button-red"
+          onClick={() => onDeleteClick(distributer.id)}
+        >
+          Delete
+        </button> */}
+      </nav>
+      ),
+    },
+  ]
+
+
 
   return (
-    <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Phone no</th>
-            <th>Gst no</th>
-            <th>Dl no</th>
-            <th>Created at</th>
-            <th>Updated at</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          {distributers.map((distributer) => (
-            <tr key={distributer.id}>
-              <td>{truncate(distributer.id)}</td>
-              <td>{truncate(distributer.name)}</td>
-              <td>{truncate(distributer.phoneNo)}</td>
-              <td>{truncate(distributer.gstNo)}</td>
-              <td>{truncate(distributer.dlNo)}</td>
-              <td>{timeTag(distributer.created_at)}</td>
-              <td>{timeTag(distributer.updated_at)}</td>
-              <td>
-                <nav className="rw-table-actions">
-                  <Link
-                    to={routes.distributer({ id: distributer.id })}
-                    title={'Show distributer ' + distributer.id + ' detail'}
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link>
-                  <Link
-                    to={routes.editDistributer({ id: distributer.id })}
-                    title={'Edit distributer ' + distributer.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
-                  </Link>
-                  {/* <button
-                    type="button"
-                    title={'Delete distributer ' + distributer.id}
-                    className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(distributer.id)}
-                  >
-                    Delete
-                  </button> */}
-                </nav>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+
+    <>
+            <SearchTable
+    change={change}
+    placeholder={"Search By Typing Distributer Name"}
+    columns={columns}
+    rows_count={rows_count}
+    search_data={search_data}
+    />
+    </>
+    // <div className="rw-segment rw-table-wrapper-responsive">
+    //   <table className="rw-table">
+    //     <thead>
+    //       <tr>
+    //         <th>Id</th>
+    //         <th>Name</th>
+    //         <th>Phone no</th>
+    //         <th>Gst no</th>
+    //         <th>Dl no</th>
+    //         <th>Created at</th>
+    //         <th>Updated at</th>
+    //         <th>&nbsp;</th>
+    //       </tr>
+    //     </thead>
+    //     <tbody>
+    //       {distributers.map((distributer) => (
+    //         <tr key={distributer.id}>
+    //           <td>{truncate(distributer.id)}</td>
+    //           <td>{truncate(distributer.name)}</td>
+    //           <td>{truncate(distributer.phoneNo)}</td>
+    //           <td>{truncate(distributer.gstNo)}</td>
+    //           <td>{truncate(distributer.dlNo)}</td>
+    //           <td>{timeTag(distributer.created_at)}</td>
+    //           <td>{timeTag(distributer.updated_at)}</td>
+    //           <td>
+    //             <nav className="rw-table-actions">
+    //               <Link
+    //                 to={routes.distributer({ id: distributer.id })}
+    //                 title={'Show distributer ' + distributer.id + ' detail'}
+    //                 className="rw-button rw-button-small"
+    //               >
+    //                 Show
+    //               </Link>
+    //               <Link
+    //                 to={routes.editDistributer({ id: distributer.id })}
+    //                 title={'Edit distributer ' + distributer.id}
+    //                 className="rw-button rw-button-small rw-button-blue"
+    //               >
+    //                 Edit
+    //               </Link>
+    //               {/* <button
+    //                 type="button"
+    //                 title={'Delete distributer ' + distributer.id}
+    //                 className="rw-button rw-button-small rw-button-red"
+    //                 onClick={() => onDeleteClick(distributer.id)}
+    //               >
+    //                 Delete
+    //               </button> */}
+    //             </nav>
+    //           </td>
+    //         </tr>
+    //       ))}
+    //     </tbody>
+    //   </table>
+    // </div>
   )
 }
 

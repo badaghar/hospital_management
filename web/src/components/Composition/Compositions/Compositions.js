@@ -1,8 +1,10 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useState } from 'react'
 
 import { QUERY } from 'src/components/Composition/CompositionsCell'
+import SearchTable from 'src/components/SearchTable/SearchTable'
 import { timeTag, truncate } from 'src/lib/formatters'
 
 const DELETE_COMPOSITION_MUTATION = gql`
@@ -14,6 +16,8 @@ const DELETE_COMPOSITION_MUTATION = gql`
 `
 
 const CompositionsList = ({ compositions }) => {
+  const [search_data, setSearch_data] = useState(compositions)
+  const [rows_count, setRows_count] = useState(compositions.length <= 5 ? 5 : 10)
   const [deleteComposition] = useMutation(DELETE_COMPOSITION_MUTATION, {
     onCompleted: () => {
       toast.success('Composition deleted')
@@ -34,56 +38,138 @@ const CompositionsList = ({ compositions }) => {
     }
   }
 
+  const change = (search)=>{
+    const search_val = search.target.value
+
+    let filterData = compositions.filter((val) => {
+      return (
+        val.name
+          .toString()
+          .toLowerCase()
+          .includes(search_val.toLowerCase())
+      )
+    })
+    setRows_count(filterData.length <= 5 ? 5 : 10)
+    setSearch_data(filterData)
+  }
+
+  const columns = [
+    {
+      Header: 'ID',
+      accessor: 'id',
+    },
+    {
+      Header: 'Name',
+      accessor: 'name',
+    },
+    {
+      Header: 'Created At',
+      accessor: 'created_at',
+      Cell: ({ original }) => (
+          timeTag(original.created_at)
+        )
+    },
+    {
+      Header: 'Updated At',
+      accessor: 'updated_at',
+      Cell: ({ original }) => (
+          timeTag(original.updated_at)
+        )
+    },
+
+    {
+      Header: 'Action',
+      accessor: 'actionColumn',
+      disableSortBy: true,
+      Cell: ({ original }) => (
+        <nav className="rw-table-actions">
+        <Link
+          to={routes.composition({ id: original.id })}
+          title={'Show composition ' + original.id + ' detail'}
+          className="rw-button rw-button-small"
+        >
+          Show
+        </Link>
+        <Link
+          to={routes.editComposition({ id: original.id })}
+          title={'Edit composition ' + original.id}
+          className="rw-button rw-button-small rw-button-blue"
+        >
+          Edit
+        </Link>
+        {/* <button
+          type="button"
+          title={'Delete composition ' + composition.id}
+          className="rw-button rw-button-small rw-button-red"
+          onClick={() => onDeleteClick(composition.id)}
+        >
+          Delete
+        </button> */}
+      </nav>
+      ),
+    },
+  ]
+
   return (
-    <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Created at</th>
-            <th>Updated at</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          {compositions.map((composition) => (
-            <tr key={composition.id}>
-              <td>{truncate(composition.id)}</td>
-              <td>{truncate(composition.name)}</td>
-              <td>{timeTag(composition.created_at)}</td>
-              <td>{timeTag(composition.updated_at)}</td>
-              <td>
-                <nav className="rw-table-actions">
-                  <Link
-                    to={routes.composition({ id: composition.id })}
-                    title={'Show composition ' + composition.id + ' detail'}
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link>
-                  <Link
-                    to={routes.editComposition({ id: composition.id })}
-                    title={'Edit composition ' + composition.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
-                  </Link>
-                  {/* <button
-                    type="button"
-                    title={'Delete composition ' + composition.id}
-                    className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(composition.id)}
-                  >
-                    Delete
-                  </button> */}
-                </nav>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+        <SearchTable
+    change={change}
+    placeholder={"Search By Typing Composition Name"}
+    columns={columns}
+    rows_count={rows_count}
+    search_data={search_data}
+    />
+
+    </>
+    // <div className="rw-segment rw-table-wrapper-responsive">
+    //   <table className="rw-table">
+    //     <thead>
+    //       <tr>
+    //         <th>Id</th>
+    //         <th>Name</th>
+    //         <th>Created at</th>
+    //         <th>Updated at</th>
+    //         <th>&nbsp;</th>
+    //       </tr>
+    //     </thead>
+    //     <tbody>
+    //       {compositions.map((composition) => (
+    //         <tr key={composition.id}>
+    //           <td>{truncate(composition.id)}</td>
+    //           <td>{truncate(composition.name)}</td>
+    //           <td>{timeTag(composition.created_at)}</td>
+    //           <td>{timeTag(composition.updated_at)}</td>
+    //           <td>
+    //             <nav className="rw-table-actions">
+    //               <Link
+    //                 to={routes.composition({ id: composition.id })}
+    //                 title={'Show composition ' + composition.id + ' detail'}
+    //                 className="rw-button rw-button-small"
+    //               >
+    //                 Show
+    //               </Link>
+    //               <Link
+    //                 to={routes.editComposition({ id: composition.id })}
+    //                 title={'Edit composition ' + composition.id}
+    //                 className="rw-button rw-button-small rw-button-blue"
+    //               >
+    //                 Edit
+    //               </Link>
+    //               {/* <button
+    //                 type="button"
+    //                 title={'Delete composition ' + composition.id}
+    //                 className="rw-button rw-button-small rw-button-red"
+    //                 onClick={() => onDeleteClick(composition.id)}
+    //               >
+    //                 Delete
+    //               </button> */}
+    //             </nav>
+    //           </td>
+    //         </tr>
+    //       ))}
+    //     </tbody>
+    //   </table>
+    // </div>
   )
 }
 

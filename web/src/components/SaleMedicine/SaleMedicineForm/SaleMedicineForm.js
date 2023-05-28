@@ -70,17 +70,12 @@ const SaleMedicineForm = (props) => {
 
 
   const onSubmit = (data) => {
-
-
     const newmedicine = medicineObj.filter((val) => {
       return val !== 0
     })
-
-
     const newperMedicine = permedicineObj.filter((val) => {
       return val !== 0
     })
-
     let input = {}
     input = {
       // 'billNo': data['billNo'],
@@ -94,9 +89,7 @@ const SaleMedicineForm = (props) => {
       'patientId': patientId,
       'permedicine': newperMedicine
     }
-
     console.log(input)
-
     props.onSave(input, props?.saleMedicine?.id)
 
   }
@@ -591,9 +584,16 @@ const SaleMedicineForm = (props) => {
 
 
         <div className="rw-button-group">
+
+
           <Submit disabled={props.loading} className="rw-button rw-button-blue">
             Save
           </Submit>
+
+          {/* <button className="rw-button rw-button-blue" >
+            Save And Print
+
+          </button> */}
         </div>
       </Form>
     </div>
