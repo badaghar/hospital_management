@@ -11,9 +11,14 @@ import {
   DateField,
 } from '@redwoodjs/forms'
 import NewSaleMedicineTable from '../NewSaleMedicineTable/NewSaleMedicineTable'
+import { toast } from '@redwoodjs/web/toast'
+
 import { useEffect, useState } from 'react'
 import Multiselect from 'multiselect-react-dropdown'
 import { Link, routes } from '@redwoodjs/router'
+import { ReactDialogBox } from 'react-js-dialog-box'
+import 'react-js-dialog-box/dist/index.css'
+import { useMutation } from '@redwoodjs/web'
 
 const formatDatetime = (value) => {
   if (value) {
@@ -21,8 +26,18 @@ const formatDatetime = (value) => {
   }
 }
 
+const CREATE_PATIENT_MUTATION = gql`
+  mutation CreatePatientMutation($input: CreatePatientInput!) {
+    createPatient(input: $input) {
+      id
+      name
+    }
+  }
+`
+
 const SaleMedicineForm = (props) => {
 
+  const [isOpen, setIsOpen] = useState(false)
 
   const [no_of_medicine, setNoOfMedicine] = useState(0)
   const [show_medicine_heading, setShowMedicineHeading] = useState(false)
@@ -50,6 +65,7 @@ const SaleMedicineForm = (props) => {
   };
 
   const [defaultDate, setDefaultDate] = useState(formatDate(new Date()));
+  const [selectName,setSelectName] = useState()
 
 
 
@@ -114,6 +130,7 @@ const SaleMedicineForm = (props) => {
     set_total_amount(tamt)
     set_total_sgst_amount(sgstamt)
     set_total_cgst_amount(cgstamt)
+    set_actual_grand_total(parseFloat(Math.round(tamt + sgstamt + cgstamt)).toFixed(2))
   }, [total_amount_list, total_cgst_amount_list, total_sgst_amount_list])
 
   useEffect(() => {
@@ -121,7 +138,7 @@ const SaleMedicineForm = (props) => {
     setDiscountAmt(dis)
     // set_grand_total(grand_total-dis)
     // console.log("here")
-    set_actual_grand_total(parseFloat(grand_total-dis).toFixed(2))
+    set_actual_grand_total(parseFloat(grand_total - dis).toFixed(2))
   }, [discount])
 
 
@@ -157,8 +174,139 @@ const SaleMedicineForm = (props) => {
     // Manufacturer = name[0].id
   }
 
+  const openModal = () =>{
+    setIsOpen(true)
+
+
+
+  }
+
+  const [createPatient, { loading, error }] = useMutation(
+    CREATE_PATIENT_MUTATION,
+    {
+      onCompleted: (data) => {
+        const name = data.createPatient.name
+        const id = data.createPatient.id
+        toast.success('Patient Added ')
+        const value = {id,name}
+
+        setSelectName(value)
+        setIsOpen(false)
+
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+    }
+  )
+
+  const addPatient = (input) => {
+    createPatient({ variables: { input } })
+  }
+
   return (
+
+
+
     <div className="rw-form-wrapper">
+
+      {isOpen && (
+        <>
+          <ReactDialogBox
+            closeBox={() => {
+              setIsOpen(false)
+            }}
+            modalWidth="50%"
+            headerBackgroundColor="#2c2c2c"
+            headerTextColor="white"
+            headerHeight="60px"
+            closeButtonColor="white"
+            bodyBackgroundColor="white"
+            bodyTextColor="black"
+            bodyHeight="200px"
+            headerText={<span className="flex items-end h-14 text-xl">Add Patient Details</span>}
+          >
+            <Form
+              onSubmit={addPatient}
+            >
+
+              <div className="grid grid-cols-4 space-y-3">
+
+                <div className='col-span-4 flex items-center space-x-3'>
+              <Label
+          name="name"
+          className="rw-label  mt-0"
+          errorClassName="rw-label rw-label-error mt-0"
+          >
+          Name
+        </Label>
+
+        <TextField
+          name="name"
+
+          className="rw-input mt-0"
+          errorClassName="rw-input rw-input-error mt-0"
+          validation={{ required: true }}
+          />
+
+        <FieldError name="name" className="rw-field-error mt-0" />
+          </div>
+
+
+<div className='col-span-2 flex items-center space-x-3'>
+
+
+        <Label
+          name="age"
+          className="rw-label mt-0"
+          errorClassName="rw-label rw-label-error mt-0"
+        >
+          Age
+        </Label>
+
+        <NumberField
+          name="age"
+
+          className="rw-input mt-0"
+          errorClassName="rw-input rw-input-error mt-0"
+          validation={{ required: true }}
+        />
+
+        <FieldError name="age" className="rw-field-error mt-0" />
+        </div>
+
+
+<div className='col-span-2 flex items-center space-x-3 pl-4'>
+
+        <Label
+          name="phone_no"
+          className="rw-label mt-0 "
+          errorClassName="rw-label rw-label-error mt-0"
+        >
+          Phone
+        </Label>
+
+        <TextField
+          name="phone_no"
+
+          className="rw-input mt-0"
+          errorClassName="rw-input rw-input-error mt-0"
+        />
+        </div>
+
+        <FieldError name="phone_no" className="rw-field-error mt-0" />
+              </div>
+
+
+              <div className="rw-button-group">
+                <Submit className="rw-button bg-gray-800 text-white">
+                  Add Patient
+                </Submit>
+              </div>
+            </Form>
+          </ReactDialogBox>
+        </>
+      )}
       <Form onSubmit={onSubmit} error={props.error}>
         <FormError
           error={props.error}
@@ -227,12 +375,15 @@ const SaleMedicineForm = (props) => {
           validation={{ required: true }}
           /> */}
             <Multiselect
-              className="rw-input mt-0  "
+              className="rw-input mt-0 selectname"
               name={"patientId"}
               options={props.patients} // Options to display in the dropdown
               onSelect={(event) => modifyPatient(event)} // Function will trigger on select event
               onRemove={(event) => modifyPatient(event)} // Function will trigger on remove event
               selectionLimit={1}
+              // value={selectName}
+              // selectedValues={selectName}
+              selectedValues={selectName ? [selectName] : []}
 
               displayValue={'name'}// Property name to display in the dropdown options
             />
@@ -244,9 +395,9 @@ const SaleMedicineForm = (props) => {
           <FieldError name="patientId" className="rw-field-error" />
 
           <div>
-            <Link to={routes.newPatient()} className="rw-button rw-button-green">
+            <div onClick={openModal} className="rw-button rw-button-green">
               <div className="rw-button-icon">+</div> {"New Patient"}
-            </Link>
+            </div>
           </div>
 
         </div>

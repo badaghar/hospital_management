@@ -29,18 +29,14 @@ describe('patients', () => {
     const result = await createPatient({
       input: {
         name: 'String',
-        age: 785799,
-        phone_no: 'String',
-        gender: 'String',
-        updated_at: '2023-05-21T14:26:09.243Z',
+        age: 7980364,
+        updated_at: '2023-05-28T17:03:57.631Z',
       },
     })
 
     expect(result.name).toEqual('String')
-    expect(result.age).toEqual(785799)
-    expect(result.phone_no).toEqual('String')
-    expect(result.gender).toEqual('String')
-    expect(result.updated_at).toEqual(new Date('2023-05-21T14:26:09.243Z'))
+    expect(result.age).toEqual(7980364)
+    expect(result.updated_at).toEqual(new Date('2023-05-28T17:03:57.631Z'))
   })
 
   scenario('updates a patient', async (scenario) => {

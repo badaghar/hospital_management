@@ -120,7 +120,7 @@ const PurchaseMedicineForm = (props) => {
       cgstamt += total_cgst_amount_list[i]
     }
 
-    set_grand_total( Math.round(tamt + sgstamt + cgstamt - damt))
+    set_grand_total(Math.round(tamt + sgstamt + cgstamt - damt))
     set_total_amount(tamt)
     set_total_dis_amount(damt)
     set_total_sgst_amount(sgstamt)
@@ -204,25 +204,29 @@ const PurchaseMedicineForm = (props) => {
           <FieldError name="date" className="rw-field-error" />
         </div>
 
-        <Label
-          name="no_of_medicine"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          No Of Medicine
-        </Label>
+        <div className='flex items-center mt-3  gap-x-4'>
 
-        <NumberField
-          name="no_of_medicine"
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-          onChange={updateMedicineTable}
-        />
+          <Label
+            name="no_of_medicine"
+            className="rw-label mt-0"
+            errorClassName="rw-label rw-label-error mt-0"
+          >
+            No Of Medicine
+          </Label>
+          <div className="flex">
 
-        <FieldError name="no_of_medicine" className="rw-field-error" />
+            <NumberField
+              name="no_of_medicine"
+              className="rw-input mt-0"
+              errorClassName="rw-input rw-input-error mt-0"
+              validation={{ required: true }}
+              onChange={updateMedicineTable}
+            />
+          </div>
 
+          <FieldError name="no_of_medicine" className="rw-field-error" />
 
+        </div>
         <div className="p-2 w-full shadow-sm bg-white ">
           <div className=" grid grid-cols-18 grid-flow-row gap-x-2 gap-y-2">
 

@@ -20,7 +20,7 @@ const NewPurchaseMedicineTable = (props) => {
   const [total_net_amount, set_total_net_amount] = useState(0)
 
   useEffect(()=>{
-    const tamt = (paid_qty)*pack*rate
+    const tamt = (paid_qty)*rate
     set_total_amount(tamt)
     const tnetamt = ((parseFloat(cgst)+parseFloat(sgst))*tamt/100.0) + tamt
     const tnetamtDisc = tnetamt - dis*tnetamt/100.0
@@ -68,7 +68,7 @@ const NewPurchaseMedicineTable = (props) => {
     }
 
     // let oneMedPrice = parseFloat(mrp) * ((parseFloat(cgst)+parseFloat(sgst)) / (100 +(parseFloat(cgst)+parseFloat(sgst))))
-    let oneMedPrice = parseFloat(mrp)
+    let oneMedPrice = parseFloat(parseFloat(mrp/pack).toFixed(2))
 
     // const dateString = "2023-05-25";
 const date = new Date(exp);
@@ -77,7 +77,7 @@ const date = new Date(exp);
       'productId':props.productList[props.value].id,
       'batch':batch,
       'exp':date,
-      'mrp' : parseFloat(oneMedPrice.toFixed(5)),
+      'mrp' : parseFloat(oneMedPrice),
       'sgst':parseFloat(sgst),
       'cgst':parseFloat(cgst),
       'discount':parseFloat(dis)

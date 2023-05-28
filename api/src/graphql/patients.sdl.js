@@ -3,14 +3,15 @@ export const schema = gql`
     id: Int!
     name: String!
     age: Int!
-    phone_no: String!
-    gender: String!
+    phone_no: String
+    gender: String
     address: String
     did: DoctorFee
     doctorFeeId: Int
     date_of_admission: DateTime
     created_at: DateTime!
     updated_at: DateTime!
+    SaleMedicine: [SaleMedicine]!
   }
 
   type Query {
@@ -21,8 +22,8 @@ export const schema = gql`
   input CreatePatientInput {
     name: String!
     age: Int!
-    phone_no: String!
-    gender: String!
+    phone_no: String
+    gender: String
     address: String
     doctorFeeId: Int
     date_of_admission: DateTime

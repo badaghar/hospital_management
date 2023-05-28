@@ -12,8 +12,8 @@ import { useState } from 'react'
 
 const ProductForm = (props) => {
   // const [compositionList,setCompositionList] = useState([])
-  let compositionList = props?.defaultComposition?.map((item)=>item.id)
-  let Manufacturer = props?.defaultManufacturer ? props.defaultManufacturer[0]?.id : 0
+  const [compositionList,setCompositionList] = useState(props?.defaultComposition?.map((item)=>item.id))
+  const [Manufacturer,setManufacturerList] = useState(props?.defaultManufacturer ? props.defaultManufacturer[0]?.id : 0)
 
   const onSubmit = (data) => {
     data['compositionList'] = compositionList
@@ -28,15 +28,17 @@ const ProductForm = (props) => {
       cl.push(items[i].id)
     }
 
-    compositionList = [...cl]
-    console.log(compositionList)
+    // compositionList = [...cl]
+    // console.log(compositionList)
+    setCompositionList(cl)
   }
   const modifiyManufacturer = (name) =>{
     if(name.length===0){
       return
     }
     // console.log(name)
-    Manufacturer = name[0].id
+    // Manufacturer = name[0].id
+    setManufacturerList(name[0].id)
   }
   // console.log("here")
 

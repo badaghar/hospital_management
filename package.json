@@ -28,6 +28,7 @@
     "multiselect-react-dropdown": "^2.0.25",
     "number-to-words": "^1.2.4",
     "puppeteer": "^20.4.0",
+    "react-js-dialog-box": "^1.1.6",
     "react-spinners": "^0.13.8",
     "react-table-6": "^6.11.0",
     "xlsx": "^0.18.5"

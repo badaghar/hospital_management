@@ -33,4 +33,7 @@ export const Patient = {
   did: (_obj, { root }) => {
     return db.patient.findUnique({ where: { id: root?.id } }).did()
   },
+  SaleMedicine: (_obj, { root }) => {
+    return db.patient.findUnique({ where: { id: root?.id } }).SaleMedicine()
+  },
 }

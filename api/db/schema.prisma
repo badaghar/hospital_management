@@ -15,8 +15,8 @@ model Patient {
   id                Int            @id @default(autoincrement())
   name              String
   age               Int
-  phone_no          String
-  gender            String
+  phone_no          String?
+  gender            String?
   address           String?
   did               DoctorFee?     @relation(fields: [doctorFeeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   doctorFeeId       Int?

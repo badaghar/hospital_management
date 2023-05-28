@@ -21399,6 +21399,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-js-dialog-box@npm:^1.1.6":
+  version: 1.1.6
+  resolution: "react-js-dialog-box@npm:1.1.6"
+  checksum: e0c484d9bbc784c5cadafe52f8fff46a985d89c4eefeaecc92fcc72bd57e8b34c90e961122690359c883b9d398b28e41cfe3b09c5d7a5845f0c09a7f50db4a62
+  languageName: node
+  linkType: hard
+
 "react-refresh@npm:0.14.0":
   version: 0.14.0
   resolution: "react-refresh@npm:0.14.0"
@@ -22183,6 +22190,7 @@ __metadata:
     number-to-words: ^1.2.4
     prettier-plugin-tailwindcss: ^0.3.0
     puppeteer: ^20.4.0
+    react-js-dialog-box: ^1.1.6
     react-spinners: ^0.13.8
     react-table-6: ^6.11.0
     xlsx: ^0.18.5

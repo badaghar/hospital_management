@@ -79,7 +79,6 @@ const PatientForm = (props) => {
           defaultValue={props.patient?.phone_no}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
         />
 
         <FieldError name="phone_no" className="rw-field-error" />
@@ -97,7 +96,6 @@ const PatientForm = (props) => {
           defaultValue={props.patient?.gender}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
         />
 
         <FieldError name="gender" className="rw-field-error" />
