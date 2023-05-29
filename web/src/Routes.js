@@ -50,7 +50,7 @@ const Routes = () => {
             <Route path="/users/{id:Int}" page={UserUserPage} name="user" />
             <Route path="/users" page={UserUsersPage} name="users" />
           </Set>
-          <Set wrap={ScaffoldLayout} title="Medicines" titleTo="medicines" buttonLabel="New Medicine" buttonTo="newMedicine">
+          <Set wrap={ScaffoldLayout} title="Medicines" titleTo="medicines" buttonLabel="Medicine Details" buttonTo="medicines">
             <Route path="/medicines/new" page={MedicineNewMedicinePage} name="newMedicine" />
             <Route path="/medicines/{id:Int}/edit" page={MedicineEditMedicinePage} name="editMedicine" />
             <Route path="/medicines/{id:Int}" page={MedicineMedicinePage} name="medicine" />

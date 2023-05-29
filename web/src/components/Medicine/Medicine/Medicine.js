@@ -86,7 +86,7 @@ const Medicine = ({ medicine }) => {
           </tbody>
         </table>
       </div>
-      <nav className="rw-button-group">
+      {/* <nav className="rw-button-group">
         <Link
           to={routes.editMedicine({ id: medicine.id })}
           className="rw-button rw-button-blue"
@@ -100,7 +100,7 @@ const Medicine = ({ medicine }) => {
         >
           Delete
         </button>
-      </nav>
+      </nav> */}
     </>
   )
 }

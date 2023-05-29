@@ -74,6 +74,10 @@ const MedicinesList = ({ medicines }) => {
       accessor: 'mrp',
     },
     {
+      Header: 'Quantity',
+      accessor: 'quantity',
+    },
+    {
       Header: 'Action',
       accessor: 'actionColumn',
       disableSortBy: true,
@@ -87,7 +91,7 @@ const MedicinesList = ({ medicines }) => {
                   >
                     Show
                   </Link>
-                  <Link
+                  {/* <Link
                     to={routes.editMedicine({ id: original.id })}
                     title={'Edit medicine ' + original.id}
                     className="rw-button rw-button-small rw-button-blue"
@@ -101,7 +105,7 @@ const MedicinesList = ({ medicines }) => {
                     onClick={() => onDeleteClick(original.id)}
                   >
                     Delete
-                  </button>
+                  </button> */}
                 </nav>
       ),
     },

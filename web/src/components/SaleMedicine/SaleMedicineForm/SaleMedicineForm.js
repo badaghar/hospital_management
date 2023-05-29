@@ -71,10 +71,10 @@ const SaleMedicineForm = (props) => {
 
   const onSubmit = (data) => {
     const newmedicine = medicineObj.filter((val) => {
-      return val !== 0
+      return val['medicine Name']
     })
     const newperMedicine = permedicineObj.filter((val) => {
-      return val !== 0
+      return val['quantity']
     })
     let input = {}
     input = {
