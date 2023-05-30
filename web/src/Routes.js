@@ -13,10 +13,16 @@ import ScaffoldLayout from 'src/layouts/ScaffoldLayout'
 
 import { useAuth } from './auth'
 import DashboardLayout from './layouts/DashboardLayout/DashboardLayout'
+import PharmacyReportLayout from './layouts/PharmacyReportLayout/PharmacyReportLayout'
 
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
+
+
+
+
+
 
 
 
@@ -36,6 +42,11 @@ const Routes = () => {
 
 
           <Route path="/" page={HomePage} name="home" />
+                <Route path="/pharmacy-report/{id:Int}" page={PharmacyReportPage} name="pharmacyReport" />
+
+          <Set wrap={PharmacyReportLayout}>
+
+          </Set>
       <Route path="/view-sale-medicine/{id:Int}" page={ViewSaleMedicinePage} name="viewSaleMedicine" />
 
           <Set wrap={ScaffoldLayout} title="SaleMedicines" titleTo="saleMedicines" buttonLabel="New SaleMedicine" buttonTo="newSaleMedicine">

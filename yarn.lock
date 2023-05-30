@@ -21365,6 +21365,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-icons@npm:^4.9.0":
+  version: 4.9.0
+  resolution: "react-icons@npm:4.9.0"
+  peerDependencies:
+    react: "*"
+  checksum: 66eb6d170643d2a35a92418e9fa4416f728ebb537d99d3d0d875faa3e46952667da31777f9ca10b7351515785b3d92dd052fd67b7863471d332cd3b68beec7d1
+  languageName: node
+  linkType: hard
+
 "react-inspector@npm:^5.1.0":
   version: 5.1.1
   resolution: "react-inspector@npm:5.1.1"
@@ -22190,6 +22199,7 @@ __metadata:
     number-to-words: ^1.2.4
     prettier-plugin-tailwindcss: ^0.3.0
     puppeteer: ^20.4.0
+    react-icons: ^4.9.0
     react-js-dialog-box: ^1.1.6
     react-spinners: ^0.13.8
     react-table-6: ^6.11.0

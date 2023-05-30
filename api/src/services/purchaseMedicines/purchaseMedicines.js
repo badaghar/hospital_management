@@ -68,6 +68,52 @@ export const deletePurchaseMedicine = ({ id }) => {
   })
 }
 
+
+// pharmacy Report
+export const distributersReport = async ({ id,startDate,endDate }) => {
+
+  const data = await db.purchaseMedicine.findMany({
+    where: {
+      distributerId:id,
+      date: {
+        gte: new Date(startDate),
+        lte: new Date(endDate),
+      },
+    },
+  });
+
+  const totalSum = data.reduce((sum, item) => sum + item.total, 0);
+  return {data,totalSum}
+}
+export const purchaseReport = async ({ startDate,endDate }) => {
+  const data = await db.purchaseMedicine.findMany({
+    where: {
+      date: {
+
+        gte: new Date(startDate),
+        lte: new Date(endDate),
+      },
+    },
+  });
+
+  const totalSum = data.reduce((sum, item) => sum + item.total, 0);
+  return {data,totalSum}
+}
+export const saleReport = async ({ startDate,endDate }) => {
+  const data = await db.saleMedicine.findMany({
+    where: {
+      date: {
+
+        gte: new Date(startDate),
+        lte: new Date(endDate),
+      },
+    },
+  });
+
+  const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
+  return {data,totalSum}
+}
+
 export const PurchaseMedicine = {
   did: (_obj, { root }) => {
     return db.purchaseMedicine.findUnique({ where: { id: root?.id } }).did()
