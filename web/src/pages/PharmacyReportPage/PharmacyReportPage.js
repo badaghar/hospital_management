@@ -107,7 +107,7 @@ const PharmacyReportPage = ({id}) => {
       <div>
         <div className='p-10 text-white'>
           <div >
-            { (id==1 || id==4) ? remove && <PharmacyReportHeaderCell changeId={changeId} text={text} id={id} /> : <div className='flex justify-center text-xl border-white border rounded-3xl p-3'>
+            { (id==1 || id==4) ? remove && <PharmacyReportHeaderCell changeId={changeId} text={text} id={id} SetComponentRender={SetComponentRender} /> : <div className='flex justify-center text-xl border-white border rounded-3xl p-3'>
                 {text}
               </div>}
           </div>

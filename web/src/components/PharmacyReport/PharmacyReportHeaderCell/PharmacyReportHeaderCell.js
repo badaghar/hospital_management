@@ -22,7 +22,7 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ distributers,changeId,text,id }) => {
+export const Success = ({ distributers,changeId,text,id,SetComponentRender }) => {
   const [options,setOptions] = useState([])
   const location = useLocation();
   useEffect(() => {
@@ -47,6 +47,7 @@ export const Success = ({ distributers,changeId,text,id }) => {
   const modifyData = (name) => {
     if (name.length === 0) {
       changeId(0)
+      SetComponentRender(0)
       return
     }
     // console.log(name)
