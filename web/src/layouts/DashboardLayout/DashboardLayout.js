@@ -1,7 +1,7 @@
 import { Link, routes } from "@redwoodjs/router"
 import { useState } from "react";
 import { useAuth } from "src/auth"
-import { MdLocalPharmacy } from "react-icons/md";
+import { MdLocalPharmacy,MdPayments } from "react-icons/md";
 import { TbReportMedical } from "react-icons/tb";
 import { Toaster } from "@redwoodjs/web/toast";
 
@@ -9,15 +9,24 @@ const DashboardLayout = ({ children }) => {
   const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
   const [pharmacyisOpen, setpharmacyIsOpen] = useState(false);
   const [pharmacyReportisOpen, setpharmacyReportIsOpen] = useState(false);
+  const [pharmacyPaymentOpen,setPharmacyPayment] = useState(false)
 
   const togglePharmacy = () => {
     setpharmacyIsOpen(!pharmacyisOpen);
     setpharmacyReportIsOpen(false)
+    setPharmacyPayment(false)
   };
   const togglePharmacyReport = () => {
     setpharmacyReportIsOpen(!pharmacyReportisOpen);
     setpharmacyIsOpen(false)
+    setPharmacyPayment(false)
   };
+  const togglePharmacyPayment = () =>{
+    setPharmacyPayment(!pharmacyPaymentOpen)
+    setpharmacyIsOpen(false)
+    setpharmacyReportIsOpen(false)
+
+  }
 
   return (
     <>
@@ -274,6 +283,8 @@ const DashboardLayout = ({ children }) => {
                           </span>
                         </Link>
                       </li>
+
+
                     </ul>
                   )}
                 </li>
@@ -286,6 +297,54 @@ const DashboardLayout = ({ children }) => {
                     <span className="ml-2 text-sm tracking-wide truncate">Patients</span>
                     <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">New</span>
                   </Link>
+                </li>
+
+                <li className="relative">
+                  <button
+                    className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+                    onClick={togglePharmacyPayment}
+                  >
+                    <span className="inline-flex justify-center items-center ml-4">
+                      <MdPayments />
+
+                    </span>
+                    <span className="ml-2 text-sm tracking-wide truncate">Pharmacy Payment</span>
+
+                  </button>
+                  {pharmacyPaymentOpen && (
+                    <ul className="absolute left-0 z-10 py-2 mt-2 bg-white dark:bg-gray-800 rounded-md shadow-lg">
+                      <li>
+                        <Link
+                          to={routes.medicinePayment()}
+                          className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+                        >
+                          <span className="inline-flex justify-center items-center ml-4">
+                            <svg
+                              className="w-5 h-5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                              />
+                            </svg>
+                          </span>
+                          <span className="ml-2 text-sm tracking-wide truncate">Pay Bills</span>
+
+                        </Link>
+                      </li>
+
+
+
+
+
+                    </ul>
+                  )}
                 </li>
 
 
@@ -378,6 +437,31 @@ const DashboardLayout = ({ children }) => {
 
                         </Link>
                       </li>
+                      <li>
+                        <Link
+                          to={routes.pharmacyReport( { id:4 } )}
+                          className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+                        >
+                          <span className="inline-flex justify-center items-center ml-4">
+                            <svg
+                              className="w-5 h-5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                              />
+                            </svg>
+                          </span>
+                          <span className="ml-2 text-sm tracking-wide truncate">Payment Reports</span>
+
+                        </Link>
+                      </li>
 
 
 
@@ -385,6 +469,10 @@ const DashboardLayout = ({ children }) => {
                     </ul>
                   )}
                 </li>
+
+
+
+
 
 
 

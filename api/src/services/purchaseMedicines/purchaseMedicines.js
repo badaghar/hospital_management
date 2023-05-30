@@ -22,6 +22,19 @@ export const createPurchaseMedicine = async ({ input }) => {
     data: data,
   })
 
+  const billData = {
+    purchaseMedicineId: med.id,
+    total: med.total,
+    balance: med.total,
+    paid: 0,
+    method: "",
+    remark: ""
+  }
+
+  await db.paymentPurchaseMedicine.create({
+    data: billData,
+  })
+
   for(let i=0;i<permedicine.length;i++)
   {
     try {
@@ -111,6 +124,42 @@ export const saleReport = async ({ startDate,endDate }) => {
   });
 
   const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
+  return {data,totalSum}
+}
+
+export const pharmacyPayment = async ({ id,startDate,endDate }) => {
+  let data;
+  if(id==1)
+  {
+    data = await db.paymentPurchaseMedicine.findMany({
+      where: {
+        balance:0,
+        updated_at: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+    });
+
+  }
+  else {
+    data = await db.paymentPurchaseMedicine.findMany({
+      where: {
+        balance: {
+          not: 0
+        },
+        updated_at: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+    });
+
+  }
+
+
+
+  const totalSum = data.reduce((sum, item) => sum + item.paid, 0);
   return {data,totalSum}
 }
 

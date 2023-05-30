@@ -14,10 +14,12 @@ import ScaffoldLayout from 'src/layouts/ScaffoldLayout'
 import { useAuth } from './auth'
 import DashboardLayout from './layouts/DashboardLayout/DashboardLayout'
 import PharmacyReportLayout from './layouts/PharmacyReportLayout/PharmacyReportLayout'
+import MedicinePaymentLayout from './layouts/MedicinePaymentLayout/MedicinePaymentLayout'
 
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
+
 
 
 
@@ -42,19 +44,29 @@ const Routes = () => {
 
 
           <Route path="/" page={HomePage} name="home" />
-                <Route path="/pharmacy-report/{id:Int}" page={PharmacyReportPage} name="pharmacyReport" />
+          <Route path="/pharmacy-report/{id:Int}" page={PharmacyReportPage} name="pharmacyReport" />
 
+            <Route path="/view-sale-medicine/{id:Int}" page={ViewSaleMedicinePage} name="viewSaleMedicine" />
           <Set wrap={PharmacyReportLayout}>
-
           </Set>
-      <Route path="/view-sale-medicine/{id:Int}" page={ViewSaleMedicinePage} name="viewSaleMedicine" />
+
+            <Route path="/medicine-payment" page={MedicinePaymentPage} name="medicinePayment" />
+            <Set wrap={MedicinePaymentLayout}>
+            </Set>
+
+          <Set wrap={ScaffoldLayout} title="PaymentPurchaseMedicines" titleTo="paymentPurchaseMedicines" buttonLabel="" buttonTo="paymentPurchaseMedicines">
+            <Route path="/payment-purchase-medicines/new" page={PaymentPurchaseMedicineNewPaymentPurchaseMedicinePage} name="newPaymentPurchaseMedicine" />
+            <Route path="/payment-purchase-medicines/{id:Int}/edit" page={PaymentPurchaseMedicineEditPaymentPurchaseMedicinePage} name="editPaymentPurchaseMedicine" />
+            <Route path="/payment-purchase-medicines/{id:Int}" page={PaymentPurchaseMedicinePaymentPurchaseMedicinePage} name="paymentPurchaseMedicine" />
+            <Route path="/payment-purchase-medicines" page={PaymentPurchaseMedicinePaymentPurchaseMedicinesPage} name="paymentPurchaseMedicines" />
+          </Set>
 
           <Set wrap={ScaffoldLayout} title="SaleMedicines" titleTo="saleMedicines" buttonLabel="New SaleMedicine" buttonTo="newSaleMedicine">
-        <Route path="/sale-medicines/new" page={SaleMedicineNewSaleMedicinePage} name="newSaleMedicine" />
-        <Route path="/sale-medicines/{id:Int}/edit" page={SaleMedicineEditSaleMedicinePage} name="editSaleMedicine" />
-        <Route path="/sale-medicines/{id:Int}" page={SaleMedicineSaleMedicinePage} name="saleMedicine" />
-        <Route path="/sale-medicines" page={SaleMedicineSaleMedicinesPage} name="saleMedicines" />
-      </Set>
+            <Route path="/sale-medicines/new" page={SaleMedicineNewSaleMedicinePage} name="newSaleMedicine" />
+            <Route path="/sale-medicines/{id:Int}/edit" page={SaleMedicineEditSaleMedicinePage} name="editSaleMedicine" />
+            <Route path="/sale-medicines/{id:Int}" page={SaleMedicineSaleMedicinePage} name="saleMedicine" />
+            <Route path="/sale-medicines" page={SaleMedicineSaleMedicinesPage} name="saleMedicines" />
+          </Set>
           <Set wrap={ScaffoldLayout} title="Users" titleTo="users" buttonLabel="New User" buttonTo="newUser">
             <Route path="/users/new" page={UserNewUserPage} name="newUser" />
             <Route path="/users/{id:Int}/edit" page={UserEditUserPage} name="editUser" />

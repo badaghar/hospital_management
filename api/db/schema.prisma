@@ -86,19 +86,37 @@ model Product {
 }
 
 model PurchaseMedicine {
-  id            Int         @id @default(autoincrement())
-  invoiceNo     String
-  did           Distributer @relation(fields: [distributerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  distributerId Int
-  date          DateTime
-  medicine      Json
-  total         Float
-  discount      Float
-  sgst          Float
-  cgst          Float
-  grand_total   Float
-  created_at    DateTime    @default(now())
-  updated_at    DateTime    @updatedAt
+  id                      Int                       @id @default(autoincrement())
+  invoiceNo               String
+  did                     Distributer               @relation(fields: [distributerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  distributerId           Int
+  date                    DateTime
+  medicine                Json
+  total                   Float
+  discount                Float
+  sgst                    Float
+  cgst                    Float
+  grand_total             Float
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime                  @updatedAt
+  PaymentPurchaseMEdicine PaymentPurchaseMedicine[]
+
+  @@unique([invoiceNo])
+}
+
+model PaymentPurchaseMedicine {
+  id                 Int              @id @default(autoincrement())
+  purchaseMedicine   PurchaseMedicine @relation(fields: [purchaseMedicineId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  purchaseMedicineId Int
+  total              Float
+  balance            Float
+  paid               Float
+  method             String
+  remark             String
+  created_at         DateTime         @default(now())
+  updated_at         DateTime         @updatedAt
+
+  @@unique([purchaseMedicineId])
 }
 
 model Medicine {

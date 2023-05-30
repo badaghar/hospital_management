@@ -4,7 +4,8 @@ import { MetaTags } from '@redwoodjs/web'
 // import { toast } from '@redwoodjs/web/dist/toast'
 import { toast } from '@redwoodjs/web/toast'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
+import PharmacyPaymentCell from 'src/components/PharmacyReport/PharmacyPaymentCell/PharmacyPaymentCell'
 import PharmacyReportDistributerCell from 'src/components/PharmacyReport/PharmacyReportDistributerCell'
 import PharmacyReportHeaderCell from 'src/components/PharmacyReport/PharmacyReportHeaderCell'
 import PharmacyReportPurchaseCell from 'src/components/PharmacyReport/PharmacyReportPurchaseCell'
@@ -20,12 +21,13 @@ const formatDatetime = (value) => {
 
 
 const PharmacyReportPage = ({id}) => {
-  const [defaultstartDate, setdefaultStartDate] = useState()
+  const [defaultstartDate, setdefaultStartDate] = useState(new Date(2022, 1).toISOString().split('T')[0])
   const [today, setToday] = useState(new Date())
-  const [defaultendDate, setdefaultEndDate] = useState()
+  const [defaultendDate, setdefaultEndDate] = useState(new Date(today.getFullYear() + 1, 1).toISOString().split('T')[0])
   const [startDate,setStartDate] = useState()
   const [endDate,setEndDate] = useState()
   // console.log(text)
+  const [remove,setRemove] = useState(false)
   const [text,setText] = useState('')
   const [ComponentRender,SetComponentRender] = useState()
 
@@ -36,6 +38,7 @@ const PharmacyReportPage = ({id}) => {
     setdefaultStartDate(new Date(2022, 1).toISOString().split('T')[0])
     setdefaultEndDate(new Date(today.getFullYear() + 1, 1).toISOString().split('T')[0])
     setSearchId(0)
+
     if(id===1)
     {
       setText("Select Distributer Name")
@@ -48,6 +51,21 @@ const PharmacyReportPage = ({id}) => {
       setText("Sale Bill Report")
 
     }
+    else if(id==4)
+    {
+      setText("Select Payment Type")
+
+    }
+  },[id])
+  useLayoutEffect(()=>{
+    setRemove(false)
+    const timeoutId = setTimeout(() => {
+      setRemove(true)
+    }, 10);
+
+    // Cleanup the timeout when the component unmounts
+    return () => clearTimeout(timeoutId);
+
   },[id])
 
   const changeId = (value)=>{
@@ -73,7 +91,7 @@ const PharmacyReportPage = ({id}) => {
     }
     if(searchId==0 && id==4)
     {
-      toast.error("Select Manufacturer To get The Report")
+      toast.error("Select Payment Type To get The Report")
       return
     }
 
@@ -89,7 +107,7 @@ const PharmacyReportPage = ({id}) => {
       <div>
         <div className='p-10 text-white'>
           <div >
-            { id==1 ? <PharmacyReportHeaderCell changeId={changeId} text={text} id={id} /> : <div className='flex justify-center text-xl border-white border rounded-3xl p-3'>
+            { (id==1 || id==4) ? remove && <PharmacyReportHeaderCell changeId={changeId} text={text} id={id} /> : <div className='flex justify-center text-xl border-white border rounded-3xl p-3'>
                 {text}
               </div>}
           </div>
@@ -149,7 +167,7 @@ const PharmacyReportPage = ({id}) => {
         <div>
           {/* <ComponentRender /> */}
           {
-            ComponentRender==1 ? <PharmacyReportDistributerCell id={searchId} startDate={startDate} endDate={endDate} /> : ComponentRender==2 ? <PharmacyReportPurchaseCell startDate={startDate} endDate={endDate}  /> : ComponentRender==3 ?  <PharmacyReportSaleCell startDate={startDate} endDate={endDate}  /> : <></>
+            ComponentRender==1 ? <PharmacyReportDistributerCell id={searchId} startDate={startDate} endDate={endDate} /> : ComponentRender==2 ? <PharmacyReportPurchaseCell startDate={startDate} endDate={endDate}  /> : ComponentRender==3 ?  <PharmacyReportSaleCell startDate={startDate} endDate={endDate}  /> : ComponentRender==4 ? <PharmacyPaymentCell id={searchId} startDate={startDate} endDate={endDate} /> :   <></>
           }
 
         </div>

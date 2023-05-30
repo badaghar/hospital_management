@@ -1,16 +1,16 @@
 import { Form, Label } from "@redwoodjs/forms"
-import { useLocation } from "@redwoodjs/router"
 import Multiselect from "multiselect-react-dropdown"
 import { useEffect, useState } from "react"
-import { useLayoutEffect } from "react-js-dialog-box"
+
 
 export const QUERY = gql`
-  query FindPharmacyReportHeaderQuery {
-    distributers{
+  query FindPharmacyPaymentHeaderQuery {
+    paymentPurchaseMedicines{
       id
-      name
+      purchaseMedicine{
+        invoiceNo
+      }
     }
-
   }
 `
 
@@ -22,36 +22,24 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ distributers,changeId,text,id }) => {
+export const Success = ({ paymentPurchaseMedicines,changeId }) => {
   const [options,setOptions] = useState([])
-  const location = useLocation();
-  useEffect(() => {
-    // Cleanup the timeout when the component unmounts
 
-    if(id==1)
-    {
-      setOptions(distributers)
-    }
-    else if(id==4)
-    {
-      setOptions([{id:1,name:'Complete Payments'},{id:2,name:'Pending Payments'}])
-    }
-    else
-    {
-        setOptions([])
-    }
-    // return () => setOptions([]);
-  },[id])
   // const [data, setDatas] = useState(0)
+
+  useState(()=>{
+    const convertedArray = paymentPurchaseMedicines.map(({ id, purchaseMedicine }) => ({
+      id,
+      invoiceNo: purchaseMedicine.invoiceNo,
+    }));
+    setOptions(convertedArray)
+  },[])
 
   const modifyData = (name) => {
     if (name.length === 0) {
       changeId(0)
       return
     }
-    // console.log(name)
-    // Distributers = name[0].id
-    // setDatas(name[0].id)
     changeId(name[0].id)
   }
   return (
@@ -68,12 +56,11 @@ export const Success = ({ distributers,changeId,text,id }) => {
               onSelect={(event) => modifyData(event)} // Function will trigger on select event
               onRemove={(event) => modifyData(event)} // Function will trigger on remove event
               selectionLimit={1}
-              displayValue="name" // Property name to display in the dropdown options
-              placeholder={text}
+              displayValue="invoiceNo" // Property name to display in the dropdown options
+              placeholder={"Enter The Invoice No"}
               showArrow
-              // selectedValues={[]}
-
-              // closeOnSelectSingle={true}
+              // closeOnSelect={true}
+              closeOnSelect={true}
 
             />
 
