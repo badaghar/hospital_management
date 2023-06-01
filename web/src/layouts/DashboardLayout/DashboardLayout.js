@@ -7,26 +7,56 @@ import { Toaster } from "@redwoodjs/web/toast";
 
 const DashboardLayout = ({ children }) => {
   const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
-  const [pharmacyisOpen, setpharmacyIsOpen] = useState(false);
-  const [pharmacyReportisOpen, setpharmacyReportIsOpen] = useState(false);
-  const [pharmacyPaymentOpen,setPharmacyPayment] = useState(false)
+  // const [pharmacyisOpen, setpharmacyIsOpen] = useState(false);
+  // const [pharmacyReportisOpen, setpharmacyReportIsOpen] = useState(false);
+  // const [pharmacyPaymentOpen,setPharmacyPayment] = useState(false)
+  // const [userOpen,setUserOpen] = useState(false)
 
-  const togglePharmacy = () => {
-    setpharmacyIsOpen(!pharmacyisOpen);
-    setpharmacyReportIsOpen(false)
-    setPharmacyPayment(false)
-  };
-  const togglePharmacyReport = () => {
-    setpharmacyReportIsOpen(!pharmacyReportisOpen);
-    setpharmacyIsOpen(false)
-    setPharmacyPayment(false)
-  };
-  const togglePharmacyPayment = () =>{
-    setPharmacyPayment(!pharmacyPaymentOpen)
-    setpharmacyIsOpen(false)
-    setpharmacyReportIsOpen(false)
+  const [dropDownOpen,setDropDownOpen] = useState('')
+  const [prevtext,setPrevText] = useState('')
+
+
+  const toggleDropDown = (text) => {
+    if(prevtext==text)
+    {
+      setDropDownOpen('')
+      setPrevText('')
+      return
+    }
+    setDropDownOpen(text)
+    setPrevText(text)
+
+
 
   }
+
+
+  // const togglePharmacy = () => {
+  //   setpharmacyIsOpen(!pharmacyisOpen);
+  //   setpharmacyReportIsOpen(false)
+  //   setPharmacyPayment(false)
+  //   setUserOpen(false)
+  // };
+  // const togglePharmacyReport = () => {
+  //   setpharmacyReportIsOpen(!pharmacyReportisOpen);
+  //   setpharmacyIsOpen(false)
+  //   setPharmacyPayment(false)
+  //   setUserOpen(false)
+  // };
+  // const togglePharmacyPayment = () =>{
+  //   setPharmacyPayment(!pharmacyPaymentOpen)
+  //   setpharmacyIsOpen(false)
+  //   setpharmacyReportIsOpen(false)
+  //   setUserOpen(false)
+
+  // }
+  // const toggleUsers = () =>{
+  //   setPharmacyPayment(false)
+  //   setpharmacyIsOpen(false)
+  //   setpharmacyReportIsOpen(false)
+  //   setUserOpen(!userOpen)
+
+  // }
 
   return (
     <>
@@ -83,7 +113,7 @@ const DashboardLayout = ({ children }) => {
                 <li className="relative">
                   <button
                     className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
-                    onClick={togglePharmacy}
+                    onClick={toggleDropDown.bind(this,'pharmacy')}
                   >
                     <span className="inline-flex justify-center items-center ml-4">
                       <MdLocalPharmacy />
@@ -92,7 +122,7 @@ const DashboardLayout = ({ children }) => {
                     <span className="ml-2 text-sm tracking-wide truncate">Pharmacy</span>
 
                   </button>
-                  {pharmacyisOpen && (
+                  {dropDownOpen=='pharmacy' && (
                     <ul className="absolute left-0 z-10 py-2 mt-2 bg-white dark:bg-gray-800 rounded-md shadow-lg">
                       <li>
                         <Link
@@ -302,7 +332,7 @@ const DashboardLayout = ({ children }) => {
                 <li className="relative">
                   <button
                     className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
-                    onClick={togglePharmacyPayment}
+                    onClick={toggleDropDown.bind(this,'pharmacyPayment')}
                   >
                     <span className="inline-flex justify-center items-center ml-4">
                       <MdPayments />
@@ -311,7 +341,7 @@ const DashboardLayout = ({ children }) => {
                     <span className="ml-2 text-sm tracking-wide truncate">Pharmacy Payment</span>
 
                   </button>
-                  {pharmacyPaymentOpen && (
+                  {dropDownOpen=='pharmacyPayment' && (
                     <ul className="absolute left-0 z-10 py-2 mt-2 bg-white dark:bg-gray-800 rounded-md shadow-lg">
                       <li>
                         <Link
@@ -351,7 +381,7 @@ const DashboardLayout = ({ children }) => {
                 <li className="relative">
                   <button
                     className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
-                    onClick={togglePharmacyReport}
+                    onClick={toggleDropDown.bind(this,'pharmacyReport')}
                   >
                     <span className="inline-flex justify-center items-center ml-4">
                       <TbReportMedical />
@@ -360,7 +390,7 @@ const DashboardLayout = ({ children }) => {
                     <span className="ml-2 text-sm tracking-wide truncate">Pharmacy Report</span>
 
                   </button>
-                  {pharmacyReportisOpen && (
+                  {dropDownOpen=='pharmacyReport' && (
                     <ul className="absolute left-0 z-10 py-2 mt-2 bg-white dark:bg-gray-800 rounded-md shadow-lg">
                       <li>
                         <Link
@@ -466,6 +496,92 @@ const DashboardLayout = ({ children }) => {
 
 
 
+                    </ul>
+                  )}
+                </li>
+
+
+                <li className="relative">
+                  <button
+                    className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+                    onClick={toggleDropDown.bind(this,'doctorFee')}
+                  >
+                    <span className="inline-flex justify-center items-center ml-4">
+                      <MdPayments />
+
+                    </span>
+                    <span className="ml-2 text-sm tracking-wide truncate">Doctor Fee</span>
+
+                  </button>
+                  {dropDownOpen=='doctorFee' && (
+                    <ul className="absolute left-0 z-10 py-2 mt-2 bg-white dark:bg-gray-800 rounded-md shadow-lg">
+                      <li>
+                        <Link
+                          to={routes.doctorFees()}
+                          className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+                        >
+                          <span className="inline-flex justify-center items-center ml-4">
+                            <svg
+                              className="w-5 h-5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                              />
+                            </svg>
+                          </span>
+                          <span className="ml-2 text-sm tracking-wide truncate">Add Doctor Fee</span>
+
+                        </Link>
+                      </li>
+                    </ul>
+                  )}
+                </li>
+                <li className="relative">
+                  <button
+                    className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+                    onClick={toggleDropDown.bind(this,'user')}
+                  >
+                    <span className="inline-flex justify-center items-center ml-4">
+                      <MdPayments />
+
+                    </span>
+                    <span className="ml-2 text-sm tracking-wide truncate">Users</span>
+
+                  </button>
+                  {dropDownOpen=='user' && (
+                    <ul className="absolute left-0 z-10 py-2 mt-2 bg-white dark:bg-gray-800 rounded-md shadow-lg">
+                      <li>
+                        <Link
+                          to={routes.signup()}
+                          className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+                        >
+                          <span className="inline-flex justify-center items-center ml-4">
+                            <svg
+                              className="w-5 h-5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                              />
+                            </svg>
+                          </span>
+                          <span className="ml-2 text-sm tracking-wide truncate">Add Users</span>
+
+                        </Link>
+                      </li>
                     </ul>
                   )}
                 </li>

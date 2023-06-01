@@ -10,13 +10,22 @@ export const patient = ({ id }) => {
   })
 }
 
-export const createPatient = ({ input }) => {
+export const createPatient = async ({ input }) => {
+  const lastRow = await db.patient.findFirst({
+    orderBy: {
+      id: 'desc'
+    }
+  });
+
+  const no = lastRow ? parseInt(lastRow.id) + 1 : 1;
+  input['name'] = input['name'] + ' ( ' + no + ' ) '
   return db.patient.create({
     data: input,
   })
 }
 
 export const updatePatient = ({ id, input }) => {
+  input['name'] = input['name'] + ' ( ' + id + ' ) '
   return db.patient.update({
     data: input,
     where: { id },

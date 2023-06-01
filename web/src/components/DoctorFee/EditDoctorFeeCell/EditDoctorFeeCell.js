@@ -15,6 +15,12 @@ export const QUERY = gql`
       created_at
       updated_at
     }
+    users{
+      id
+      name
+      email
+      roles
+    }
   }
 `
 const UPDATE_DOCTOR_FEE_MUTATION = gql`
@@ -36,7 +42,7 @@ export const Failure = ({ error }) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ doctorFee }) => {
+export const Success = ({ doctorFee,users }) => {
   const [updateDoctorFee, { loading, error }] = useMutation(
     UPDATE_DOCTOR_FEE_MUTATION,
     {
@@ -63,6 +69,7 @@ export const Success = ({ doctorFee }) => {
       </header>
       <div className="rw-segment-main">
         <DoctorFeeForm
+        users={users}
           doctorFee={doctorFee}
           onSave={onSave}
           error={error}

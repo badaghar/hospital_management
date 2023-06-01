@@ -19,11 +19,11 @@ import { useAuth } from 'src/auth'
 const SignupPage = () => {
   const { isAuthenticated, signUp } = useAuth()
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate(routes.home())
-    }
-  }, [isAuthenticated])
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate(routes.home())
+  //   }
+  // }, [isAuthenticated])
 
   // focus on username box on page load
   const usernameRef = useRef(null)
@@ -33,9 +33,10 @@ const SignupPage = () => {
 
   const onSubmit = async (data) => {
     const response = await signUp({
-      username: data.username,
+      username: data.email,
       password: data.password,
       roles: data.roles,
+      name: data.username
     })
 
     if (response.message) {
@@ -45,6 +46,7 @@ const SignupPage = () => {
     } else {
       // user is signed in automatically
       toast.success('Welcome!')
+      navigate(routes.home())
     }
   }
 
@@ -84,6 +86,27 @@ const SignupPage = () => {
                   />
 
                   <FieldError name="username" className="rw-field-error" />
+                  <Label
+                    name="email"
+                    className="rw-label"
+                    errorClassName="rw-label rw-label-error"
+                  >
+                    Email
+                  </Label>
+                  <TextField
+                    name="email"
+                    className="rw-input"
+                    errorClassName="rw-input rw-input-error"
+
+                    validation={{
+                      required: {
+                        value: true,
+                        message: 'email is required',
+                      },
+                    }}
+                  />
+
+                  <FieldError name="username" className="rw-field-error" />
 
                   <Label
                     name="password"
@@ -106,6 +129,10 @@ const SignupPage = () => {
                   />
 
                   <FieldError name="password" className="rw-field-error" />
+
+                  <div className='text-black'>
+
+
                   <Label
                     name="roles"
                     className="rw-label"
@@ -129,11 +156,14 @@ const SignupPage = () => {
                   >
                     <option>Please select an option</option>
                     <option value={'admin'}>Admin</option>
-                    <option value={'moderator'}>Manager</option>
+                    <option value={'reciptionist'}>Reciptionist</option>
+                    <option value={'pharmacy'}>Pharmacy</option>
+                    <option value={'doctor'}>Doctor</option>
 
                   </SelectField>
 
                   <FieldError name="roles" className="rw-field-error" />
+                  </div>
 
                   <div className="rw-button-group">
                     <Submit className="rw-button rw-button-blue">
@@ -144,12 +174,12 @@ const SignupPage = () => {
               </div>
             </div>
           </div>
-          <div className="rw-login-link">
+          {/* <div className="rw-login-link">
             <span>Already have an account?</span>{' '}
             <Link to={routes.login()} className="rw-link">
               Log in!
             </Link>
-          </div>
+          </div> */}
         </div>
       </main>
     </>

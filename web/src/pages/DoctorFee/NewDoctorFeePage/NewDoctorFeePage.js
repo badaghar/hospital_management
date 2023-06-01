@@ -1,7 +1,8 @@
 import NewDoctorFee from 'src/components/DoctorFee/NewDoctorFee'
+import NewDoctorFeeCell from 'src/components/DoctorFee/NewDoctorFeeCell'
 
 const NewDoctorFeePage = () => {
-  return <NewDoctorFee />
+  return <NewDoctorFeeCell />
 }
 
 export default NewDoctorFeePage

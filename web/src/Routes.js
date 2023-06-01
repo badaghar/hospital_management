@@ -34,25 +34,25 @@ const Routes = () => {
       <Route path="/download-sale-medicine/{id:Int}" page={DownloadsDownloadSaleMedicinePage} name="downloadSaleMedicine" />
 
       <Route path="/login" page={LoginPage} name="login" />
-      <Route path="/signup" page={SignupPage} name="signup" />
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
       <Private unauthenticated='login' >
 
         <Set wrap={DashboardLayout}>
 
+          <Route path="/signup" page={SignupPage} name="signup" />
 
 
           <Route path="/" page={HomePage} name="home" />
           <Route path="/pharmacy-report/{id:Int}" page={PharmacyReportPage} name="pharmacyReport" />
 
-            <Route path="/view-sale-medicine/{id:Int}" page={ViewSaleMedicinePage} name="viewSaleMedicine" />
+          <Route path="/view-sale-medicine/{id:Int}" page={ViewSaleMedicinePage} name="viewSaleMedicine" />
           <Set wrap={PharmacyReportLayout}>
           </Set>
 
-            <Route path="/medicine-payment" page={MedicinePaymentPage} name="medicinePayment" />
-            <Set wrap={MedicinePaymentLayout}>
-            </Set>
+          <Route path="/medicine-payment" page={MedicinePaymentPage} name="medicinePayment" />
+          <Set wrap={MedicinePaymentLayout}>
+          </Set>
 
           <Set wrap={ScaffoldLayout} title="PaymentPurchaseMedicines" titleTo="paymentPurchaseMedicines" buttonLabel="" buttonTo="paymentPurchaseMedicines">
             <Route path="/payment-purchase-medicines/new" page={PaymentPurchaseMedicineNewPaymentPurchaseMedicinePage} name="newPaymentPurchaseMedicine" />
