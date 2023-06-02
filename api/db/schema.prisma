@@ -12,29 +12,108 @@ generator client {
 // to create migrations for them and apply to your dev DB.
 
 model Patient {
-  id                Int            @id @default(autoincrement())
-  name              String
-  age               Int
-  phone_no          String?
-  gender            String?
-  address           String?
-  did               DoctorFee?     @relation(fields: [doctorFeeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  doctorFeeId       Int?
-  date_of_admission DateTime?
-  created_at        DateTime       @default(now())
-  updated_at        DateTime       @updatedAt
-  SaleMedicine      SaleMedicine[]
+  id           Int            @id @default(autoincrement())
+  name         String
+  age          Int
+  phone_no     String?
+  gender       String?
+  address      String?
+  created_at   DateTime       @default(now())
+  updated_at   DateTime       @updatedAt
+  Opd          Opd[]
+  Ipd          Ipd[]
+  SaleMedicine SaleMedicine[]
+}
+
+model Opd {
+  id                Int      @id @default(autoincrement())
+  consultant_doctor String
+  charges           Json
+  paymentMode       Float
+  amount            Float
+  patient           Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+  patientId         Int
+}
+
+model Ipd {
+  id                Int               @id @default(autoincrement())
+  patient           Patient           @relation(fields: [patientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  consultant_doctor String
+  date_of_admission DateTime
+  created_at        DateTime          @default(now())
+  updated_at        DateTime          @updatedAt
+  paid_amount       Float
+  Operation         Operation[]
+  IpdCharges        IpdCharges[]
+  IpdConsultation   IpdConsultation[]
+  IpdPayment        IpdPayment[]
+  patientId         Int
+}
+
+model Operation {
+  id                Int      @id @default(autoincrement())
+  operation_name    String
+  date              DateTime
+  consultant_doctor String
+  remark            String
+  result            String
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+  ipd               Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ipdId             Int
+}
+
+model IpdCharges {
+  id          Int      @id @default(autoincrement())
+  charge_type String
+  charge      Float
+  quantity    Int
+  total       Float
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  ipd         Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ipdId       Int
+}
+
+model IpdConsultation {
+  id                  Int      @id @default(autoincrement())
+  consultation_doctor String
+  consultation_type   String
+  amount              Float
+  ipd                 Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ipdId               Int
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+}
+
+model IpdPayment {
+  id           Int      @id @default(autoincrement())
+  amount       Float
+  payment_mode String
+  ipd          Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ipdId        Int
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+}
+
+model Charges {
+  id         Int      @id @default(autoincrement())
+  name       String
+  amount     Float
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model DoctorFee {
-  id         Int       @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   type       String
   amount     Float
-  did        User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  did        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId     Int
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  Patient    Patient[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model Distributer {

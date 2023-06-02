@@ -31,32 +31,6 @@ const DashboardLayout = ({ children }) => {
   }
 
 
-  // const togglePharmacy = () => {
-  //   setpharmacyIsOpen(!pharmacyisOpen);
-  //   setpharmacyReportIsOpen(false)
-  //   setPharmacyPayment(false)
-  //   setUserOpen(false)
-  // };
-  // const togglePharmacyReport = () => {
-  //   setpharmacyReportIsOpen(!pharmacyReportisOpen);
-  //   setpharmacyIsOpen(false)
-  //   setPharmacyPayment(false)
-  //   setUserOpen(false)
-  // };
-  // const togglePharmacyPayment = () =>{
-  //   setPharmacyPayment(!pharmacyPaymentOpen)
-  //   setpharmacyIsOpen(false)
-  //   setpharmacyReportIsOpen(false)
-  //   setUserOpen(false)
-
-  // }
-  // const toggleUsers = () =>{
-  //   setPharmacyPayment(false)
-  //   setpharmacyIsOpen(false)
-  //   setpharmacyReportIsOpen(false)
-  //   setUserOpen(!userOpen)
-
-  // }
 
   return (
     <>
