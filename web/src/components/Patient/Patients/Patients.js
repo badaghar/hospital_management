@@ -45,8 +45,6 @@ const PatientsList = ({ patients }) => {
             <th>Phone no</th>
             <th>Gender</th>
             <th>Address</th>
-            <th>Doctor fee id</th>
-            <th>Date of admission</th>
             <th>Created at</th>
             <th>Updated at</th>
             <th>&nbsp;</th>
@@ -61,8 +59,6 @@ const PatientsList = ({ patients }) => {
               <td>{truncate(patient.phone_no)}</td>
               <td>{truncate(patient.gender)}</td>
               <td>{truncate(patient.address)}</td>
-              <td>{truncate(patient.doctorFeeId)}</td>
-              <td>{timeTag(patient.date_of_admission)}</td>
               <td>{timeTag(patient.created_at)}</td>
               <td>{timeTag(patient.updated_at)}</td>
               <td>

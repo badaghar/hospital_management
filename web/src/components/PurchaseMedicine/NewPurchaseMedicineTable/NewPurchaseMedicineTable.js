@@ -287,6 +287,7 @@ const date = new Date(exp);
           name={'dis_' + props.value}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
+          value={dis}
           onChange={updateTotal}
           validation={{ required: true }}
         />

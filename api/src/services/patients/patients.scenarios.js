@@ -3,15 +3,15 @@ export const standard = defineScenario({
     one: {
       data: {
         name: 'String',
-        age: 1187663,
-        updated_at: '2023-05-28T17:03:57.642Z',
+        age: 7605802,
+        updated_at: '2023-06-02T13:12:48.293Z',
       },
     },
     two: {
       data: {
         name: 'String',
-        age: 2532357,
-        updated_at: '2023-05-28T17:03:57.642Z',
+        age: 4379482,
+        updated_at: '2023-06-02T13:12:48.293Z',
       },
     },
   },

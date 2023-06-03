@@ -14,8 +14,6 @@ export const QUERY = gql`
       phone_no
       gender
       address
-      doctorFeeId
-      date_of_admission
       created_at
       updated_at
     }
@@ -30,8 +28,6 @@ const UPDATE_PATIENT_MUTATION = gql`
       phone_no
       gender
       address
-      doctorFeeId
-      date_of_admission
       created_at
       updated_at
     }

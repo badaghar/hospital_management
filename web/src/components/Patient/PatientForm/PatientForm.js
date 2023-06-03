@@ -5,15 +5,8 @@ import {
   Label,
   TextField,
   NumberField,
-  DatetimeLocalField,
   Submit,
 } from '@redwoodjs/forms'
-
-const formatDatetime = (value) => {
-  if (value) {
-    return value.replace(/:\d{2}\.\d{3}\w/, '')
-  }
-}
 
 const PatientForm = (props) => {
   const onSubmit = (data) => {
@@ -116,40 +109,6 @@ const PatientForm = (props) => {
         />
 
         <FieldError name="address" className="rw-field-error" />
-
-        <Label
-          name="doctorFeeId"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Doctor fee id
-        </Label>
-
-        <NumberField
-          name="doctorFeeId"
-          defaultValue={props.patient?.doctorFeeId}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-        />
-
-        <FieldError name="doctorFeeId" className="rw-field-error" />
-
-        <Label
-          name="date_of_admission"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Date of admission
-        </Label>
-
-        <DatetimeLocalField
-          name="date_of_admission"
-          defaultValue={formatDatetime(props.patient?.date_of_admission)}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-        />
-
-        <FieldError name="date_of_admission" className="rw-field-error" />
 
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">

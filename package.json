@@ -30,6 +30,7 @@
     "puppeteer": "^20.4.0",
     "react-icons": "^4.9.0",
     "react-js-dialog-box": "^1.1.6",
+    "react-select": "^5.7.3",
     "react-spinners": "^0.13.8",
     "react-table-6": "^6.11.0",
     "xlsx": "^0.18.5"

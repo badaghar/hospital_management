@@ -64,14 +64,6 @@ const Patient = ({ patient }) => {
               <td>{patient.address}</td>
             </tr>
             <tr>
-              <th>Doctor fee id</th>
-              <td>{patient.doctorFeeId}</td>
-            </tr>
-            <tr>
-              <th>Date of admission</th>
-              <td>{timeTag(patient.date_of_admission)}</td>
-            </tr>
-            <tr>
               <th>Created at</th>
               <td>{timeTag(patient.created_at)}</td>
             </tr>

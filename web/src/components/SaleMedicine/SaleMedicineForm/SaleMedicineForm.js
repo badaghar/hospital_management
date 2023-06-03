@@ -310,23 +310,6 @@ const SaleMedicineForm = (props) => {
 
 
         <div className='flex items-center mt-3  gap-x-4'>
-          {/* <Label
-            name="billNo"
-            className="rw-label mt-0"
-            errorClassName="rw-label rw-label-error"
-          >
-            Bill no
-          </Label>
-          <div className="flex">
-            <TextField
-              name="billNo"
-              defaultValue={props.saleMedicine?.billNo}
-              className="rw-input mt-0"
-              errorClassName="rw-input rw-input-error"
-              validation={{ required: true }}
-            />
-          </div>
-          <FieldError name="billNo" className="rw-field-error" /> */}
           <Label
             name="date"
             className="rw-label mt-0"
@@ -358,15 +341,6 @@ const SaleMedicineForm = (props) => {
           </Label>
 
           <div className=" flex-1">
-
-
-            {/* <NumberField
-          name="patientId"
-          defaultValue={props.saleMedicine?.patientId}
-          className="rw-input mt-0"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-          /> */}
             <Multiselect
               className="rw-input mt-0 selectname"
               name={"patientId"}
@@ -380,12 +354,12 @@ const SaleMedicineForm = (props) => {
 
               displayValue={'name'}// Property name to display in the dropdown options
             />
+          <FieldError name="patientId" className="rw-field-error" />
 
           </div>
 
 
 
-          <FieldError name="patientId" className="rw-field-error" />
 
           <div>
             <div onClick={openModal} className="rw-button rw-button-green">

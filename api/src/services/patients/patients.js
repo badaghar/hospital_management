@@ -39,8 +39,11 @@ export const deletePatient = ({ id }) => {
 }
 
 export const Patient = {
-  did: (_obj, { root }) => {
-    return db.patient.findUnique({ where: { id: root?.id } }).did()
+  Opd: (_obj, { root }) => {
+    return db.patient.findUnique({ where: { id: root?.id } }).Opd()
+  },
+  Ipd: (_obj, { root }) => {
+    return db.patient.findUnique({ where: { id: root?.id } }).Ipd()
   },
   SaleMedicine: (_obj, { root }) => {
     return db.patient.findUnique({ where: { id: root?.id } }).SaleMedicine()

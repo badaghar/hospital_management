@@ -6,11 +6,10 @@ export const schema = gql`
     phone_no: String
     gender: String
     address: String
-    did: DoctorFee
-    doctorFeeId: Int
-    date_of_admission: DateTime
     created_at: DateTime!
     updated_at: DateTime!
+    Opd: [Opd]!
+    Ipd: [Ipd]!
     SaleMedicine: [SaleMedicine]!
   }
 
@@ -25,8 +24,6 @@ export const schema = gql`
     phone_no: String
     gender: String
     address: String
-    doctorFeeId: Int
-    date_of_admission: DateTime
   }
 
   input UpdatePatientInput {
@@ -35,8 +32,6 @@ export const schema = gql`
     phone_no: String
     gender: String
     address: String
-    doctorFeeId: Int
-    date_of_admission: DateTime
   }
 
   type Mutation {
