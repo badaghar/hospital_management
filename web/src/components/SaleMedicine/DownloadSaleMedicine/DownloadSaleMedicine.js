@@ -31,18 +31,31 @@ const DownloadSaleMedicine = ({ saleMedicine,download }) => {
     return getPDF() // API call
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/pdf' })
-        const link = document.createElement('a')
-        link.href = window.URL.createObjectURL(blob)
-        link.download =
-          saleMedicine.patient.name + saleMedicine.id +
-          '.pdf'
-        link.click()
-        setDownloadstart(false)
+        // const link = document.createElement('a')
+        // link.href = window.URL.createObjectURL(blob)
+        // link.download =
+        //   saleMedicine.patient.name + saleMedicine.id +
+        //   '.pdf'
+        // link.click()
+        var blobURL = URL.createObjectURL(blob)
+        var iframe =  document.createElement('iframe')
+        document.body.appendChild(iframe)
+        iframe.style.display = 'none'
+
+        iframe.src = blobURL
+     iframe.onload = function() {
+      setTimeout(function() {
+        iframe.focus()
+        iframe.contentWindow.print()
+      }, 1)
+    }
+       setDownloadstart(false)
         toast.success('Download Complete')
       })
       .catch((err) => {
-        setDownloadstart(false)
+      setDownloadstart(false)
         toast.error('something wrong happened try again')
+        console.log(err)
       })
   }
   return (

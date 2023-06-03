@@ -22,9 +22,13 @@ const NewPurchaseMedicineTable = (props) => {
   useEffect(()=>{
     const tamt = (paid_qty)*rate
     set_total_amount(tamt)
-    const tnetamt = ((parseFloat(cgst)+parseFloat(sgst))*tamt/100.0) + tamt
-    const tnetamtDisc = tnetamt - dis*tnetamt/100.0
-    set_total_net_amount(tnetamtDisc)
+    const tnetamtDisc = tamt - dis*tamt/100.0
+    const tnetamt = ((parseFloat(cgst)+parseFloat(sgst))*tnetamtDisc/100.0) + tnetamtDisc
+    // const tnetamt = ((parseFloat(cgst)+parseFloat(sgst))*tamt/100.0) + tamt
+    // const tnetamt = ((parseFloat(cgst)+parseFloat(sgst))*tamt/100.0) + tamt
+    // const tnetamtDisc = tnetamt - dis*tnetamt/100.0
+    // set_total_net_amount(tnetamtDisc)
+    set_total_net_amount(tnetamt)
     props.set_total_amount_list((ml)=>{
       const updatedList = [...ml];
       updatedList[props.value] = tamt;
@@ -33,19 +37,19 @@ const NewPurchaseMedicineTable = (props) => {
     })
     props.set_total_dis_amount_list((ml)=>{
       const updatedList = [...ml];
-      updatedList[props.value] = dis*tnetamt/100.0;
+      updatedList[props.value] = dis*tamt/100.0;
 
       return updatedList;
     })
     props.set_total_sgst_amount_list((ml)=>{
       const updatedList = [...ml];
-      updatedList[props.value] = ((parseFloat(sgst))*tamt/100.0);
+      updatedList[props.value] = parseFloat(( (parseFloat(sgst))*tnetamtDisc/100.0).toFixed(2));
 
       return updatedList;
     })
     props.set_total_cgst_amount_list((ml)=>{
       const updatedList = [...ml];
-      updatedList[props.value] = ((parseFloat(cgst))*tamt/100.0);
+      updatedList[props.value] = parseFloat(((parseFloat(cgst))*tnetamtDisc/100.0).toFixed(2));
 
       return updatedList;
     })
@@ -206,6 +210,7 @@ const date = new Date(exp);
           errorClassName="rw-input rw-input-error"
           onChange={updateTotal}
           validation={{ required: true }}
+
         />
 
         <FieldError
@@ -233,6 +238,7 @@ const date = new Date(exp);
           className="rw-input"
           errorClassName="rw-input rw-input-error"
           onChange={updateTotal}
+          value={free_qty}
           validation={{ required: true }}
         />
 

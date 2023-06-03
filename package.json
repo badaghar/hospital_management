@@ -24,7 +24,9 @@
   },
   "packageManager": "yarn@3.5.1",
   "dependencies": {
+    "@redwoodjs/web": "^5.2.4",
     "axios": "^1.4.0",
+    "graphql": "^16.6.0",
     "multiselect-react-dropdown": "^2.0.25",
     "number-to-words": "^1.2.4",
     "puppeteer": "^20.4.0",

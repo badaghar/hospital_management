@@ -34,7 +34,7 @@ export const schema = gql`
   type Query {
     purchaseMedicines: [PurchaseMedicine!]! @requireAuth
     purchaseMedicine(id: Int!): PurchaseMedicine @requireAuth
-    checkInvoiceNumber(invoiceNo:String!): PurchaseMedicine @requireAuth
+    checkInvoiceNumber(invoiceNo:String!): [PurchaseMedicine]! @requireAuth
     # pharmacy Report
     distributersReport(id:Int!,startDate:String!,endDate:String!): DistributerReportResponse! @requireAuth
     purchaseReport(startDate:String!,endDate:String!): DistributerReportResponse! @requireAuth

@@ -7,6 +7,7 @@ import { QUERY } from 'src/components/SaleMedicine/SaleMedicinesCell'
 import SearchTable from 'src/components/SearchTable/SearchTable'
 import { jsonTruncate, timeTag, truncate } from 'src/lib/formatters'
 
+
 const DELETE_SALE_MEDICINE_MUTATION = gql`
   mutation DeleteSaleMedicineMutation($id: Int!) {
     deleteSaleMedicine(id: $id) {

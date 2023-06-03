@@ -47,22 +47,22 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
             >
               <section
                 className="border-black border"
-                style={{ width: '19.6cm', height: '14.85cm' }}
+                style={{ width: '19.6cm', height: '13.45cm' }}
               >
                 <section
                   id="firstLayer"
                   className="border-b border-black"
-                  style={{ width: '19.6cm', height: '3.5cm' }}
+                  style={{ width: '19.6cm', height: '3.1cm' }}
                 >
                   <div style={{padding:'0cm 0.1cm'}}>
                     <img src="/sri.jpg" alt="" srcset="" />
                   </div>
-                  <div className="flex font-bold justify-between px-6">
+                  <div className="flex font-bold text-xs justify-between px-6">
                     <div>
                       Bill No : {saleMedicine.billNo}
                     </div>
                     <div>
-                      Date : {saleMedicine.date.split('T00:00:00.000Z')[0]}
+                      Date : {saleMedicine.date.split('T00:00:00.000Z')[0].split('-')[2]}-{saleMedicine.date.split('T00:00:00.000Z')[0].split('-')[1]}-{saleMedicine.date.split('T00:00:00.000Z')[0].split('-')[0]}
                     </div>
 
                   </div>
@@ -70,15 +70,15 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
                 <section
                   id="secondLayer"
                   className="border-b border-black"
-                  style={{ width: '19.6cm', height: '0.9cm' ,padding:'0.1cm 0cm' }}
+                  style={{ width: '19.6cm', height: '0.65cm' ,padding:'0cm 0cm' }}
                 >
 
                   <div className="flex f justify-between px-6">
                     <div className="space-x-4">
-                      <span className="font-bold">Name</span> <span>{saleMedicine.patient.name} ({saleMedicine.patient.age})</span>
+                      <span className="font-bold text-xs ">Name</span> <span className="text-xs">{saleMedicine.patient.name} ({saleMedicine.patient.age})</span>
                     </div>
                     <div className="space-x-4">
-                    <span className="font-bold">Phone</span> <span>{saleMedicine.patient.phone_no}</span>
+                    <span className="font-bold text-xs">Phone</span> <span className="text-xs">{saleMedicine.patient.phone_no}</span>
                     </div>
 
                   </div>
@@ -86,10 +86,10 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
                 <section
                   id="thirdLayer"
                   className="border-b border-black"
-                  style={{ width: '19.6cm', height: '7cm' ,padding:'0.1cm 0cm' }}
+                  style={{ width: '19.6cm', height: '7.52cm' ,padding:'0.1cm 0cm' }}
                 >
 
-                  <div className="grid grid-cols-8  font-bold">
+                  <div className="grid grid-cols-8  font-bold border-b  text-xs border-black">
                     <span className="col-span-2">Medicine Name</span>
                     <span>Batch No</span>
                     <span>Exp Date</span>
@@ -98,7 +98,7 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
                     <span>CGST/SGST</span>
                     <span>Amount (₹)</span>
                   </div>
-                  <div className="text-sm grid grid-cols-8 ">
+                  <div className="text-xs grid grid-cols-8 ">
                     {
                       chunks[item].map((med)=>{
                         return(
@@ -106,10 +106,10 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
                           <span className="col-span-2">{med['medicine Name']}</span>
                           <span>{med['batch No']}</span>
                           <span>{formatedDate}</span>
-                          <span>{med['mrp']}</span>
+                          <span>{med['mrp']}{  Number.isInteger(med['mrp']) && <>.00</>}</span>
                           <span>{med['quantity']}</span>
                           <span>{med['cgst/sgst']}</span>
-                          <span>{med['amount']}</span>
+                          <span>{med['amount']}{  Number.isInteger(med['amount']) && <>.00</>}</span>
                           </>
                         )
 
@@ -135,17 +135,16 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
                       <div className="col-span-2 p-5">
                           {/* Rs. {converter.toWords(saleMedicine.grand_total)} Only */}
                       </div>
-                      <div className=" absolute bottom-1 right-4 ">
+                      <div className=" absolute bottom-1 right-4 text-sm">
                         Authorised Signatory
                       </div>
                     </div>
-                    <div className="border-l  border-black text-sm pl-3 grid grid-cols-2">
-                    <span className="font-bold">SUB TOTAL</span> <span>{saleMedicine.total}</span>
-                    <span className="font-bold"> SGST</span> <span>{saleMedicine.sgst}</span>
-                    <span className="font-bold"> CGST</span> <span>{saleMedicine.cgst}</span>
-                    <span className="font-bold "> Discount</span> <span>{saleMedicine.discount}</span>
-                    <span className="h-1 bg-black col-span-2 "></span>
-                    <span className="font-bold">GRAND TOTAL</span> <span>{saleMedicine.grand_total}</span>
+                    <div className="border-l  border-black grid grid-cols-2 text-xs ">
+                    <span className="font-bold pl-1">SUB TOTAL</span> <span className="border-l  border-black  pl-1">{saleMedicine.total}{  Number.isInteger(saleMedicine.total) && <>.00</>}</span>
+                    <span className="font-bold pl-1"> SGST</span> <span className="border-l  border-black  pl-1">{saleMedicine.sgst}</span>
+                    <span className="font-bold pl-1"> CGST</span> <span className="border-l  border-black  pl-1">{saleMedicine.cgst}</span>
+                    <span className="font-bold pl-1"> Discount</span> <span className="border-l  border-black  pl-1">{saleMedicine.discount}{  Number.isInteger(saleMedicine.discount) && <>.00</>}</span>
+                    <span className="font-bold pl-1 border-t border-black">GRAND TOTAL</span> <span  className="font-bold border-t border-black border-l  pl-1">{saleMedicine.grand_total}{  Number.isInteger(saleMedicine.grand_total) && <>.00</>}</span>
                     </div>
 
                   </div>

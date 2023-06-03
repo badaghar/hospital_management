@@ -19,11 +19,7 @@ export const QUERY = gql`
         name
         phone_no
         age
-        did{
-          did{
-            name
-          }
-        }
+
       }
     }
   }

@@ -13,6 +13,19 @@ import {
 import Multiselect from 'multiselect-react-dropdown'
 import NewPurchaseMedicineTable from '../NewPurchaseMedicineTable/NewPurchaseMedicineTable'
 import { useEffect, useState } from 'react'
+// import { db } from 'src/lib/db'
+import { toast } from '@redwoodjs/web/dist/toast'
+// import
+// import { useQuery } from '@redwoodjs/web'
+// import { gql } from 'graphql-tag'
+
+// const GET_INVOICE_BILL = gql`
+//   query checkInvoiceNumber($invoiceNo: String!) {
+//     checkInvoiceNumber(invoiceNo: $invoiceNo) {
+//       id
+//     }
+//   }
+// `
 
 
 const formatDatetime = (value) => {
@@ -41,6 +54,9 @@ const PurchaseMedicineForm = (props) => {
   const [grand_total, set_grand_total] = useState(0)
 
   const [Distributers, setDistributers] = useState(0)
+
+
+
 
   const modifiyDistributer = (name) => {
     if (name.length === 0) {
@@ -142,6 +158,24 @@ const PurchaseMedicineForm = (props) => {
     />)
   }
 
+  // const { data, error, loading } = useQuery(GET_INVOICE_BILL, {
+  //   variables: { invoiceNo:  },
+  // })
+
+  const chequeInvoiceNo = async (val) =>{
+    console.log(val.target.value)
+    // const { data, error, loading } = useQuery(GET_INVOICE_BILL, {
+    //   variables: { invoiceNo: val.target.value },
+    // })
+    // const data = await getBill(val.target.value)
+    // if(data.length)
+    // {
+    //   toast.error("Purchase Bill Already")
+
+    // }
+
+  }
+
   return (
     <div className="rw-form-wrapper text-xs">
       <Form onSubmit={onSubmit} error={props.error}>
@@ -167,6 +201,7 @@ const PurchaseMedicineForm = (props) => {
               className="rw-input mt-0"
               errorClassName="rw-input mt-0 rw-input-error"
               validation={{ required: true }}
+              onBlur={chequeInvoiceNo}
             />
           </div>
           <FieldError name="invoiceNo" className="rw-field-error" />
