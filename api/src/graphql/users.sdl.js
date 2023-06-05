@@ -26,8 +26,8 @@ export const schema = gql`
     resetToken: String
     resetTokenExpiresAt: DateTime
     roles: String!
-    created_at: DateTime!
-    updated_at: DateTime!
+    created_at: DateTime
+    updated_at: DateTime
   }
 
   input UpdateUserInput {

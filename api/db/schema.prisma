@@ -50,6 +50,7 @@ model Ipd {
   IpdConsultation   IpdConsultation[]
   IpdPayment        IpdPayment[]
   patientId         Int
+  Bed               Bed[]
 }
 
 model Operation {
@@ -98,12 +99,38 @@ model IpdPayment {
   updated_at   DateTime @updatedAt
 }
 
+model Floor {
+  id         Int      @id @default(autoincrement())
+  floor_name String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  Bed        Bed[]
+
+  @@unique([floor_name])
+}
+
+model Bed {
+  id         Int      @id @default(autoincrement())
+  bed_name   String
+  floor      Floor    @relation(fields: [floorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  occupied   Boolean
+  ipd        Ipd?     @relation(fields: [ipdId], references: [id], onUpdate: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  floorId    Int
+  ipdId      Int?
+
+  @@unique([floorId, bed_name])
+}
+
 model Charges {
   id         Int      @id @default(autoincrement())
   name       String
   amount     Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  @@unique([name])
 }
 
 model DoctorFee {
@@ -125,6 +152,8 @@ model Distributer {
   created_at        DateTime           @default(now())
   updated_at        DateTime           @updatedAt
   purchase_medicine PurchaseMedicine[]
+
+  @@unique([name])
 }
 
 model Manufacturer {
@@ -133,6 +162,8 @@ model Manufacturer {
   Product    Product[]
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
+
+  @@unique([name])
 }
 
 model Composition {
@@ -141,6 +172,8 @@ model Composition {
   created_at           DateTime               @default(now())
   updated_at           DateTime               @updatedAt
   ProductToComposition ProductToComposition[]
+
+  @@unique([name])
 }
 
 model ProductToComposition {
@@ -229,6 +262,7 @@ model SaleMedicine {
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   patientId   Int
+  doctor_name String
 }
 
 model User {

@@ -10,10 +10,48 @@ export const ipd = ({ id }) => {
   })
 }
 
-export const createIpd = ({ input }) => {
-  return db.ipd.create({
-    data: input,
+export const createIpd = async ({ input }) => {
+
+  let {extra_data,...data} = input
+
+  let ipd =  await db.ipd.create({
+    data: data,
   })
+
+  let {DoctorCharges,OtherCharges,IpdPayment,bed} = extra_data
+  await db.bed.update({
+    where: {
+      id: bed
+    },
+    data :{
+      occupied: true,
+      ipdId:ipd.id
+    }
+  })
+
+  IpdPayment['ipdId'] = ipd.id
+  await db.ipdPayment.create({
+    data : IpdPayment
+  })
+
+  let otherChargesArray = OtherCharges.map((item)=>{
+    return {...item,ipdId:ipd.id}
+  })
+  let doctorChargesArray = DoctorCharges.map((item)=>{
+    return {...item,ipdId:ipd.id}
+  })
+  await db.ipdCharges.createMany({
+    data: otherChargesArray
+  })
+  await db.ipdConsultation.createMany({
+    data: doctorChargesArray
+  })
+
+  return ipd
+
+
+
+
 }
 
 export const updateIpd = ({ id, input }) => {

@@ -22,9 +22,9 @@ export const schema = gql`
   input CreateIpdInput {
     consultant_doctor: String!
     date_of_admission: DateTime!
-
     paid_amount: Float!
     patientId: Int!
+    extra_data: JSON!
   }
 
   input UpdateIpdInput {

@@ -21,6 +21,14 @@ const Routes = () => {
     <Router useAuth={useAuth}>
 
 
+
+
+
+
+
+
+
+
       <Route path="/download-purchase-medicine" page={DownloadsDownloadPurchaseMedicinePage} name="downloadPurchaseMedicine" />
       <Route path="/download-sale-medicine/{id:Int}" page={DownloadsDownloadSaleMedicinePage} name="downloadSaleMedicine" />
       <Route path="/login" page={LoginPage} name="login" />
@@ -28,12 +36,15 @@ const Routes = () => {
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
 
 
+          <Route path="/signup" page={SignupPage} name="signup" />
 
       <Private unauthenticated='login' >
 
         <Set wrap={DashboardLayout}>
 
-          <Route path="/signup" page={SignupPage} name="signup" />
+      <Route path="/view-bed" page={BedViewBedPage} name="viewBed" />
+
+
 
 
           <Route path="/" page={HomePage} name="home" />
@@ -165,6 +176,20 @@ const Routes = () => {
             <Route path="/opds/{id:Int}" page={OpdOpdPage} name="opd" />
             <Route path="/opds" page={OpdOpdsPage} name="opds" />
           </Set>
+          <Set wrap={ScaffoldLayout} title="Beds" titleTo="beds" buttonLabel="New Bed" buttonTo="newBed">
+        <Route path="/beds/new" page={BedNewBedPage} name="newBed" />
+        <Route path="/beds/{id:Int}/edit" page={BedEditBedPage} name="editBed" />
+        <Route path="/beds/{id:Int}" page={BedBedPage} name="bed" />
+        <Route path="/beds" page={BedBedsPage} name="beds" />
+      </Set>
+
+
+      <Set wrap={ScaffoldLayout} title="Floors" titleTo="floors" buttonLabel="New Floor" buttonTo="newFloor">
+        <Route path="/floors/new" page={FloorNewFloorPage} name="newFloor" />
+        <Route path="/floors/{id:Int}/edit" page={FloorEditFloorPage} name="editFloor" />
+        <Route path="/floors/{id:Int}" page={FloorFloorPage} name="floor" />
+        <Route path="/floors" page={FloorFloorsPage} name="floors" />
+      </Set>
           <Route notfound page={NotFoundPage} />
         </Set>
       </Private>
