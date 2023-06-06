@@ -13,7 +13,7 @@ export const schema = gql`
     created_at: DateTime!
     updated_at: DateTime!
     patientId: Int!
-    doctor_name: SaleMedicine!
+    doctor_name: String!
   }
 
   type Query {

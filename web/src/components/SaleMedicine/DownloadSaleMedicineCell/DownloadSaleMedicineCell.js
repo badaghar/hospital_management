@@ -15,6 +15,7 @@ export const QUERY = gql`
       created_at
       updated_at
       patientId
+      doctor_name
       patient{
         name
         phone_no

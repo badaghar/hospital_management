@@ -80,6 +80,9 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
                     <div className="space-x-4">
                     <span className="font-bold text-xs">Phone</span> <span className="text-xs">{saleMedicine.patient.phone_no}</span>
                     </div>
+                    <div className="space-x-4">
+                    <span className="font-bold text-xs">Doctor Name </span> <span className="text-xs">{saleMedicine.doctor_name}</span>
+                    </div>
 
                   </div>
                 </section>
