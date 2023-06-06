@@ -18,13 +18,27 @@ import 'react-js-dialog-box/dist/index.css'
 import { useMutation } from '@redwoodjs/web'
 import React from 'react'
 import Select from 'react-select'
+function convertObjectValuesToUpper(obj) {
+  if (typeof obj !== 'object' || obj === null) {
+    // throw new Error('Input must be an object.');
+    return {}
+  }
 
+  for (let key in obj) {
+    if (typeof obj[key] === 'string') {
+      obj[key] = obj[key].trim().toUpperCase();
+    }
+  }
+
+  return obj;
+}
 const BedForm = (props) => {
 
   const [floors,setFloors] = useState([])
   const [defaultFloor,setDefaultFloor] = useState()
   const [floorId,setFloorId] = useState()
   const onSubmit = (data) => {
+    data = convertObjectValuesToUpper(data)
     data['occupied'] = false
     data['floorId'] = floorId
     props.onSave(data, props?.bed?.id)

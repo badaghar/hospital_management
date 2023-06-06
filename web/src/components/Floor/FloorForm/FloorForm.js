@@ -6,9 +6,23 @@ import {
   TextField,
   Submit,
 } from '@redwoodjs/forms'
+function convertObjectValuesToUpper(obj) {
+  if (typeof obj !== 'object' || obj === null) {
+    // throw new Error('Input must be an object.');
+    return {}
+  }
 
+  for (let key in obj) {
+    if (typeof obj[key] === 'string') {
+      obj[key] = obj[key].trim().toUpperCase();
+    }
+  }
+
+  return obj;
+}
 const FloorForm = (props) => {
   const onSubmit = (data) => {
+    data = convertObjectValuesToUpper(data)
     props.onSave(data, props?.floor?.id)
   }
 
