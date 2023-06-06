@@ -185,6 +185,16 @@ const PurchaseMedicineForm = (props) => {
 
   const chequeInvoiceNo = async (val) =>{
     console.log(val.target.value)
+
+    const data = props.purchaseMedicines.find((item)=> item.invoiceNo==val.target.value)
+    console.log(data)
+    if(data!=undefined)
+    {
+      toast.error("Purchase Bill Added Already")
+
+    }
+    else{
+    }
     // const { data, error, loading } = useQuery(GET_INVOICE_BILL, {
     //   variables: { invoiceNo: val.target.value },
     // })

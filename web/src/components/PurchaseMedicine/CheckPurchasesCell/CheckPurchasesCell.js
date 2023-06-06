@@ -27,6 +27,9 @@ export const QUERY = gql`
       id
       name
     }
+    purchaseMedicines{
+      invoiceNo
+    }
   }
 `
 
@@ -40,7 +43,7 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ distributers,manufacturers ,products}) => {
+export const Success = ({ distributers,manufacturers ,products,purchaseMedicines}) => {
 
   const [createPurchaseMedicine, { loading, error }] = useMutation(
     CREATE_PURCHASE_MEDICINE_MUTATION,
@@ -67,7 +70,7 @@ export const Success = ({ distributers,manufacturers ,products}) => {
         </h2>
       </header>
       <div className="rw-segment-main">
-        <PurchaseMedicineForm onSave={onSave} loading={loading} error={error} distributers={distributers} manufacturers={manufacturers} products={products}/>
+        <PurchaseMedicineForm onSave={onSave} loading={loading} error={error} distributers={distributers} manufacturers={manufacturers} products={products} purchaseMedicines={purchaseMedicines}/>
       </div>
     </div>
   )
