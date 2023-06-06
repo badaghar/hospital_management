@@ -30,7 +30,7 @@ export const schema = gql`
   }
 
   type Mutation {
-    createIpdConsultation(input: CreateIpdConsultationInput!): IpdConsultation!
+    createIpdConsultation(input: [CreateIpdConsultationInput]!): IpdConsultation
       @requireAuth
     updateIpdConsultation(
       id: Int!

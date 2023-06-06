@@ -10,6 +10,35 @@ export const ipd = ({ id }) => {
   })
 }
 
+export const dischargePatient = async ({id}) => {
+  const date = new Date()
+  await db.ipd.update(
+    {
+      data: {
+        discharge_date: date
+      },
+      where:{
+        id:id
+      }
+    }
+  )
+
+  const data = await db.bed.findFirst({
+    where: {
+       ipdId: id,
+    },
+});
+  await db.bed.update({
+    where:{
+      id:data.id
+    },
+    data:{
+      occupied:false,
+      ipdId:null
+    }
+  })
+}
+
 export const createIpd = async ({ input }) => {
 
   let {extra_data,...data} = input

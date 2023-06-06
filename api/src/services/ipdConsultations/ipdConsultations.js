@@ -1,4 +1,5 @@
 import { db } from 'src/lib/db'
+import { logger } from 'src/lib/logger'
 
 export const ipdConsultations = () => {
   return db.ipdConsultation.findMany()
@@ -10,10 +11,11 @@ export const ipdConsultation = ({ id }) => {
   })
 }
 
-export const createIpdConsultation = ({ input }) => {
-  return db.ipdConsultation.create({
+export const createIpdConsultation = async ({ input }) => {
+  const data = await db.ipdConsultation.createMany({
     data: input,
   })
+  logger.info(data)
 }
 
 export const updateIpdConsultation = ({ id, input }) => {

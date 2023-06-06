@@ -6,6 +6,7 @@ export const schema = gql`
     date_of_admission: DateTime!
     created_at: DateTime!
     updated_at: DateTime!
+    discharge_date: DateTime!
     paid_amount: Float!
     Operation: [Operation]!
     IpdCharges: [IpdCharges]!
@@ -38,5 +39,6 @@ export const schema = gql`
     createIpd(input: CreateIpdInput!): Ipd! @requireAuth
     updateIpd(id: Int!, input: UpdateIpdInput!): Ipd! @requireAuth
     deleteIpd(id: Int!): Ipd! @requireAuth
+    dischargePatient(id: Int!) : Ipd @requireAuth
   }
 `

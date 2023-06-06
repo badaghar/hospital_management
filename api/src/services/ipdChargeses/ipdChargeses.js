@@ -10,8 +10,8 @@ export const ipdCharges = ({ id }) => {
   })
 }
 
-export const createIpdCharges = ({ input }) => {
-  return db.ipdCharges.create({
+export const createIpdCharges = async ({ input }) => {
+  const data= await db.ipdCharges.createMany({
     data: input,
   })
 }

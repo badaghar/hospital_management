@@ -1,10 +1,15 @@
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 
 import { timeTag } from 'src/lib/formatters'
 import IpdOverview from '../IpdOverview/IpdOverview'
+import IpdConsultant from '../IpdConsultant/IpdConsultant'
+import IpdCharges from 'src/components/IpdCharges/IpdCharges/IpdCharges'
+import IpdOtherCharges from '../IpdOtherCharges/IpdOtherCharges'
+import PaymentIpd from '../PaymentIpd/PaymentIpd'
+// import { useEffect } from 'react-js-dialog-box'
 
 const DELETE_IPD_MUTATION = gql`
   mutation DeleteIpdMutation($id: Int!) {
@@ -14,13 +19,27 @@ const DELETE_IPD_MUTATION = gql`
   }
 `
 
-const Ipd = ({ ipd }) => {
+const Ipd = ({ ipd,users,doctorFees,chargeses }) => {
 
   const [dropDownOpen,setDropDownOpen] = useState('overview')
+  const [totalAmount,setTotalAmount] = useState(0)
   const toggleDropDown = (text) => {
     setDropDownOpen(text)
   }
 
+
+  useEffect(()=>{
+    let tamt = 0;
+    ipd.IpdConsultation.map((it)=>{
+      tamt += it.amount
+    })
+    ipd.IpdCharges.map((it)=>{
+      tamt += it.total
+    })
+    setTotalAmount(tamt)
+
+
+  },[])
 
 
 
@@ -54,11 +73,6 @@ const Ipd = ({ ipd }) => {
               OverView
             </div>
             <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
-            onClick={toggleDropDown.bind(this,'operation')}
-            >
-              Operations
-            </div>
-            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'consultant')}
             >
               consultant Registration
@@ -78,7 +92,16 @@ const Ipd = ({ ipd }) => {
 
 
           {
-            dropDownOpen=='overview' && <IpdOverview />
+            dropDownOpen=='overview' && <IpdOverview ipd={ipd} />
+          }
+          {
+            dropDownOpen=='consultant' && <IpdConsultant ipd={ipd} users={users} doctorFees={doctorFees} />
+          }
+          {
+            dropDownOpen=='charges' && <IpdOtherCharges ipd={ipd} users={users} chargeses={chargeses} />
+          }
+          {
+            dropDownOpen=='payment' && <PaymentIpd ipd={ipd} users={users} chargeses={chargeses} totalAmount={totalAmount} />
           }
         </div>
       </div>
@@ -89,13 +112,13 @@ const Ipd = ({ ipd }) => {
         >
           Edit
         </Link> */}
-        <button
+        {/* <button
           type="button"
           className="rw-button rw-button-red"
           onClick={() => onDeleteClick(ipd.id)}
         >
           Delete
-        </button>
+        </button> */}
       </nav>
     </>
   )

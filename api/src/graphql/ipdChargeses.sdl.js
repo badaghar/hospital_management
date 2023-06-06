@@ -33,7 +33,7 @@ export const schema = gql`
   }
 
   type Mutation {
-    createIpdCharges(input: CreateIpdChargesInput!): IpdCharges! @requireAuth
+    createIpdCharges(input: [CreateIpdChargesInput]!): IpdCharges @requireAuth
     updateIpdCharges(id: Int!, input: UpdateIpdChargesInput!): IpdCharges!
       @requireAuth
     deleteIpdCharges(id: Int!): IpdCharges! @requireAuth
