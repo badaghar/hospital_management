@@ -12,6 +12,7 @@ const CREATE_DISTRIBUTER_MUTATION = gql`
   }
 `
 
+
 const NewDistributer = () => {
   const [createDistributer, { loading, error }] = useMutation(
     CREATE_DISTRIBUTER_MUTATION,
@@ -27,6 +28,8 @@ const NewDistributer = () => {
   )
 
   const onSave = (input) => {
+    // input = convertObjectValuesToUpper(input)
+
     createDistributer({ variables: { input } })
   }
 

@@ -12,6 +12,8 @@ const CREATE_MANUFACTURER_MUTATION = gql`
   }
 `
 
+
+
 const NewManufacturer = () => {
   const [createManufacturer, { loading, error }] = useMutation(
     CREATE_MANUFACTURER_MUTATION,
@@ -27,6 +29,8 @@ const NewManufacturer = () => {
   )
 
   const onSave = (input) => {
+
+    // input = convertObjectValuesToUpper(input)
     createManufacturer({ variables: { input } })
   }
 

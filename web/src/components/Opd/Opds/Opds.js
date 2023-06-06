@@ -70,13 +70,13 @@ const OpdsList = ({ opds }) => {
                   >
                     Show
                   </Link>
-                  <Link
+                  {/* <Link
                     to={routes.editOpd({ id: opd.id })}
                     title={'Edit opd ' + opd.id}
                     className="rw-button rw-button-small rw-button-blue"
                   >
                     Edit
-                  </Link>
+                  </Link> */}
                   <button
                     type="button"
                     title={'Delete opd ' + opd.id}

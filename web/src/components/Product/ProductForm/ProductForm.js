@@ -16,6 +16,21 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 
+function convertObjectValuesToUpper(obj) {
+  if (typeof obj !== 'object' || obj === null) {
+    // throw new Error('Input must be an object.');
+    return {}
+  }
+
+  for (let key in obj) {
+    if (typeof obj[key] === 'string') {
+      obj[key] = obj[key].trim().toUpperCase();
+    }
+  }
+
+  return obj;
+}
+
 
 const CREATE_MANUFACTURER_MUTATION = gql`
   mutation CreateManufacturerMutation($input: CreateManufacturerInput!) {
@@ -48,8 +63,10 @@ const ProductForm = (props) => {
   const [compositionName,setCompositionName] = useState()
 
   const onSubmit = (data) => {
+
     data['compositionList'] = compositionList
     data['manufacturerId'] = Manufacturer
+    data = convertObjectValuesToUpper(data)
     // console.log(data['compositionList'])
     props.onSave(data, props?.product?.id)
   }
@@ -119,9 +136,11 @@ const ProductForm = (props) => {
 
 
   const addManufacturer = (input) => {
+    input = convertObjectValuesToUpper(input)
     createManufacturer({ variables: { input } })
   }
   const addComposition = (input) => {
+    input = convertObjectValuesToUpper(input)
     createComposition({ variables: { input } })
   }
 

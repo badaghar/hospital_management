@@ -10,7 +10,20 @@ import {
 } from '@redwoodjs/forms'
 import Multiselect from 'multiselect-react-dropdown'
 import { useState, useEffect } from 'react'
+function convertObjectValuesToUpper(obj) {
+  if (typeof obj !== 'object' || obj === null) {
+    // throw new Error('Input must be an object.');
+    return {}
+  }
 
+  for (let key in obj) {
+    if (typeof obj[key] === 'string') {
+      obj[key] = obj[key].trim().toUpperCase();
+    }
+  }
+
+  return obj;
+}
 
 const DoctorFeeForm = (props) => {
 
@@ -40,6 +53,7 @@ const DoctorFeeForm = (props) => {
   const onSubmit = (data) => {
     data['type'] = type
     data['userId'] = doctorId
+    data =convertObjectValuesToUpper(data)
     props.onSave(data, props?.doctorFee?.id)
   }
 

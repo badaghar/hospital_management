@@ -1,8 +1,10 @@
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useState } from 'react'
 
 import { timeTag } from 'src/lib/formatters'
+import IpdOverview from '../IpdOverview/IpdOverview'
 
 const DELETE_IPD_MUTATION = gql`
   mutation DeleteIpdMutation($id: Int!) {
@@ -13,6 +15,15 @@ const DELETE_IPD_MUTATION = gql`
 `
 
 const Ipd = ({ ipd }) => {
+
+  const [dropDownOpen,setDropDownOpen] = useState('overview')
+  const toggleDropDown = (text) => {
+    setDropDownOpen(text)
+  }
+
+
+
+
   const [deleteIpd] = useMutation(DELETE_IPD_MUTATION, {
     onCompleted: () => {
       toast.success('Ipd deleted')
@@ -37,46 +48,47 @@ const Ipd = ({ ipd }) => {
             Ipd {ipd.id} Detail
           </h2>
         </header>
-        <table className="rw-table">
-          <tbody>
-            <tr>
-              <th>Id</th>
-              <td>{ipd.id}</td>
-            </tr>
-            <tr>
-              <th>Consultant doctor</th>
-              <td>{ipd.consultant_doctor}</td>
-            </tr>
-            <tr>
-              <th>Date of admission</th>
-              <td>{timeTag(ipd.date_of_admission)}</td>
-            </tr>
-            <tr>
-              <th>Created at</th>
-              <td>{timeTag(ipd.created_at)}</td>
-            </tr>
-            <tr>
-              <th>Updated at</th>
-              <td>{timeTag(ipd.updated_at)}</td>
-            </tr>
-            <tr>
-              <th>Paid amount</th>
-              <td>{ipd.paid_amount}</td>
-            </tr>
-            <tr>
-              <th>Patient id</th>
-              <td>{ipd.patientId}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div>
+          <div className='flex bg-gray-800 text-white  space-x-5 rounded-3xl justify-around'>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2' onClick={toggleDropDown.bind(this,'overview')}>
+              OverView
+            </div>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+            onClick={toggleDropDown.bind(this,'operation')}
+            >
+              Operations
+            </div>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+            onClick={toggleDropDown.bind(this,'consultant')}
+            >
+              consultant Registration
+            </div>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+            onClick={toggleDropDown.bind(this,'charges')}
+            >
+              Charges
+            </div>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+            onClick={toggleDropDown.bind(this,'payment')}
+            >
+              Payment
+            </div>
+
+          </div>
+
+
+          {
+            dropDownOpen=='overview' && <IpdOverview />
+          }
+        </div>
       </div>
       <nav className="rw-button-group">
-        <Link
+        {/* <Link
           to={routes.editIpd({ id: ipd.id })}
           className="rw-button rw-button-blue"
         >
           Edit
-        </Link>
+        </Link> */}
         <button
           type="button"
           className="rw-button rw-button-red"

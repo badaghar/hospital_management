@@ -12,6 +12,8 @@ const CREATE_COMPOSITION_MUTATION = gql`
   }
 `
 
+
+
 const NewComposition = () => {
   const [createComposition, { loading, error }] = useMutation(
     CREATE_COMPOSITION_MUTATION,
@@ -27,6 +29,7 @@ const NewComposition = () => {
   )
 
   const onSave = (input) => {
+
     createComposition({ variables: { input } })
   }
 

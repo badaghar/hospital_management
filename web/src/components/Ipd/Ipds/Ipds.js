@@ -68,13 +68,13 @@ const IpdsList = ({ ipds }) => {
                   >
                     Show
                   </Link>
-                  <Link
+                  {/* <Link
                     to={routes.editIpd({ id: ipd.id })}
                     title={'Edit ipd ' + ipd.id}
                     className="rw-button rw-button-small rw-button-blue"
                   >
                     Edit
-                  </Link>
+                  </Link> */}
                   <button
                     type="button"
                     title={'Delete ipd ' + ipd.id}

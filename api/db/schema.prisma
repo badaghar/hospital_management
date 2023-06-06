@@ -45,6 +45,7 @@ model Ipd {
   created_at        DateTime          @default(now())
   updated_at        DateTime          @updatedAt
   paid_amount       Float
+  discharge_date    DateTime?
   Operation         Operation[]
   IpdCharges        IpdCharges[]
   IpdConsultation   IpdConsultation[]
