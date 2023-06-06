@@ -10,10 +10,21 @@ export const ipdPayment = ({ id }) => {
   })
 }
 
-export const createIpdPayment = ({ input }) => {
-  return db.ipdPayment.create({
+export const createIpdPayment = async ({ input }) => {
+  const data = await db.ipdPayment.create({
     data: input,
   })
+  const ipd = await db.ipd.findFirst({where:{id:data.ipdId}})
+  await db.ipd.update({
+    where:{
+      id:data.ipdId
+    },
+    data:{
+      paid_amount: parseFloat(ipd.paid_amount) + parseFloat(input.amount)
+
+    }
+  })
+  return data
 }
 
 export const updateIpdPayment = ({ id, input }) => {
