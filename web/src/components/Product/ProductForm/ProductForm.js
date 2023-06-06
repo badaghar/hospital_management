@@ -8,13 +8,16 @@ import {
   Submit,
 } from '@redwoodjs/forms'
 import Multiselect from 'multiselect-react-dropdown'
-import { useState } from 'react'
-import { ReactDialogBox } from 'react-js-dialog-box'
+import { useState,useEffect, useLayoutEffect } from 'react'
+import { ReactDialogBox} from 'react-js-dialog-box'
 import 'react-js-dialog-box/dist/index.css'
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
+import React from 'react'
+import Select from 'react-select'
+import ManufacturersList from 'src/components/Manufacturer/Manufacturers/Manufacturers'
 
 function convertObjectValuesToUpper(obj) {
   if (typeof obj !== 'object' || obj === null) {
@@ -54,18 +57,53 @@ const ProductForm = (props) => {
 
 
   // const [compositionList,setCompositionList] = useState([])
-  const [compositionList, setCompositionList] = useState(props?.defaultComposition?.map((item) => item.id))
-  const [Manufacturer, setManufacturerList] = useState(props?.defaultManufacturer ? props.defaultManufacturer[0]?.id : 0)
+  const [compositionList, setCompositionList] = useState([])
+  // const [Manufacturer, setManufacturerList] = useState(props?.defaultManufacturer ? { value:props.defaultManufacturer[0]?.id,label:'hello' }: 0)
+  const [Manufacturer, setManufacturerList] = useState()
+  const [ddefaultComposition,setDefaultComposition] = useState()
 
   const [manufacturerModelIsOpen, setManufacturerModelIsOpen] = useState(false)
   const [manufacturerName, setManufacturerName] = useState()
   const [compositionIsOpen,setCompositionIsOpen] = useState(false)
   const [compositionName,setCompositionName] = useState()
+  const [manufacturerOption,setManufacturerOption] = useState()
+  useEffect(()=>{
+
+    const updatedDefaultComposition = [];
+    for (let i = 0; i < props.product?.ProductToComposition.length; i++) {
+      updatedDefaultComposition.push({
+        id: props.product?.ProductToComposition[i].cid.id,
+        name: props.product?.ProductToComposition[i].cid.name,
+      });
+    }
+    setCompositionList(updatedDefaultComposition.map((item) =>{
+      return item.id
+    }))
+    setDefaultComposition(updatedDefaultComposition.map((item) =>{
+      return {id:item.id,name:item.name}
+    }))
+
+    setManufacturerList({value:props.product?.mid.id,label:props.product?.mid.name})
+    // setDefaultComposition(updatedDefaultComposition);
+    // setDefaultManufacutrer([{id:product.mid.id,name:product.mid.name}])
+
+
+
+
+
+    const opt = props.manufacturers.map((item)=>{
+      return {label:item.name,value:item.id}
+    })
+    // console.log(props)
+    console.log(props.compostions,'hello')
+    setManufacturerOption(opt)
+
+  },[])
 
   const onSubmit = (data) => {
 
     data['compositionList'] = compositionList
-    data['manufacturerId'] = Manufacturer
+    data['manufacturerId'] = Manufacturer.value
     data = convertObjectValuesToUpper(data)
     // console.log(data['compositionList'])
     props.onSave(data, props?.product?.id)
@@ -85,9 +123,10 @@ const ProductForm = (props) => {
     if (name.length === 0) {
       return
     }
+    setManufacturerList(name)
     // console.log(name)
     // Manufacturer = name[0].id
-    setManufacturerList(name[0].id)
+    // setManufacturerList(name[0].id)
   }
   // console.log("here")
 
@@ -105,10 +144,10 @@ const ProductForm = (props) => {
       onCompleted: (data) => {
         const name = data.createManufacturer.name
         const id = data.createManufacturer.id
-        const value = { id, name }
+        const value = { value:id, label:name }
         toast.success('Manufacturer created')
         console.log(data.createManufacturer)
-        setManufacturerName(value)
+        setManufacturerList(value)
         setManufacturerModelIsOpen(false)
       },
       onError: (error) => {
@@ -304,14 +343,18 @@ const ProductForm = (props) => {
 
           <div className=" flex-1">
 
-            <Multiselect
-              options={props.manufacturers} // Options to display in the dropdown
+            {/* <Multiselect
+              options={ma} // Options to display in the dropdown
               selectedValues={props?.defaultManufacturer || manufacturerName ? [manufacturerName] : []}
               onSelect={(event) => modifiyManufacturer(event)} // Function will trigger on select event
               onRemove={(event) => modifiyManufacturer(event)} // Function will trigger on remove event
               selectionLimit={1}
               displayValue="name" // Property name to display in the dropdown options
+            /> */}
+             <Select options={manufacturerOption} onChange={modifiyManufacturer} isClearable={true} value={Manufacturer}
             />
+
+
           </div>
 
           <div>
@@ -330,7 +373,7 @@ const ProductForm = (props) => {
 
         <Multiselect
           options={props.compostions} // Options to display in the dropdown
-          selectedValues={props?.defaultComposition || compositionName ? [compositionName] : []}
+          selectedValues={ddefaultComposition}
           onSelect={(event) => modifiyComposition(event)} // Function will trigger on select event
           onRemove={(event) => modifiyComposition(event)} // Function will trigger on remove event
           displayValue="name" // Property name to display in the dropdown options

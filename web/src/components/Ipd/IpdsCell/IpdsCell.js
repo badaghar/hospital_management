@@ -8,10 +8,14 @@ export const QUERY = gql`
       id
       consultant_doctor
       date_of_admission
+      discharge_date
       created_at
       updated_at
       paid_amount
       patientId
+      patient{
+        name
+      }
     }
   }
 `

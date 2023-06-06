@@ -5,6 +5,8 @@ import { MetaTags } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { useEffect, useLayoutEffect, useState } from 'react'
+import OpdReportCell from 'src/components/PharmacyReport/OpdReportCell'
+import IpdReportCell from 'src/components/PharmacyReport/IpdReportCell'
 import PharmacyPaymentCell from 'src/components/PharmacyReport/PharmacyPaymentCell/PharmacyPaymentCell'
 import PharmacyReportDistributerCell from 'src/components/PharmacyReport/PharmacyReportDistributerCell'
 import PharmacyReportHeaderCell from 'src/components/PharmacyReport/PharmacyReportHeaderCell'
@@ -55,6 +57,14 @@ const PharmacyReportPage = ({id}) => {
     {
       setText("Select Payment Type")
 
+    }
+    else if(id==5)
+    {
+      setText('IPD Patient Report')
+    }
+    else if(id==6)
+    {
+      setText('OPD Patient Report')
     }
   },[id])
   useLayoutEffect(()=>{
@@ -167,7 +177,7 @@ const PharmacyReportPage = ({id}) => {
         <div>
           {/* <ComponentRender /> */}
           {
-            ComponentRender==1 ? <PharmacyReportDistributerCell id={searchId} startDate={startDate} endDate={endDate} /> : ComponentRender==2 ? <PharmacyReportPurchaseCell startDate={startDate} endDate={endDate}  /> : ComponentRender==3 ?  <PharmacyReportSaleCell startDate={startDate} endDate={endDate}  /> : ComponentRender==4 ? <PharmacyPaymentCell id={searchId} startDate={startDate} endDate={endDate} /> :   <></>
+            ComponentRender==1 ? <PharmacyReportDistributerCell id={searchId} startDate={startDate} endDate={endDate} /> : ComponentRender==2 ? <PharmacyReportPurchaseCell startDate={startDate} endDate={endDate}  /> : ComponentRender==3 ?  <PharmacyReportSaleCell startDate={startDate} endDate={endDate}  /> : ComponentRender==4 ? <PharmacyPaymentCell id={searchId} startDate={startDate} endDate={endDate} /> : ComponentRender==5 ? <IpdReportCell  startDate={startDate} endDate={endDate} />  :  ComponentRender==6 ? <OpdReportCell  startDate={startDate} endDate={endDate} /> : <></>
           }
 
         </div>

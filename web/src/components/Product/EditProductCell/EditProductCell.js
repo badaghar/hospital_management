@@ -59,20 +59,16 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ product ,compositions,manufacturers}) => {
-  const [defaultComposition, setDefaultComposition] = useState([]);
+  const [defaultComposition, setDefaultComposition] = useState([])
   const [defaultManufacturer,setDefaultManufacutrer] = useState([])
 
-  useLayoutEffect(() => {
-    const updatedDefaultComposition = [];
-    for (let i = 0; i < product.ProductToComposition.length; i++) {
-      updatedDefaultComposition.push({
-        id: product.ProductToComposition[i].cid.id,
-        name: product.ProductToComposition[i].cid.name,
-      });
-    }
-    setDefaultComposition(updatedDefaultComposition);
-    setDefaultManufacutrer([{id:product.mid.id,name:product.mid.name}])
-  }, []);
+  // useEffect(() => {
+
+  //   // console.log([{id:product.mid.id,name:product.mid.name}])
+
+  // }, []);
+
+  console.log(defaultComposition,defaultManufacturer)
   const [updateProduct, { loading, error }] = useMutation(
     UPDATE_PRODUCT_MUTATION,
     {

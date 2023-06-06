@@ -14,6 +14,8 @@ import Multiselect from 'multiselect-react-dropdown'
 import NewPurchaseMedicineTable from '../NewPurchaseMedicineTable/NewPurchaseMedicineTable'
 import { useEffect, useState } from 'react'
 // import { db } from 'src/lib/db'
+import React from 'react'
+import Select from 'react-select'
 import { toast } from '@redwoodjs/web/dist/toast'
 // import
 // import { useQuery } from '@redwoodjs/web'
@@ -54,7 +56,26 @@ const PurchaseMedicineForm = (props) => {
   const [grand_total, set_grand_total] = useState(0)
 
   const [Distributers, setDistributers] = useState(0)
+  const [selectDistributer,setSelectDistributer] = useState()
 
+  const [manufacturers,setManufacturers] = useState([])
+  const [product,setProduct] = useState([])
+
+  useEffect(()=>{
+    const opt =props.distributers.map((item)=>{
+      return {label:item.name,value:item.id}
+    })
+    setSelectDistributer(opt)
+    const opt2 = props.manufacturers.map((item)=>{
+      return  {label:item.name,value:item.id,name:item.name,id:item.id}
+    })
+    setManufacturers(opt2)
+    const opt3 = props.products.map((item)=>{
+      return  {label:item.name,value:item.id,name:item.name,id:item.id}
+    })
+    setProduct(opt2)
+
+  },[])
 
 
 
@@ -64,7 +85,7 @@ const PurchaseMedicineForm = (props) => {
     }
     // console.log(name)
     // Distributers = name[0].id
-    setDistributers(name[0].id)
+    setDistributers(name.value)
   }
   const onSubmit = (data) => {
     data['DistributerId'] = Distributers
@@ -146,7 +167,7 @@ const PurchaseMedicineForm = (props) => {
   var medicineRows = []
   for (var i = 0; i < no_of_medicine; i++) {
     medicineRows.push(<NewPurchaseMedicineTable key={'purchase_' + i} value={i}
-      manufacturers={props.manufacturers} manufacturersList={manufacturersList} products={props.products} productList={productList}
+      manufacturers={manufacturers} manufacturersList={manufacturersList} products={product} productList={productList}
       setManufacturerList={setManufacturerList} setProductList={setProductList}
       set_total_amount_list={set_total_amount_list}
       set_total_dis_amount_list={set_total_dis_amount_list}
@@ -211,13 +232,17 @@ const PurchaseMedicineForm = (props) => {
             Distributer Name
           </Label>
           <div className="flex-1">
-            <Multiselect
+            {/* <Multiselect
               options={props.distributers} // Options to display in the dropdown
               // selectedValues={props?.defaultDistributer}
               onSelect={(event) => modifiyDistributer(event)} // Function will trigger on select event
               onRemove={(event) => modifiyDistributer(event)} // Function will trigger on remove event
               selectionLimit={1}
               displayValue="name" // Property name to display in the dropdown options
+            /> */}
+                  <Select options={selectDistributer} onChange={modifiyDistributer} isClearable={true}
+
+
             />
           </div>
           <Label

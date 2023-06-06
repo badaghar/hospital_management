@@ -127,6 +127,37 @@ export const saleReport = async ({ startDate,endDate }) => {
   return {data,totalSum}
 }
 
+// hospital Report
+
+export const ipdReport = async ({ startDate,endDate }) => {
+  const data = await db.ipd.findMany({
+    where: {
+      date_of_admission : {
+
+        gte: new Date(startDate),
+        lte: new Date(endDate),
+      },
+    },
+  });
+
+  const totalSum = data.reduce((sum, item) => sum + item.paid_amount, 0);
+  return {data,totalSum}
+}
+export const opdReport = async ({ startDate,endDate }) => {
+  const data = await db.opd.findMany({
+    where: {
+      created_at : {
+
+        gte: new Date(startDate),
+        lte: new Date(endDate),
+      },
+    },
+  });
+
+  const totalSum = data.reduce((sum, item) => sum + item.amount, 0);
+  return {data,totalSum}
+}
+
 export const pharmacyPayment = async ({ id,startDate,endDate }) => {
   let data;
   if(id==1)

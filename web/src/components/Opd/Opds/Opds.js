@@ -1,8 +1,10 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useState } from 'react'
 
 import { QUERY } from 'src/components/Opd/OpdsCell'
+import SearchTable from 'src/components/SearchTable/SearchTable'
 import { jsonTruncate, timeTag, truncate } from 'src/lib/formatters'
 
 const DELETE_OPD_MUTATION = gql`
@@ -14,6 +16,8 @@ const DELETE_OPD_MUTATION = gql`
 `
 
 const OpdsList = ({ opds }) => {
+  const [search_data, setSearch_data] = useState(opds)
+  const [rows_count, setRows_count] = useState(opds.length <= 5 ? 5 : 10)
   const [deleteOpd] = useMutation(DELETE_OPD_MUTATION, {
     onCompleted: () => {
       toast.success('Opd deleted')
@@ -34,64 +38,126 @@ const OpdsList = ({ opds }) => {
     }
   }
 
-  return (
-    <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Consultant doctor</th>
-            <th>Charges</th>
-            <th>Payment mode</th>
-            <th>Amount</th>
-            <th>Created at</th>
-            <th>Updated at</th>
-            <th>Patient id</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          {opds.map((opd) => (
-            <tr key={opd.id}>
-              <td>{truncate(opd.id)}</td>
-              <td>{truncate(opd.consultant_doctor)}</td>
-              <td>{jsonTruncate(opd.charges)}</td>
-              <td>{truncate(opd.paymentMode)}</td>
-              <td>{truncate(opd.amount)}</td>
-              <td>{timeTag(opd.created_at)}</td>
-              <td>{timeTag(opd.updated_at)}</td>
-              <td>{truncate(opd.patientId)}</td>
-              <td>
-                <nav className="rw-table-actions">
-                  <Link
-                    to={routes.opd({ id: opd.id })}
-                    title={'Show opd ' + opd.id + ' detail'}
+  const change = (search)=>{
+    const search_val = search.target.value
+
+    let filterData = opds.filter((val) => {
+      return (
+        val.patient.name
+          .toString()
+          .toLowerCase()
+          .includes(search_val.toLowerCase())
+      )
+    })
+    setRows_count(filterData.length <= 5 ? 5 : 10)
+    setSearch_data(filterData)
+  }
+
+  const columns = [
+    {
+      Header: 'Name',
+      accessor: 'patient.name',
+    },
+    {
+      Header: 'Consultant doctor',
+      accessor: 'consultant_doctor',
+    },
+    {
+      Header: 'Payment mode',
+      accessor: 'paymentMode',
+    },
+    {
+      Header: 'Amount',
+      accessor: 'amount',
+    },
+    {
+      Header: 'Action',
+      accessor: 'actionColumn',
+      disableSortBy: true,
+      Cell: ({ original }) => (
+                   <nav className="rw-table-actions">
+                          <Link
+                    to={routes.opd({ id: original.id })}
+                    title={'Show opd ' + original.id + ' detail'}
                     className="rw-button rw-button-small"
                   >
                     Show
                   </Link>
-                  {/* <Link
-                    to={routes.editOpd({ id: opd.id })}
-                    title={'Edit opd ' + opd.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
-                  </Link> */}
-                  <button
-                    type="button"
-                    title={'Delete opd ' + opd.id}
-                    className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(opd.id)}
-                  >
-                    Delete
-                  </button>
+
                 </nav>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+      ),
+    },
+  ]
+
+
+
+  return (
+    <>
+    <SearchTable
+change={change}
+placeholder={"Search By Typing Patient Name"}
+columns={columns}
+rows_count={rows_count}
+search_data={search_data}
+/>
+</>
+    // <div className="rw-segment rw-table-wrapper-responsive">
+    //   <table className="rw-table">
+    //     <thead>
+    //       <tr>
+    //         <th>Id</th>
+    //         <th>Consultant doctor</th>
+    //         <th>Charges</th>
+    //         <th>Payment mode</th>
+    //         <th>Amount</th>
+    //         <th>Created at</th>
+    //         <th>Updated at</th>
+    //         <th>Patient id</th>
+    //         <th>&nbsp;</th>
+    //       </tr>
+    //     </thead>
+    //     <tbody>
+    //       {opds.map((opd) => (
+    //         <tr key={opd.id}>
+    //           <td>{truncate(opd.id)}</td>
+    //           <td>{truncate(opd.consultant_doctor)}</td>
+    //           <td>{jsonTruncate(opd.charges)}</td>
+    //           <td>{truncate(opd.paymentMode)}</td>
+    //           <td>{truncate(opd.amount)}</td>
+    //           <td>{timeTag(opd.created_at)}</td>
+    //           <td>{timeTag(opd.updated_at)}</td>
+    //           <td>{truncate(opd.patientId)}</td>
+    //           <td>
+    //             <nav className="rw-table-actions">
+    //               <Link
+    //                 to={routes.opd({ id: opd.id })}
+    //                 title={'Show opd ' + opd.id + ' detail'}
+    //                 className="rw-button rw-button-small"
+    //               >
+    //                 Show
+    //               </Link>
+    //               {/* <Link
+    //                 to={routes.editOpd({ id: opd.id })}
+    //                 title={'Edit opd ' + opd.id}
+    //                 className="rw-button rw-button-small rw-button-blue"
+    //               >
+    //                 Edit
+    //               </Link> */}
+    //               <button
+    //                 type="button"
+    //                 title={'Delete opd ' + opd.id}
+    //                 className="rw-button rw-button-small rw-button-red"
+    //                 onClick={() => onDeleteClick(opd.id)}
+    //               >
+    //                 Delete
+    //               </button>
+    //             </nav>
+    //           </td>
+    //         </tr>
+    //       ))}
+    //     </tbody>
+    //   </table>
+    // </div>
   )
 }
 

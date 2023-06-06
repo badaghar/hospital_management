@@ -12,6 +12,8 @@ import {
 } from '@redwoodjs/forms'
 import NewSaleMedicineTable from '../NewSaleMedicineTable/NewSaleMedicineTable'
 import { toast } from '@redwoodjs/web/toast'
+import React from 'react'
+import Select from 'react-select'
 
 import { useEffect, useState } from 'react'
 import Multiselect from 'multiselect-react-dropdown'
@@ -82,6 +84,33 @@ const SaleMedicineForm = (props) => {
   const [defaultDate, setDefaultDate] = useState(formatDate(new Date()));
   const [selectName,setSelectName] = useState()
 
+  const [medicine,setmedicine] = useState([])
+  const [product,setProduct] = useState([])
+  const [patient, setPatient] = useState([])
+  const [defaultPatient, setDefaultPatient] = useState()
+
+
+  useEffect(()=>{
+    // const opt =props.distributers.map((item)=>{
+    //   return {label:item.name,value:item.id}
+    // })
+    // setSelectDistributer(opt)
+    const opt2 = props.medicines.map((item)=>{
+      return  {label:item.pid.name,value:item.id,name:item.pid.name,id:item.id,data:item}
+    })
+    setmedicine(opt2)
+    // const opt3 = props.products.map((item)=>{
+    //   return  {label:item.name,value:item.id,name:item.name,id:item.id}
+    // })
+    // setProduct(opt2)
+    const arrPat = props.patients.map((item) => {
+      const obj = { 'label': item.name, 'value': item.id }
+      return obj
+    })
+    // // console.log(arrPat)
+    setPatient(arrPat)
+
+  },[])
 
 
   const onSubmit = (data) => {
@@ -102,7 +131,8 @@ const SaleMedicineForm = (props) => {
       'cgst': parseFloat(total_cgst_amount.toFixed(2)),
       'grand_total': parseFloat(actual_grand_total),
       'patientId': patientId,
-      'permedicine': newperMedicine
+      'permedicine': newperMedicine,
+      'doctor_name':'rahul'
     }
     console.log(input)
     props.onSave(input, props?.saleMedicine?.id)
@@ -168,19 +198,25 @@ const SaleMedicineForm = (props) => {
       set_total_cgst_amount_list={set_total_cgst_amount_list}
       setmedicineObj={setmedicineObj}
       setPermedicineObj={setPermedicineObj}
-      medicines={props.medicines}
+      medicines={medicine}
 
     />)
   }
 
-  const modifyPatient = (name) => {
-    if (name.length === 0) {
-      return
-    }
-    setPatientId(name[0].id)
-    // // console.log(name)
-    // Manufacturer = name[0].id
+  const changePatienId = (item) => {
+    // // console.log(item)
+    setDefaultPatient(item)
+    setPatientId(item.value)
   }
+
+  // const modifyPatient = (name) => {
+  //   if (name.length === 0) {
+  //     return
+  //   }
+  //   setPatientId(name[0].id)
+  //   // // console.log(name)
+  //   // Manufacturer = name[0].id
+  // }
 
   const openModal = () =>{
     setIsOpen(true)
@@ -197,6 +233,8 @@ const SaleMedicineForm = (props) => {
         const id = data.createPatient.id
         toast.success('Patient Added ')
         const value = {id,name}
+        setPatient((item) => [...item, value])
+        setDefaultPatient(value)
 
         setSelectName(value)
         setIsOpen(false)
@@ -357,7 +395,7 @@ const SaleMedicineForm = (props) => {
           </Label>
 
           <div className=" flex-1">
-            <Multiselect
+            {/* <Multiselect
               className="rw-input mt-0 selectname"
               name={"patientId"}
               options={props.patients} // Options to display in the dropdown
@@ -369,6 +407,10 @@ const SaleMedicineForm = (props) => {
               selectedValues={selectName ? [selectName] : []}
 
               displayValue={'name'}// Property name to display in the dropdown options
+            /> */}
+                   <Select options={patient} onChange={changePatienId} isClearable={true}
+              value={defaultPatient}
+
             />
           <FieldError name="patientId" className="rw-field-error" />
 

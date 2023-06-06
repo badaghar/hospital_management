@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react'
 import { Label, TextField, FieldError, DateField } from '@redwoodjs/forms'
 import Multiselect from 'multiselect-react-dropdown'
 
-
+import React from 'react'
+import Select from 'react-select'
 const NewPurchaseMedicineTable = (props) => {
   const [mfr, setMfr] = useState('')
   const [paid_qty, set_paid_qty] = useState(0)
@@ -99,6 +100,8 @@ const date = new Date(exp);
       return updatedList;
     })
 
+    console.log(medObj)
+
 
   },[mfr,paid_qty,free_qty,pack,mrp,rate,dis,sgst,cgst])
 
@@ -158,7 +161,7 @@ const date = new Date(exp);
     }
     props.setManufacturerList((ml)=>{
       const updatedList = [...ml];
-      updatedList[props.value] = {id:name[0].id,name:name[0].name};
+      updatedList[props.value] = {id:name.id,name:name.name};
 
       return updatedList;
     })
@@ -171,7 +174,7 @@ const date = new Date(exp);
       const updatedList = [...ml]; // Create a new array with the existing values
 
       // Update the desired element
-      updatedList[props.value] = {id:name[0].id,name:name[0].name};
+      updatedList[props.value] = {id:name.id,name:name.name};
 
       return updatedList;
     })
@@ -182,7 +185,7 @@ const date = new Date(exp);
   return (
     <>
       <div className="flex col-span-3 justify-center flex-grow-0">
-      <Multiselect
+      {/* <Multiselect
       className="rw-input"
           options={props.manufacturers} // Options to display in the dropdown
           onSelect={(event) => modifiyManufacturer(event)} // Function will trigger on select event
@@ -190,10 +193,12 @@ const date = new Date(exp);
           selectionLimit={1}
 
           displayValue="name" // Property name to display in the dropdown options
-        />
+        /> */}
+          <Select className='rw-input' options={props.manufacturers} onChange={modifiyManufacturer} isClearable={true}
+/>
       </div>
       <div className="flex col-span-3 justify-center">
-      <Multiselect
+      {/* <Multiselect
       className="rw-input"
           options={props.products} // Options to display in the dropdown
           onSelect={(event) => modifyProducts(event)} // Function will trigger on select event
@@ -201,7 +206,9 @@ const date = new Date(exp);
           selectionLimit={1}
 
           displayValue="name" // Property name to display in the dropdown options
-        />
+        /> */}
+                  <Select className='rw-input' options={props.products} onChange={modifyProducts} isClearable={true}
+/>
       </div>
       <div className="flex col-span-1 justify-center">
         <TextField

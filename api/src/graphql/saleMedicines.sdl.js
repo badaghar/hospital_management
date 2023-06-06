@@ -13,6 +13,7 @@ export const schema = gql`
     created_at: DateTime!
     updated_at: DateTime!
     patientId: Int!
+    doctor_name: SaleMedicine!
   }
 
   type Query {
@@ -31,6 +32,7 @@ export const schema = gql`
     grand_total: Float!
     patientId: Int!
     permedicine: JSON!
+    doctor_name: String!
   }
 
   input UpdateSaleMedicineInput {

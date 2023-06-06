@@ -2,7 +2,8 @@ import { useEffect, useLayoutEffect, useState } from 'react'
 
 import { Label, TextField, FieldError, DateField, NumberField } from '@redwoodjs/forms'
 import Multiselect from 'multiselect-react-dropdown'
-
+import React from 'react'
+import Select from 'react-select'
 
 
 const NewSaleMedicineTable = (props) => {
@@ -18,9 +19,10 @@ const NewSaleMedicineTable = (props) => {
   const [finalList,setFinalList] = useState([])
 
   useLayoutEffect(()=>{
-    const newList = props.medicines.map((item)=>{
-      return {...item,'name':item.pid.name}
-    })
+    // const newList = props.medicines.map((item)=>{
+    //   return {...item,'name':item.pid.name}
+    // })
+    const newList = props.medicines
     setDublicateList(newList)
 
     const uniqueArray = newList.filter(
@@ -28,6 +30,7 @@ const NewSaleMedicineTable = (props) => {
         index === self.findIndex((o) => o.name === obj.name)
     );
     setMedicineList(uniqueArray)
+    console.log(uniqueArray)
     // console.log(newList)
 
   },[props.medicines])
@@ -42,12 +45,17 @@ const NewSaleMedicineTable = (props) => {
     }
     props.setProductList((ml)=>{
       const updatedList = [...ml];
-      updatedList[props.value] = {id:name[0].id,name:name[0].name};
+      updatedList[props.value] = {id:name.id,name:name.name};
 
       return updatedList;
     })
-    const newBatchList = dublicatList.filter((item)=>item.name==name[0].name)
+
+    let newBatchList = dublicatList.filter((item)=>item.name==name.name)
     // console.log(newBatchList)
+     newBatchList = newBatchList.map((item) => {
+      return {label:item.data.batch,value:item.data.batch,batch:item.data.batch,id:item.id,data:item}
+    })
+
     setBatchList(newBatchList)
   }
 
@@ -56,15 +64,16 @@ const NewSaleMedicineTable = (props) => {
       return
     }
 
-    const newMedicineList = batchList.filter((item)=>item.batch==name[0].batch)
+    const newMedicineList = batchList.filter((item)=>item.batch==name.batch)
     // console.log(newMedicineList)
-    setFinalList(newMedicineList)
-    set_exp(newMedicineList[0].exp)
-    set_mrp(newMedicineList[0].mrp)
-    set_cgst_sgst(newMedicineList[0].cgst+newMedicineList[0].sgst)
+    setFinalList(newMedicineList[0].data.data)
+    set_exp(newMedicineList[0].data.data.exp)
+    set_mrp(newMedicineList[0].data.data.mrp)
+    set_cgst_sgst(newMedicineList[0].data.data.cgst+newMedicineList[0].data.data.sgst)
   }
 
   useEffect(()=>{
+    // console.log('finallist ',finalList)
 
     let total_amount = parseFloat(mrp)*parseInt(quantity)
     // console.log("here",quantity,'total amount ',total_amount)
@@ -92,19 +101,19 @@ const NewSaleMedicineTable = (props) => {
     })
 
     let obj = {
-      'medicine Name':finalList[0]?.name,
-      'batch No':finalList[0]?.batch,
-      'Expiry Date':finalList[0]?.exp,
-      'mrp':  parseFloat(finalList[0]?.mrp?.toFixed(5)),
+      'medicine Name':finalList?.pid?.name,
+      'batch No':finalList?.batch,
+      'Expiry Date':finalList?.exp,
+      'mrp':  parseFloat(finalList?.mrp?.toFixed(5)),
       'quantity':quantity,
-      'cgst/sgst':parseFloat(finalList[0]?.cgst)+parseFloat(finalList[0]?.sgst),
-      'amount': parseFloat((quantity*finalList[0]?.mrp).toFixed(5))
+      'cgst/sgst':parseFloat(finalList?.cgst)+parseFloat(finalList?.sgst),
+      'amount': parseFloat((quantity*finalList?.mrp).toFixed(5))
     }
 
     let medObj = {
-      'quantity': parseFloat(finalList[0]?.quantity)-parseFloat(quantity),
-      'productId':finalList[0]?.productId,
-      'batch':finalList[0]?.batch
+      'quantity': parseFloat(finalList?.quantity)-parseFloat(quantity),
+      'productId':finalList?.productId,
+      'batch':finalList?.batch
     }
 
     props.setmedicineObj((ml)=>{
@@ -119,6 +128,8 @@ const NewSaleMedicineTable = (props) => {
 
       return updatedList;
     })
+
+    console.log(obj,medObj)
 
     // console.log()
 
@@ -138,7 +149,7 @@ const NewSaleMedicineTable = (props) => {
     <>
 
     <div className="flex col-span-4 justify-center">
-    <Multiselect
+    {/* <Multiselect
     className="rw-input"
         options={medicineList} // Options to display in the dropdown
         onSelect={(event) => modifyProducts(event)} // Function will trigger on select event
@@ -146,10 +157,12 @@ const NewSaleMedicineTable = (props) => {
         selectionLimit={1}
 
         displayValue={'name'}// Property name to display in the dropdown options
-      />
+      /> */}
+           <Select className='rw-input' options={medicineList} onChange={modifyProducts} isClearable={true}
+/>
     </div>
     <div className="flex col-span-3 justify-center">
-    <Multiselect
+    {/* <Multiselect
     className="rw-input"
         options={batchList} // Options to display in the dropdown
         onSelect={(event) => modifyBatch(event)} // Function will trigger on select event
@@ -157,7 +170,9 @@ const NewSaleMedicineTable = (props) => {
         selectionLimit={1}
 
         displayValue={'batch'}// Property name to display in the dropdown options
-      />
+      /> */}
+                 <Select className='rw-input' options={batchList} onChange={modifyBatch} isClearable={true}
+/>
     </div>
 
     <div className="flex col-span-1 justify-center">
@@ -195,7 +210,7 @@ const NewSaleMedicineTable = (props) => {
         onChange={(e)=>
           {
 
-            if(e.target.value>  (finalList[0]?.quantity || 0))
+            if(e.target.value>  (finalList?.quantity || 0))
             {
                 return
             }
