@@ -63,7 +63,7 @@ const IpdForm = (props) => {
 
     // data['paymentMode'] = payment
     // data['bed'] = bedName.id
-    data['paid_amount'] = advancePayment
+    data['paid_amount'] =  parseFloat(advancePayment)
 
     data['date_of_admission'] = data['date_of_admission']
     data['extra_data'] = {
