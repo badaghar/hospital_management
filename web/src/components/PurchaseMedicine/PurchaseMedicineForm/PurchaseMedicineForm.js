@@ -73,7 +73,7 @@ const PurchaseMedicineForm = (props) => {
     const opt3 = props.products.map((item)=>{
       return  {label:item.name,value:item.id,name:item.name,id:item.id}
     })
-    setProduct(opt2)
+    setProduct(opt3)
 
   },[])
 

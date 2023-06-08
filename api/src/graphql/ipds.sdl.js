@@ -6,7 +6,7 @@ export const schema = gql`
     date_of_admission: DateTime!
     created_at: DateTime!
     updated_at: DateTime!
-    discharge_date: DateTime!
+    discharge_date: DateTime
     paid_amount: Float!
     Operation: [Operation]!
     IpdCharges: [IpdCharges]!
