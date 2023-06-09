@@ -12,6 +12,7 @@ import PharmacyReportDistributerCell from 'src/components/PharmacyReport/Pharmac
 import PharmacyReportHeaderCell from 'src/components/PharmacyReport/PharmacyReportHeaderCell'
 import PharmacyReportPurchaseCell from 'src/components/PharmacyReport/PharmacyReportPurchaseCell'
 import PharmacyReportSaleCell from 'src/components/PharmacyReport/PharmacyReportSaleCell'
+import PharmacyReturnMedicinesCell from 'src/components/PharmacyReport/PharmacyReturnMedicinesCell'
 
 
 const formatDatetime = (value) => {
@@ -65,6 +66,10 @@ const PharmacyReportPage = ({id}) => {
     else if(id==6)
     {
       setText('OPD Patient Report')
+    }
+    else if(id==11)
+    {
+      setText('Return Medicine Report')
     }
   },[id])
   useLayoutEffect(()=>{
@@ -177,7 +182,7 @@ const PharmacyReportPage = ({id}) => {
         <div>
           {/* <ComponentRender /> */}
           {
-            ComponentRender==1 ? <PharmacyReportDistributerCell id={searchId} startDate={startDate} endDate={endDate} /> : ComponentRender==2 ? <PharmacyReportPurchaseCell startDate={startDate} endDate={endDate}  /> : ComponentRender==3 ?  <PharmacyReportSaleCell startDate={startDate} endDate={endDate}  /> : ComponentRender==4 ? <PharmacyPaymentCell id={searchId} startDate={startDate} endDate={endDate} /> : ComponentRender==5 ? <IpdReportCell  startDate={startDate} endDate={endDate} />  :  ComponentRender==6 ? <OpdReportCell  startDate={startDate} endDate={endDate} /> : <></>
+            ComponentRender==1 ? <PharmacyReportDistributerCell id={searchId} startDate={startDate} endDate={endDate} /> : ComponentRender==2 ? <PharmacyReportPurchaseCell startDate={startDate} endDate={endDate}  /> : ComponentRender==3 ?  <PharmacyReportSaleCell startDate={startDate} endDate={endDate}  /> : ComponentRender==4 ? <PharmacyPaymentCell id={searchId} startDate={startDate} endDate={endDate} /> : ComponentRender==5 ? <IpdReportCell  startDate={startDate} endDate={endDate} />  :  ComponentRender==6 ? <OpdReportCell  startDate={startDate} endDate={endDate} /> :  ComponentRender==11 ?  <PharmacyReturnMedicinesCell startDate={startDate} endDate={endDate}  /> : <></>
           }
 
         </div>

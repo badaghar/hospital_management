@@ -29,6 +29,10 @@ export const schema = gql`
     data: [PaymentPurchaseMedicine]!
     totalSum: Float!
   }
+  type ReturnMedicineReport{
+    data: [ReturnMedicine]!
+    totalSum: Float!
+  }
 
   type IpdReport {
     data: [Ipd]!
@@ -48,6 +52,7 @@ export const schema = gql`
     distributersReport(id:Int!,startDate:String!,endDate:String!): DistributerReportResponse! @requireAuth
     purchaseReport(startDate:String!,endDate:String!): DistributerReportResponse! @requireAuth
     saleReport(startDate:String!,endDate:String!) : SaleReport! @requireAuth
+    returnMedicinesReport(startDate:String!,endDate:String!) : ReturnMedicineReport! @requireAuth
     pharmacyPayment(id:Int!,startDate:String!,endDate:String!): PaymentReport! @requireAuth
     # hospital Report
     ipdReport(startDate:String!,endDate:String!) : IpdReport! @requireAuth

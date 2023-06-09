@@ -29,6 +29,16 @@ const Routes = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
       <Route path="/download-purchase-medicine" page={DownloadsDownloadPurchaseMedicinePage} name="downloadPurchaseMedicine" />
       <Route path="/download-sale-medicine/{id:Int}" page={DownloadsDownloadSaleMedicinePage} name="downloadSaleMedicine" />
       <Route path="/login" page={LoginPage} name="login" />
@@ -36,13 +46,13 @@ const Routes = () => {
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
 
 
-          <Route path="/signup" page={SignupPage} name="signup" />
+      <Route path="/signup" page={SignupPage} name="signup" />
 
       <Private unauthenticated='login' >
 
         <Set wrap={DashboardLayout}>
 
-      <Route path="/view-bed" page={BedViewBedPage} name="viewBed" />
+          <Route path="/view-bed" page={BedViewBedPage} name="viewBed" />
 
 
 
@@ -64,6 +74,13 @@ const Routes = () => {
             <Route path="/payment-purchase-medicines/{id:Int}" page={PaymentPurchaseMedicinePaymentPurchaseMedicinePage} name="paymentPurchaseMedicine" />
             <Route path="/payment-purchase-medicines" page={PaymentPurchaseMedicinePaymentPurchaseMedicinesPage} name="paymentPurchaseMedicines" />
           </Set>
+          <Set wrap={ScaffoldLayout} title="Return Medicines" titleTo="returnMedicines" buttonLabel="New ReturnMedicine" buttonTo="newReturnMedicine">
+            <Route path="/return-medicines/new" page={ReturnMedicineNewReturnMedicinePage} name="newReturnMedicine" />
+            <Route path="/return-medicines/{id:Int}/edit" page={ReturnMedicineEditReturnMedicinePage} name="editReturnMedicine" />
+            <Route path="/return-medicines/{id:Int}" page={ReturnMedicineReturnMedicinePage} name="returnMedicine" />
+            <Route path="/return-medicines" page={ReturnMedicineReturnMedicinesPage} name="returnMedicines" />
+          </Set>
+
 
           <Set wrap={ScaffoldLayout} title="SaleMedicines" titleTo="saleMedicines" buttonLabel="New SaleMedicine" buttonTo="newSaleMedicine">
             <Route path="/sale-medicines/new" page={SaleMedicineNewSaleMedicinePage} name="newSaleMedicine" />
@@ -177,19 +194,19 @@ const Routes = () => {
             <Route path="/opds" page={OpdOpdsPage} name="opds" />
           </Set>
           <Set wrap={ScaffoldLayout} title="Beds" titleTo="beds" buttonLabel="New Bed" buttonTo="newBed">
-        <Route path="/beds/new" page={BedNewBedPage} name="newBed" />
-        <Route path="/beds/{id:Int}/edit" page={BedEditBedPage} name="editBed" />
-        <Route path="/beds/{id:Int}" page={BedBedPage} name="bed" />
-        <Route path="/beds" page={BedBedsPage} name="beds" />
-      </Set>
+            <Route path="/beds/new" page={BedNewBedPage} name="newBed" />
+            <Route path="/beds/{id:Int}/edit" page={BedEditBedPage} name="editBed" />
+            <Route path="/beds/{id:Int}" page={BedBedPage} name="bed" />
+            <Route path="/beds" page={BedBedsPage} name="beds" />
+          </Set>
 
 
-      <Set wrap={ScaffoldLayout} title="Floors" titleTo="floors" buttonLabel="New Floor" buttonTo="newFloor">
-        <Route path="/floors/new" page={FloorNewFloorPage} name="newFloor" />
-        <Route path="/floors/{id:Int}/edit" page={FloorEditFloorPage} name="editFloor" />
-        <Route path="/floors/{id:Int}" page={FloorFloorPage} name="floor" />
-        <Route path="/floors" page={FloorFloorsPage} name="floors" />
-      </Set>
+          <Set wrap={ScaffoldLayout} title="Floors" titleTo="floors" buttonLabel="New Floor" buttonTo="newFloor">
+            <Route path="/floors/new" page={FloorNewFloorPage} name="newFloor" />
+            <Route path="/floors/{id:Int}/edit" page={FloorEditFloorPage} name="editFloor" />
+            <Route path="/floors/{id:Int}" page={FloorFloorPage} name="floor" />
+            <Route path="/floors" page={FloorFloorsPage} name="floors" />
+          </Set>
           <Route notfound page={NotFoundPage} />
         </Set>
       </Private>

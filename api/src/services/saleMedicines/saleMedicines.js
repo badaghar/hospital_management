@@ -43,13 +43,7 @@ export const createSaleMedicine = async ({ input }) => {
         }
       }
     })
-
-    // console.log('Per Medicine: \n\n\n\n\n\n\n\n\n\n', permedicine[i])
-
   }
-  // console.info('array is \n\n\n\n\n\n\n\n\n\n')
-  // console.log("here hello 3\n\n\n\n\n\n\n\n\n\n",permedicine[0])
-  // logger.warn("hii \n\n\n\n\n\n\n\n\n\n")
   return med
 }
 
