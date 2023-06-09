@@ -6,6 +6,9 @@ export const QUERY = gql`
       id
       invoiceNo
       distributerId
+      did{
+        name
+      }
       date
       medicine
       total
@@ -15,6 +18,7 @@ export const QUERY = gql`
       grand_total
       created_at
       updated_at
+
     }
   }
 `

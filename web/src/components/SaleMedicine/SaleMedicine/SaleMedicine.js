@@ -32,10 +32,8 @@ const SaleMedicine = ({ saleMedicine }) => {
   return (
     <>
 
-<div className="bg-white p-6 shadow-lg rounded-lg grid gap-4 grid-cols-2">
-  <div className="col-span-2">
-    <h2 className="text-xl font-bold mb-4">SaleMedicine {saleMedicine.id} Detail</h2>
-  </div>
+<div className="bg-white p-6 shadow-lg rounded-lg grid gap-4 grid-cols-2 text-sm">
+
 
   <div className="col-span-2">
     <table className="w-full border border-gray-200">
@@ -57,7 +55,7 @@ const SaleMedicine = ({ saleMedicine }) => {
   </div>
 
   <div className="col-span-2">
-    <h3 className="text-lg font-bold mb-4">Product Information</h3>
+    <h3 className=" font-bold mb-4">Product Information</h3>
     <table className="w-full border border-gray-200">
       <thead>
         <tr>
@@ -87,37 +85,37 @@ const SaleMedicine = ({ saleMedicine }) => {
   </div>
 
   <div>
-    <p className="text-lg font-bold">Total</p>
+    <p className=" font-bold">Total</p>
     <p className="p-4">{saleMedicine.total}</p>
   </div>
 
   <div>
-    <p className="text-lg font-bold">Discount</p>
+    <p className=" font-bold">Discount</p>
     <p className="p-4">{saleMedicine.discount}</p>
   </div>
 
   <div>
-    <p className="text-lg font-bold">Sgst</p>
+    <p className=" font-bold">Sgst</p>
     <p className="p-4">{saleMedicine.sgst}</p>
   </div>
 
   <div>
-    <p className="text-lg font-bold">Cgst</p>
+    <p className=" font-bold">Cgst</p>
     <p className="p-4">{saleMedicine.cgst}</p>
   </div>
 
   <div>
-    <p className="text-lg font-bold">Grand total</p>
+    <p className=" font-bold">Grand total</p>
     <p className="p-4">{saleMedicine.grand_total}</p>
   </div>
 
   <div>
-    <p className="text-lg font-bold">Created at</p>
+    <p className=" font-bold">Created at</p>
     <p className="p-4">{timeTag(saleMedicine.created_at)}</p>
   </div>
 
   <div>
-    <p className="text-lg font-bold">Updated at</p>
+    <p className=" font-bold">Updated at</p>
     <p className="p-4">{timeTag(saleMedicine.updated_at)}</p>
   </div>
 

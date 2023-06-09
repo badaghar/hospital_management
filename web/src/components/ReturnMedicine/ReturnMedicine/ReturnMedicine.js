@@ -31,7 +31,7 @@ const ReturnMedicine = ({ returnMedicine }) => {
 
   return (
     <>
-      <div className="rw-segment">
+      {/* <div className="rw-segment">
         <header className="rw-segment-header">
           <h2 className="rw-heading rw-heading-secondary">
             ReturnMedicine {returnMedicine.id} Detail
@@ -100,7 +100,85 @@ const ReturnMedicine = ({ returnMedicine }) => {
         >
           Delete
         </button>
-      </nav>
+      </nav> */}
+      <div className="bg-white p-6 shadow-lg rounded-lg grid gap-4 grid-cols-2 text-sm">
+
+
+        <div className="col-span-2">
+          <table className="w-full border border-gray-200">
+            <tbody>
+              <tr>
+                <th className="p-4">Id</th>
+                <td className="p-4">{returnMedicine.id}</td>
+              </tr>
+              <tr>
+                <th className="p-4">Date</th>
+                <td className="p-4">{timeTag(returnMedicine.date)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div className="col-span-2">
+          <h3 className=" font-bold mb-4">Product Information</h3>
+          <table className="w-full border border-gray-200">
+            <thead>
+              <tr>
+                <th className="p-4">Product</th>
+                <th className="p-4">Batch</th>
+                <th className="p-4">Expiry Date</th>
+                <th className="p-4">MRP</th>
+                <th className="p-4">Quantity</th>
+                <th className="p-4">CGST/SGST</th>
+                <th className="p-4">Amount</th>
+              </tr>
+            </thead>
+            <tbody className='text-center'>
+              {returnMedicine.medicine.map((item, index) => (
+                <tr key={index}>
+                  <td className="p-4">{item['medicine Name']}</td>
+                  <td className="p-4">{item['batch No']}</td>
+                  <td className="p-4">{item['Expiry Date']}</td>
+                  <td className="p-4">{item['mrp']}</td>
+                  <td className="p-4">{item['quantity']}</td>
+                  <td className="p-4">{item['cgst/sgst']}</td>
+                  <td className="p-4">{item['amount']}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <p className=" font-bold">Total</p>
+          <p className="p-4">{returnMedicine.total}</p>
+        </div>
+
+        <div>
+          <p className=" font-bold">Sgst</p>
+          <p className="p-4">{returnMedicine.sgst}</p>
+        </div>
+
+        <div>
+          <p className=" font-bold">Cgst</p>
+          <p className="p-4">{returnMedicine.cgst}</p>
+        </div>
+
+        <div>
+          <p className=" font-bold">Grand total</p>
+          <p className="p-4">{returnMedicine.grand_total}</p>
+        </div>
+
+        <div>
+          <p className=" font-bold">Created at</p>
+          <p className="p-4">{timeTag(returnMedicine.created_at)}</p>
+        </div>
+
+        <div>
+          <p className=" font-bold">Updated at</p>
+          <p className="p-4">{timeTag(returnMedicine.updated_at)}</p>
+        </div>
+      </div>
     </>
   )
 }

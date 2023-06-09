@@ -45,7 +45,7 @@ export const Success = ({ floors,beds }) => {
           return(
             <>
               <div className='border border-white rounded-xl mx-11 my-3 p-4'>
-                <div className='text-xl flex justify-center p-2'>
+                <div className=' flex justify-center p-2'>
                   <h1 className='underline'>{floor.floor_name}</h1>
                 </div>
                 <div className='grid grid-cols-4 justify-items-center'>
@@ -53,7 +53,8 @@ export const Success = ({ floors,beds }) => {
                     beds.filter((bed)=>bed.floorId==floor.id).map((item)=>{
                       return(
                         <div className={`flex flex-col items-center  ${item.ipd?.patient.name ? 'text-red-700' : 'text-green-700'}`}>
-                          <FaBed className={`text-[100px]`} />
+                          <span>{item.bed_name}</span>
+                          <FaBed className={`text-xl`} />
                           <span className=''>{item.ipd?.patient.name || 'Empty'}</span>
                         </div>
                       )
