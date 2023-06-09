@@ -11,7 +11,7 @@ import './index.css'
 
 const App = () => (
   <FatalErrorBoundary page={FatalErrorPage}>
-    <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
+    <RedwoodProvider titleTemplate="Hospitech | Hospital Management">
       <AuthProvider>
         <RedwoodApolloProvider useAuth={useAuth}>
           <Routes />
