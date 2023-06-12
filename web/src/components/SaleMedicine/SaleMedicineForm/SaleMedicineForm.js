@@ -88,7 +88,8 @@ const SaleMedicineForm = (props) => {
   const [product,setProduct] = useState([])
   const [patient, setPatient] = useState([])
   const [defaultPatient, setDefaultPatient] = useState()
-
+  const [doctors,setDoctors] = useState([])
+  const [doctorName,setDoctorName] = useState()
 
   useEffect(()=>{
     // const opt =props.distributers.map((item)=>{
@@ -109,6 +110,14 @@ const SaleMedicineForm = (props) => {
     })
     // // console.log(arrPat)
     setPatient(arrPat)
+
+    const arrDoc = props.users.filter((item) => item.roles=='doctor').map((item)=>{
+      const obj = { 'label': item.name, 'value': item.name }
+      return obj
+    })
+
+    // console.log(arrDoc)
+    setDoctors(arrDoc)
 
   },[])
 
@@ -132,7 +141,7 @@ const SaleMedicineForm = (props) => {
       'grand_total': parseFloat(actual_grand_total),
       'patientId': patientId,
       'permedicine': newperMedicine,
-      'doctor_name':'rahul'
+      'doctor_name':doctorName
     }
     console.log(input)
     props.onSave(input, props?.saleMedicine?.id)
@@ -209,14 +218,9 @@ const SaleMedicineForm = (props) => {
     setPatientId(item.value)
   }
 
-  // const modifyPatient = (name) => {
-  //   if (name.length === 0) {
-  //     return
-  //   }
-  //   setPatientId(name[0].id)
-  //   // // console.log(name)
-  //   // Manufacturer = name[0].id
-  // }
+  const changeDoctorName = (item) =>{
+    setDoctorName(item.value)
+  }
 
   const openModal = () =>{
     setIsOpen(true)
@@ -391,7 +395,7 @@ const SaleMedicineForm = (props) => {
             className="rw-label mt-0"
             errorClassName="rw-label rw-label-error"
           >
-            Patient id
+            Patient Name
           </Label>
 
           <div className=" flex-1">
@@ -449,6 +453,39 @@ const SaleMedicineForm = (props) => {
           </div>
 
           <FieldError name="no_of_medicine" className="rw-field-error" />
+
+          <Label
+            name="doctor_name"
+            className="rw-label mt-0"
+            errorClassName="rw-label rw-label-error"
+          >
+            Doctor Name
+          </Label>
+
+          <div className=" flex-1">
+            {/* <Multiselect
+              className="rw-input mt-0 selectname"
+              name={"patientId"}
+              options={props.patients} // Options to display in the dropdown
+              onSelect={(event) => modifyPatient(event)} // Function will trigger on select event
+              onRemove={(event) => modifyPatient(event)} // Function will trigger on remove event
+              selectionLimit={1}
+              // value={selectName}
+              // selectedValues={selectName}
+              selectedValues={selectName ? [selectName] : []}
+
+              displayValue={'name'}// Property name to display in the dropdown options
+            /> */}
+                   <Select options={doctors} onChange={changeDoctorName} isClearable={true} required
+
+
+            />
+          <FieldError name="doctor_name" className="rw-field-error" />
+
+          </div>
+
+
+
         </div>
         <div className="p-2 w-full shadow-sm bg-white ">
           <div className=" grid grid-cols-12 grid-flow-row gap-x-2 gap-y-2">
