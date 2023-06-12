@@ -352,7 +352,8 @@ const ProductForm = (props) => {
               displayValue="name" // Property name to display in the dropdown options
             /> */}
              <Select options={manufacturerOption} onChange={modifiyManufacturer} isClearable={true} value={Manufacturer}
-            />
+
+           />
 
 
           </div>

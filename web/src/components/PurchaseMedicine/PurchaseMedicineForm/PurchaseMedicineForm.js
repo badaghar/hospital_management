@@ -17,6 +17,9 @@ import { useEffect, useState } from 'react'
 import React from 'react'
 import Select from 'react-select'
 import { toast } from '@redwoodjs/web/dist/toast'
+import { ReactDialogBox } from 'react-js-dialog-box'
+import ProductForm from 'src/components/Product/ProductForm/ProductForm'
+import { useMutation } from '@redwoodjs/web'
 // import
 // import { useQuery } from '@redwoodjs/web'
 // import { gql } from 'graphql-tag'
@@ -28,7 +31,14 @@ import { toast } from '@redwoodjs/web/dist/toast'
 //     }
 //   }
 // `
-
+const CREATE_PRODUCT_MUTATION = gql`
+  mutation CreateProductMutation($input: CreateProductInput!) {
+    createProduct(input: $input) {
+      id
+      name
+    }
+  }
+`
 
 const formatDatetime = (value) => {
   if (value) {
@@ -37,6 +47,24 @@ const formatDatetime = (value) => {
 }
 
 const PurchaseMedicineForm = (props) => {
+
+  const [createProduct, { loading, error }] = useMutation(
+    CREATE_PRODUCT_MUTATION,
+    {
+      onCompleted: (pro) => {
+        toast.success('Product created')
+        console.log(item)
+        const item = pro.createProduct
+        setProductForm(false)
+        // navigate(routes.products())
+
+    setProduct((it)=>[...it,{ label: item.name, value: item.id, name: item.name, id: item.id }])
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+    }
+  )
 
   const [no_of_medicine, setNoOfMedicine] = useState(0)
   const [show_medicine_heading, setShowMedicineHeading] = useState(false)
@@ -48,6 +76,7 @@ const PurchaseMedicineForm = (props) => {
   const [total_cgst_amount_list, set_total_cgst_amount_list] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const [medicineObj, setmedicineObj] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const [permedicineObj, setPermedicineObj] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  const [productForm, setProductForm] = useState(false)
 
   const [total_amount, set_total_amount] = useState(0)
   const [total_dis_amount, set_total_dis_amount] = useState(0)
@@ -56,26 +85,26 @@ const PurchaseMedicineForm = (props) => {
   const [grand_total, set_grand_total] = useState(0)
 
   const [Distributers, setDistributers] = useState(0)
-  const [selectDistributer,setSelectDistributer] = useState()
+  const [selectDistributer, setSelectDistributer] = useState()
 
-  const [manufacturers,setManufacturers] = useState([])
-  const [product,setProduct] = useState([])
+  const [manufacturers, setManufacturers] = useState([])
+  const [product, setProduct] = useState([])
 
-  useEffect(()=>{
-    const opt =props.distributers.map((item)=>{
-      return {label:item.name,value:item.id}
+  useEffect(() => {
+    const opt = props.distributers.map((item) => {
+      return { label: item.name, value: item.id }
     })
     setSelectDistributer(opt)
-    const opt2 = props.manufacturers.map((item)=>{
-      return  {label:item.name,value:item.id,name:item.name,id:item.id}
+    const opt2 = props.manufacturers.map((item) => {
+      return { label: item.name, value: item.id, name: item.name, id: item.id }
     })
     setManufacturers(opt2)
-    const opt3 = props.products.map((item)=>{
-      return  {label:item.name,value:item.id,name:item.name,id:item.id}
+    const opt3 = props.products.map((item) => {
+      return { label: item.name, value: item.id, name: item.name, id: item.id }
     })
     setProduct(opt3)
 
-  },[])
+  }, [])
 
 
 
@@ -87,7 +116,7 @@ const PurchaseMedicineForm = (props) => {
     // Distributers = name[0].id
     setDistributers(name.value)
   }
-  const onSubmit = (data) => {
+  const onSub = (data) => {
     data['DistributerId'] = Distributers
     console.log("here")
 
@@ -183,17 +212,16 @@ const PurchaseMedicineForm = (props) => {
   //   variables: { invoiceNo:  },
   // })
 
-  const chequeInvoiceNo = async (val) =>{
+  const chequeInvoiceNo = async (val) => {
     console.log(val.target.value)
 
-    const data = props.purchaseMedicines.find((item)=> item.invoiceNo==val.target.value)
+    const data = props.purchaseMedicines.find((item) => item.invoiceNo == val.target.value)
     console.log(data)
-    if(data!=undefined)
-    {
+    if (data != undefined) {
       toast.error("Purchase Bill Added Already")
 
     }
-    else{
+    else {
     }
     // const { data, error, loading } = useQuery(GET_INVOICE_BILL, {
     //   variables: { invoiceNo: val.target.value },
@@ -205,11 +233,42 @@ const PurchaseMedicineForm = (props) => {
 
     // }
 
+    // const setProductFormVisible = () =>{
+
+    // }
+
+  }
+
+
+  const onSave = (input) => {
+    createProduct({ variables: { input } })
   }
 
   return (
     <div className="rw-form-wrapper text-xs">
-      <Form onSubmit={onSubmit} error={props.error}>
+
+      {
+        productForm && <ReactDialogBox
+          closeBox={setProductForm.bind(this, false)}
+          modalWidth='50%'
+          headerBackgroundColor='#000000'
+          headerTextColor='white'
+          headerHeight='60px'
+          closeButtonColor='white'
+          bodyBackgroundColor='#fff'
+          bodyTextColor='white'
+          bodyHeight='350px'
+
+          headerText={<span className="flex items-end h-14 text-xl">Add Product Details</span>}
+
+        >
+
+          <ProductForm onSave={onSave} loading={props.loading} error={props.error} compostions={props.compositions} manufacturers={props.manufacturers} />
+
+        </ReactDialogBox>
+
+      }
+      <Form onSubmit={onSub} error={props.error}>
         <FormError
           error={props.error}
           wrapperClassName="rw-form-error-wrapper"
@@ -250,7 +309,7 @@ const PurchaseMedicineForm = (props) => {
               selectionLimit={1}
               displayValue="name" // Property name to display in the dropdown options
             /> */}
-                  <Select options={selectDistributer} onChange={modifiyDistributer} isClearable={true}
+            <Select options={selectDistributer} onChange={modifiyDistributer} isClearable={true}
 
 
             />
@@ -293,6 +352,16 @@ const PurchaseMedicineForm = (props) => {
               onChange={updateMedicineTable}
             />
           </div>
+
+          <div className='flex'>
+            <div className='bg-green-600 p-2 text-white rounded-md opacity-50 hover:opacity-100 cursor-pointer'
+            onClick={setProductForm.bind(this,true)}
+            >
+              Add Product
+            </div>
+
+          </div>
+
 
           <FieldError name="no_of_medicine" className="rw-field-error" />
 
