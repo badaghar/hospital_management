@@ -236,7 +236,7 @@ const SaleMedicineForm = (props) => {
         const name = data.createPatient.name
         const id = data.createPatient.id
         toast.success('Patient Added ')
-        const value = {id,name}
+        const value = {value:id,label:name}
         setPatient((item) => [...item, value])
         setDefaultPatient(value)
 
