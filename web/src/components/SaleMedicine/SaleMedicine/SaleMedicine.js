@@ -73,7 +73,7 @@ const SaleMedicine = ({ saleMedicine }) => {
           <tr key={index}>
             <td className="p-4">{item['medicine Name']}</td>
             <td className="p-4">{item['batch No']}</td>
-            <td className="p-4">{item['Expiry Date']}</td>
+            <td className="p-4">{item['Expiry Date'].split('-')[1] +'-'+item['Expiry Date'].split('-')[0]}</td>
             <td className="p-4">{item['mrp']}</td>
             <td className="p-4">{item['quantity']}</td>
             <td className="p-4">{item['cgst/sgst']}</td>

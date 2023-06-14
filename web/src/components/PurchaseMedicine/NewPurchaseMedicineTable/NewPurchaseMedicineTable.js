@@ -19,6 +19,7 @@ const NewPurchaseMedicineTable = (props) => {
   const [cgst, set_cgst] = useState(0)
   const [total_amount, set_total_amount] = useState(0)
   const [total_net_amount, set_total_net_amount] = useState(0)
+  const [products,setProducts] = useState([])
 
   useEffect(()=>{
     const tamt = (paid_qty)*rate
@@ -54,6 +55,7 @@ const NewPurchaseMedicineTable = (props) => {
 
       return updatedList;
     })
+
 
     let obj = {
       'mfr':props.manufacturersList[props.value],
@@ -163,8 +165,21 @@ const date = new Date(exp);
       const updatedList = [...ml];
       updatedList[props.value] = {id:name.id,name:name.name};
 
+
+
       return updatedList;
     })
+
+    let pro = props.manufacturers.filter((item) => {
+      return item.id == name.id
+      // console.log(name.id,item.id)
+    })
+    pro =  pro[0].item.Product.map((item)=>{
+      return { label: item.name, value: item.id, name: item.name, id: item.id }
+    })
+    console.log(pro)
+
+    setProducts(pro)
   }
   const modifyProducts = (name) =>{
     if(name.length===0){
@@ -207,7 +222,7 @@ const date = new Date(exp);
 
           displayValue="name" // Property name to display in the dropdown options
         /> */}
-                  <Select className='rw-input' options={props.products} onChange={modifyProducts} isClearable={true}
+                  <Select className='rw-input' options={products} onChange={modifyProducts} isClearable={true}
 />
       </div>
       <div className="flex col-span-1 justify-center">

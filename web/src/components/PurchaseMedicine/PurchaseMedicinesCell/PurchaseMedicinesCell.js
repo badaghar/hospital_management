@@ -1,4 +1,5 @@
 import { Link, routes } from '@redwoodjs/router'
+import { useEffect, useState } from 'react'
 
 import PurchaseMedicines from 'src/components/PurchaseMedicine/PurchaseMedicines'
 
@@ -43,5 +44,11 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ purchaseMedicines }) => {
+
+  const [obj,setObj] = useState({})
+  // useEffect(()=>{
+  //   setObj({...purchaseMedicines,'sgst':purchaseMedicines})
+
+  // },[])
   return <PurchaseMedicines purchaseMedicines={purchaseMedicines} />
 }

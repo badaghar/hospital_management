@@ -66,7 +66,7 @@ const MedicinesList = ({ medicines }) => {
       Header: 'Exp Date',
       accessor: 'exp',
       Cell: ({ original }) => (
-          timeTag(original.created_at)
+          original.exp.split('-')[1] + '-'+ original.exp.split('-')[0]
         )
     },
     {

@@ -22,6 +22,10 @@ export const QUERY = gql`
     manufacturers{
       id
       name
+      Product{
+        id
+        name
+      }
     }
     products{
       id

@@ -91,7 +91,7 @@ const PurchaseMedicine = ({ purchaseMedicine }) => {
                   <td className="p-4">{item.paid_qty}</td>
                   <td className="p-4">{item.free_qty}</td>
                   <td className="p-4">{item.pack}</td>
-                  <td className="p-4">{item.exp}</td>
+                  <td className="p-4">{item.exp.split('-')[1] +'-'+ item.exp.split('-')[0]}</td>
                   <td className="p-4">{item.mrp}</td>
                   <td className="p-4">{item.rate}</td>
                   <td className="p-4">{item.dis}</td>
@@ -112,7 +112,7 @@ const PurchaseMedicine = ({ purchaseMedicine }) => {
 
         <div>
           <p className=" font-bold">Discount</p>
-          <p className="p-4">{purchaseMedicine.discount}</p>
+          <p className="p-4">{purchaseMedicine.discount.toFixed(2)}</p>
         </div>
 
         <div>

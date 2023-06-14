@@ -16,6 +16,8 @@ const DELETE_PURCHASE_MEDICINE_MUTATION = gql`
 `
 
 const PurchaseMedicinesList = ({ purchaseMedicines }) => {
+
+
   const [search_data, setSearch_data] = useState(purchaseMedicines)
   const [rows_count, setRows_count] = useState(purchaseMedicines.length <= 5 ? 5 : 10)
   const [deletePurchaseMedicine] = useMutation(
@@ -74,19 +76,32 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
     {
       Header: 'Total',
       accessor: 'total',
+      Cell: ({ original }) => (
+        original.total.toFixed(2)
+      )
+
     },
 
     {
       Header: 'Discount',
       accessor: 'discount',
+      Cell: ({ original }) => (
+        original.discount.toFixed(2)
+      )
     },
     {
       Header: 'SGST',
       accessor: 'sgst',
+      Cell: ({ original }) => (
+        original.sgst.toFixed(2)
+      )
     },
     {
       Header: 'CGST',
       accessor: 'cgst',
+      Cell: ({ original }) => (
+        original.cgst.toFixed(2)
+      )
     },
     {
       Header: 'Grand Total',

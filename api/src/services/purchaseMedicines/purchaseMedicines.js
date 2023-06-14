@@ -95,7 +95,7 @@ export const distributersReport = async ({ id,startDate,endDate }) => {
     },
   });
 
-  const totalSum = data.reduce((sum, item) => sum + item.total, 0);
+  const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
   return {data,totalSum}
 }
 export const purchaseReport = async ({ startDate,endDate }) => {
@@ -109,7 +109,7 @@ export const purchaseReport = async ({ startDate,endDate }) => {
     },
   });
 
-  const totalSum = data.reduce((sum, item) => sum + item.total, 0);
+  const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
   return {data,totalSum}
 }
 export const saleReport = async ({ startDate,endDate }) => {

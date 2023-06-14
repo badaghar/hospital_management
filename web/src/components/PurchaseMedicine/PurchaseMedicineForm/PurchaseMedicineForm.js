@@ -96,7 +96,7 @@ const PurchaseMedicineForm = (props) => {
     })
     setSelectDistributer(opt)
     const opt2 = props.manufacturers.map((item) => {
-      return { label: item.name, value: item.id, name: item.name, id: item.id }
+      return { label: item.name, value: item.id, name: item.name, id: item.id,item }
     })
     setManufacturers(opt2)
     const opt3 = props.products.map((item) => {
