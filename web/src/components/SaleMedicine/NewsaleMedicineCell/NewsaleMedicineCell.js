@@ -64,9 +64,10 @@ export const Success = ({ medicines, patients,users}) => {
   const [createSaleMedicine, { loading, error }] = useMutation(
     CREATE_SALE_MEDICINE_MUTATION,
     {
-      onCompleted: () => {
+      onCompleted: (data) => {
         toast.success('SaleMedicine created')
-        navigate(routes.saleMedicines())
+        // navigate(routes.saleMedicines())
+        navigate(routes.viewSaleMedicine({ id: data.createSaleMedicine.id }))
       },
       onError: (error) => {
         toast.error(error.message)
