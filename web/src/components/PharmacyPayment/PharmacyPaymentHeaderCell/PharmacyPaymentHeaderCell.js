@@ -1,8 +1,8 @@
 import { Form, Label } from "@redwoodjs/forms"
 import Multiselect from "multiselect-react-dropdown"
 import { useEffect, useState } from "react"
-
-
+import React from 'react'
+import Select from 'react-select'
 export const QUERY = gql`
   query FindPharmacyPaymentHeaderQuery {
     paymentPurchaseMedicines{
@@ -31,6 +31,8 @@ export const Success = ({ paymentPurchaseMedicines,changeId }) => {
     const convertedArray = paymentPurchaseMedicines.map(({ id, purchaseMedicine }) => ({
       id,
       invoiceNo: purchaseMedicine.invoiceNo,
+      label:purchaseMedicine.invoiceNo,
+      value:purchaseMedicine.id
     }));
     setOptions(convertedArray)
   },[])
@@ -40,7 +42,7 @@ export const Success = ({ paymentPurchaseMedicines,changeId }) => {
       changeId(0)
       return
     }
-    changeId(name[0].id)
+    changeId(name.id)
   }
   return (
     <>
@@ -49,7 +51,7 @@ export const Success = ({ paymentPurchaseMedicines,changeId }) => {
         <div className="text-gray-950">
 
 
-            <Multiselect
+            {/* <Multiselect
 
               options={options} // Options to display in the dropdown
               // selectedValues={props?.defaultDistributer}
@@ -62,7 +64,10 @@ export const Success = ({ paymentPurchaseMedicines,changeId }) => {
               // closeOnSelect={true}
               closeOnSelect={true}
 
-            />
+            /> */}
+                    <Select options={options} onChange={modifyData} isClearable={true}
+
+/>
 
         </div>
 
