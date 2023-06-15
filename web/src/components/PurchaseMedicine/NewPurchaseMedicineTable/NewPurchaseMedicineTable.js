@@ -74,6 +74,22 @@ const NewPurchaseMedicineTable = (props) => {
       'net_amount':parseFloat(total_net_amount),
     }
 
+    let manObj = {
+      'productId':props.productList[props.value].id,
+      'batch':batch,
+      'paid_qty': parseFloat(paid_qty),
+      'free_qty':parseFloat(free_qty),
+      'pack':parseFloat(pack),
+      'exp':new Date(exp),
+      'mrp':parseFloat(mrp),
+      'rate':parseFloat(rate),
+      'dis':parseFloat(dis),
+      'sgst':parseFloat(sgst),
+      'cgst':parseFloat(cgst),
+      'amount':parseFloat(total_amount),
+      'net_amount':parseFloat(total_net_amount),
+    }
+
     // let oneMedPrice = parseFloat(mrp) * ((parseFloat(cgst)+parseFloat(sgst)) / (100 +(parseFloat(cgst)+parseFloat(sgst))))
     let oneMedPrice = parseFloat(parseFloat(mrp/pack).toFixed(2))
 
@@ -98,6 +114,12 @@ const date = new Date(exp);
     props.setPermedicineObj((ml)=>{
       const updatedList = [...ml];
       updatedList[props.value] = medObj
+
+      return updatedList;
+    })
+    props.setmedicineManuObj((ml)=>{
+      const updatedList = [...ml];
+      updatedList[props.value] = manObj
 
       return updatedList;
     })

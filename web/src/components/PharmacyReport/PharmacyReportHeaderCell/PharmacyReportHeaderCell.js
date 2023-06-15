@@ -3,10 +3,16 @@ import { useLocation } from "@redwoodjs/router"
 import Multiselect from "multiselect-react-dropdown"
 import { useEffect, useState } from "react"
 import { useLayoutEffect } from "react-js-dialog-box"
+import React from 'react'
+import Select from 'react-select'
 
 export const QUERY = gql`
   query FindPharmacyReportHeaderQuery {
     distributers{
+      id
+      name
+    }
+    manufacturers{
       id
       name
     }
@@ -22,30 +28,30 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ distributers,changeId,text,id,SetComponentRender }) => {
-  const [options,setOptions] = useState([])
+export const Success = ({ distributers, changeId, text, id, SetComponentRender, manufacturers }) => {
+  const [options, setOptions] = useState([])
   const location = useLocation();
   useEffect(() => {
     // Cleanup the timeout when the component unmounts
 
-    if(id==1)
-    {
+    if (id == 1) {
       setOptions(distributers)
     }
-    else if(id==4)
-    {
-      setOptions([{id:1,name:'Complete Payments'},{id:2,name:'Pending Payments'}])
+    else if (id == 4) {
+      setOptions([{ id: 1, name: 'Complete Payments' }, { id: 2, name: 'Pending Payments' }])
     }
-    else
-    {
-        setOptions([])
+    else if (id == 12) {
+      setOptions(manufacturers)
+    }
+    else {
+      setOptions([])
     }
     // return () => setOptions([]);
-  },[id])
+  }, [id])
   // const [data, setDatas] = useState(0)
 
   const modifyData = (name) => {
-    if (name.length === 0) {
+    if (name.length==0) {
       changeId(0)
       SetComponentRender(0)
       return
@@ -53,16 +59,16 @@ export const Success = ({ distributers,changeId,text,id,SetComponentRender }) =>
     // console.log(name)
     // Distributers = name[0].id
     // setDatas(name[0].id)
-    changeId(name[0].id)
+    changeId(name.id)
   }
   return (
     <>
 
 
-        <div className="text-gray-950">
+      <div className="text-gray-950">
 
 
-            <Multiselect
+        <Multiselect
 
               options={options} // Options to display in the dropdown
               // selectedValues={props?.defaultDistributer}
@@ -77,8 +83,11 @@ export const Success = ({ distributers,changeId,text,id,SetComponentRender }) =>
               // closeOnSelectSingle={true}
 
             />
+        {/* <Select options={options} onChange={modifyData} isClearable={true} value={Manufacturer}
 
-        </div>
+        /> */}
+
+      </div>
 
     </>
   )

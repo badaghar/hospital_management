@@ -39,6 +39,132 @@ const Routes = () => {
 
 
 
+      <Set wrap={ScaffoldLayout} title="ManufacturerPurchaseMedicines" titleTo="manufacturerPurchaseMedicines" buttonLabel="New ManufacturerPurchaseMedicine" buttonTo="newManufacturerPurchaseMedicine">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <Route path="/manufacturer-purchase-medicines/new" page={ManufacturerPurchaseMedicineNewManufacturerPurchaseMedicinePage} name="newManufacturerPurchaseMedicine" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <Route path="/manufacturer-purchase-medicines/{id:Int}/edit" page={ManufacturerPurchaseMedicineEditManufacturerPurchaseMedicinePage} name="editManufacturerPurchaseMedicine" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <Route path="/manufacturer-purchase-medicines/{id:Int}" page={ManufacturerPurchaseMedicineManufacturerPurchaseMedicinePage} name="manufacturerPurchaseMedicine" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <Route path="/manufacturer-purchase-medicines" page={ManufacturerPurchaseMedicineManufacturerPurchaseMedicinesPage} name="manufacturerPurchaseMedicines" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </Set>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <Route path="/download-purchase-medicine" page={DownloadsDownloadPurchaseMedicinePage} name="downloadPurchaseMedicine" />
       <Route path="/download-sale-medicine/{id:Int}" page={DownloadsDownloadSaleMedicinePage} name="downloadSaleMedicine" />
       <Route path="/login" page={LoginPage} name="login" />

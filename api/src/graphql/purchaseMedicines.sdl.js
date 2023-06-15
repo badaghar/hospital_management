@@ -20,6 +20,11 @@ export const schema = gql`
   data: [PurchaseMedicine]!
   totalSum: Float!
 }
+  type ManufacturerReportResponse {
+  data: [ManufacturerPurchaseMedicine]!
+  totalSum: Float!
+  gstSum: Float!
+}
   type SaleReport {
     data: [SaleMedicine]!
     totalSum: Float!
@@ -44,12 +49,14 @@ export const schema = gql`
   }
 
 
+
   type Query {
     purchaseMedicines: [PurchaseMedicine!]! @requireAuth
     purchaseMedicine(id: Int!): PurchaseMedicine @requireAuth
     checkInvoiceNumber(invoiceNo:String!): [PurchaseMedicine]! @requireAuth
     # pharmacy Report
     distributersReport(id:Int!,startDate:String!,endDate:String!): DistributerReportResponse! @requireAuth
+    manufacturerReport(id:Int!,startDate:String!,endDate:String!): ManufacturerReportResponse! @requireAuth
     purchaseReport(startDate:String!,endDate:String!): DistributerReportResponse! @requireAuth
     saleReport(startDate:String!,endDate:String!) : SaleReport! @requireAuth
     returnMedicinesReport(startDate:String!,endDate:String!) : ReturnMedicineReport! @requireAuth
@@ -71,6 +78,7 @@ export const schema = gql`
     cgst: Float!
     grand_total: Float!
     permedicine: [CreateMedicineInput]!
+    newperMedicineManu: [CreateManufacturerPurchaseMedicineInput]!
   }
 
   input UpdatePurchaseMedicineInput {

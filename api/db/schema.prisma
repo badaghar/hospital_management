@@ -189,14 +189,15 @@ model ProductToComposition {
 }
 
 model Product {
-  id                   Int                    @id @default(autoincrement())
-  name                 String
-  mid                  Manufacturer           @relation(fields: [manufacturerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  manufacturerId       Int
-  created_at           DateTime               @default(now())
-  updated_at           DateTime               @updatedAt
-  Medicine             Medicine[]
-  ProductToComposition ProductToComposition[]
+  id                           Int                            @id @default(autoincrement())
+  name                         String
+  mid                          Manufacturer                   @relation(fields: [manufacturerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  manufacturerId               Int
+  created_at                   DateTime                       @default(now())
+  updated_at                   DateTime                       @updatedAt
+  Medicine                     Medicine[]
+  ProductToComposition         ProductToComposition[]
+  ManufacturerPurchaseMedicine ManufacturerPurchaseMedicine[]
 }
 
 model PurchaseMedicine {
@@ -248,6 +249,26 @@ model Medicine {
   updated_at DateTime @updatedAt
 
   @@unique([productId, batch])
+}
+
+model ManufacturerPurchaseMedicine {
+  id         Int      @id @default(autoincrement())
+  pid        Product  @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productId  Int
+  batch      String
+  paid_qty   Int
+  free_qty   Int
+  pack       Int
+  exp        DateTime
+  mrp        Float
+  rate       Float
+  dis        Float
+  sgst       Float
+  cgst       Float
+  amount     Float
+  net_amount Float
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model SaleMedicine {
