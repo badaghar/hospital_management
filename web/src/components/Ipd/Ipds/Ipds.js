@@ -54,33 +54,39 @@ const IpdsList = ({ ipds }) => {
   }
   const columns = [
     {
-      Header: 'Name',
+       headerClassName: 'text-left',
+      Header:  'Name',
       accessor: 'patient.name',
     },
     {
-      Header: 'Consultant doctor',
+       headerClassName: 'text-left',
+      Header:  'Consultant doctor',
       accessor: 'consultant_doctor',
     },
     {
-      Header: 'Date of admission',
+       headerClassName: 'text-left',
+      Header:  'Date of admission',
       accessor: 'date_of_admission',
       Cell: ({ original }) => (
           timeTag(original.created_at)
         )
     },
     {
-      Header: 'Paid Amount',
+       headerClassName: 'text-left',
+      Header:  'Paid Amount',
       accessor: 'paid_amount',
     },
     {
-      Header: 'Date of Discharge',
+       headerClassName: 'text-left',
+      Header:  'Date of Discharge',
       accessor: 'discharge_date',
       Cell: ({ original }) => (
           timeTag(original.created_at)
         )
     },
     {
-      Header: 'Action',
+       headerClassName: 'text-left',
+      Header:  'Action',
       accessor: 'actionColumn',
       disableSortBy: true,
       Cell: ({ original }) => (

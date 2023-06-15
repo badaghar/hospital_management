@@ -25,7 +25,7 @@ export const Loading = () => <div>Loading...</div>
 
 export const Empty = ({ startDate, endDate }) => <div>
 
-  No Report Found B/w {startDate.toString()} and {endDate.toString()}
+  No Report Found B/w {startDate.toLocaleDateString()} and {endDate.toLocaleDateString()}
 
 </div>
 
@@ -38,13 +38,15 @@ export const Success = ({ opdReport,startDate,endDate }) => {
     <>
           <div className='text-white p-10 text-center'>
         <span>
-          Total Paymnet Done From {startDate.toString()} to {endDate.toString()} is <span className='font-bold'>
+          Total Paymnet Done From {startDate.toLocaleDateString()} to {endDate.toLocaleDateString()} is <span className='font-bold'>
             ₹{opdReport.totalSum}
           </span>
         </span>
 
       </div>
+      <div className='bg-white text-black'>
       <OpdsList opds={opdReport.data} />
+      </div>
     </>
   )
 }

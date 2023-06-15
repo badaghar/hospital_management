@@ -55,33 +55,57 @@ const ReturnMedicinesList = ({ returnMedicines }) => {
 
   const columns = [
     {
-      Header: 'Date',
+       headerClassName: 'text-left',
+      Header:  'Date',
       accessor: 'date',
+      Cell: ({ original }) => (
+        original.date.split('T00:')[0]
+      )
     },
     {
-      Header: 'Patient Name',
+
+       headerClassName: 'text-left',
+      Header:  'Patient Name',
       accessor: 'patient.name',
     },
     {
-      Header: 'Total',
+       headerClassName: 'text-left',
+      Header:  'Total',
       accessor: 'total',
+      Cell: ({ original }) => (
+        original.total.toFixed(2)
+      )
     },
     {
-      Header: 'SGST',
+
+       headerClassName: 'text-left',
+      Header:  'SGST',
       accessor: 'sgst',
+      Cell: ({ original }) => (
+        original.sgst.toFixed(2)
+      )
     },
     {
-      Header: 'CGST',
+       headerClassName: 'text-left',
+      Header:  'CGST',
       accessor: 'cgst',
+      Cell: ({ original }) => (
+        original.cgst.toFixed(2)
+      )
     },
     {
-      Header: 'Grand Total',
+       headerClassName: 'text-left',
+      Header:  'Grand Total',
       accessor: 'grand_total',
+      Cell: ({ original }) => (
+        original.grand_total.toFixed(2)
+      )
     },
 
 
     {
-      Header: 'Action',
+       headerClassName: 'text-left',
+      Header:  'Action',
       accessor: 'actionColumn',
       disableSortBy: true,
       Cell: ({ original }) => (

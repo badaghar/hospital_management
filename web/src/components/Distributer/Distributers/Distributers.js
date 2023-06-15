@@ -53,27 +53,33 @@ const DistributersList = ({ distributers }) => {
   }
   const columns = [
     {
-      Header: 'ID',
+       headerClassName: 'text-left',
+      Header:  'ID',
       accessor: 'id',
     },
     {
-      Header: 'Name',
+       headerClassName: 'text-left',
+      Header:  'Name',
       accessor: 'name',
     },
     {
-      Header: 'Phone no',
+       headerClassName: 'text-left',
+      Header:  'Phone no',
       accessor: 'phoneNo',
     },
     {
-      Header: 'Gst no',
+       headerClassName: 'text-left',
+      Header:  'Gst no',
       accessor: 'gstNo',
     },
     {
-      Header: 'Dl no',
+       headerClassName: 'text-left',
+      Header:  'Dl no',
       accessor: 'dlNo',
     },
     {
-      Header: 'Action',
+       headerClassName: 'text-left',
+      Header:  'Action',
       accessor: 'actionColumn',
       disableSortBy: true,
       Cell: ({ original }) => (

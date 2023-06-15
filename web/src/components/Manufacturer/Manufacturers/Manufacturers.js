@@ -55,22 +55,26 @@ const ManufacturersList = ({ manufacturers }) => {
 
   const columns = [
     {
-      Header: 'ID',
+       headerClassName: 'text-left',
+      Header:  'ID',
       accessor: 'id',
     },
     {
-      Header: 'Name',
+       headerClassName: 'text-left',
+      Header:  'Name',
       accessor: 'name',
     },
     {
-      Header: 'Created At',
+       headerClassName: 'text-left',
+      Header:  'Created At',
       accessor: 'created_at',
       Cell: ({ original }) => (
           timeTag(original.created_at)
         )
     },
     {
-      Header: 'Updated At',
+       headerClassName: 'text-left',
+      Header:  'Updated At',
       accessor: 'updated_at',
       Cell: ({ original }) => (
           timeTag(original.updated_at)
@@ -78,7 +82,8 @@ const ManufacturersList = ({ manufacturers }) => {
     },
 
     {
-      Header: 'Action',
+       headerClassName: 'text-left',
+      Header:  'Action',
       accessor: 'actionColumn',
       disableSortBy: true,
       Cell: ({ original }) => (

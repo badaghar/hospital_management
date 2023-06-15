@@ -55,14 +55,17 @@ const MedicinesList = ({ medicines }) => {
 
   const columns = [
     {
+      headerClassName: 'text-left',
       Header: 'Name',
       accessor: 'pid.name',
     },
     {
+      headerClassName: 'text-left',
       Header: 'Batch',
       accessor: 'batch',
     },
     {
+      headerClassName: 'text-left',
       Header: 'Exp Date',
       accessor: 'exp',
       Cell: ({ original }) => (
@@ -70,14 +73,20 @@ const MedicinesList = ({ medicines }) => {
         )
     },
     {
+      headerClassName: 'text-left',
       Header: 'MRP',
       accessor: 'mrp',
+      Cell: ({ original }) => (
+        original.mrp.toFixed(2)
+      )
     },
     {
+      headerClassName: 'text-left',
       Header: 'Quantity',
       accessor: 'quantity',
     },
     {
+      headerClassName: 'text-left',
       Header: 'Action',
       accessor: 'actionColumn',
       disableSortBy: true,
@@ -119,6 +128,7 @@ const MedicinesList = ({ medicines }) => {
     columns={columns}
     rows_count={rows_count}
     search_data={search_data}
+    className=''
     />
     </>
     // <div className="rw-segment rw-table-wrapper-responsive">

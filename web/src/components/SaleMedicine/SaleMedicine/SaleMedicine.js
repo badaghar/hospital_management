@@ -48,7 +48,7 @@ const SaleMedicine = ({ saleMedicine }) => {
         </tr>
         <tr>
           <th className="p-4">Date</th>
-          <td className="p-4">{timeTag(saleMedicine.date)}</td>
+          <td className="p-4">{saleMedicine.date.split('T00:00:00.000Z')}</td>
         </tr>
       </tbody>
     </table>

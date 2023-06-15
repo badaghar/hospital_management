@@ -55,23 +55,28 @@ const OpdsList = ({ opds }) => {
 
   const columns = [
     {
-      Header: 'Name',
+       headerClassName: 'text-left',
+      Header:  'Name',
       accessor: 'patient.name',
     },
     {
-      Header: 'Consultant doctor',
+       headerClassName: 'text-left',
+      Header:  'Consultant doctor',
       accessor: 'consultant_doctor',
     },
     {
-      Header: 'Payment mode',
+       headerClassName: 'text-left',
+      Header:  'Payment mode',
       accessor: 'paymentMode',
     },
     {
-      Header: 'Amount',
+       headerClassName: 'text-left',
+      Header:  'Amount',
       accessor: 'amount',
     },
     {
-      Header: 'Action',
+       headerClassName: 'text-left',
+      Header:  'Action',
       accessor: 'actionColumn',
       disableSortBy: true,
       Cell: ({ original }) => (

@@ -29,7 +29,7 @@ export const Loading = () => <div>Loading...</div>
 
 export const Empty = ({ startDate, endDate }) => <div>
 
-  No Report Found B/w {startDate.toString()} and {endDate.toString()}
+  No Report Found B/w {startDate.toLocaleDateString()} and {endDate.toLocaleDateString()}
 
 </div>
 
@@ -44,13 +44,15 @@ export const Success = ({ saleReport, startDate, endDate }) => {
     <>
       <div className='text-white p-10 text-center'>
         <span>
-          Total Sale Amount  From {startDate.toString()} to {endDate.toString()} is <span className='font-bold'>
+          Total Sale Amount  From {startDate.toLocaleDateString()} to {endDate.toLocaleDateString()} is <span className='font-bold'>
             ₹{saleReport?.totalSum}
           </span>
         </span>
 
       </div>
+      <div className='bg-white text-black'>
       <SaleMedicines saleMedicines={saleReport.data} />
+      </div>
 
 
 

@@ -113,7 +113,7 @@ const ReturnMedicine = ({ returnMedicine }) => {
               </tr>
               <tr>
                 <th className="p-4">Date</th>
-                <td className="p-4">{timeTag(returnMedicine.date)}</td>
+                <td className="p-4">{returnMedicine.date.split('T00:00:00.000Z')}</td>
               </tr>
             </tbody>
           </table>

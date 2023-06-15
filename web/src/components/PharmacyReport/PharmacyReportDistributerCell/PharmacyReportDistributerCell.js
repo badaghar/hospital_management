@@ -27,12 +27,17 @@ export const QUERY = gql`
 
   }
 `
+function convertToShortDateString(dateString) {
+  const date = new Date(dateString);
+  const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+  return date.toLocaleDateString('en-US', options);
+}
 
 export const Loading = () => <div>Loading...</div>
 
 export const Empty = ({ startDate, endDate }) => <div>
 
-  No Report Found B/w {startDate.toString()} and {endDate.toString()}
+  No Report Found B/w {startDate.toLocaleDateString()} and {endDate.toLocaleDateString()}
 
 </div>
 
@@ -47,13 +52,16 @@ export const Success = ({ distributersReport, startDate, endDate }) => {
     <>
       <div className='text-white p-10 text-center'>
         <span>
-          Total Purchase Amount From Distributer {distributersReport.data[0]?.did?.name} From {startDate.toString()} to {endDate.toString()} is <span className='font-bold'>
+          Total Purchase Amount From Distributer {distributersReport.data[0]?.did?.name} From {startDate.toLocaleDateString()} to {endDate.toLocaleDateString()} is <span className='font-bold'>
             ₹{distributersReport.totalSum}
           </span>
         </span>
 
       </div>
+      <div className='bg-white text-black'>
       <PurchaseMedicines purchaseMedicines={distributersReport.data} />
+
+      </div>
 
 
 

@@ -53,22 +53,26 @@ const ProductsList = ({ products }) => {
   }
   const columns = [
     {
-      Header: 'ID',
+       headerClassName: 'text-left',
+      Header:  'ID',
       accessor: 'id',
     },
     {
-      Header: 'Name',
+       headerClassName: 'text-left',
+      Header:  'Name',
       accessor: 'name',
     },
 
     {
-      Header: 'Manufacturer Name',
+       headerClassName: 'text-left',
+      Header:  'Manufacturer Name',
       accessor: 'mid.name',
     },
 
 
     {
-      Header: 'Action',
+       headerClassName: 'text-left',
+      Header:  'Action',
       accessor: 'actionColumn',
       disableSortBy: true,
       Cell: ({ original }) => (

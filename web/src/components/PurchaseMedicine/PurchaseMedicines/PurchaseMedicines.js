@@ -62,18 +62,25 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
 
   const columns = [
     {
+      headerClassName: 'text-left',
       Header: 'Invoice No',
       accessor: 'invoiceNo',
     },
     {
+      headerClassName: 'text-left',
       Header: 'Distributer Name',
       accessor: 'did.name',
     },
     {
+      headerClassName: 'text-left',
       Header: 'Date',
       accessor: 'date',
+      Cell: ({ original }) => (
+        original.date.split('T00:')[0]
+      )
     },
     {
+      headerClassName: 'text-left',
       Header: 'Total',
       accessor: 'total',
       Cell: ({ original }) => (
@@ -83,6 +90,7 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
     },
 
     {
+      headerClassName: 'text-left',
       Header: 'Discount',
       accessor: 'discount',
       Cell: ({ original }) => (
@@ -90,6 +98,7 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
       )
     },
     {
+      headerClassName: 'text-left',
       Header: 'SGST',
       accessor: 'sgst',
       Cell: ({ original }) => (
@@ -97,6 +106,7 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
       )
     },
     {
+      headerClassName: 'text-left',
       Header: 'CGST',
       accessor: 'cgst',
       Cell: ({ original }) => (
@@ -104,12 +114,17 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
       )
     },
     {
+      headerClassName: 'text-left',
       Header: 'Grand Total',
       accessor: 'grand_total',
+      Cell: ({ original }) => (
+        original.grand_total.toFixed(2)
+      )
     },
 
 
     {
+      headerClassName: 'text-left',
       Header: 'Action',
       accessor: 'actionColumn',
       disableSortBy: true,
