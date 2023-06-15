@@ -64,22 +64,22 @@ const ManufacturersList = ({ manufacturers }) => {
       Header:  'Name',
       accessor: 'name',
     },
-    {
-       headerClassName: 'text-left',
-      Header:  'Created At',
-      accessor: 'created_at',
-      Cell: ({ original }) => (
-          timeTag(original.created_at)
-        )
-    },
-    {
-       headerClassName: 'text-left',
-      Header:  'Updated At',
-      accessor: 'updated_at',
-      Cell: ({ original }) => (
-          timeTag(original.updated_at)
-        )
-    },
+    // {
+    //    headerClassName: 'text-left',
+    //   Header:  'Created At',
+    //   accessor: 'created_at',
+    //   Cell: ({ original }) => (
+    //       timeTag(original.created_at)
+    //     )
+    // },
+    // {
+    //    headerClassName: 'text-left',
+    //   Header:  'Updated At',
+    //   accessor: 'updated_at',
+    //   Cell: ({ original }) => (
+    //       timeTag(original.updated_at)
+    //     )
+    // },
 
     {
        headerClassName: 'text-left',

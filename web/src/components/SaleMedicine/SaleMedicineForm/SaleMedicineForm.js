@@ -656,7 +656,7 @@ const SaleMedicineForm = (props) => {
 
 
           <Submit disabled={props.loading} className="rw-button rw-button-blue">
-            Save
+            Save and Print
           </Submit>
 
           {/* <button className="rw-button rw-button-blue" >

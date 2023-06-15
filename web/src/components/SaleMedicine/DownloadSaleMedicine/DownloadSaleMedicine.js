@@ -88,7 +88,7 @@ const DownloadSaleMedicine = ({ saleMedicine,download }) => {
                   />
                 </>
               ) : (
-                'Download PDF'
+                'Print PDF'
               )}
             </button>
           </div>

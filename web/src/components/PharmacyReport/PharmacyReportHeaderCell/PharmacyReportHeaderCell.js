@@ -35,13 +35,20 @@ export const Success = ({ distributers, changeId, text, id, SetComponentRender, 
     // Cleanup the timeout when the component unmounts
 
     if (id == 1) {
-      setOptions(distributers)
+      const obj = distributers.map((item)=>{
+        return {id:item.id,name:item.name,value:item.id,label:item.name}
+      })
+      setOptions(obj)
     }
     else if (id == 4) {
-      setOptions([{ id: 1, name: 'Complete Payments' }, { id: 2, name: 'Pending Payments' }])
+      setOptions([{ id: 1, name: 'Complete Payments',Label:'Complete Payments',value:1 }, { id: 2, name: 'Pending Payments',Label:'Pending Payments',value:2 }])
     }
     else if (id == 12) {
-      setOptions(manufacturers)
+      // setOptions(manufacturers)
+      const obj = manufacturers.map((item)=>{
+        return {id:item.id,name:item.name,value:item.id,label:item.name}
+      })
+      setOptions(obj)
     }
     else {
       setOptions([])
@@ -68,7 +75,7 @@ export const Success = ({ distributers, changeId, text, id, SetComponentRender, 
       <div className="text-gray-950">
 
 
-        <Multiselect
+        {/* <Multiselect
 
               options={options} // Options to display in the dropdown
               // selectedValues={props?.defaultDistributer}
@@ -82,10 +89,10 @@ export const Success = ({ distributers, changeId, text, id, SetComponentRender, 
 
               // closeOnSelectSingle={true}
 
-            />
-        {/* <Select options={options} onChange={modifyData} isClearable={true} value={Manufacturer}
+            /> */}
+        <Select options={options} onChange={modifyData} isClearable={true}
 
-        /> */}
+        />
 
       </div>
 
