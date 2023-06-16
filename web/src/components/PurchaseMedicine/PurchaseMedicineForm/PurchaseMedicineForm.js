@@ -262,7 +262,7 @@ const PurchaseMedicineForm = (props) => {
           headerHeight='60px'
           closeButtonColor='white'
           bodyBackgroundColor='#fff'
-          bodyTextColor='white'
+          bodyTextColor='black'
           bodyHeight='350px'
 
           headerText={<span className="flex items-end h-14 text-xl">Add Product Details</span>}

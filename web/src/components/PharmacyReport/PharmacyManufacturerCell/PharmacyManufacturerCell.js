@@ -54,7 +54,7 @@ export const Success = ({ manufacturerReport, startDate, endDate }) => {
       <div className='text-white p-10 text-center'>
         <span>
           Total Purchase Amount From Manufacturer {manufacturerReport.data[0]?.pid?.mid?.name} From {startDate.toLocaleDateString()} to {endDate.toLocaleDateString()} Without Gst is <span className='font-bold'>
-            ₹{manufacturerReport.totalSum} and with Gst is ₹{manufacturerReport.gstSum}
+            ₹{parseFloat(manufacturerReport.totalSum).toFixed(2)} and with Gst is ₹{parseFloat(manufacturerReport.gstSum).toFixed(2)}
           </span>
         </span>
 

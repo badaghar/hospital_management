@@ -55,6 +55,7 @@ function convertObjectValuesToUpper(obj) {
 const SaleMedicineForm = (props) => {
 
   const [isOpen, setIsOpen] = useState(false)
+  const [isSave,setIsSave] = useState(false)
 
   const [no_of_medicine, setNoOfMedicine] = useState(0)
   const [show_medicine_heading, setShowMedicineHeading] = useState(false)
@@ -123,6 +124,8 @@ const SaleMedicineForm = (props) => {
 
 
   const onSubmit = (data) => {
+    // console.log(isSave)
+    // console.log(data)
     const newmedicine = medicineObj.filter((val) => {
       return val['medicine Name']
     })
@@ -143,8 +146,8 @@ const SaleMedicineForm = (props) => {
       'permedicine': newperMedicine,
       'doctor_name':doctorName
     }
-    console.log(input)
-    props.onSave(input, props?.saleMedicine?.id)
+    // console.log(input)
+    props.onSave(input, isSave ,props?.saleMedicine?.id)
 
   }
 
@@ -654,15 +657,16 @@ const SaleMedicineForm = (props) => {
 
         <div className="rw-button-group">
 
+          <button className="rw-button rw-button-blue" onClick={()=>setIsSave(true)}>
+            Save
 
-          <Submit disabled={props.loading} className="rw-button rw-button-blue">
+          </button>
+
+          <Submit disabled={props.loading} className="rw-button rw-button-blue"  onClick={()=>setIsSave(false)}>
             Save and Print
           </Submit>
 
-          {/* <button className="rw-button rw-button-blue" >
-            Save And Print
 
-          </button> */}
         </div>
       </Form>
     </div>

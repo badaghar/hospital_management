@@ -1,6 +1,7 @@
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useState } from 'react'
 
 import SaleMedicineForm from 'src/components/SaleMedicine/SaleMedicineForm'
 
@@ -60,14 +61,21 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ medicines, patients,users}) => {
+export const Success = ({ medicines, patients, users }) => {
+  const [isSave, setIssave] = useState()
   const [createSaleMedicine, { loading, error }] = useMutation(
     CREATE_SALE_MEDICINE_MUTATION,
     {
       onCompleted: (data) => {
         toast.success('SaleMedicine created')
-        // navigate(routes.saleMedicines())
-        navigate(routes.viewSaleMedicine({ id: data.createSaleMedicine.id }))
+        if (isSave) {
+          navigate(routes.saleMedicines())
+
+        }
+        else {
+
+          navigate(routes.viewSaleMedicine({ id: data.createSaleMedicine.id }))
+        }
       },
       onError: (error) => {
         toast.error(error.message)
@@ -75,7 +83,8 @@ export const Success = ({ medicines, patients,users}) => {
     }
   )
 
-  const onSave = (input) => {
+  const onSave = (input, isSave) => {
+    setIssave(isSave)
     createSaleMedicine({ variables: { input } })
   }
 
