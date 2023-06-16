@@ -18,14 +18,15 @@ export const checkInvoiceNumber = ({ invoiceNo }) => {
 export const createPurchaseMedicine = async ({ input }) => {
   const {permedicine,newperMedicineManu,...data} =  input
 
+
   const med = await db.purchaseMedicine.create({
     data: data,
   })
 
   const billData = {
     purchaseMedicineId: med.id,
-    total: med.total,
-    balance: med.total,
+    total: med.grand_total,
+    balance: med.grand_total,
     paid: 0,
     method: "",
     remark: ""

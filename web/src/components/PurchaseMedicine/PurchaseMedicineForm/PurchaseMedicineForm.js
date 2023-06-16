@@ -21,6 +21,7 @@ import { ReactDialogBox } from 'react-js-dialog-box'
 import ProductForm from 'src/components/Product/ProductForm/ProductForm'
 import { useMutation } from '@redwoodjs/web'
 // import
+import { QUERY } from '../CheckPurchasesCell'
 // import { useQuery } from '@redwoodjs/web'
 // import { gql } from 'graphql-tag'
 
@@ -36,6 +37,14 @@ const CREATE_PRODUCT_MUTATION = gql`
     createProduct(input: $input) {
       id
       name
+      mid{
+        id
+      name
+      Product{
+        id
+        name
+      }
+      }
     }
   }
 `
@@ -53,16 +62,31 @@ const PurchaseMedicineForm = (props) => {
     {
       onCompleted: (pro) => {
         toast.success('Product created')
+        const item = pro.createProduct.mid
         console.log(item)
-        const item = pro.createProduct
         setProductForm(false)
-        // navigate(routes.products())
+        // // navigate(routes.products())
+        const opt2 = props.manufacturers.map((it) => {
+          if (item.id == it.id) {
+            return { label: item.name, value: item.id, name: item.name, id: item.id, item }
+          }
+          return { label: it.name, value: it.id, name: it.name, id: it.id, it }
+        })
+        setManufacturers(opt2)
+        // setManufacturers((it) => {
+        //   const data =  [...it, { label: item.name, value: item.id, name: item.name, id: item.id, item }]
+        //   console.log(data)
+        //   return data
+        // })
+        setProduct((it) => [...it, { label: item.name, value: item.id, name: item.name, id: item.id }])
 
-    setProduct((it)=>[...it,{ label: item.name, value: item.id, name: item.name, id: item.id }])
       },
       onError: (error) => {
         toast.error(error.message)
       },
+      // refetchQueries: [{ query: QUERY }],
+      // awaitRefetchQueries: true,
+
     }
   )
 
@@ -97,7 +121,7 @@ const PurchaseMedicineForm = (props) => {
     })
     setSelectDistributer(opt)
     const opt2 = props.manufacturers.map((item) => {
-      return { label: item.name, value: item.id, name: item.name, id: item.id,item }
+      return { label: item.name, value: item.id, name: item.name, id: item.id, item }
     })
     setManufacturers(opt2)
     const opt3 = props.products.map((item) => {
@@ -145,7 +169,7 @@ const PurchaseMedicineForm = (props) => {
       'cgst': total_cgst_amount,
       'grand_total': grand_total,
       'permedicine': newperMedicine,
-      'newperMedicineManu':newperMedicineManu
+      'newperMedicineManu': newperMedicineManu
     }
 
     // medInput = newperMedicine
@@ -361,7 +385,7 @@ const PurchaseMedicineForm = (props) => {
 
           <div className='flex'>
             <div className='bg-green-600 p-2 text-white rounded-md opacity-50 hover:opacity-100 cursor-pointer'
-            onClick={setProductForm.bind(this,true)}
+              onClick={setProductForm.bind(this, true)}
             >
               Add Product
             </div>

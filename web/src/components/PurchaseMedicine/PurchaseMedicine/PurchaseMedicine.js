@@ -39,24 +39,21 @@ const PurchaseMedicine = ({ purchaseMedicine }) => {
       <div className="bg-white p-6 shadow-lg rounded-lg grid gap-4 grid-cols-2 text-sm">
 
         <div className="col-span-2">
-          <table className="w-full border border-gray-200">
+          <table className="w-full border border-gray-200 text-center">
             <tbody>
               <tr>
                 <th className="p-4">Id</th>
-                <td className="p-4">{purchaseMedicine.id}</td>
-              </tr>
-              <tr>
                 <th className="p-4">Invoice no</th>
-                <td className="p-4">{purchaseMedicine.invoiceNo}</td>
-              </tr>
-              <tr>
                 <th className="p-4">Distributor Name</th>
-                <td className="p-4">{purchaseMedicine.did.name}</td>
+                <th className="p-4">Date</th>
               </tr>
               <tr>
-                <th className="p-4">Date</th>
+                <td className="p-4">{purchaseMedicine.id}</td>
+                <td className="p-4">{purchaseMedicine.invoiceNo}</td>
+                <td className="p-4">{purchaseMedicine.did.name}</td>
                 <td className="p-4">{purchaseMedicine.date.split('T00:00:00.000Z')}</td>
               </tr>
+
             </tbody>
           </table>
         </div>
@@ -91,7 +88,7 @@ const PurchaseMedicine = ({ purchaseMedicine }) => {
                   <td className="p-4">{item.paid_qty}</td>
                   <td className="p-4">{item.free_qty}</td>
                   <td className="p-4">{item.pack}</td>
-                  <td className="p-4">{item.exp.split('-')[1] +'-'+ item.exp.split('-')[0]}</td>
+                  <td className="p-4">{item.exp.split('-')[1] + '-' + item.exp.split('-')[0]}</td>
                   <td className="p-4">{item.mrp}</td>
                   <td className="p-4">{item.rate}</td>
                   <td className="p-4">{item.dis}</td>
@@ -105,44 +102,36 @@ const PurchaseMedicine = ({ purchaseMedicine }) => {
           </table>
         </div>
 
-        <div>
-          <p className=" font-bold">Total</p>
-          <p className="p-4">{purchaseMedicine.total}</p>
+        <div className="col-span-2">
+
+          <table className="w-full border border-gray-200 text-center">
+            <tbody>
+              <tr>
+                <td className="p-4 font-bold">Total</td>
+                <td className="p-4 font-bold">Discount</td>
+                <td className="p-4 font-bold">Sgst</td>
+                <td className="p-4 font-bold">Cgst</td>
+                <td className="p-4 font-bold">Grand total</td>
+                <td className="p-4 font-bold">Created at</td>
+              </tr>
+
+              <tr className=''>
+                <td className="p-4">{purchaseMedicine.total}</td>
+                <td className="p-4">{purchaseMedicine.discount.toFixed(2)}</td>
+                <td className="p-4">{purchaseMedicine.sgst.toFixed(2)}</td>
+                <td className="p-4">{purchaseMedicine.cgst.toFixed(2)}</td>
+                <td className="p-4">{purchaseMedicine.grand_total}</td>
+                <td className="p-4">{purchaseMedicine.created_at.split('T')[0]}</td>
+              </tr>
+          {/* {    date = new Date().toLocaleDateString() } */}
+
+            </tbody>
+          </table>
+          </div>
         </div>
 
-        <div>
-          <p className=" font-bold">Discount</p>
-          <p className="p-4">{purchaseMedicine.discount.toFixed(2)}</p>
-        </div>
-
-        <div>
-          <p className=" font-bold">Sgst</p>
-          <p className="p-4">{purchaseMedicine.sgst.toFixed(2)}</p>
-        </div>
-
-        <div>
-          <p className=" font-bold">Cgst</p>
-          <p className="p-4">{purchaseMedicine.cgst.toFixed(2)}</p>
-        </div>
-
-        <div>
-          <p className=" font-bold">Grand total</p>
-          <p className="p-4">{purchaseMedicine.grand_total}</p>
-        </div>
-
-        <div>
-          <p className=" font-bold">Created at</p>
-          <p className="p-4">{timeTag(purchaseMedicine.created_at)}</p>
-        </div>
-
-        <div>
-          <p className=" font-bold">Updated at</p>
-          <p className="p-4">{timeTag(purchaseMedicine.updated_at)}</p>
-        </div>
-      </div>
-
-      <nav className="rw-button-group">
-        {/* <Link
+        <nav className="rw-button-group">
+          {/* <Link
           to={routes.editPurchaseMedicine({ id: purchaseMedicine.id })}
           className="rw-button rw-button-blue"
         >
@@ -155,9 +144,9 @@ const PurchaseMedicine = ({ purchaseMedicine }) => {
         >
           Delete
         </button> */}
-      </nav>
-    </>
-  )
+        </nav>
+      </>
+      )
 }
 
-export default PurchaseMedicine
+      export default PurchaseMedicine

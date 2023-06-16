@@ -19,105 +19,105 @@ const NewPurchaseMedicineTable = (props) => {
   const [cgst, set_cgst] = useState(0)
   const [total_amount, set_total_amount] = useState(0)
   const [total_net_amount, set_total_net_amount] = useState(0)
-  const [products,setProducts] = useState([])
+  const [products, setProducts] = useState([])
 
-  useEffect(()=>{
-    const tamt = (paid_qty)*rate
+  useEffect(() => {
+    const tamt = (paid_qty) * rate
     set_total_amount(tamt)
-    const tnetamtDisc = tamt - dis*tamt/100.0
-    const tnetamt = ((parseFloat(cgst)+parseFloat(sgst))*tnetamtDisc/100.0) + tnetamtDisc
+    const tnetamtDisc = tamt - dis * tamt / 100.0
+    const tnetamt = ((parseFloat(cgst) + parseFloat(sgst)) * tnetamtDisc / 100.0) + tnetamtDisc
     // const tnetamt = ((parseFloat(cgst)+parseFloat(sgst))*tamt/100.0) + tamt
     // const tnetamt = ((parseFloat(cgst)+parseFloat(sgst))*tamt/100.0) + tamt
     // const tnetamtDisc = tnetamt - dis*tnetamt/100.0
     // set_total_net_amount(tnetamtDisc)
     set_total_net_amount(tnetamt)
-    props.set_total_amount_list((ml)=>{
+    props.set_total_amount_list((ml) => {
       const updatedList = [...ml];
       updatedList[props.value] = tamt;
 
       return updatedList;
     })
-    props.set_total_dis_amount_list((ml)=>{
+    props.set_total_dis_amount_list((ml) => {
       const updatedList = [...ml];
-      updatedList[props.value] = dis*tamt/100.0;
+      updatedList[props.value] = dis * tamt / 100.0;
 
       return updatedList;
     })
-    props.set_total_sgst_amount_list((ml)=>{
+    props.set_total_sgst_amount_list((ml) => {
       const updatedList = [...ml];
-      updatedList[props.value] = parseFloat(( (parseFloat(sgst))*tnetamtDisc/100.0).toFixed(2));
+      updatedList[props.value] = parseFloat(((parseFloat(sgst)) * tnetamtDisc / 100.0).toFixed(2));
 
       return updatedList;
     })
-    props.set_total_cgst_amount_list((ml)=>{
+    props.set_total_cgst_amount_list((ml) => {
       const updatedList = [...ml];
-      updatedList[props.value] = parseFloat(((parseFloat(cgst))*tnetamtDisc/100.0).toFixed(2));
+      updatedList[props.value] = parseFloat(((parseFloat(cgst)) * tnetamtDisc / 100.0).toFixed(2));
 
       return updatedList;
     })
 
 
     let obj = {
-      'mfr':props.manufacturersList[props.value],
-      'product':props.productList[props.value],
-      'batch':batch,
+      'mfr': props.manufacturersList[props.value],
+      'product': props.productList[props.value],
+      'batch': batch,
       'paid_qty': parseFloat(paid_qty),
-      'free_qty':parseFloat(free_qty),
-      'pack':parseFloat(pack),
-      'exp':exp,
-      'mrp':parseFloat(mrp),
-      'rate':parseFloat(rate),
-      'dis':parseFloat(dis),
-      'sgst':parseFloat(sgst),
-      'cgst':parseFloat(cgst),
-      'amount':parseFloat(total_amount),
-      'net_amount':parseFloat(total_net_amount),
+      'free_qty': parseFloat(free_qty),
+      'pack': parseFloat(pack),
+      'exp': exp,
+      'mrp': parseFloat(mrp),
+      'rate': parseFloat(rate),
+      'dis': parseFloat(dis),
+      'sgst': parseFloat(sgst),
+      'cgst': parseFloat(cgst),
+      'amount': parseFloat(total_amount),
+      'net_amount': parseFloat(total_net_amount),
     }
 
     let manObj = {
-      'productId':props.productList[props.value].id,
-      'batch':batch,
+      'productId': props.productList[props.value].id,
+      'batch': batch,
       'paid_qty': parseFloat(paid_qty),
-      'free_qty':parseFloat(free_qty),
-      'pack':parseFloat(pack),
-      'exp':new Date(exp),
-      'mrp':parseFloat(mrp),
-      'rate':parseFloat(rate),
-      'dis':parseFloat(dis),
-      'sgst':parseFloat(sgst),
-      'cgst':parseFloat(cgst),
-      'amount':parseFloat(total_amount),
-      'net_amount':parseFloat(total_net_amount),
+      'free_qty': parseFloat(free_qty),
+      'pack': parseFloat(pack),
+      'exp': new Date(exp),
+      'mrp': parseFloat(mrp),
+      'rate': parseFloat(rate),
+      'dis': parseFloat(dis),
+      'sgst': parseFloat(sgst),
+      'cgst': parseFloat(cgst),
+      'amount': parseFloat(total_amount),
+      'net_amount': parseFloat(total_net_amount),
     }
 
     // let oneMedPrice = parseFloat(mrp) * ((parseFloat(cgst)+parseFloat(sgst)) / (100 +(parseFloat(cgst)+parseFloat(sgst))))
-    let oneMedPrice = parseFloat(parseFloat(mrp/pack).toFixed(2))
+    let oneMedPrice = parseFloat(parseFloat(mrp / pack).toFixed(2))
 
     // const dateString = "2023-05-25";
-const date = new Date(exp);
+    const date = new Date(exp);
     let medObj = {
-      'quantity':(parseFloat(paid_qty)+parseFloat(free_qty))*parseFloat(pack),
-      'productId':props.productList[props.value].id,
-      'batch':batch,
-      'exp':date,
-      'mrp' : parseFloat(oneMedPrice),
-      'sgst':parseFloat(sgst),
-      'cgst':parseFloat(cgst),
-      'discount':parseFloat(dis)
+      'quantity': (parseFloat(paid_qty) + parseFloat(free_qty)) * parseFloat(pack),
+      'productId': props.productList[props.value].id,
+      'batch': batch,
+      'exp': date,
+      'mrp': parseFloat(oneMedPrice),
+      'sgst': parseFloat(sgst),
+      'cgst': parseFloat(cgst),
+      'discount': parseFloat(dis)
     }
-    props.setmedicineObj((ml)=>{
+    props.setmedicineObj((ml) => {
       const updatedList = [...ml];
       updatedList[props.value] = obj
 
       return updatedList;
     })
-    props.setPermedicineObj((ml)=>{
+    props.setPermedicineObj((ml) => {
       const updatedList = [...ml];
       updatedList[props.value] = medObj
 
       return updatedList;
     })
-    props.setmedicineManuObj((ml)=>{
+    props.setmedicineManuObj((ml) => {
       const updatedList = [...ml];
       updatedList[props.value] = manObj
 
@@ -127,7 +127,7 @@ const date = new Date(exp);
     console.log(medObj)
 
 
-  },[mfr,paid_qty,free_qty,pack,mrp,rate,dis,sgst,cgst])
+  }, [mfr, paid_qty, free_qty, pack, mrp, rate, dis, sgst, cgst])
 
   const updateTotal = (data) => {
     let grade_temp_obj = {}
@@ -179,13 +179,13 @@ const date = new Date(exp);
   // let grade_temp_obj={};
   // grade_temp_obj[mfr+"_"+grade_point] = [min,max]
 
-  const modifiyManufacturer = (name) =>{
-    if(name.length===0){
+  const modifiyManufacturer = (name) => {
+    if (name.length === 0) {
       return
     }
-    props.setManufacturerList((ml)=>{
+    props.setManufacturerList((ml) => {
       const updatedList = [...ml];
-      updatedList[props.value] = {id:name.id,name:name.name};
+      updatedList[props.value] = { id: name.id, name: name.name };
 
 
 
@@ -196,22 +196,22 @@ const date = new Date(exp);
       return item.id == name.id
       // console.log(name.id,item.id)
     })
-    pro =  pro[0].item.Product.map((item)=>{
+    pro = pro[0].item.Product.map((item) => {
       return { label: item.name, value: item.id, name: item.name, id: item.id }
     })
     console.log(pro)
 
     setProducts(pro)
   }
-  const modifyProducts = (name) =>{
-    if(name.length===0){
+  const modifyProducts = (name) => {
+    if (name.length === 0) {
       return
     }
-    props.setProductList((ml)=>{
+    props.setProductList((ml) => {
       const updatedList = [...ml]; // Create a new array with the existing values
 
       // Update the desired element
-      updatedList[props.value] = {id:name.id,name:name.name};
+      updatedList[props.value] = { id: name.id, name: name.name };
 
       return updatedList;
     })
@@ -222,7 +222,7 @@ const date = new Date(exp);
   return (
     <>
       <div className="flex col-span-3 justify-center flex-grow-0">
-      {/* <Multiselect
+        {/* <Multiselect
       className="rw-input"
           options={props.manufacturers} // Options to display in the dropdown
           onSelect={(event) => modifiyManufacturer(event)} // Function will trigger on select event
@@ -231,11 +231,11 @@ const date = new Date(exp);
 
           displayValue="name" // Property name to display in the dropdown options
         /> */}
-          <Select className='rw-input' options={props.manufacturers} onChange={modifiyManufacturer} isClearable={true}
-/>
+        <Select className='rw-input' options={props.manufacturers} onChange={modifiyManufacturer} isClearable={true}
+        />
       </div>
       <div className="flex col-span-3 justify-center">
-      {/* <Multiselect
+        {/* <Multiselect
       className="rw-input"
           options={props.products} // Options to display in the dropdown
           onSelect={(event) => modifyProducts(event)} // Function will trigger on select event
@@ -244,8 +244,8 @@ const date = new Date(exp);
 
           displayValue="name" // Property name to display in the dropdown options
         /> */}
-                  <Select className='rw-input' options={products} onChange={modifyProducts} isClearable={true}
-/>
+        <Select className='rw-input' options={products} onChange={modifyProducts} isClearable={true}
+        />
       </div>
       <div className="flex col-span-1 justify-center">
         <TextField
@@ -374,7 +374,7 @@ const date = new Date(exp);
           // onChange={updateTotal}
           value={total_amount}
           disabled={true}
-          // validation={{ required: true }}
+        // validation={{ required: true }}
         />
 
         <FieldError name={'amount_' + props.value} className="rw-field-error" />
@@ -387,7 +387,7 @@ const date = new Date(exp);
           value={total_net_amount}
           disabled={true}
 
-          // validation={{ required: true }}
+        // validation={{ required: true }}
         />
 
         <FieldError name={'net_amount_' + props.value} className="rw-field-error" />
