@@ -15,6 +15,9 @@ export const QUERY = gql`
       created_at
       updated_at
       patientId
+      patient{
+        name
+      }
     }
   }
 `

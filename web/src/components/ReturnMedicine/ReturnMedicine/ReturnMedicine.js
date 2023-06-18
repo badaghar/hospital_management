@@ -105,14 +105,16 @@ const ReturnMedicine = ({ returnMedicine }) => {
 
 
         <div className="col-span-2">
-          <table className="w-full border border-gray-200">
+          <table className="w-full border border-gray-200 text-center">
             <tbody>
               <tr>
                 <th className="p-4">Id</th>
-                <td className="p-4">{returnMedicine.id}</td>
+                <th className="p-4">Patient Name</th>
+                <th className="p-4">Date</th>
               </tr>
               <tr>
-                <th className="p-4">Date</th>
+                <td className="p-4">{returnMedicine.id}</td>
+                <td className="p-4">{returnMedicine.patient.name}</td>
                 <td className="p-4">{returnMedicine.date.split('T00:00:00.000Z')}</td>
               </tr>
             </tbody>
@@ -138,7 +140,7 @@ const ReturnMedicine = ({ returnMedicine }) => {
                 <tr key={index}>
                   <td className="p-4">{item['medicine Name']}</td>
                   <td className="p-4">{item['batch No']}</td>
-                  <td className="p-4">{item['Expiry Date'].split('-')[1] +'-'+item['Expiry Date'].split('-')[0]}</td>
+                  <td className="p-4">{item['Expiry Date'].split('-')[1] + '-' + item['Expiry Date'].split('-')[0]}</td>
                   <td className="p-4">{item['mrp']}</td>
                   <td className="p-4">{item['quantity']}</td>
                   <td className="p-4">{item['cgst/sgst']}</td>
@@ -149,34 +151,30 @@ const ReturnMedicine = ({ returnMedicine }) => {
           </table>
         </div>
 
-        <div>
-          <p className=" font-bold">Total</p>
-          <p className="p-4">{returnMedicine.total}</p>
-        </div>
 
-        <div>
-          <p className=" font-bold">Sgst</p>
-          <p className="p-4">{returnMedicine.sgst}</p>
-        </div>
+        <div className="col-span-2">
+          <table className="w-full border border-gray-200 text-center">
+            <tbody>
+              <tr>
+                <th className=" font-bold">Total</th>
 
-        <div>
-          <p className=" font-bold">Cgst</p>
-          <p className="p-4">{returnMedicine.cgst}</p>
-        </div>
-
-        <div>
-          <p className=" font-bold">Grand total</p>
-          <p className="p-4">{returnMedicine.grand_total}</p>
-        </div>
-
-        <div>
-          <p className=" font-bold">Created at</p>
-          <p className="p-4">{timeTag(returnMedicine.created_at)}</p>
-        </div>
-
-        <div>
-          <p className=" font-bold">Updated at</p>
-          <p className="p-4">{timeTag(returnMedicine.updated_at)}</p>
+                <th className=" font-bold">Sgst</th>
+                <th className=" font-bold">Cgst</th>
+                <th className=" font-bold">Grand total</th>
+                <th className=" font-bold">Created at</th>
+                <th className=" font-bold">Updated at</th>
+              </tr>
+              <tr>
+                <td className="p-4">{returnMedicine.total}</td>
+                <td className="p-4">{returnMedicine.discount}</td>
+                <td className="p-4">{returnMedicine.sgst}</td>
+                <td className="p-4">{returnMedicine.cgst}</td>
+                <td className="p-4">{returnMedicine.grand_total}</td>
+                <td className="p-4">{timeTag(returnMedicine.created_at)}</td>
+                <td className="p-4">{timeTag(returnMedicine.updated_at)}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </>

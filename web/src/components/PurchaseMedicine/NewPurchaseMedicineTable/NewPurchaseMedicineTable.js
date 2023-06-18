@@ -127,7 +127,7 @@ const NewPurchaseMedicineTable = (props) => {
     console.log(medObj)
 
 
-  }, [mfr, paid_qty, free_qty, pack, mrp, rate, dis, sgst, cgst])
+  }, [mfr, paid_qty, free_qty, pack, mrp, rate, dis, sgst, cgst,batch,exp])
 
   const updateTotal = (data) => {
     let grade_temp_obj = {}

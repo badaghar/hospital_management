@@ -13,6 +13,7 @@ const DELETE_PURCHASE_MEDICINE_MUTATION = gql`
 `
 
 const PurchaseMedicine = ({ purchaseMedicine }) => {
+  console.log(purchaseMedicine)
   const [deletePurchaseMedicine] = useMutation(
     DELETE_PURCHASE_MEDICINE_MUTATION,
     {
@@ -89,13 +90,13 @@ const PurchaseMedicine = ({ purchaseMedicine }) => {
                   <td className="p-4">{item.free_qty}</td>
                   <td className="p-4">{item.pack}</td>
                   <td className="p-4">{item.exp.split('-')[1] + '-' + item.exp.split('-')[0]}</td>
-                  <td className="p-4">{item.mrp}</td>
-                  <td className="p-4">{item.rate}</td>
-                  <td className="p-4">{item.dis}</td>
+                  <td className="p-4">{item.mrp.toFixed(2)}</td>
+                  <td className="p-4">{item.rate.toFixed(2)}</td>
+                  <td className="p-4">{item.dis.toFixed(2)}</td>
                   <td className="p-4">{item.sgst}</td>
                   <td className="p-4">{item.cgst}</td>
-                  <td className="p-4">{item.amount}</td>
-                  <td className="p-4">{item.net_amount.toFixed(2)}</td>
+                  <td className="p-4">{item.amount.toFixed(2)}</td>
+                  <td className="p-4">{ isNaN(parseFloat(item.net_amount).toFixed(2)) ? (0).toFixed(2) :parseFloat(item.net_amount).toFixed(2) }</td>
                 </tr>
               ))}
             </tbody>
@@ -120,7 +121,7 @@ const PurchaseMedicine = ({ purchaseMedicine }) => {
                 <td className="p-4">{purchaseMedicine.discount.toFixed(2)}</td>
                 <td className="p-4">{purchaseMedicine.sgst.toFixed(2)}</td>
                 <td className="p-4">{purchaseMedicine.cgst.toFixed(2)}</td>
-                <td className="p-4">{purchaseMedicine.grand_total}</td>
+                <td className="p-4">{purchaseMedicine.grand_total.toFixed(2)}</td>
                 <td className="p-4">{purchaseMedicine.created_at.split('T')[0]}</td>
               </tr>
           {/* {    date = new Date().toLocaleDateString() } */}

@@ -1,6 +1,7 @@
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import axios from 'axios'
 import { useState } from 'react'
 
 import SaleMedicineForm from 'src/components/SaleMedicine/SaleMedicineForm'
@@ -62,6 +63,47 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ medicines, patients, users }) => {
+
+
+  function getPDF(id) {
+    return axios.get(
+      `/.redwood/functions/downloadSaleMedicineBill?id=` +
+      id,
+      {
+        responseType: 'arraybuffer',
+        headers: {
+          Accept: 'application/pdf',
+        },
+      }
+    )
+  }
+  const printPDF = (id) => {
+    return getPDF(id) // API call
+      .then((response) => {
+        const blob = new Blob([response.data], { type: 'application/pdf' })
+        var blobURL = URL.createObjectURL(blob)
+        var iframe =  document.createElement('iframe')
+        document.body.appendChild(iframe)
+        iframe.style.display = 'none'
+
+        iframe.src = blobURL
+     iframe.onload = function() {
+      setTimeout(function() {
+        iframe.focus()
+        iframe.contentWindow.print()
+      }, 1)
+    }
+        toast.success('Download Complete')
+      })
+      .catch((err) => {
+        toast.error('something wrong happened try again')
+        console.log(err)
+      })
+  }
+
+
+
+
   const [isSave, setIssave] = useState()
   const [createSaleMedicine, { loading, error }] = useMutation(
     CREATE_SALE_MEDICINE_MUTATION,
@@ -73,8 +115,10 @@ export const Success = ({ medicines, patients, users }) => {
 
         }
         else {
+          printPDF(data.createSaleMedicine.id)
+          navigate(routes.saleMedicines())
 
-          navigate(routes.viewSaleMedicine({ id: data.createSaleMedicine.id }))
+          // navigate(routes.viewSaleMedicine({ id: data.createSaleMedicine.id }))
         }
       },
       onError: (error) => {

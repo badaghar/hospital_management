@@ -172,6 +172,8 @@ const PurchaseMedicineForm = (props) => {
       'newperMedicineManu': newperMedicineManu
     }
 
+
+
     // medInput = newperMedicine
 
     console.log(input)
