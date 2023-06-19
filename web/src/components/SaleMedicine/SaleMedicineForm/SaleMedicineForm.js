@@ -466,22 +466,7 @@ const SaleMedicineForm = (props) => {
           </Label>
 
           <div className=" flex-1">
-            {/* <Multiselect
-              className="rw-input mt-0 selectname"
-              name={"patientId"}
-              options={props.patients} // Options to display in the dropdown
-              onSelect={(event) => modifyPatient(event)} // Function will trigger on select event
-              onRemove={(event) => modifyPatient(event)} // Function will trigger on remove event
-              selectionLimit={1}
-              // value={selectName}
-              // selectedValues={selectName}
-              selectedValues={selectName ? [selectName] : []}
-
-              displayValue={'name'}// Property name to display in the dropdown options
-            /> */}
                    <Select options={doctors} onChange={changeDoctorName} isClearable={true} required
-
-
             />
           <FieldError name="doctor_name" className="rw-field-error" />
 
@@ -490,6 +475,18 @@ const SaleMedicineForm = (props) => {
 
 
         </div>
+
+ <div className='flex items-center mt-3  gap-x-4'>
+
+
+          <div className=" flex-1">
+                   <Select options={doctors} onChange={changeDoctorName} isClearable={true}
+                   placeholder="Search For Medicine By Composition Name"
+            />
+
+          </div>
+
+          </div>
         <div className="p-2 w-full shadow-sm bg-white ">
           <div className=" grid grid-cols-12 grid-flow-row gap-x-2 gap-y-2">
 

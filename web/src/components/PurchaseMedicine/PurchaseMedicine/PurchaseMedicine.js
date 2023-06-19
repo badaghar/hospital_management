@@ -89,7 +89,7 @@ const PurchaseMedicine = ({ purchaseMedicine }) => {
                   <td className="p-4">{item.paid_qty}</td>
                   <td className="p-4">{item.free_qty}</td>
                   <td className="p-4">{item.pack}</td>
-                  <td className="p-4">{item.exp.split('-')[1] + '-' + item.exp.split('-')[0]}</td>
+                  <td className="p-4">{item.exp  ?  item.exp.split('-')[1] + '-' + item.exp.split('-')[0] : '04-2026'} </td>
                   <td className="p-4">{item.mrp.toFixed(2)}</td>
                   <td className="p-4">{item.rate.toFixed(2)}</td>
                   <td className="p-4">{item.dis.toFixed(2)}</td>

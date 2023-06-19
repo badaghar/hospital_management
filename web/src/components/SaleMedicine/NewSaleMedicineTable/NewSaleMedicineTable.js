@@ -67,7 +67,7 @@ const NewSaleMedicineTable = (props) => {
     const newMedicineList = batchList.filter((item)=>item.batch==name.batch)
     // console.log(newMedicineList)
     setFinalList(newMedicineList[0].data.data)
-    set_exp(newMedicineList[0].data.data.exp)
+    set_exp(newMedicineList[0].data.data.exp ?  newMedicineList[0].data.data.exp.toString().split('-')[0]+'-'+newMedicineList[0].data.data.exp.toString().split('-')[1] : '2026-04')
     set_mrp(newMedicineList[0].data.data.mrp)
     set_cgst_sgst(newMedicineList[0].data.data.cgst+newMedicineList[0].data.data.sgst)
   }
