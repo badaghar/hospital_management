@@ -55,7 +55,7 @@ function convertObjectValuesToUpper(obj) {
 const SaleMedicineForm = (props) => {
 
   const [isOpen, setIsOpen] = useState(false)
-  const [isSave,setIsSave] = useState(false)
+  const [isSave, setIsSave] = useState(false)
 
   const [no_of_medicine, setNoOfMedicine] = useState(0)
   const [show_medicine_heading, setShowMedicineHeading] = useState(false)
@@ -83,22 +83,24 @@ const SaleMedicineForm = (props) => {
   };
 
   const [defaultDate, setDefaultDate] = useState(formatDate(new Date()));
-  const [selectName,setSelectName] = useState()
+  const [selectName, setSelectName] = useState()
 
-  const [medicine,setmedicine] = useState([])
-  const [product,setProduct] = useState([])
+  const [medicine, setmedicine] = useState([])
+  const [product, setProduct] = useState([])
   const [patient, setPatient] = useState([])
   const [defaultPatient, setDefaultPatient] = useState()
-  const [doctors,setDoctors] = useState([])
-  const [doctorName,setDoctorName] = useState()
+  const [doctors, setDoctors] = useState([])
+  const [doctorName, setDoctorName] = useState()
 
-  useEffect(()=>{
+  const [compositionToProductLsit,setCompositionToProductLsit] = useState([])
+
+  useEffect(() => {
     // const opt =props.distributers.map((item)=>{
     //   return {label:item.name,value:item.id}
     // })
     // setSelectDistributer(opt)
-    const opt2 = props.medicines.map((item)=>{
-      return  {label:item.pid.name,value:item.id,name:item.pid.name,id:item.id,data:item}
+    const opt2 = props.medicines.map((item) => {
+      return { label: item.pid.name, value: item.id, name: item.pid.name, id: item.id, data: item }
     })
     setmedicine(opt2)
     // const opt3 = props.products.map((item)=>{
@@ -112,7 +114,7 @@ const SaleMedicineForm = (props) => {
     // // console.log(arrPat)
     setPatient(arrPat)
 
-    const arrDoc = props.users.filter((item) => item.roles=='doctor').map((item)=>{
+    const arrDoc = props.users.filter((item) => item.roles == 'doctor').map((item) => {
       const obj = { 'label': item.name, 'value': item.name }
       return obj
     })
@@ -120,7 +122,7 @@ const SaleMedicineForm = (props) => {
     // console.log(arrDoc)
     setDoctors(arrDoc)
 
-  },[])
+  }, [])
 
 
   const onSubmit = (data) => {
@@ -144,10 +146,10 @@ const SaleMedicineForm = (props) => {
       'grand_total': parseFloat(actual_grand_total),
       'patientId': patientId,
       'permedicine': newperMedicine,
-      'doctor_name':doctorName
+      'doctor_name': doctorName
     }
     // console.log(input)
-    props.onSave(input, isSave ,props?.saleMedicine?.id)
+    props.onSave(input, isSave, props?.saleMedicine?.id)
 
   }
 
@@ -221,11 +223,11 @@ const SaleMedicineForm = (props) => {
     setPatientId(item.value)
   }
 
-  const changeDoctorName = (item) =>{
+  const changeDoctorName = (item) => {
     setDoctorName(item.value)
   }
 
-  const openModal = () =>{
+  const openModal = () => {
     setIsOpen(true)
 
 
@@ -239,7 +241,7 @@ const SaleMedicineForm = (props) => {
         const name = data.createPatient.name
         const id = data.createPatient.id
         toast.success('Patient Added ')
-        const value = {value:id,label:name}
+        const value = { value: id, label: name }
         setPatient((item) => [...item, value])
         setDefaultPatient(value)
 
@@ -256,6 +258,53 @@ const SaleMedicineForm = (props) => {
   const addPatient = (input) => {
     input = convertObjectValuesToUpper(input)
     createPatient({ variables: { input } })
+  }
+
+  const modifiyCompositionToProduct = (items) =>{
+    if(items.length==0)
+    {
+      return
+    }
+    let cl = []
+    let medList = []
+    for (let i = 0; i < items.length; i++) {
+      cl.push(items[i].id)
+      for(let j=0;j<items[i].ProductToComposition.length;j++)
+      {
+        medList.push(items[i].ProductToComposition[j].pid.name)
+
+      }
+    }
+    console.log(medList)
+    let actualList = {}
+
+    for(let i=0;i<medList.length;i++)
+    {
+      if(actualList[medList[i]])
+      {
+
+        actualList[medList[i]] +=1
+      }else{
+        actualList[medList[i]] = 1
+      }
+    }
+
+    console.log(actualList)
+
+    let realList = []
+    for(let key in actualList)
+    {
+      console.log(actualList[key])
+      if(actualList[key]==cl.length)
+      {
+        realList.push({label:key,value:key})
+
+      }
+    }
+    console.log(realList)
+    setCompositionToProductLsit(realList)
+
+
   }
 
   return (
@@ -287,68 +336,68 @@ const SaleMedicineForm = (props) => {
               <div className="grid grid-cols-4 space-y-3">
 
                 <div className='col-span-4 flex items-center space-x-3'>
-              <Label
-          name="name"
-          className="rw-label  mt-0"
-          errorClassName="rw-label rw-label-error mt-0"
-          >
-          Name
-        </Label>
+                  <Label
+                    name="name"
+                    className="rw-label  mt-0"
+                    errorClassName="rw-label rw-label-error mt-0"
+                  >
+                    Name
+                  </Label>
 
-        <TextField
-          name="name"
+                  <TextField
+                    name="name"
 
-          className="rw-input mt-0"
-          errorClassName="rw-input rw-input-error mt-0"
-          validation={{ required: true }}
-          />
+                    className="rw-input mt-0"
+                    errorClassName="rw-input rw-input-error mt-0"
+                    validation={{ required: true }}
+                  />
 
-        <FieldError name="name" className="rw-field-error mt-0" />
-          </div>
-
-
-<div className='col-span-2 flex items-center space-x-3'>
+                  <FieldError name="name" className="rw-field-error mt-0" />
+                </div>
 
 
-        <Label
-          name="age"
-          className="rw-label mt-0"
-          errorClassName="rw-label rw-label-error mt-0"
-        >
-          Age
-        </Label>
-
-        <NumberField
-          name="age"
-
-          className="rw-input mt-0"
-          errorClassName="rw-input rw-input-error mt-0"
-          validation={{ required: true }}
-        />
-
-        <FieldError name="age" className="rw-field-error mt-0" />
-        </div>
+                <div className='col-span-2 flex items-center space-x-3'>
 
 
-<div className='col-span-2 flex items-center space-x-3 pl-4'>
+                  <Label
+                    name="age"
+                    className="rw-label mt-0"
+                    errorClassName="rw-label rw-label-error mt-0"
+                  >
+                    Age
+                  </Label>
 
-        <Label
-          name="phone_no"
-          className="rw-label mt-0 "
-          errorClassName="rw-label rw-label-error mt-0"
-        >
-          Phone
-        </Label>
+                  <NumberField
+                    name="age"
 
-        <TextField
-          name="phone_no"
+                    className="rw-input mt-0"
+                    errorClassName="rw-input rw-input-error mt-0"
+                    validation={{ required: true }}
+                  />
 
-          className="rw-input mt-0"
-          errorClassName="rw-input rw-input-error mt-0"
-        />
-        </div>
+                  <FieldError name="age" className="rw-field-error mt-0" />
+                </div>
 
-        <FieldError name="phone_no" className="rw-field-error mt-0" />
+
+                <div className='col-span-2 flex items-center space-x-3 pl-4'>
+
+                  <Label
+                    name="phone_no"
+                    className="rw-label mt-0 "
+                    errorClassName="rw-label rw-label-error mt-0"
+                  >
+                    Phone
+                  </Label>
+
+                  <TextField
+                    name="phone_no"
+
+                    className="rw-input mt-0"
+                    errorClassName="rw-input rw-input-error mt-0"
+                  />
+                </div>
+
+                <FieldError name="phone_no" className="rw-field-error mt-0" />
               </div>
 
 
@@ -415,11 +464,11 @@ const SaleMedicineForm = (props) => {
 
               displayValue={'name'}// Property name to display in the dropdown options
             /> */}
-                   <Select options={patient} onChange={changePatienId} isClearable={true}
+            <Select options={patient} onChange={changePatienId} isClearable={true}
               value={defaultPatient}
 
             />
-          <FieldError name="patientId" className="rw-field-error" />
+            <FieldError name="patientId" className="rw-field-error" />
 
           </div>
 
@@ -466,9 +515,9 @@ const SaleMedicineForm = (props) => {
           </Label>
 
           <div className=" flex-1">
-                   <Select options={doctors} onChange={changeDoctorName} isClearable={true} required
+            <Select options={doctors} onChange={changeDoctorName} isClearable={true} required
             />
-          <FieldError name="doctor_name" className="rw-field-error" />
+            <FieldError name="doctor_name" className="rw-field-error" />
 
           </div>
 
@@ -476,17 +525,28 @@ const SaleMedicineForm = (props) => {
 
         </div>
 
- <div className='flex items-center mt-3  gap-x-4'>
+        <div className='flex items-center mt-3  gap-x-4'>
 
 
-          <div className=" flex-1">
-                   <Select options={doctors} onChange={changeDoctorName} isClearable={true}
-                   placeholder="Search For Medicine By Composition Name"
+        <div className=" flex-1">
+          <Multiselect
+            options={props.compositions} // Options to display in the dropdown
+
+            onSelect={(event) => modifiyCompositionToProduct(event)} // Function will trigger on select event
+            onRemove={(event) => modifiyCompositionToProduct(event)} // Function will trigger on remove event
+            displayValue="name" // Property name to display in the dropdown options
+            placeholder='Select The Medicines'
+          />
+          </div>
+
+
+
+            <Select options={compositionToProductLsit}  isClearable={true}
+              placeholder="List Of Medicines"
             />
 
-          </div>
 
-          </div>
+        </div>
         <div className="p-2 w-full shadow-sm bg-white ">
           <div className=" grid grid-cols-12 grid-flow-row gap-x-2 gap-y-2">
 
@@ -654,12 +714,12 @@ const SaleMedicineForm = (props) => {
 
         <div className="rw-button-group">
 
-          <button className="rw-button rw-button-blue" onClick={()=>setIsSave(true)}>
+          <button className="rw-button rw-button-blue" onClick={() => setIsSave(true)}>
             Save
 
           </button>
 
-          <Submit disabled={props.loading} className="rw-button rw-button-blue"  onClick={()=>setIsSave(false)}>
+          <Submit disabled={props.loading} className="rw-button rw-button-blue" onClick={() => setIsSave(false)}>
             Save and Print
           </Submit>
 

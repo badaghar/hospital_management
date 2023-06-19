@@ -50,6 +50,18 @@ export const QUERY = gql`
 
     }
 
+    compositions{
+      id
+      name
+      ProductToComposition{
+        pid{
+          id
+          name
+        }
+      }
+    }
+
+
 
   }
 `
@@ -62,7 +74,7 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ medicines, patients, users }) => {
+export const Success = ({ medicines, patients, users,compositions }) => {
 
 
   function getPDF(id) {
@@ -140,6 +152,7 @@ export const Success = ({ medicines, patients, users }) => {
       <div className="rw-segment-main">
         <SaleMedicineForm onSave={onSave} loading={loading} error={error}
           patients={patients} medicines={medicines} users={users}
+          compositions={compositions}
         />
       </div>
     </div>

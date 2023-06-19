@@ -114,9 +114,6 @@ const ProductForm = (props) => {
     for (let i = 0; i < items.length; i++) {
       cl.push(items[i].id)
     }
-
-    // compositionList = [...cl]
-    // console.log(compositionList)
     setCompositionList(cl)
   }
   const modifiyManufacturer = (name) => {
