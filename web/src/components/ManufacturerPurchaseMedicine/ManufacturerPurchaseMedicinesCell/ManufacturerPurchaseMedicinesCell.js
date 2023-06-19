@@ -7,6 +7,9 @@ export const QUERY = gql`
     manufacturerPurchaseMedicines {
       id
       productId
+      pid{
+        name
+      }
       batch
       paid_qty
       free_qty

@@ -8,6 +8,7 @@ export const QUERY = gql`
         id
         productId
         pid{
+          name
           mid{
             name
           }
@@ -60,7 +61,7 @@ export const Success = ({ manufacturerReport, startDate, endDate }) => {
 
       </div>
       <div className='bg-white text-black'>
-        {/* <ManufacturerPurchaseMedicinesList manufacturerPurchaseMedicines={manufacturerReport.data} /> */}
+        <ManufacturerPurchaseMedicinesList manufacturerPurchaseMedicines={manufacturerReport.data} />
 
       </div>
 

@@ -196,6 +196,24 @@ export const returnMedicinesReport = async ({ startDate,endDate }) => {
   const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
   return {data,totalSum}
 }
+export const pharmacyExpiryMedicineReport = async () => {
+  const date = new Date()
+  date.setMonth(date.getMonth()+2)
+
+  const data = await db.medicine.findMany({
+    where: {
+      exp: {
+        lte: date,
+      },
+    },
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
+  });
+  return data
+}
 
 // hospital Report
 

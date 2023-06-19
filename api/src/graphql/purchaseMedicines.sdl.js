@@ -50,6 +50,8 @@ export const schema = gql`
 
 
 
+
+
   type Query {
     purchaseMedicines: [PurchaseMedicine!]! @requireAuth
     purchaseMedicine(id: Int!): PurchaseMedicine @requireAuth
@@ -64,6 +66,7 @@ export const schema = gql`
     # hospital Report
     ipdReport(startDate:String!,endDate:String!) : IpdReport! @requireAuth
     opdReport(startDate:String!,endDate:String!) : OpdReport! @requireAuth
+    pharmacyExpiryMedicineReport: [Medicine]! @requireAuth
 
   }
 
