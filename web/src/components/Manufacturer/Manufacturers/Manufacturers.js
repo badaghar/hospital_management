@@ -55,10 +55,13 @@ const ManufacturersList = ({ manufacturers }) => {
 
   const columns = [
     {
-       headerClassName: 'text-left',
-      Header:  'ID',
-      accessor: 'id',
-    },
+      headerClassName: 'text-left',
+     Header:  'SL. No',
+     // accessor: 'id',
+           Cell: ({index}) => (
+           index+1
+       )
+   },
     {
        headerClassName: 'text-left',
       Header:  'Name',

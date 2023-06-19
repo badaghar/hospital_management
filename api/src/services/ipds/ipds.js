@@ -1,7 +1,13 @@
 import { db } from 'src/lib/db'
 
 export const ipds = () => {
-  return db.ipd.findMany()
+  return db.ipd.findMany({
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
+  })
 }
 
 export const ipd = ({ id }) => {

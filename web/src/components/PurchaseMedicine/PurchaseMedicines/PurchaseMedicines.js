@@ -63,6 +63,14 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
   const columns = [
     {
       headerClassName: 'text-left',
+     Header:  'SL. No',
+     // accessor: 'id',
+           Cell: ({index}) => (
+           index+1
+       )
+   },
+    {
+      headerClassName: 'text-left',
       Header: 'Invoice No',
       accessor: 'invoiceNo',
     },

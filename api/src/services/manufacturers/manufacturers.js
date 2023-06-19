@@ -1,7 +1,13 @@
 import { db } from 'src/lib/db'
 
 export const manufacturers = () => {
-  return db.manufacturer.findMany()
+  return db.manufacturer.findMany({
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
+  })
 }
 
 export const manufacturer = ({ id }) => {

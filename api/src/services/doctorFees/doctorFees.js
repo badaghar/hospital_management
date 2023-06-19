@@ -1,7 +1,13 @@
 import { db } from 'src/lib/db'
 
 export const doctorFees = () => {
-  return db.doctorFee.findMany()
+  return db.doctorFee.findMany({
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
+  })
 }
 
 export const doctorFee = ({ id }) => {

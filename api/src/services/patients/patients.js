@@ -1,7 +1,13 @@
 import { db } from 'src/lib/db'
 
 export const patients = () => {
-  return db.patient.findMany()
+  return db.patient.findMany({
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
+  })
 }
 
 export const patient = ({ id }) => {

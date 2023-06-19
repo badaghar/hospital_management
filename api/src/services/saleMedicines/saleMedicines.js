@@ -2,7 +2,13 @@ import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
 
 export const saleMedicines = () => {
-  return db.saleMedicine.findMany()
+  return db.saleMedicine.findMany({
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
+  })
 }
 
 export const saleMedicine = ({ id }) => {

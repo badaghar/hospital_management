@@ -55,6 +55,14 @@ const ReturnMedicinesList = ({ returnMedicines }) => {
 
   const columns = [
     {
+      headerClassName: 'text-left',
+     Header:  'SL. No',
+     // accessor: 'id',
+           Cell: ({index}) => (
+           index+1
+       )
+   },
+    {
        headerClassName: 'text-left',
       Header:  'Date',
       accessor: 'date',

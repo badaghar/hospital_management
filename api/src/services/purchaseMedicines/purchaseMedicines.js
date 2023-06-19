@@ -1,7 +1,13 @@
 import { db } from 'src/lib/db'
 
 export const purchaseMedicines = () => {
-  return db.purchaseMedicine.findMany()
+  return db.purchaseMedicine.findMany({
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
+  })
 }
 
 export const purchaseMedicine = ({ id }) => {
@@ -97,6 +103,12 @@ export const distributersReport = async ({ id,startDate,endDate }) => {
         lte: new Date(endDate),
       },
     },
+      orderBy: [
+        {
+          id: 'desc'
+        }
+      ]
+
   });
 
   const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
@@ -115,6 +127,11 @@ export const manufacturerReport = async ({ id,startDate,endDate }) => {
       },
 
     },
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
   });
 
   const totalSum = data.reduce((sum, item) => sum + item.amount, 0);
@@ -131,6 +148,11 @@ export const purchaseReport = async ({ startDate,endDate }) => {
         lte: new Date(endDate),
       },
     },
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
   });
 
   const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
@@ -145,6 +167,11 @@ export const saleReport = async ({ startDate,endDate }) => {
         lte: new Date(endDate),
       },
     },
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
   });
 
   const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
@@ -159,6 +186,11 @@ export const returnMedicinesReport = async ({ startDate,endDate }) => {
         lte: new Date(endDate),
       },
     },
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
   });
 
   const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
@@ -176,6 +208,11 @@ export const ipdReport = async ({ startDate,endDate }) => {
         lte: new Date(endDate),
       },
     },
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
   });
 
   const totalSum = data.reduce((sum, item) => sum + item.paid_amount, 0);
@@ -190,6 +227,11 @@ export const opdReport = async ({ startDate,endDate }) => {
         lte: new Date(endDate),
       },
     },
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
   });
 
   const totalSum = data.reduce((sum, item) => sum + item.amount, 0);
@@ -208,6 +250,11 @@ export const pharmacyPayment = async ({ id,startDate,endDate }) => {
           lte: new Date(endDate),
         },
       },
+      orderBy: [
+        {
+          id: 'desc'
+        }
+      ]
     });
 
   }
@@ -222,6 +269,11 @@ export const pharmacyPayment = async ({ id,startDate,endDate }) => {
           lte: new Date(endDate),
         },
       },
+      orderBy: [
+        {
+          id: 'desc'
+        }
+      ]
     });
 
   }

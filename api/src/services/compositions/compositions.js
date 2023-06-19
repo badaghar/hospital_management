@@ -1,7 +1,13 @@
 import { db } from 'src/lib/db'
 
 export const compositions = () => {
-  return db.composition.findMany()
+  return db.composition.findMany({
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
+  })
 }
 
 export const composition = ({ id }) => {

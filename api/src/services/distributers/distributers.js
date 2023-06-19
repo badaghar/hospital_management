@@ -1,7 +1,13 @@
 import { db } from 'src/lib/db'
 
 export const distributers = () => {
-  return db.distributer.findMany()
+  return db.distributer.findMany({
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
+  })
 }
 
 export const distributer = ({ id }) => {

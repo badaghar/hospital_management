@@ -1,7 +1,13 @@
 import { db } from 'src/lib/db'
 
 export const users = () => {
-  return db.user.findMany()
+  return db.user.findMany({
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
+  })
 }
 
 export const user = ({ id }) => {

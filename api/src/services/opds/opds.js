@@ -1,7 +1,13 @@
 import { db } from 'src/lib/db'
 
 export const opds = () => {
-  return db.opd.findMany()
+  return db.opd.findMany({
+    orderBy: [
+      {
+        id: 'desc'
+      }
+    ]
+  })
 }
 
 export const opd = ({ id }) => {

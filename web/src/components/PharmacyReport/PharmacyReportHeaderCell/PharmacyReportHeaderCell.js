@@ -41,7 +41,8 @@ export const Success = ({ distributers, changeId, text, id, SetComponentRender, 
       setOptions(obj)
     }
     else if (id == 4) {
-      setOptions([{ id: 1, name: 'Complete Payments',Label:'Complete Payments',value:1 }, { id: 2, name: 'Pending Payments',Label:'Pending Payments',value:2 }])
+      setOptions([{ id: 1, name: 'Complete Payments',label:'Complete Payments',value:1 }, { id: 2, name: 'Pending Payments',label:'Pending Payments',value:2 }])
+
     }
     else if (id == 12) {
       // setOptions(manufacturers)
