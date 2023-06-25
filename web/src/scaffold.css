@@ -25,7 +25,7 @@
 .rw-scaffold input {
   font-family: inherit;
   font-size: 100%;
-  overflow: visible;
+  /* overflow: visible; */
 }
 .rw-scaffold input:-ms-input-placeholder {
   color: #a0aec0;
@@ -65,7 +65,7 @@
   border-radius: 0.5rem;
   border-width: 1px;
   border-color: #e5e7eb;
-  overflow: hidden;
+  /* overflow: visible; */
   width: 100%;
   scrollbar-color: #a1a1aa transparent;
 }

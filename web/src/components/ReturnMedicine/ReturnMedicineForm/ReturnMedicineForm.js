@@ -217,6 +217,7 @@ const ReturnMedicineForm = (props) => {
         const value = { id, name }
         setPatient((item) => [...item, value])
         setDefaultPatient(value)
+        setPatientId(id)
 
         setSelectName(value)
         setIsOpen(false)
