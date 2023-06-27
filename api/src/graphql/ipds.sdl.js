@@ -2,17 +2,22 @@ export const schema = gql`
   type Ipd {
     id: Int!
     patient: Patient!
+    patientId: Int!
     consultant_doctor: String!
     date_of_admission: DateTime!
     created_at: DateTime!
     updated_at: DateTime!
-    discharge_date: DateTime
     paid_amount: Float!
-    Operation: [Operation]!
+    discharge_date: DateTime
+    patientType: String!
     IpdCharges: [IpdCharges]!
     IpdConsultation: [IpdConsultation]!
     IpdPayment: [IpdPayment]!
-    patientId: Int!
+    Bed: [Bed]!
+    IpdLabCharges: [IpdLabCharges]!
+    IpdOperationPayment: [IpdOperationPayment]!
+    IpdChat: [IpdChat]!
+    IpdSummary: [IpdSummary]!
   }
 
   type Query {
@@ -21,18 +26,22 @@ export const schema = gql`
   }
 
   input CreateIpdInput {
+    patientId: Int!
     consultant_doctor: String!
     date_of_admission: DateTime!
+
     paid_amount: Float!
-    patientId: Int!
-    extra_data: JSON!
+    discharge_date: DateTime
+    patientType: String!
   }
 
   input UpdateIpdInput {
+    patientId: Int
     consultant_doctor: String
     date_of_admission: DateTime
     paid_amount: Float
-    patientId: Int
+    discharge_date: DateTime
+    patientType: String
   }
 
   type Mutation {

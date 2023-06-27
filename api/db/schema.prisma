@@ -20,12 +20,13 @@ model Patient {
   address        String?
   created_at     DateTime         @default(now())
   updated_at     DateTime         @updatedAt
-  Opd            Opd[]
   Ipd            Ipd[]
   SaleMedicine   SaleMedicine[]
   ReturnMedicine ReturnMedicine[]
+  Opd            Opd[]
 }
 
+// delete
 model Opd {
   id                Int      @id @default(autoincrement())
   consultant_doctor String
@@ -39,34 +40,68 @@ model Opd {
 }
 
 model Ipd {
-  id                Int               @id @default(autoincrement())
-  patient           Patient           @relation(fields: [patientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  consultant_doctor String
-  date_of_admission DateTime
-  created_at        DateTime          @default(now())
-  updated_at        DateTime          @updatedAt
-  paid_amount       Float
-  discharge_date    DateTime?
-  Operation         Operation[]
-  IpdCharges        IpdCharges[]
-  IpdConsultation   IpdConsultation[]
-  IpdPayment        IpdPayment[]
-  patientId         Int
-  Bed               Bed[]
+  id                  Int                   @id @default(autoincrement())
+  patient             Patient               @relation(fields: [patientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  patientId           Int
+  consultant_doctor   String
+  date_of_admission   DateTime
+  created_at          DateTime              @default(now())
+  updated_at          DateTime              @updatedAt
+  paid_amount         Float
+  discharge_date      DateTime?
+  patientType         String
+  IpdCharges          IpdCharges[]
+  IpdConsultation     IpdConsultation[]
+  IpdPayment          IpdPayment[]
+  Bed                 Bed[]
+  IpdLabCharges       IpdLabCharges[]
+  IpdOperationPayment IpdOperationPayment[]
+  IpdChat             IpdChat[]
+  IpdSummary          IpdSummary[]
 }
 
-model Operation {
-  id                Int      @id @default(autoincrement())
-  operation_name    String
-  date              DateTime
-  consultant_doctor String
-  remark            String
-  result            String
-  created_at        DateTime @default(now())
-  updated_at        DateTime @updatedAt
-  ipd               Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  ipdId             Int
+model IpdChat {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  ipd        Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ipdId      Int
+  updated_at DateTime @updatedAt
 }
+
+model IpdSummary {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  ipd        Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ipdId      Int
+  updated_at DateTime @updatedAt
+}
+
+model IpdOperationPayment {
+  id               Int      @id @default(autoincrement())
+  operation_name   String
+  date             DateTime
+  operation_doctor String
+  remark           String
+  result           String
+  amount           Float
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+  ipd              Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ipdId            Int
+}
+
+// model Operation {
+//   id                Int      @id @default(autoincrement())
+//   operation_name    String
+//   date              DateTime
+//   consultant_doctor String
+//   remark            String
+//   result            String
+//   created_at        DateTime @default(now())
+//   updated_at        DateTime @updatedAt
+//   ipd               Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+//   ipdId             Int
+// }
 
 model IpdCharges {
   id          Int      @id @default(autoincrement())
@@ -89,6 +124,16 @@ model IpdConsultation {
   ipdId               Int
   created_at          DateTime @default(now())
   updated_at          DateTime @updatedAt
+}
+
+model IpdLabCharges {
+  id         Int      @id @default(autoincrement())
+  lab_name   String
+  ipd        Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ipdId      Int
+  amount     Float
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model IpdPayment {
@@ -129,6 +174,25 @@ model Charges {
   id         Int      @id @default(autoincrement())
   name       String
   amount     Float
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([name])
+}
+
+model LabCharges {
+  id         Int      @id @default(autoincrement())
+  name       String
+  amount     Float
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([name])
+}
+
+model Operation {
+  id         Int      @id @default(autoincrement())
+  name       String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 

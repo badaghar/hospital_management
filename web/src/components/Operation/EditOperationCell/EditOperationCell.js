@@ -9,14 +9,9 @@ export const QUERY = gql`
   query EditOperationById($id: Int!) {
     operation: operation(id: $id) {
       id
-      operation_name
-      date
-      consultant_doctor
-      remark
-      result
+      name
       created_at
       updated_at
-      ipdId
     }
   }
 `
@@ -24,14 +19,9 @@ const UPDATE_OPERATION_MUTATION = gql`
   mutation UpdateOperationMutation($id: Int!, $input: UpdateOperationInput!) {
     updateOperation(id: $id, input: $input) {
       id
-      operation_name
-      date
-      consultant_doctor
-      remark
-      result
+      name
       created_at
       updated_at
-      ipdId
     }
   }
 `

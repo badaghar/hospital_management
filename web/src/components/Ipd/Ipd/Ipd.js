@@ -9,6 +9,7 @@ import IpdConsultant from '../IpdConsultant/IpdConsultant'
 import IpdCharges from 'src/components/IpdCharges/IpdCharges/IpdCharges'
 import IpdOtherCharges from '../IpdOtherCharges/IpdOtherCharges'
 import PaymentIpd from '../PaymentIpd/PaymentIpd'
+import LabChargesIpd from '../LabChargesIpd/LabChargesIpd'
 // import { useEffect } from 'react-js-dialog-box'
 
 const DELETE_IPD_MUTATION = gql`
@@ -19,7 +20,7 @@ const DELETE_IPD_MUTATION = gql`
   }
 `
 
-const Ipd = ({ ipd,users,doctorFees,chargeses }) => {
+const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses }) => {
 
   const [dropDownOpen,setDropDownOpen] = useState('overview')
   const [totalAmount,setTotalAmount] = useState(0)
@@ -37,6 +38,7 @@ const Ipd = ({ ipd,users,doctorFees,chargeses }) => {
       tamt += it.total
     })
     setTotalAmount(tamt)
+    console.log(ipd)
 
 
   },[])
@@ -83,6 +85,11 @@ const Ipd = ({ ipd,users,doctorFees,chargeses }) => {
               Charges
             </div>
             <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+            onClick={toggleDropDown.bind(this,'labcharges')}
+            >
+              Lab Charges
+            </div>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'payment')}
             >
               Payment
@@ -99,6 +106,9 @@ const Ipd = ({ ipd,users,doctorFees,chargeses }) => {
           }
           {
             dropDownOpen=='charges' && <IpdOtherCharges ipd={ipd} users={users} chargeses={chargeses} />
+          }
+          {
+            dropDownOpen=='labcharges' && <LabChargesIpd ipd={ipd} users={users} labChargeses={labChargeses}  />
           }
           {
             dropDownOpen=='payment' && <PaymentIpd ipd={ipd} users={users} chargeses={chargeses} totalAmount={totalAmount} />

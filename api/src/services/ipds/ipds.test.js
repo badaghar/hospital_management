@@ -22,21 +22,23 @@ describe('ipds', () => {
   scenario('creates a ipd', async (scenario) => {
     const result = await createIpd({
       input: {
-        consultant_doctor: 'String',
-        date_of_admission: '2023-06-02T13:15:19.007Z',
-        updated_at: '2023-06-02T13:15:19.007Z',
-        paid_amount: 1360714.6329505236,
         patientId: scenario.ipd.two.patientId,
+        consultant_doctor: 'String',
+        date_of_admission: '2023-06-27T09:17:40.826Z',
+        updated_at: '2023-06-27T09:17:40.826Z',
+        paid_amount: 8367683.144835163,
+        patientType: 'String',
       },
     })
 
+    expect(result.patientId).toEqual(scenario.ipd.two.patientId)
     expect(result.consultant_doctor).toEqual('String')
     expect(result.date_of_admission).toEqual(
-      new Date('2023-06-02T13:15:19.007Z')
+      new Date('2023-06-27T09:17:40.826Z')
     )
-    expect(result.updated_at).toEqual(new Date('2023-06-02T13:15:19.007Z'))
-    expect(result.paid_amount).toEqual(1360714.6329505236)
-    expect(result.patientId).toEqual(scenario.ipd.two.patientId)
+    expect(result.updated_at).toEqual(new Date('2023-06-27T09:17:40.826Z'))
+    expect(result.paid_amount).toEqual(8367683.144835163)
+    expect(result.patientType).toEqual('String')
   })
 
   scenario('updates a ipd', async (scenario) => {

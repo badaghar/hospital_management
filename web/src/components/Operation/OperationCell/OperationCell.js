@@ -4,14 +4,9 @@ export const QUERY = gql`
   query FindOperationById($id: Int!) {
     operation: operation(id: $id) {
       id
-      operation_name
-      date
-      consultant_doctor
-      remark
-      result
+      name
       created_at
       updated_at
-      ipdId
     }
   }
 `

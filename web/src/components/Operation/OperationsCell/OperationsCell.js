@@ -6,14 +6,9 @@ export const QUERY = gql`
   query FindOperations {
     operations {
       id
-      operation_name
-      date
-      consultant_doctor
-      remark
-      result
+      name
       created_at
       updated_at
-      ipdId
     }
   }
 `

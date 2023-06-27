@@ -44,24 +44,8 @@ const Operation = ({ operation }) => {
               <td>{operation.id}</td>
             </tr>
             <tr>
-              <th>Operation name</th>
-              <td>{operation.operation_name}</td>
-            </tr>
-            <tr>
-              <th>Date</th>
-              <td>{timeTag(operation.date)}</td>
-            </tr>
-            <tr>
-              <th>Consultant doctor</th>
-              <td>{operation.consultant_doctor}</td>
-            </tr>
-            <tr>
-              <th>Remark</th>
-              <td>{operation.remark}</td>
-            </tr>
-            <tr>
-              <th>Result</th>
-              <td>{operation.result}</td>
+              <th>Name</th>
+              <td>{operation.name}</td>
             </tr>
             <tr>
               <th>Created at</th>
@@ -70,10 +54,6 @@ const Operation = ({ operation }) => {
             <tr>
               <th>Updated at</th>
               <td>{timeTag(operation.updated_at)}</td>
-            </tr>
-            <tr>
-              <th>Ipd id</th>
-              <td>{operation.ipdId}</td>
             </tr>
           </tbody>
         </table>

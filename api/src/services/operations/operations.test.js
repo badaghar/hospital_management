@@ -25,26 +25,13 @@ describe('operations', () => {
     expect(result).toEqual(scenario.operation.one)
   })
 
-  scenario('creates a operation', async (scenario) => {
+  scenario('creates a operation', async () => {
     const result = await createOperation({
-      input: {
-        operation_name: 'String',
-        date: '2023-06-02T13:15:32.234Z',
-        consultant_doctor: 'String',
-        remark: 'String',
-        result: 'String',
-        updated_at: '2023-06-02T13:15:32.234Z',
-        ipdId: scenario.operation.two.ipdId,
-      },
+      input: { name: 'String3727594', updated_at: '2023-06-27T08:57:53.824Z' },
     })
 
-    expect(result.operation_name).toEqual('String')
-    expect(result.date).toEqual(new Date('2023-06-02T13:15:32.234Z'))
-    expect(result.consultant_doctor).toEqual('String')
-    expect(result.remark).toEqual('String')
-    expect(result.result).toEqual('String')
-    expect(result.updated_at).toEqual(new Date('2023-06-02T13:15:32.234Z'))
-    expect(result.ipdId).toEqual(scenario.operation.two.ipdId)
+    expect(result.name).toEqual('String3727594')
+    expect(result.updated_at).toEqual(new Date('2023-06-27T08:57:53.824Z'))
   })
 
   scenario('updates a operation', async (scenario) => {
@@ -53,10 +40,10 @@ describe('operations', () => {
     })
     const result = await updateOperation({
       id: original.id,
-      input: { operation_name: 'String2' },
+      input: { name: 'String36697892' },
     })
 
-    expect(result.operation_name).toEqual('String2')
+    expect(result.name).toEqual('String36697892')
   })
 
   scenario('deletes a operation', async (scenario) => {

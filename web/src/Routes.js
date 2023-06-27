@@ -20,148 +20,42 @@ const Routes = () => {
   return (
     <Router useAuth={useAuth}>
 
+      <Set wrap={ScaffoldLayout} title="IpdLabChargeses" titleTo="ipdLabChargeses" buttonLabel="New IpdLabCharges" buttonTo="newIpdLabCharges">
 
+        <Route path="/ipd-lab-chargeses/new" page={IpdLabChargesNewIpdLabChargesPage} name="newIpdLabCharges" />
 
+        <Route path="/ipd-lab-chargeses/{id:Int}/edit" page={IpdLabChargesEditIpdLabChargesPage} name="editIpdLabCharges" />
 
+        <Route path="/ipd-lab-chargeses/{id:Int}" page={IpdLabChargesIpdLabChargesPage} name="ipdLabCharges" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <Set wrap={ScaffoldLayout} title="ManufacturerPurchaseMedicines" titleTo="manufacturerPurchaseMedicines" buttonLabel="New ManufacturerPurchaseMedicine" buttonTo="newManufacturerPurchaseMedicine">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <Route path="/manufacturer-purchase-medicines/new" page={ManufacturerPurchaseMedicineNewManufacturerPurchaseMedicinePage} name="newManufacturerPurchaseMedicine" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <Route path="/manufacturer-purchase-medicines/{id:Int}/edit" page={ManufacturerPurchaseMedicineEditManufacturerPurchaseMedicinePage} name="editManufacturerPurchaseMedicine" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <Route path="/manufacturer-purchase-medicines/{id:Int}" page={ManufacturerPurchaseMedicineManufacturerPurchaseMedicinePage} name="manufacturerPurchaseMedicine" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <Route path="/manufacturer-purchase-medicines" page={ManufacturerPurchaseMedicineManufacturerPurchaseMedicinesPage} name="manufacturerPurchaseMedicines" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <Route path="/ipd-lab-chargeses" page={IpdLabChargesIpdLabChargesesPage} name="ipdLabChargeses" />
 
       </Set>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      <Set wrap={ScaffoldLayout} title="IpdOperationPayments" titleTo="ipdOperationPayments" buttonLabel="New IpdOperationPayment" buttonTo="newIpdOperationPayment">
+        <Route path="/ipd-operation-payments/new" page={IpdOperationPaymentNewIpdOperationPaymentPage} name="newIpdOperationPayment" />
+        <Route path="/ipd-operation-payments/{id:Int}/edit" page={IpdOperationPaymentEditIpdOperationPaymentPage} name="editIpdOperationPayment" />
+        <Route path="/ipd-operation-payments/{id:Int}" page={IpdOperationPaymentIpdOperationPaymentPage} name="ipdOperationPayment" />
+        <Route path="/ipd-operation-payments" page={IpdOperationPaymentIpdOperationPaymentsPage} name="ipdOperationPayments" />
+      </Set>
+      <Set wrap={ScaffoldLayout} title="IpdSummaries" titleTo="ipdSummaries" buttonLabel="New IpdSummary" buttonTo="newIpdSummary">
+        <Route path="/ipd-summaries/new" page={IpdSummaryNewIpdSummaryPage} name="newIpdSummary" />
+        <Route path="/ipd-summaries/{id:Int}/edit" page={IpdSummaryEditIpdSummaryPage} name="editIpdSummary" />
+        <Route path="/ipd-summaries/{id:Int}" page={IpdSummaryIpdSummaryPage} name="ipdSummary" />
+        <Route path="/ipd-summaries" page={IpdSummaryIpdSummariesPage} name="ipdSummaries" />
+      </Set>
+      <Set wrap={ScaffoldLayout} title="IpdChats" titleTo="ipdChats" buttonLabel="New IpdChat" buttonTo="newIpdChat">
+        <Route path="/ipd-chats/new" page={IpdChatNewIpdChatPage} name="newIpdChat" />
+        <Route path="/ipd-chats/{id:Int}/edit" page={IpdChatEditIpdChatPage} name="editIpdChat" />
+        <Route path="/ipd-chats/{id:Int}" page={IpdChatIpdChatPage} name="ipdChat" />
+        <Route path="/ipd-chats" page={IpdChatIpdChatsPage} name="ipdChats" />
+      </Set>
+      <Set wrap={ScaffoldLayout} title="ManufacturerPurchaseMedicines" titleTo="manufacturerPurchaseMedicines" buttonLabel="New ManufacturerPurchaseMedicine" buttonTo="newManufacturerPurchaseMedicine">
+        <Route path="/manufacturer-purchase-medicines/new" page={ManufacturerPurchaseMedicineNewManufacturerPurchaseMedicinePage} name="newManufacturerPurchaseMedicine" />
+        <Route path="/manufacturer-purchase-medicines/{id:Int}/edit" page={ManufacturerPurchaseMedicineEditManufacturerPurchaseMedicinePage} name="editManufacturerPurchaseMedicine" />
+        <Route path="/manufacturer-purchase-medicines/{id:Int}" page={ManufacturerPurchaseMedicineManufacturerPurchaseMedicinePage} name="manufacturerPurchaseMedicine" />
+        <Route path="/manufacturer-purchase-medicines" page={ManufacturerPurchaseMedicineManufacturerPurchaseMedicinesPage} name="manufacturerPurchaseMedicines" />
+      </Set>
 
 
 
@@ -282,6 +176,13 @@ const Routes = () => {
             <Route path="/chargeses/{id:Int}/edit" page={ChargesEditChargesPage} name="editCharges" />
             <Route path="/chargeses/{id:Int}" page={ChargesChargesPage} name="charges" />
             <Route path="/chargeses" page={ChargesChargesesPage} name="chargeses" />
+          </Set>
+          <Set wrap={ScaffoldLayout} title="LabChargeses" titleTo="labChargeses" buttonLabel="New LabCharges" buttonTo="newLabCharges">
+            <Route path="/lab-chargeses/new" page={LabChargesNewLabChargesPage} name="newLabCharges" />
+            <Route path="/lab-chargeses/{id:Int}" page={LabChargesLabChargesPage} name="labCharges" />
+            <Route path="/lab-chargeses" page={LabChargesLabChargesesPage} name="labChargeses" />
+            <Route path="/lab-chargeses/{id:Int}/edit" page={LabChargesEditLabChargesPage} name="editLabCharges" />
+
           </Set>
           <Set wrap={ScaffoldLayout} title="IpdPayments" titleTo="ipdPayments" buttonLabel="New IpdPayment" buttonTo="newIpdPayment">
             <Route path="/ipd-payments/new" page={IpdPaymentNewIpdPaymentPage} name="newIpdPayment" />

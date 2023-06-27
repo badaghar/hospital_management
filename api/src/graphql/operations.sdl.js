@@ -1,15 +1,9 @@
 export const schema = gql`
   type Operation {
     id: Int!
-    operation_name: String!
-    date: DateTime!
-    consultant_doctor: String!
-    remark: String!
-    result: String!
+    name: String!
     created_at: DateTime!
     updated_at: DateTime!
-    ipd: Ipd!
-    ipdId: Int!
   }
 
   type Query {
@@ -18,21 +12,15 @@ export const schema = gql`
   }
 
   input CreateOperationInput {
-    operation_name: String!
-    date: DateTime!
-    consultant_doctor: String!
-    remark: String!
-    result: String!
-    ipdId: Int!
+    name: String!
+    created_at: DateTime!
+    updated_at: DateTime!
   }
 
   input UpdateOperationInput {
-    operation_name: String
-    date: DateTime
-    consultant_doctor: String
-    remark: String
-    result: String
-    ipdId: Int
+    name: String
+    created_at: DateTime
+    updated_at: DateTime
   }
 
   type Mutation {

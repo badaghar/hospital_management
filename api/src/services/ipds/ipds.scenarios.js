@@ -3,14 +3,15 @@ export const standard = defineScenario({
     one: {
       data: {
         consultant_doctor: 'String',
-        date_of_admission: '2023-06-02T13:15:19.016Z',
-        updated_at: '2023-06-02T13:15:19.016Z',
-        paid_amount: 8722656.932678543,
+        date_of_admission: '2023-06-27T09:17:40.842Z',
+        updated_at: '2023-06-27T09:17:40.842Z',
+        paid_amount: 5967439.99252122,
+        patientType: 'String',
         patient: {
           create: {
             name: 'String',
-            age: 5361739,
-            updated_at: '2023-06-02T13:15:19.016Z',
+            age: 4616843,
+            updated_at: '2023-06-27T09:17:40.842Z',
           },
         },
       },
@@ -18,14 +19,15 @@ export const standard = defineScenario({
     two: {
       data: {
         consultant_doctor: 'String',
-        date_of_admission: '2023-06-02T13:15:19.016Z',
-        updated_at: '2023-06-02T13:15:19.016Z',
-        paid_amount: 7724518.207285956,
+        date_of_admission: '2023-06-27T09:17:40.842Z',
+        updated_at: '2023-06-27T09:17:40.842Z',
+        paid_amount: 7212667.51223697,
+        patientType: 'String',
         patient: {
           create: {
             name: 'String',
-            age: 1566706,
-            updated_at: '2023-06-02T13:15:19.016Z',
+            age: 9011193,
+            updated_at: '2023-06-27T09:17:40.842Z',
           },
         },
       },

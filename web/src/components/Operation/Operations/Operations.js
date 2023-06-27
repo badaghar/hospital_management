@@ -40,14 +40,9 @@ const OperationsList = ({ operations }) => {
         <thead>
           <tr>
             <th>Id</th>
-            <th>Operation name</th>
-            <th>Date</th>
-            <th>Consultant doctor</th>
-            <th>Remark</th>
-            <th>Result</th>
+            <th>Name</th>
             <th>Created at</th>
             <th>Updated at</th>
-            <th>Ipd id</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -55,14 +50,9 @@ const OperationsList = ({ operations }) => {
           {operations.map((operation) => (
             <tr key={operation.id}>
               <td>{truncate(operation.id)}</td>
-              <td>{truncate(operation.operation_name)}</td>
-              <td>{timeTag(operation.date)}</td>
-              <td>{truncate(operation.consultant_doctor)}</td>
-              <td>{truncate(operation.remark)}</td>
-              <td>{truncate(operation.result)}</td>
+              <td>{truncate(operation.name)}</td>
               <td>{timeTag(operation.created_at)}</td>
               <td>{timeTag(operation.updated_at)}</td>
-              <td>{truncate(operation.ipdId)}</td>
               <td>
                 <nav className="rw-table-actions">
                   <Link

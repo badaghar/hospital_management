@@ -28,9 +28,3 @@ export const deleteOperation = ({ id }) => {
     where: { id },
   })
 }
-
-export const Operation = {
-  ipd: (_obj, { root }) => {
-    return db.operation.findUnique({ where: { id: root?.id } }).ipd()
-  },
-}

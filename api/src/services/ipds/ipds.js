@@ -1,5 +1,6 @@
 import { db } from 'src/lib/db'
 
+
 export const ipds = () => {
   return db.ipd.findMany({
     orderBy: [
@@ -48,6 +49,7 @@ export const dischargePatient = async ({id}) => {
 export const createIpd = async ({ input }) => {
 
   let {extra_data,...data} = input
+  data['patientType'] = 'IPD'
 
   let ipd =  await db.ipd.create({
     data: data,
@@ -106,9 +108,6 @@ export const Ipd = {
   patient: (_obj, { root }) => {
     return db.ipd.findUnique({ where: { id: root?.id } }).patient()
   },
-  Operation: (_obj, { root }) => {
-    return db.ipd.findUnique({ where: { id: root?.id } }).Operation()
-  },
   IpdCharges: (_obj, { root }) => {
     return db.ipd.findUnique({ where: { id: root?.id } }).IpdCharges()
   },
@@ -117,5 +116,20 @@ export const Ipd = {
   },
   IpdPayment: (_obj, { root }) => {
     return db.ipd.findUnique({ where: { id: root?.id } }).IpdPayment()
+  },
+  Bed: (_obj, { root }) => {
+    return db.ipd.findUnique({ where: { id: root?.id } }).Bed()
+  },
+  IpdLabCharges: (_obj, { root }) => {
+    return db.ipd.findUnique({ where: { id: root?.id } }).IpdLabCharges()
+  },
+  IpdOperationPayment: (_obj, { root }) => {
+    return db.ipd.findUnique({ where: { id: root?.id } }).IpdOperationPayment()
+  },
+  IpdChat: (_obj, { root }) => {
+    return db.ipd.findUnique({ where: { id: root?.id } }).IpdChat()
+  },
+  IpdSummary: (_obj, { root }) => {
+    return db.ipd.findUnique({ where: { id: root?.id } }).IpdSummary()
   },
 }
