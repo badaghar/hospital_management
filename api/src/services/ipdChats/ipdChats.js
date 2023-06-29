@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { db } from 'src/lib/db'
 
 export const ipdChats = () => {
@@ -10,8 +11,8 @@ export const ipdChat = ({ id }) => {
   })
 }
 
-export const createIpdChat = ({ input }) => {
-  return db.ipdChat.create({
+export const createIpdChat = async ({ input }) => {
+  await db.ipdChat.createMany({
     data: input,
   })
 }

@@ -10,10 +10,6 @@ export const QUERY = gql`
     ipdOperationPayment: ipdOperationPayment(id: $id) {
       id
       operation_name
-      date
-      operation_doctor
-      remark
-      result
       amount
       created_at
       updated_at
@@ -29,10 +25,6 @@ const UPDATE_IPD_OPERATION_PAYMENT_MUTATION = gql`
     updateIpdOperationPayment(id: $id, input: $input) {
       id
       operation_name
-      date
-      operation_doctor
-      remark
-      result
       amount
       created_at
       updated_at

@@ -4,16 +4,9 @@ import {
   FieldError,
   Label,
   TextField,
-  DatetimeLocalField,
   NumberField,
   Submit,
 } from '@redwoodjs/forms'
-
-const formatDatetime = (value) => {
-  if (value) {
-    return value.replace(/:\d{2}\.\d{3}\w/, '')
-  }
-}
 
 const IpdOperationPaymentForm = (props) => {
   const onSubmit = (data) => {
@@ -47,78 +40,6 @@ const IpdOperationPaymentForm = (props) => {
         />
 
         <FieldError name="operation_name" className="rw-field-error" />
-
-        <Label
-          name="date"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Date
-        </Label>
-
-        <DatetimeLocalField
-          name="date"
-          defaultValue={formatDatetime(props.ipdOperationPayment?.date)}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-        />
-
-        <FieldError name="date" className="rw-field-error" />
-
-        <Label
-          name="operation_doctor"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Operation doctor
-        </Label>
-
-        <TextField
-          name="operation_doctor"
-          defaultValue={props.ipdOperationPayment?.operation_doctor}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-        />
-
-        <FieldError name="operation_doctor" className="rw-field-error" />
-
-        <Label
-          name="remark"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Remark
-        </Label>
-
-        <TextField
-          name="remark"
-          defaultValue={props.ipdOperationPayment?.remark}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-        />
-
-        <FieldError name="remark" className="rw-field-error" />
-
-        <Label
-          name="result"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Result
-        </Label>
-
-        <TextField
-          name="result"
-          defaultValue={props.ipdOperationPayment?.result}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-        />
-
-        <FieldError name="result" className="rw-field-error" />
 
         <Label
           name="amount"

@@ -11,6 +11,10 @@ export const QUERY = gql`
       id
       created_at
       ipdId
+      date
+      drug
+      dose
+      route
       updated_at
     }
   }
@@ -21,6 +25,10 @@ const UPDATE_IPD_CHAT_MUTATION = gql`
       id
       created_at
       ipdId
+      date
+      drug
+      dose
+      route
       updated_at
     }
   }

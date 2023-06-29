@@ -29,22 +29,30 @@ describe('ipdChats', () => {
     const result = await createIpdChat({
       input: {
         ipdId: scenario.ipdChat.two.ipdId,
-        updated_at: '2023-06-27T02:33:28.205Z',
+        date: '2023-06-28T23:46:55.538Z',
+        drug: 'String',
+        dose: 'String',
+        route: 'String',
+        updated_at: '2023-06-28T23:46:55.538Z',
       },
     })
 
     expect(result.ipdId).toEqual(scenario.ipdChat.two.ipdId)
-    expect(result.updated_at).toEqual(new Date('2023-06-27T02:33:28.205Z'))
+    expect(result.date).toEqual(new Date('2023-06-28T23:46:55.538Z'))
+    expect(result.drug).toEqual('String')
+    expect(result.dose).toEqual('String')
+    expect(result.route).toEqual('String')
+    expect(result.updated_at).toEqual(new Date('2023-06-28T23:46:55.538Z'))
   })
 
   scenario('updates a ipdChat', async (scenario) => {
     const original = await ipdChat({ id: scenario.ipdChat.one.id })
     const result = await updateIpdChat({
       id: original.id,
-      input: { updated_at: '2023-06-28T02:33:28.205Z' },
+      input: { date: '2023-06-29T23:46:55.538Z' },
     })
 
-    expect(result.updated_at).toEqual(new Date('2023-06-28T02:33:28.205Z'))
+    expect(result.date).toEqual(new Date('2023-06-29T23:46:55.538Z'))
   })
 
   scenario('deletes a ipdChat', async (scenario) => {

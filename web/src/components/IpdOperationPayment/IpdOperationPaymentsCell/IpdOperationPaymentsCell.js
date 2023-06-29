@@ -7,10 +7,6 @@ export const QUERY = gql`
     ipdOperationPayments {
       id
       operation_name
-      date
-      operation_doctor
-      remark
-      result
       amount
       created_at
       updated_at

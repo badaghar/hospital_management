@@ -10,8 +10,8 @@ export const ipdOperationPayment = ({ id }) => {
   })
 }
 
-export const createIpdOperationPayment = ({ input }) => {
-  return db.ipdOperationPayment.create({
+export const createIpdOperationPayment = async ({ input }) => {
+  await db.ipdOperationPayment.createMany({
     data: input,
   })
 }

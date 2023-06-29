@@ -4,6 +4,10 @@ export const schema = gql`
     created_at: DateTime!
     ipd: Ipd!
     ipdId: Int!
+    date: DateTime!
+    drug: String!
+    dose: String!
+    route: String!
     updated_at: DateTime!
   }
 
@@ -13,19 +17,23 @@ export const schema = gql`
   }
 
   input CreateIpdChatInput {
-    created_at: DateTime!
     ipdId: Int!
-    updated_at: DateTime!
+    date: DateTime!
+    drug: String!
+    dose: String!
+    route: String!
   }
 
   input UpdateIpdChatInput {
-    created_at: DateTime
     ipdId: Int
-    updated_at: DateTime
+    date: DateTime
+    drug: String
+    dose: String
+    route: String
   }
 
   type Mutation {
-    createIpdChat(input: CreateIpdChatInput!): IpdChat! @requireAuth
+    createIpdChat(input: [CreateIpdChatInput]!): IpdChat @requireAuth
     updateIpdChat(id: Int!, input: UpdateIpdChatInput!): IpdChat! @requireAuth
     deleteIpdChat(id: Int!): IpdChat! @requireAuth
   }

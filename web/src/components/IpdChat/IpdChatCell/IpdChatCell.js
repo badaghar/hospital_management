@@ -6,6 +6,10 @@ export const QUERY = gql`
       id
       created_at
       ipdId
+      date
+      drug
+      dose
+      route
       updated_at
     }
   }

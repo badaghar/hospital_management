@@ -53,22 +53,6 @@ const IpdOperationPayment = ({ ipdOperationPayment }) => {
               <td>{ipdOperationPayment.operation_name}</td>
             </tr>
             <tr>
-              <th>Date</th>
-              <td>{timeTag(ipdOperationPayment.date)}</td>
-            </tr>
-            <tr>
-              <th>Operation doctor</th>
-              <td>{ipdOperationPayment.operation_doctor}</td>
-            </tr>
-            <tr>
-              <th>Remark</th>
-              <td>{ipdOperationPayment.remark}</td>
-            </tr>
-            <tr>
-              <th>Result</th>
-              <td>{ipdOperationPayment.result}</td>
-            </tr>
-            <tr>
               <th>Amount</th>
               <td>{ipdOperationPayment.amount}</td>
             </tr>

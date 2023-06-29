@@ -42,6 +42,10 @@ const IpdChatsList = ({ ipdChats }) => {
             <th>Id</th>
             <th>Created at</th>
             <th>Ipd id</th>
+            <th>Date</th>
+            <th>Drug</th>
+            <th>Dose</th>
+            <th>Route</th>
             <th>Updated at</th>
             <th>&nbsp;</th>
           </tr>
@@ -52,6 +56,10 @@ const IpdChatsList = ({ ipdChats }) => {
               <td>{truncate(ipdChat.id)}</td>
               <td>{timeTag(ipdChat.created_at)}</td>
               <td>{truncate(ipdChat.ipdId)}</td>
+              <td>{timeTag(ipdChat.date)}</td>
+              <td>{truncate(ipdChat.drug)}</td>
+              <td>{truncate(ipdChat.dose)}</td>
+              <td>{truncate(ipdChat.route)}</td>
               <td>{timeTag(ipdChat.updated_at)}</td>
               <td>
                 <nav className="rw-table-actions">

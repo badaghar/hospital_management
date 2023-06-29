@@ -46,10 +46,6 @@ const IpdOperationPaymentsList = ({ ipdOperationPayments }) => {
           <tr>
             <th>Id</th>
             <th>Operation name</th>
-            <th>Date</th>
-            <th>Operation doctor</th>
-            <th>Remark</th>
-            <th>Result</th>
             <th>Amount</th>
             <th>Created at</th>
             <th>Updated at</th>
@@ -62,10 +58,6 @@ const IpdOperationPaymentsList = ({ ipdOperationPayments }) => {
             <tr key={ipdOperationPayment.id}>
               <td>{truncate(ipdOperationPayment.id)}</td>
               <td>{truncate(ipdOperationPayment.operation_name)}</td>
-              <td>{timeTag(ipdOperationPayment.date)}</td>
-              <td>{truncate(ipdOperationPayment.operation_doctor)}</td>
-              <td>{truncate(ipdOperationPayment.remark)}</td>
-              <td>{truncate(ipdOperationPayment.result)}</td>
               <td>{truncate(ipdOperationPayment.amount)}</td>
               <td>{timeTag(ipdOperationPayment.created_at)}</td>
               <td>{timeTag(ipdOperationPayment.updated_at)}</td>

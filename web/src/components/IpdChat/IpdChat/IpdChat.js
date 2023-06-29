@@ -52,6 +52,22 @@ const IpdChat = ({ ipdChat }) => {
               <td>{ipdChat.ipdId}</td>
             </tr>
             <tr>
+              <th>Date</th>
+              <td>{timeTag(ipdChat.date)}</td>
+            </tr>
+            <tr>
+              <th>Drug</th>
+              <td>{ipdChat.drug}</td>
+            </tr>
+            <tr>
+              <th>Dose</th>
+              <td>{ipdChat.dose}</td>
+            </tr>
+            <tr>
+              <th>Route</th>
+              <td>{ipdChat.route}</td>
+            </tr>
+            <tr>
               <th>Updated at</th>
               <td>{timeTag(ipdChat.updated_at)}</td>
             </tr>

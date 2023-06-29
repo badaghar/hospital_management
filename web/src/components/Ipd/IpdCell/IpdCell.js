@@ -41,7 +41,15 @@ export const QUERY = gql`
       }
       IpdOperationPayment{
         operation_name
+        amount
       }
+      IpdChat{
+        date
+        drug
+        dose
+        route
+      }
+
 
     }
 
@@ -67,6 +75,9 @@ export const QUERY = gql`
       name
       amount
     }
+    operations{
+      name
+    }
 
   }
 `
@@ -79,6 +90,6 @@ export const Failure = ({ error }) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ ipd, users, doctorFees, chargeses,labChargeses }) => {
-  return <Ipd ipd={ipd} users={users} doctorFees={doctorFees} chargeses={chargeses} labChargeses={labChargeses}/>
+export const Success = ({ ipd, users, doctorFees, chargeses,labChargeses,operations }) => {
+  return <Ipd ipd={ipd} users={users} doctorFees={doctorFees} chargeses={chargeses} labChargeses={labChargeses} operations={operations}/>
 }

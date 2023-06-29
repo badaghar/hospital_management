@@ -5,7 +5,7 @@ import Select from 'react-select'
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { QUERY } from 'src/components/Ipd/IpdsCell'
+import { QUERY } from 'src/components/Ipd/IpdCell'
 const CREATE_IPD_CHARGES_MUTATION = gql`
   mutation CreateIpdChargesMutation($input: [CreateIpdChargesInput]!) {
     createIpdCharges(input: $input) {
@@ -22,15 +22,28 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
     {
       onCompleted: () => {
         toast.success('IpdCharges added')
-        navigate(routes.ipds())
+        navigate(routes.ipd({id:ipd.id}))
       },
       onError: (error) => {
         toast.error(error.message)
       },
+      refetchQueries: [{ query: QUERY,  variables: {
+        id: ipd.id,
+      }, }],
+      awaitRefetchQueries: true,
     }
   )
   const onSave = () => {
     // console.log(doctorChargesArray)
+    const hasEmptyValue = otherChargesArray.some((obj) => {
+      // Check if any value in the object is empty
+      return Object.values(obj).some((value) => value === null || value === '' || !value);
+    });
+    if(hasEmptyValue)
+    {
+      toast.error('Enter All The Details')
+      return
+    }
     createIpdCharges({ variables: { input: otherChargesArray } })
   }
 

@@ -33,23 +33,15 @@ describe('ipdOperationPayments', () => {
     const result = await createIpdOperationPayment({
       input: {
         operation_name: 'String',
-        date: '2023-06-27T02:34:32.265Z',
-        operation_doctor: 'String',
-        remark: 'String',
-        result: 'String',
-        amount: 8244629.516155759,
-        updated_at: '2023-06-27T02:34:32.265Z',
+        amount: 3735307.6676140474,
+        updated_at: '2023-06-27T09:41:53.546Z',
         ipdId: scenario.ipdOperationPayment.two.ipdId,
       },
     })
 
     expect(result.operation_name).toEqual('String')
-    expect(result.date).toEqual(new Date('2023-06-27T02:34:32.265Z'))
-    expect(result.operation_doctor).toEqual('String')
-    expect(result.remark).toEqual('String')
-    expect(result.result).toEqual('String')
-    expect(result.amount).toEqual(8244629.516155759)
-    expect(result.updated_at).toEqual(new Date('2023-06-27T02:34:32.265Z'))
+    expect(result.amount).toEqual(3735307.6676140474)
+    expect(result.updated_at).toEqual(new Date('2023-06-27T09:41:53.546Z'))
     expect(result.ipdId).toEqual(scenario.ipdOperationPayment.two.ipdId)
   })
 

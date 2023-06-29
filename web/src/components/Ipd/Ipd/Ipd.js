@@ -10,6 +10,8 @@ import IpdCharges from 'src/components/IpdCharges/IpdCharges/IpdCharges'
 import IpdOtherCharges from '../IpdOtherCharges/IpdOtherCharges'
 import PaymentIpd from '../PaymentIpd/PaymentIpd'
 import LabChargesIpd from '../LabChargesIpd/LabChargesIpd'
+import IpdOperation from '../IpdOperation/IpdOperation'
+import IpdChatComponent from '../IpdChatComponent/IpdChatComponent'
 // import { useEffect } from 'react-js-dialog-box'
 
 const DELETE_IPD_MUTATION = gql`
@@ -20,7 +22,7 @@ const DELETE_IPD_MUTATION = gql`
   }
 `
 
-const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses }) => {
+const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations }) => {
 
   const [dropDownOpen,setDropDownOpen] = useState('overview')
   const [totalAmount,setTotalAmount] = useState(0)
@@ -90,6 +92,16 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses }) => {
               Lab Charges
             </div>
             <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+            onClick={toggleDropDown.bind(this,'operations')}
+            >
+              Operations
+            </div>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+            onClick={toggleDropDown.bind(this,'chat')}
+            >
+              Medication Chat
+            </div>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'payment')}
             >
               Payment
@@ -109,6 +121,12 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses }) => {
           }
           {
             dropDownOpen=='labcharges' && <LabChargesIpd ipd={ipd} users={users} labChargeses={labChargeses}  />
+          }
+          {
+            dropDownOpen=='operations' && <IpdOperation ipd={ipd} users={users} operations={operations}  />
+          }
+          {
+            dropDownOpen=='chat' && <IpdChatComponent ipd={ipd} users={users}  />
           }
           {
             dropDownOpen=='payment' && <PaymentIpd ipd={ipd} users={users} chargeses={chargeses} totalAmount={totalAmount} />

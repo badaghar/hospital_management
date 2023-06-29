@@ -5,23 +5,26 @@ import Select from 'react-select'
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+// import { QUERY } from 'src/components/Ipd/IpdsCell'
 import { QUERY } from 'src/components/Ipd/IpdCell'
-const CREATE_IPD_LAB_CHARGES_MUTATION = gql`
-  mutation CreateIpdLabChargesMutation($input: [CreateIpdLabChargesInput]!) {
-    createIpdLabCharges(input: $input) {
+
+const CREATE_IPD_OPERATION_PAYMENT_MUTATION = gql`
+  mutation CreateIpdOperationPaymentMutation(
+    $input: [CreateIpdOperationPaymentInput]!
+  ) {
+    createIpdOperationPayment(input: $input) {
       id
     }
   }
 `
 
-
-const LabChargesIpd = ({ ipd, users, labChargeses }) => {
-  const [labChargesArray, setLabChargesArray] = useState([])
-  const [createIpdLabCharges, { loading, error }] = useMutation(
-    CREATE_IPD_LAB_CHARGES_MUTATION,
+const IpdOperation = ({ ipd, users, operations }) => {
+  const [operationChargesArray, setoperationChargesArray] = useState([])
+  const [createIpdOperationPayment, { loading, error }] = useMutation(
+    CREATE_IPD_OPERATION_PAYMENT_MUTATION,
     {
       onCompleted: () => {
-        toast.success('IpdLabCharges added')
+        toast.success('IpdOperationPayment Added')
         navigate(routes.ipd({id:ipd.id}))
       },
       onError: (error) => {
@@ -34,8 +37,8 @@ const LabChargesIpd = ({ ipd, users, labChargeses }) => {
     }
   )
   const onSave = () => {
-    // console.log(doctorChargesArray)
-    const hasEmptyValue = labChargesArray.some((obj) => {
+    console.log(operationChargesArray)
+    const hasEmptyValue = operationChargesArray.some((obj) => {
       // Check if any value in the object is empty
       return Object.values(obj).some((value) => value === null || value === '' || !value);
     });
@@ -44,15 +47,15 @@ const LabChargesIpd = ({ ipd, users, labChargeses }) => {
       toast.error('Enter All The Details')
       return
     }
-    createIpdLabCharges({ variables: { input: labChargesArray } })
+    createIpdOperationPayment({ variables: { input: operationChargesArray } })
   }
 
-  const addLabCharges = () => {
-    setLabChargesArray((item) => [...item, { lab_name: '', amount: 0, ipdId: ipd.id }])
+  const addOperationCharge = () => {
+    setoperationChargesArray((item) => [...item, { operation_name: '', amount: 0, ipdId: ipd.id }])
   }
 
   const deleteLabCharges = (index) => {
-    setLabChargesArray((array) => {
+    setoperationChargesArray((array) => {
       const newArray = [...array];
       newArray.splice(index, 1);
       return newArray;
@@ -67,15 +70,15 @@ const LabChargesIpd = ({ ipd, users, labChargeses }) => {
         <div className="p-2 w-full shadow-sm bg-white ">
           <div className=" grid grid-cols-3 grid-flow-row gap-x-2 gap-y-2">
 
-            <div className="flex col-span-1 justify-center">Lab Charges Type</div>
+            <div className="flex col-span-1 justify-center">Operation Type</div>
             <div className="flex col-span-1 justify-center">Amount</div>
             <div className="flex col-span-1 justify-center">Action</div>
 
             {
-              ipd.IpdLabCharges.map((item, index) => {
+              ipd.IpdOperationPayment.map((item, index) => {
                 return (
                   <>
-                    <div className="flex col-span-1 justify-center">{item.lab_name}</div>
+                    <div className="flex col-span-1 justify-center">{item.operation_name}</div>
                     <div className="flex col-span-1 justify-center">{item.amount}</div>
                     <div className="flex col-span-1 justify-center">No Action</div>
 
@@ -84,12 +87,12 @@ const LabChargesIpd = ({ ipd, users, labChargeses }) => {
               })
             }
             {
-              labChargesArray.map((item, index) => {
+              operationChargesArray.map((item, index) => {
                 return (
                   <>
-                    <LabChargesBody key={index} labChargeses={labChargeses} item={item}
-                      labChargesArray={labChargesArray}
-                      setLabChargesArray={setLabChargesArray}
+                    <OperationChargeBody key={index} operations={operations} item={item}
+                      operationChargesArray={operationChargesArray}
+                      setoperationChargesArray={setoperationChargesArray}
                       del={deleteLabCharges}
                       index={index}
                     />
@@ -101,7 +104,7 @@ const LabChargesIpd = ({ ipd, users, labChargeses }) => {
           </div>
 
           <div className='flex justify-center mt-2'>
-            <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addLabCharges}>Add Lab Charge</div>
+            <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addOperationCharge}>Add Operation Charge</div>
           </div>
 
         </div>
@@ -114,27 +117,40 @@ const LabChargesIpd = ({ ipd, users, labChargeses }) => {
   )
 }
 
-const LabChargesBody = ({ labChargeses, item, labChargesArray, del, setLabChargesArray, index }) => {
+const OperationChargeBody = ({ operations, item, operationChargesArray, del, setoperationChargesArray, index }) => {
 
-  const [labchargeType, setlabChargeType] = useState()
+  // const [labchargeType, setlabChargeType] = useState()
   const [obj, setObj] = useState([])
   const [amount, setAmount] = useState(0)
 
 
 
-  const labchargeTypeChange = (item) => {
+  const operationChargeTypeChange = (item) => {
 
 
-    setLabChargesArray((array) => {
+    setoperationChargesArray((array) => {
       const newArray = [...array];
       newArray[index] = {
         ...newArray[index],
-        lab_name: item?.value || '',
-        amount: item?.amount || 0
+        operation_name: item?.name || '',
+
       };
       return newArray;
     });
   }
+
+  useEffect(()=>{
+    setoperationChargesArray((array) => {
+      const newArray = [...array];
+      newArray[index] = {
+        ...newArray[index],
+        amount: parseInt(amount),
+
+      };
+      return newArray;
+    });
+
+  },[amount])
 
 
 
@@ -144,13 +160,13 @@ const LabChargesBody = ({ labChargeses, item, labChargesArray, del, setLabCharge
 
   useEffect(() => {
 
-    if (item.charge_type) {
-      setlabChargeType({ value: item.name, label: item.name })
-    }
-    setAmount(item.amount)
+    // if (item.charge_type) {
+    //   setlabChargeType({ value: item.name, label: item.name })
+    // }
+    // setAmount(item.amount)
 
-    const obj = labChargeses.map((char) => {
-      const ob = { value: char.name, label: char.name, amount: char.amount }
+    const obj = operations.map((char) => {
+      const ob = { value: char.name, label: char.name,name:char.name }
       return ob
     })
     setObj(obj)
@@ -161,10 +177,14 @@ const LabChargesBody = ({ labChargeses, item, labChargesArray, del, setLabCharge
   return (
     <>
       <div className="flex col-span-1 justify-center">
-        <Select options={obj} isClearable={true} required onChange={labchargeTypeChange} value={item.name !== '' ? labchargeType : ''}
+        <Select options={obj} isClearable={true} required onChange={operationChargeTypeChange}
+
+        // value={item.name !== '' ? labchargeType : ''}
         />
       </div>
-      <div className="flex col-span-1 justify-center">{amount}</div>
+      <div className="flex col-span-1 justify-center text-black">
+        <input type="number" onChange={(e)=>setAmount(e.target.value)} value={amount} />
+      </div>
       <div className="flex col-span-1 justify-center">
 
         <span className='cursor-pointer text-xl text-red-600' onClick={del.bind(this, index)}>
@@ -175,8 +195,5 @@ const LabChargesBody = ({ labChargeses, item, labChargesArray, del, setLabCharge
   )
 }
 
-export default LabChargesIpd
-
-
-// export default IpdOtherCharges
+export default IpdOperation
 

@@ -2,10 +2,6 @@ export const schema = gql`
   type IpdOperationPayment {
     id: Int!
     operation_name: String!
-    date: DateTime!
-    operation_doctor: String!
-    remark: String!
-    result: String!
     amount: Float!
     created_at: DateTime!
     updated_at: DateTime!
@@ -20,32 +16,20 @@ export const schema = gql`
 
   input CreateIpdOperationPaymentInput {
     operation_name: String!
-    date: DateTime!
-    operation_doctor: String!
-    remark: String!
-    result: String!
     amount: Float!
-    created_at: DateTime!
-    updated_at: DateTime!
     ipdId: Int!
   }
 
   input UpdateIpdOperationPaymentInput {
     operation_name: String
-    date: DateTime
-    operation_doctor: String
-    remark: String
-    result: String
     amount: Float
-    created_at: DateTime
-    updated_at: DateTime
     ipdId: Int
   }
 
   type Mutation {
     createIpdOperationPayment(
-      input: CreateIpdOperationPaymentInput!
-    ): IpdOperationPayment! @requireAuth
+      input: [CreateIpdOperationPaymentInput]!
+    ): IpdOperationPayment @requireAuth
     updateIpdOperationPayment(
       id: Int!
       input: UpdateIpdOperationPaymentInput!

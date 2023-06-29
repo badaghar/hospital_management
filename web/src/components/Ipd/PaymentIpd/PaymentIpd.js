@@ -19,6 +19,8 @@ import 'react-js-dialog-box/dist/index.css'
 import React from 'react'
 import Select from 'react-select'
 import { useMutation } from '@redwoodjs/web'
+import { QUERY } from 'src/components/Ipd/IpdCell'
+
 
 
 const CREATE_IPD_PAYMENT_MUTATION = gql`
@@ -40,11 +42,15 @@ const PaymentIpd = ({ totalAmount, ipd }) => {
     {
       onCompleted: () => {
         toast.success('Payment Done Successfully')
-        navigate(routes.ipds())
+        navigate(routes.ipd({id:ipd.id}))
       },
       onError: (error) => {
         toast.error(error.message)
       },
+      refetchQueries: [{ query: QUERY,  variables: {
+        id: ipd.id,
+      }, }],
+      awaitRefetchQueries: true,
     }
   )
 
