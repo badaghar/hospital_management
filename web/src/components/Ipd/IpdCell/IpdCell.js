@@ -11,6 +11,7 @@ export const QUERY = gql`
       paid_amount
       patientId
       discharge_date
+      patientType
       patient{
         name
         age

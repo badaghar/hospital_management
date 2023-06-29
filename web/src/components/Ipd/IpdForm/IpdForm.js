@@ -55,17 +55,26 @@ const IpdForm = (props) => {
   const [totalAmount,setTotalAmount] = useState(0)
   const [advancePayment,setAdvancePayment] = useState(0)
   const [bedName,setBedName] = useState()
+  const [isOPD,setIsOpd] = useState(!!props.type)
   // const []
 
   const onSubmit = (data) => {
     data['patientId'] = patientId
     data['consultant_doctor'] = doctorName.value
+    data['patientType'] = props.type
+
 
     // data['paymentMode'] = payment
     // data['bed'] = bedName.id
     data['paid_amount'] =  parseFloat(advancePayment)
 
-    data['date_of_admission'] = data['date_of_admission']
+    if(isOPD)
+    {
+      data['date_of_admission'] = new Date()
+    }
+    else{
+      data['date_of_admission'] = data['date_of_admission']
+    }
     data['extra_data'] = {
       'DoctorCharges' : doctorChargesArray,
       'OtherCharges' : otherChargesArray,
@@ -73,11 +82,11 @@ const IpdForm = (props) => {
         amount:  parseFloat(advancePayment),
         'payment_mode': payment
       },
-      'bed':bedName.id
+      'bed': isOPD==false ? bedName.id : -1
     }
     delete data['amount']
     delete data['amount1']
-    // console.log(data)
+    console.log(data)
     props.onSave(data, props?.opd?.id)
   }
 
@@ -444,7 +453,7 @@ const IpdForm = (props) => {
           >
             Consultant Doctor Name
           </Label>
-          <div className="">
+          <div className={`${isOPD && 'flex-1'}`}>
             <Select options={doctors} onChange={changeDoctor} isClearable={true} value={doctorName}
             />
           </div>
@@ -452,7 +461,7 @@ const IpdForm = (props) => {
 
           <Label
             name="date_of_admission"
-            className="rw-label mt-0"
+            className={`rw-label mt-0 ${isOPD && 'hidden'}`}
             errorClassName="rw-label rw-label-error mt-0"
           >
             Date of admission
@@ -460,21 +469,22 @@ const IpdForm = (props) => {
           <div className="">
           <DateField
             name="date_of_admission"
-            defaultValue={formatDatetime(props.ipd?.date_of_admission)}
-            className="rw-input mt-0"
+            // defaultValue={formatDatetime(props.ipd?.date_of_admission)}
+            // defaultValue={defaultDateTransfer(new Date())}
+            className={`rw-label mt-0 ${isOPD && 'hidden'}`}
             errorClassName="rw-input rw-input-error mt-0"
-            validation={{ required: true }}
+            validation={{ required:  !isOPD  }}
           />
           </div>
 
           <FieldError name="date_of_admission" className="rw-field-error mt-0" />
 
           <Label
-            className="rw-label mt-0"
+            className={`rw-label mt-0 ${isOPD && 'hidden'}`}
           >
             Select Bed
           </Label>
-          <div className="w-72">
+          <div className={`w-72 ${isOPD && 'hidden'}`}>
             <Select options={bedOptions} onChange={changeBed} isClearable={true} value={bedName}
             />
           </div>

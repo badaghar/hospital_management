@@ -1,8 +1,8 @@
 import IpdsList from "src/components/Ipd/Ipds/Ipds"
 
 export const QUERY = gql`
-  query FindIpdReportQuery($startDate: String!,$endDate: String!) {
-    ipdReport: ipdReport(startDate: $startDate, endDate: $endDate) {
+  query FindIpdReportQuery($startDate: String!,$endDate: String!,$type: String!) {
+    ipdReport: ipdReport(startDate: $startDate, endDate: $endDate,type: $type) {
       data{
         id
       consultant_doctor

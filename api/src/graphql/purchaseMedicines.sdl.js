@@ -64,7 +64,7 @@ export const schema = gql`
     returnMedicinesReport(startDate:String!,endDate:String!) : ReturnMedicineReport! @requireAuth
     pharmacyPayment(id:Int!,startDate:String!,endDate:String!): PaymentReport! @requireAuth
     # hospital Report
-    ipdReport(startDate:String!,endDate:String!) : IpdReport! @requireAuth
+    ipdReport(startDate:String!,endDate:String!,type: String!) : IpdReport! @requireAuth
     opdReport(startDate:String!,endDate:String!) : OpdReport! @requireAuth
     pharmacyExpiryMedicineReport: [Medicine]! @requireAuth
 

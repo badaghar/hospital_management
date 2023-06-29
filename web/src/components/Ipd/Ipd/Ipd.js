@@ -39,11 +39,17 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations }) => {
     ipd.IpdCharges.map((it)=>{
       tamt += it.total
     })
+    ipd.IpdLabCharges.map((it)=>{
+      tamt += it.amount
+    })
+    ipd.IpdOperationPayment.map((it)=>{
+      tamt += it.amount
+    })
     setTotalAmount(tamt)
     console.log(ipd)
 
 
-  },[])
+  },[ipd])
 
 
 
@@ -91,16 +97,16 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations }) => {
             >
               Lab Charges
             </div>
-            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+       { ipd.patientType=='IPD' &&     <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'operations')}
             >
               Operations
-            </div>
-            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+            </div>}
+      {    ipd.patientType=='IPD' &&      <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'chat')}
             >
               Medication Chat
-            </div>
+            </div>}
             <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'payment')}
             >

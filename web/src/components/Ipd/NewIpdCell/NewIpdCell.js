@@ -65,11 +65,11 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ patients,users,doctorFees,chargeses,beds,floors }) => {
+export const Success = ({ patients,users,doctorFees,chargeses,beds,floors,type }) => {
   const [createIpd, { loading, error }] = useMutation(CREATE_IPD_MUTATION, {
     onCompleted: () => {
-      toast.success('Ipd created')
-      navigate(routes.ipds())
+      toast.success(type + ' Patient Info Added')
+      navigate(routes.ipds({type}))
     },
     onError: (error) => {
       toast.error(error.message)
@@ -86,7 +86,7 @@ export const Success = ({ patients,users,doctorFees,chargeses,beds,floors }) => 
         <h2 className="rw-heading rw-heading-secondary">New Ipd</h2>
       </header>
       <div className="rw-segment-main">
-        <IpdForm onSave={onSave} loading={loading} error={error} patients={patients} users={users} doctorFees={doctorFees} chargeses={chargeses}
+        <IpdForm onSave={onSave} loading={loading} error={error} patients={patients} users={users} doctorFees={doctorFees} chargeses={chargeses} type={type}
         floors={floors} beds={beds}
         />
       </div>

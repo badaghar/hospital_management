@@ -715,7 +715,7 @@ const DashboardLayout = ({ children }) => {
                     <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                       <li>
                         <Link
-                          to={routes.ipds()}
+                          to={routes.ipds({type:'IPD'})}
                           className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         >
                           <span className="inline-flex justify-center items-center ml-4">
@@ -757,7 +757,7 @@ const DashboardLayout = ({ children }) => {
                     <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                       <li>
                         <Link
-                          to={routes.opds()}
+                           to={routes.ipds({type:'OPD'})}
                           className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         >
                           <span className="inline-flex justify-center items-center ml-4">

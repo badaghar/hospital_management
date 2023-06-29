@@ -21,15 +21,10 @@ const Routes = () => {
     <Router useAuth={useAuth}>
 
       <Set wrap={ScaffoldLayout} title="IpdLabChargeses" titleTo="ipdLabChargeses" buttonLabel="New IpdLabCharges" buttonTo="newIpdLabCharges">
-
         <Route path="/ipd-lab-chargeses/new" page={IpdLabChargesNewIpdLabChargesPage} name="newIpdLabCharges" />
-
         <Route path="/ipd-lab-chargeses/{id:Int}/edit" page={IpdLabChargesEditIpdLabChargesPage} name="editIpdLabCharges" />
-
         <Route path="/ipd-lab-chargeses/{id:Int}" page={IpdLabChargesIpdLabChargesPage} name="ipdLabCharges" />
-
         <Route path="/ipd-lab-chargeses" page={IpdLabChargesIpdLabChargesesPage} name="ipdLabChargeses" />
-
       </Set>
 
       <Set wrap={ScaffoldLayout} title="IpdOperationPayments" titleTo="ipdOperationPayments" buttonLabel="New IpdOperationPayment" buttonTo="newIpdOperationPayment">
@@ -208,11 +203,11 @@ const Routes = () => {
             <Route path="/operations/{id:Int}" page={OperationOperationPage} name="operation" />
             <Route path="/operations" page={OperationOperationsPage} name="operations" />
           </Set>
-          <Set wrap={ScaffoldLayout} title="Ipds" titleTo="ipds" buttonLabel="New Ipd" buttonTo="newIpd">
-            <Route path="/ipds/new" page={IpdNewIpdPage} name="newIpd" />
+          <Set wrap={ScaffoldLayout} title="Ipds" titleTo="ipds" buttonLabel="New Ipd" buttonTo="newIpd" hide='hide'>
+            <Route path="/ipds/new/{type:String}" page={IpdNewIpdPage} name="newIpd" />
             <Route path="/ipds/{id:Int}/edit" page={IpdEditIpdPage} name="editIpd" />
             <Route path="/ipds/{id:Int}" page={IpdIpdPage} name="ipd" />
-            <Route path="/ipds" page={IpdIpdsPage} name="ipds" />
+            <Route path="/ipds/{type:String}" page={IpdIpdsPage} name="ipds" />
           </Set>
           <Set wrap={ScaffoldLayout} title="Opds" titleTo="opds" buttonLabel="New Opd" buttonTo="newOpd">
             <Route path="/opds/new" page={OpdNewOpdPage} name="newOpd" />

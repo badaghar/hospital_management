@@ -50,13 +50,14 @@ const IpdOverview = ({ipd}) => {
                {ipd.patient.name}
             </span>
             {
-              !ipd.discharge_date ?
+             ipd.patientType=='IPD' &&
+           (   !ipd.discharge_date ?
               <span className="bg-green-800 p-1 px-3 text-white rounded-3xl hover:bg-white hover:text-green-800 cursor-pointer " onClick={dischargePatient}>
               Discharge Patient
             </span> :
               <span className="bg-green-800 p-1 px-3 text-white rounded-3xl hover:bg-white hover:text-green-800 cursor-pointer ">
                Patient is Discharged At {timeTag(ipd.discharge_date)}
-            </span>
+            </span>)
 
           }
           </div>
@@ -99,11 +100,11 @@ const IpdOverview = ({ipd}) => {
             <span>{ipd.paid_amount}</span>
           </div>
 
-          <div className="flex items-center space-x-3">
+       { ipd.patientType=='IPD' &&     <div className="flex items-center space-x-3">
             <span>Date Of Admitted :- </span>
             <span>{timeTag(ipd.date_of_admission)}</span>
 
-          </div>
+          </div>}
 
 
 

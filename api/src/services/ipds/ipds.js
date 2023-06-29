@@ -1,13 +1,20 @@
 import { db } from 'src/lib/db'
 
 
-export const ipds = () => {
+export const ipds = ({type}) => {
+  console.log('\n\n\n\n\n\n\n\n\n ',type)
   return db.ipd.findMany({
+    where:{
+      patientType:type
+    },
     orderBy: [
       {
         id: 'desc'
       }
-    ]
+    ],
+    // where:{
+    //   patientType:type
+    // }
   })
 }
 
@@ -49,22 +56,27 @@ export const dischargePatient = async ({id}) => {
 export const createIpd = async ({ input }) => {
 
   let {extra_data,...data} = input
-  data['patientType'] = 'IPD'
+  let {DoctorCharges,OtherCharges,IpdPayment,bed} = extra_data
 
   let ipd =  await db.ipd.create({
     data: data,
   })
 
-  let {DoctorCharges,OtherCharges,IpdPayment,bed} = extra_data
-  await db.bed.update({
-    where: {
-      id: bed
-    },
-    data :{
-      occupied: true,
-      ipdId:ipd.id
-    }
-  })
+  try {
+    await db.bed.update({
+      where: {
+        id: bed
+      },
+      data :{
+        occupied: true,
+        ipdId:ipd.id
+      }
+    })
+
+  } catch (error) {
+    console.log(error)
+  }
+
 
   IpdPayment['ipdId'] = ipd.id
   await db.ipdPayment.create({

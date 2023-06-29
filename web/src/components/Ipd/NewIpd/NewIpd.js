@@ -12,11 +12,11 @@ const CREATE_IPD_MUTATION = gql`
   }
 `
 
-const NewIpd = () => {
+const NewIpd = ({type}) => {
   const [createIpd, { loading, error }] = useMutation(CREATE_IPD_MUTATION, {
     onCompleted: () => {
       toast.success('Ipd created')
-      navigate(routes.ipds())
+      navigate(routes.ipds({type}))
     },
     onError: (error) => {
       toast.error(error.message)
@@ -33,7 +33,7 @@ const NewIpd = () => {
         <h2 className="rw-heading rw-heading-secondary">New Ipd</h2>
       </header>
       <div className="rw-segment-main">
-        <IpdForm onSave={onSave} loading={loading} error={error} />
+        <IpdForm onSave={onSave} loading={loading} error={error} type={type} />
       </div>
     </div>
   )

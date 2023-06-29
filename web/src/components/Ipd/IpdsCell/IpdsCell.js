@@ -3,8 +3,8 @@ import { Link, routes } from '@redwoodjs/router'
 import Ipds from 'src/components/Ipd/Ipds'
 
 export const QUERY = gql`
-  query FindIpds {
-    ipds {
+  query FindIpds($type: String!) {
+    ipds(type: $type) {
       id
       consultant_doctor
       date_of_admission
@@ -22,11 +22,11 @@ export const QUERY = gql`
 
 export const Loading = () => <div>Loading...</div>
 
-export const Empty = () => {
+export const Empty = ({type}) => {
   return (
     <div className="rw-text-center">
       {'No ipds yet. '}
-      <Link to={routes.newIpd()} className="rw-link">
+      <Link to={routes.newIpd({type})} className="rw-link">
         {'Create one?'}
       </Link>
     </div>
@@ -37,6 +37,6 @@ export const Failure = ({ error }) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ ipds }) => {
+export const Success = ({ ipds,type }) => {
   return <Ipds ipds={ipds} />
 }

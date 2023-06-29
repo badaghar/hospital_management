@@ -21,7 +21,7 @@ export const schema = gql`
   }
 
   type Query {
-    ipds: [Ipd!]! @requireAuth
+    ipds(type: String!): [Ipd!]! @requireAuth
     ipd(id: Int!): Ipd @requireAuth
   }
 
@@ -33,6 +33,7 @@ export const schema = gql`
     paid_amount: Float!
     discharge_date: DateTime
     patientType: String!
+    extra_data: JSON!
   }
 
   input UpdateIpdInput {

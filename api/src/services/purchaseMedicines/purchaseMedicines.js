@@ -217,7 +217,7 @@ export const pharmacyExpiryMedicineReport = async () => {
 
 // hospital Report
 
-export const ipdReport = async ({ startDate,endDate }) => {
+export const ipdReport = async ({ startDate,endDate,type }) => {
   const data = await db.ipd.findMany({
     where: {
       date_of_admission : {
@@ -225,6 +225,7 @@ export const ipdReport = async ({ startDate,endDate }) => {
         gte: new Date(startDate),
         lte: new Date(endDate),
       },
+      patientType:type
     },
     orderBy: [
       {
