@@ -16,11 +16,11 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
 
     }
     setPages(page)
-    console.log(saleMedicine.date.split('T00:00:00.000Z')[0])
-    const date = new Date("2023-05-31");
-    let fD = `${("0" + (date.getMonth() + 1)).slice(-2)}-${date.getFullYear()}`;
+    // console.log(saleMedicine.date.split('T00:00:00.000Z')[0])
+    // const date = new Date("2023-05-31");
+
     // console.log(formattedDate);
-    setFormatedDate(fD)
+    // setFormatedDate(fD)
 
     const array = saleMedicine.medicine;
 
@@ -36,6 +36,13 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
 
 
   }, [saleMedicine])
+  const formate = (da) =>{
+    console.log(da)
+    const date = new Date(da)
+    let fD = `${("0" + (date.getMonth() + 1)).slice(-2)}-${date.getFullYear()}`;
+    return fD
+
+  }
   return (
     <>
       {
@@ -108,7 +115,7 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
                           <>
                           <span className="col-span-2">{med['medicine Name']}</span>
                           <span>{med['batch No']}</span>
-                          <span>{formatedDate}</span>
+                          <span>{formate(med['Expiry Date'])}</span>
                           <span>{med['mrp']}{  Number.isInteger(med['mrp']) && <>.00</>}</span>
                           <span>{med['quantity']}</span>
                           <span>{med['cgst/sgst']}</span>
