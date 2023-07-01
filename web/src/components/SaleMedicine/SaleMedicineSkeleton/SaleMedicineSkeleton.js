@@ -4,17 +4,19 @@ const converter = require('number-to-words');
 const SaleMedicineSkeleton = ({ saleMedicine }) => {
 
   const [pages, setPages] = useState([])
+  const [count,setCount] = useState()
   const [chunks,setChunks] = useState([])
-  let count = 0
+  // let count = 0
   const [formatedDate,setFormatedDate] = useState("")
   useEffect(() => {
-    const noOfPage = Math.ceil(saleMedicine.medicine.length / 10)
+    const noOfPage = Math.ceil(saleMedicine.medicine.length / 15)
     // setPages(noOfPage)
     let page = []
     for (let i = 0; i < noOfPage; i++) {
       page.push(i)
 
     }
+    setCount(noOfPage-1)
     setPages(page)
     // console.log(saleMedicine.date.split('T00:00:00.000Z')[0])
     // const date = new Date("2023-05-31");
@@ -24,7 +26,7 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
 
     const array = saleMedicine.medicine;
 
-      const chunkSize = 10;
+      const chunkSize = 15;
       // const chunks = [];
       let i = 0;
 
@@ -46,7 +48,7 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
   return (
     <>
       {
-        pages.map((item) => {
+        pages.map((item,ind) => {
           return (
             <section
               className="border-black border text-black"
@@ -150,11 +152,11 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
                       </div>
                     </div>
                     <div className="border-l  border-black grid grid-cols-2 text-xs ">
-                    <span className="font-bold pl-1">SUB TOTAL</span> <span className="border-l  border-black  pl-1">{saleMedicine.total}{  Number.isInteger(saleMedicine.total) && <>.00</>}</span>
-                    <span className="font-bold pl-1"> SGST</span> <span className="border-l  border-black  pl-1">{saleMedicine.sgst}</span>
-                    <span className="font-bold pl-1"> CGST</span> <span className="border-l  border-black  pl-1">{saleMedicine.cgst}</span>
-                    <span className="font-bold pl-1"> Discount</span> <span className="border-l  border-black  pl-1">{saleMedicine.discount}{  Number.isInteger(saleMedicine.discount) && <>.00</>}</span>
-                    <span className="font-bold pl-1 border-t border-black">GRAND TOTAL</span> <span  className="font-bold border-t border-black border-l  pl-1">{saleMedicine.grand_total}{  Number.isInteger(saleMedicine.grand_total) && <>.00</>}</span>
+                    <span className="font-bold pl-1">SUB TOTAL</span> <span className="border-l  border-black  pl-1">  { count!=ind ?  '---'  : saleMedicine.total}{count!=ind ?  ''  :  (Number.isInteger(saleMedicine.total) && <>.00</>)}</span>
+                    <span className="font-bold pl-1"> SGST</span> <span className="border-l  border-black  pl-1">{ count!=ind ?  '---'  : saleMedicine.sgst}</span>
+                    <span className="font-bold pl-1"> CGST</span> <span className="border-l  border-black  pl-1">{ count!=ind ?  '---'  : saleMedicine.cgst}</span>
+                    <span className="font-bold pl-1"> Discount</span> <span className="border-l  border-black  pl-1">  {count!=ind ?  '---'  :  saleMedicine.discount}{count!=ind ?  ''  : ( Number.isInteger(saleMedicine.discount) && <>.00</>)}</span>
+                    <span className="font-bold pl-1 border-t border-black">GRAND TOTAL</span> <span  className="font-bold border-t border-black border-l  pl-1">{ count!=ind ?  '---'  : saleMedicine.grand_total}{ count!=ind ?  ''  : ( Number.isInteger(saleMedicine.grand_total) && <>.00</>)}</span>
                     </div>
 
                   </div>
