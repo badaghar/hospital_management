@@ -12,6 +12,7 @@ import PaymentIpd from '../PaymentIpd/PaymentIpd'
 import LabChargesIpd from '../LabChargesIpd/LabChargesIpd'
 import IpdOperation from '../IpdOperation/IpdOperation'
 import IpdChatComponent from '../IpdChatComponent/IpdChatComponent'
+import SummaryIpd from '../SummaryIpd/SummaryIpd'
 // import { useEffect } from 'react-js-dialog-box'
 
 const DELETE_IPD_MUTATION = gql`
@@ -82,6 +83,9 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations }) => {
             <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2' onClick={toggleDropDown.bind(this,'overview')}>
               OverView
             </div>
+       { ipd.discharge_date &&    <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2' onClick={toggleDropDown.bind(this,'sumamry')}>
+              Summary
+            </div>}
             <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'consultant')}
             >
@@ -118,6 +122,9 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations }) => {
 
           {
             dropDownOpen=='overview' && <IpdOverview ipd={ipd} />
+          }
+          {
+            dropDownOpen=='sumamry' && <SummaryIpd ipd={ipd} />
           }
           {
             dropDownOpen=='consultant' && <IpdConsultant ipd={ipd} users={users} doctorFees={doctorFees} />

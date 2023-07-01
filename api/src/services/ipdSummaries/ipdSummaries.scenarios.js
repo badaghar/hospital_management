@@ -2,19 +2,20 @@ export const standard = defineScenario({
   ipdSummary: {
     one: {
       data: {
-        updated_at: '2023-06-27T02:33:56.513Z',
+        summary: { foo: 'bar' },
+        updated_at: '2023-07-01T13:32:41.746Z',
         ipd: {
           create: {
             consultant_doctor: 'String',
-            date_of_admission: '2023-06-27T02:33:56.513Z',
-            updated_at: '2023-06-27T02:33:56.513Z',
-            paid_amount: 2577620.009144048,
+            date_of_admission: '2023-07-01T13:32:41.746Z',
+            updated_at: '2023-07-01T13:32:41.746Z',
+            paid_amount: 3690137.4024320366,
             patientType: 'String',
             patient: {
               create: {
                 name: 'String',
-                age: 2175587,
-                updated_at: '2023-06-27T02:33:56.513Z',
+                age: 2290795,
+                updated_at: '2023-07-01T13:32:41.746Z',
               },
             },
           },
@@ -23,19 +24,20 @@ export const standard = defineScenario({
     },
     two: {
       data: {
-        updated_at: '2023-06-27T02:33:56.513Z',
+        summary: { foo: 'bar' },
+        updated_at: '2023-07-01T13:32:41.746Z',
         ipd: {
           create: {
             consultant_doctor: 'String',
-            date_of_admission: '2023-06-27T02:33:56.513Z',
-            updated_at: '2023-06-27T02:33:56.513Z',
-            paid_amount: 6525384.5630705,
+            date_of_admission: '2023-07-01T13:32:41.746Z',
+            updated_at: '2023-07-01T13:32:41.746Z',
+            paid_amount: 941712.9623598997,
             patientType: 'String',
             patient: {
               create: {
                 name: 'String',
-                age: 1401200,
-                updated_at: '2023-06-27T02:33:56.513Z',
+                age: 8016522,
+                updated_at: '2023-07-01T13:32:41.746Z',
               },
             },
           },

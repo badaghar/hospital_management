@@ -4,6 +4,7 @@ import {
   FieldError,
   Label,
   NumberField,
+  TextAreaField,
   Submit,
 } from '@redwoodjs/forms'
 
@@ -39,6 +40,24 @@ const IpdSummaryForm = (props) => {
         />
 
         <FieldError name="ipdId" className="rw-field-error" />
+
+        <Label
+          name="summary"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Summary
+        </Label>
+
+        <TextAreaField
+          name="summary"
+          defaultValue={JSON.stringify(props.ipdSummary?.summary)}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+          validation={{ valueAsJSON: true, required: true }}
+        />
+
+        <FieldError name="summary" className="rw-field-error" />
 
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">

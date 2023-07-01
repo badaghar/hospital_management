@@ -50,6 +50,10 @@ export const QUERY = gql`
         dose
         route
       }
+      IpdSummary{
+        ipdId
+        summary
+      }
 
 
     }

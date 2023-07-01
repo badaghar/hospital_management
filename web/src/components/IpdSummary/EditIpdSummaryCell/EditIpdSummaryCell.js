@@ -9,8 +9,9 @@ export const QUERY = gql`
   query EditIpdSummaryById($id: Int!) {
     ipdSummary: ipdSummary(id: $id) {
       id
-      created_at
       ipdId
+      summary
+      created_at
       updated_at
     }
   }
@@ -19,8 +20,9 @@ const UPDATE_IPD_SUMMARY_MUTATION = gql`
   mutation UpdateIpdSummaryMutation($id: Int!, $input: UpdateIpdSummaryInput!) {
     updateIpdSummary(id: $id, input: $input) {
       id
-      created_at
       ipdId
+      summary
+      created_at
       updated_at
     }
   }

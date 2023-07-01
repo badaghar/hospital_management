@@ -29,12 +29,14 @@ describe('ipdSummaries', () => {
     const result = await createIpdSummary({
       input: {
         ipdId: scenario.ipdSummary.two.ipdId,
-        updated_at: '2023-06-27T02:33:56.495Z',
+        summary: { foo: 'bar' },
+        updated_at: '2023-07-01T13:32:41.716Z',
       },
     })
 
     expect(result.ipdId).toEqual(scenario.ipdSummary.two.ipdId)
-    expect(result.updated_at).toEqual(new Date('2023-06-27T02:33:56.495Z'))
+    expect(result.summary).toEqual({ foo: 'bar' })
+    expect(result.updated_at).toEqual(new Date('2023-07-01T13:32:41.716Z'))
   })
 
   scenario('updates a ipdSummary', async (scenario) => {
@@ -43,10 +45,10 @@ describe('ipdSummaries', () => {
     })
     const result = await updateIpdSummary({
       id: original.id,
-      input: { updated_at: '2023-06-28T02:33:56.495Z' },
+      input: { summary: { foo: 'baz' } },
     })
 
-    expect(result.updated_at).toEqual(new Date('2023-06-28T02:33:56.495Z'))
+    expect(result.summary).toEqual({ foo: 'baz' })
   })
 
   scenario('deletes a ipdSummary', async (scenario) => {

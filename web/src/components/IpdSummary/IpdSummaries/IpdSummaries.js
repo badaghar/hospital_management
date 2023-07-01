@@ -3,7 +3,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/IpdSummary/IpdSummariesCell'
-import { timeTag, truncate } from 'src/lib/formatters'
+import { jsonTruncate, timeTag, truncate } from 'src/lib/formatters'
 
 const DELETE_IPD_SUMMARY_MUTATION = gql`
   mutation DeleteIpdSummaryMutation($id: Int!) {
@@ -40,8 +40,9 @@ const IpdSummariesList = ({ ipdSummaries }) => {
         <thead>
           <tr>
             <th>Id</th>
-            <th>Created at</th>
             <th>Ipd id</th>
+            <th>Summary</th>
+            <th>Created at</th>
             <th>Updated at</th>
             <th>&nbsp;</th>
           </tr>
@@ -50,8 +51,9 @@ const IpdSummariesList = ({ ipdSummaries }) => {
           {ipdSummaries.map((ipdSummary) => (
             <tr key={ipdSummary.id}>
               <td>{truncate(ipdSummary.id)}</td>
-              <td>{timeTag(ipdSummary.created_at)}</td>
               <td>{truncate(ipdSummary.ipdId)}</td>
+              <td>{jsonTruncate(ipdSummary.summary)}</td>
+              <td>{timeTag(ipdSummary.created_at)}</td>
               <td>{timeTag(ipdSummary.updated_at)}</td>
               <td>
                 <nav className="rw-table-actions">

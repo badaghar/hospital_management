@@ -6,8 +6,9 @@ export const QUERY = gql`
   query FindIpdSummaries {
     ipdSummaries {
       id
-      created_at
       ipdId
+      summary
+      created_at
       updated_at
     }
   }

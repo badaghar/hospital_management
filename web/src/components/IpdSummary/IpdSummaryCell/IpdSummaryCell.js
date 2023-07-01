@@ -4,8 +4,9 @@ export const QUERY = gql`
   query FindIpdSummaryById($id: Int!) {
     ipdSummary: ipdSummary(id: $id) {
       id
-      created_at
       ipdId
+      summary
+      created_at
       updated_at
     }
   }

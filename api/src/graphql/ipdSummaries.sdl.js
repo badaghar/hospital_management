@@ -1,9 +1,10 @@
 export const schema = gql`
   type IpdSummary {
     id: Int!
-    created_at: DateTime!
     ipd: Ipd!
     ipdId: Int!
+    summary: JSON!
+    created_at: DateTime!
     updated_at: DateTime!
   }
 
@@ -13,15 +14,13 @@ export const schema = gql`
   }
 
   input CreateIpdSummaryInput {
-    created_at: DateTime!
     ipdId: Int!
-    updated_at: DateTime!
+    summary: JSON!
   }
 
   input UpdateIpdSummaryInput {
-    created_at: DateTime
     ipdId: Int
-    updated_at: DateTime
+    summary: JSON
   }
 
   type Mutation {

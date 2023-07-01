@@ -18,7 +18,7 @@ const IpdOverview = ({ipd}) => {
     {
       onCompleted: () => {
         toast.success('Discharged Done Successfully')
-        navigate(routes.ipds())
+        navigate(routes.ipds({type:ipd.patientType}))
       },
       onError: (error) => {
         toast.error(error.message)

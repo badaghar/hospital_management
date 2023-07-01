@@ -2,7 +2,7 @@ import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import { timeTag } from 'src/lib/formatters'
+import { jsonDisplay, timeTag } from 'src/lib/formatters'
 
 const DELETE_IPD_SUMMARY_MUTATION = gql`
   mutation DeleteIpdSummaryMutation($id: Int!) {
@@ -44,12 +44,16 @@ const IpdSummary = ({ ipdSummary }) => {
               <td>{ipdSummary.id}</td>
             </tr>
             <tr>
-              <th>Created at</th>
-              <td>{timeTag(ipdSummary.created_at)}</td>
-            </tr>
-            <tr>
               <th>Ipd id</th>
               <td>{ipdSummary.ipdId}</td>
+            </tr>
+            <tr>
+              <th>Summary</th>
+              <td>{jsonDisplay(ipdSummary.summary)}</td>
+            </tr>
+            <tr>
+              <th>Created at</th>
+              <td>{timeTag(ipdSummary.created_at)}</td>
             </tr>
             <tr>
               <th>Updated at</th>
