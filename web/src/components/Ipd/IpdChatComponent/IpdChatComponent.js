@@ -22,6 +22,7 @@ const IpdChatComponent = ({ ipd, users }) => {
     {
       onCompleted: () => {
         toast.success('IpdChat created')
+        setmedicationChargeArray([])
         navigate(routes.ipd({id:ipd.id}))
       },
       onError: (error) => {

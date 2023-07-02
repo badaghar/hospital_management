@@ -25,6 +25,7 @@ const IpdOperation = ({ ipd, users, operations }) => {
     {
       onCompleted: () => {
         toast.success('IpdOperationPayment Added')
+        setoperationChargesArray([])
         navigate(routes.ipd({id:ipd.id}))
       },
       onError: (error) => {

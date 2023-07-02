@@ -22,6 +22,7 @@ const LabChargesIpd = ({ ipd, users, labChargeses }) => {
     {
       onCompleted: () => {
         toast.success('IpdLabCharges added')
+        setLabChargesArray([])
         navigate(routes.ipd({id:ipd.id}))
       },
       onError: (error) => {

@@ -22,6 +22,7 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
     {
       onCompleted: () => {
         toast.success('IpdCharges added')
+        setOtherChargesArray([])
         navigate(routes.ipd({id:ipd.id}))
       },
       onError: (error) => {

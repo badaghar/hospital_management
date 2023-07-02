@@ -16,11 +16,14 @@ const CREATE_IPD_CONSULTATION_MUTATION = gql`
 
 
 const IpdConsultant = ({ ipd, users, doctorFees }) => {
+  const [doctors, setDoctors] = useState()
+  const [doctorChargesArray, setDoctorChargesArray] = useState([])
   const [createIpdConsultation, { loading, error }] = useMutation(
     CREATE_IPD_CONSULTATION_MUTATION,
     {
       onCompleted: () => {
         toast.success('Consultation Charges Added')
+        setDoctorChargesArray([])
 
         navigate(routes.ipd({id:ipd.id}))
       },
@@ -47,8 +50,7 @@ const IpdConsultant = ({ ipd, users, doctorFees }) => {
     }
     createIpdConsultation({ variables: { input:doctorChargesArray } })
   }
-  const [doctors, setDoctors] = useState()
-  const [doctorChargesArray, setDoctorChargesArray] = useState([])
+
   const addDoctorCharges = () => {
     setDoctorChargesArray((item) => [...item, { consultation_doctor: '', consultation_type: '', amount: 0,ipdId:ipd.id }])
     // setNoOfDoctorCharges((item) => item + 1)

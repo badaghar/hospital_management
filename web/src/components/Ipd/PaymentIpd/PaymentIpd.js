@@ -42,6 +42,8 @@ const PaymentIpd = ({ totalAmount, ipd }) => {
     {
       onCompleted: () => {
         toast.success('Payment Done Successfully')
+        setPayment('')
+        setAdvancePayment(0)
         navigate(routes.ipd({id:ipd.id}))
       },
       onError: (error) => {
