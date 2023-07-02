@@ -144,8 +144,15 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
 
                   <div className="grid grid-cols-4  justify-between  ">
                     <div className=" col-span-3 grid grid-cols-3 relative">
-                      <div className="col-span-2 p-5">
-                          {/* Rs. {converter.toWords(saleMedicine.grand_total)} Only */}
+                      <div className="col-span-2">
+                        <div className="font-bold underline text-sm">Terms & Conditions</div>
+                        <div className="text-xs">
+                          Goods once sold will not be taken back or exchanged.
+                          Bills not paid due date will attract 24% interest.
+                          All disputes subject to Jurisdiction only.
+                          Prescribed Sales Tax declaration will be given
+                        </div>
+
                       </div>
                       <div className=" absolute bottom-1 right-4 text-sm">
                         Authorised Signatory
