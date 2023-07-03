@@ -11,8 +11,16 @@ export const ipdSummary = ({ id }) => {
 }
 
 export const createIpdSummary = ({ input }) => {
+  const {update,id,...data} = input
+  if(update==1)
+  {
+    return db.ipdSummary.update({
+      data: data,
+      where: { id },
+    })
+  }
   return db.ipdSummary.create({
-    data: input,
+    data: data,
   })
 }
 

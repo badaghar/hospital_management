@@ -1,6 +1,7 @@
 import { navigate, routes } from "@redwoodjs/router"
 import { useMutation } from "@redwoodjs/web"
 import { toast } from "@redwoodjs/web/dist/toast"
+import axios from "axios"
 import { useState,useLayoutEffect } from "react"
 // import { useLayoutEffect } from "react-js-dialog-box"
 
@@ -13,13 +14,49 @@ const CREATE_IPD_SUMMARY_MUTATION = gql`
 `
 
 const SummaryIpd = ({ ipd }) => {
+
   const [obj, setObj] = useState({})
+  const [isPrint,setIsPrint] = useState(false)
+  const [isUpdate,setIsUpdate] = useState(!!ipd.IpdSummary[0])
+  function getPDF(id) {
+    return axios.get(
+      `/.redwood/functions/downloadDischargeSummary?id=` +
+      id,
+      {
+        responseType: 'arraybuffer',
+        headers: {
+          Accept: 'application/pdf',
+        },
+      }
+    )
+  }
+  const printPDF = (id) => {
+    return getPDF(id) // API call
+      .then((response) => {
+        const blob = new Blob([response.data], { type: 'application/pdf' })
+        var blobURL = URL.createObjectURL(blob)
+        var iframe =  document.createElement('iframe')
+        document.body.appendChild(iframe)
+        iframe.style.display = 'none'
+
+        iframe.src = blobURL
+     iframe.onload = function() {
+      setTimeout(function() {
+        iframe.focus()
+        iframe.contentWindow.print()
+      }, 1)
+    }
+        toast.success('Download Complete')
+      })
+      .catch((err) => {
+        toast.error('something wrong happened try again')
+        console.log(err)
+      })
+  }
 
   useLayoutEffect(()=>{
     if(ipd.IpdSummary[0])
     {
-      // console.log(ipd.IpdSummary[0])
-
       setObj(()=>{
          return { ...ipd.IpdSummary[0].summary}
       })
@@ -29,8 +66,14 @@ const SummaryIpd = ({ ipd }) => {
   const [createIpdSummary, { loading, error }] = useMutation(
     CREATE_IPD_SUMMARY_MUTATION,
     {
-      onCompleted: () => {
+      onCompleted: (data) => {
         toast.success('IpdSummary created')
+        if(isPrint)
+        {
+          printPDF(data.createIpdSummary.id)
+
+
+        }
         navigate(routes.ipds({type:'IPD'}))
       },
       onError: (error) => {
@@ -48,15 +91,39 @@ const SummaryIpd = ({ ipd }) => {
     });
   }
   const save = () => {
-    // const yes = confirm("Are You sure you want to save the changes . Once Changed it Cannot be Modified")
-    // if(yes)
-    // {
+      let input = {
+        ipdId : ipd.id,
+        summary: obj
+      }
+      if(isUpdate)
+      {
+        // console.log(ipd.IpdSummary[0])
+        input['update'] = 1
+        input['id'] = ipd.IpdSummary[0].id
+      }
+      else{
+        input['update'] = 0
+        input['id'] = 0
+      }
+      createIpdSummary({ variables: { input } })
+  }
+  const saveAndPrint = () => {
       const input = {
         ipdId : ipd.id,
         summary: obj
       }
+      if(isUpdate)
+      {
+        // console.log(ipd.IpdSummary[0])
+        input['update'] = 1
+        input['id'] = ipd.IpdSummary[0].id
+      }
+      else{
+        input['update'] = 0
+        input['id'] = 0
+      }
+      setIsPrint(true)
       createIpdSummary({ variables: { input } })
-    // }
 
   }
   return (
@@ -138,7 +205,8 @@ const SummaryIpd = ({ ipd }) => {
           </div>
 
           <div className="flex justify-center m-2">
-            <button className="bg-green-600 p-2 text-white rounded-lg hover:bg-green-400" onClick={save}>Save</button>
+            <button className="bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2" onClick={save}>Save</button>
+            <button className="bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2" onClick={saveAndPrint}>Save & Print</button>
           </div>
         </div>
 

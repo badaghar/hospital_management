@@ -55,7 +55,8 @@ const IpdForm = (props) => {
   const [totalAmount,setTotalAmount] = useState(0)
   const [advancePayment,setAdvancePayment] = useState(0)
   const [bedName,setBedName] = useState()
-  const [isOPD,setIsOpd] = useState(!!props.type)
+  const [isOPD,setIsOpd] = useState(props.type=='OPD')
+  console.log(isOPD)
   // const []
 
   const onSubmit = (data) => {

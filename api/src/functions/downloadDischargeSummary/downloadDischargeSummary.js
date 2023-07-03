@@ -1,6 +1,5 @@
 import { logger } from 'src/lib/logger'
 const puppeteer = require('puppeteer')
-
 /**
  * The handler function is your code that processes http request events.
  * You can use return and throw to send a response or error, respectively.
@@ -16,6 +15,7 @@ const puppeteer = require('puppeteer')
  * @param { APIGatewayEvent } event - an object which contains information from the invoker.
  * @param { Context } context - contains information about the invocation,
  * function, and execution environment.
+ * download-discharge-summary
  */
 export const handler = async (event, _context) => {
   logger.info(
@@ -27,7 +27,7 @@ export const handler = async (event, _context) => {
     const browser = await puppeteer.launch({ headless: true })
     const page = await browser.newPage()
     await page.goto(
-      `http://${process.env.IP_ADDRESS}:8910/download-sale-medicine/${id}`,
+      `http://${process.env.IP_ADDRESS}:8910/download-discharge-summary/${id}`,
       {
         waitUntil: 'networkidle0',
       }

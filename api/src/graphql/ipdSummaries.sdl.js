@@ -10,12 +10,14 @@ export const schema = gql`
 
   type Query {
     ipdSummaries: [IpdSummary!]! @requireAuth
-    ipdSummary(id: Int!): IpdSummary @requireAuth
+    ipdSummary(id: Int!): IpdSummary @skipAuth
   }
 
   input CreateIpdSummaryInput {
     ipdId: Int!
     summary: JSON!
+    update: Int!
+    id: Int!
   }
 
   input UpdateIpdSummaryInput {

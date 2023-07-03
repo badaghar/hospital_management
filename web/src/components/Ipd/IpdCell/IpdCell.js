@@ -51,6 +51,7 @@ export const QUERY = gql`
         route
       }
       IpdSummary{
+        id
         ipdId
         summary
       }
