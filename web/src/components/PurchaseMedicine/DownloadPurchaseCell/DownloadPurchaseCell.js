@@ -53,10 +53,19 @@ export const Success = ({ purchaseMedicines }) => {
   <table className="rw-table" id='download_excel'>
         <thead>
         <tr>
-          <th colSpan={8}>Purchase Medicine Information</th>
+          <th colSpan={8}>Purchase Medicine Report</th>
+        </tr>
+        <tr>
+          <th colSpan={8}>Sidhdhi Vinayak Multi Speciality Hospital</th>
+        </tr>
+        <tr>
+          <th colSpan={8}>Near Tank Bund,Beside Saba School, Main Road Yadggiri 585202</th>
+        </tr>
+        <tr>
+          <th colSpan={8}>Mobile No: 7760056992</th>
         </tr>
           <tr>
-
+            <th>Sl. No</th>
             <th>Invoice no</th>
             <th>Distributer Name</th>
             <th>Date</th>
@@ -70,9 +79,10 @@ export const Success = ({ purchaseMedicines }) => {
           </tr>
         </thead>
         <tbody>
-          {purchaseMedicines.map((purchaseMedicine) => (
+          {purchaseMedicines.map((purchaseMedicine,ind) => (
             <tr key={purchaseMedicine.id}>
 
+              <td>{ind+1}</td>
               <td>{truncate(purchaseMedicine.invoiceNo)}</td>
               <td>{truncate(purchaseMedicine.did.name)}</td>
 

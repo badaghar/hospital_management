@@ -1,4 +1,8 @@
+import DownloadSaleMedicine from 'src/components/SaleMedicine/DownloadSaleMedicine/DownloadSaleMedicine'
 import SaleMedicines from 'src/components/SaleMedicine/SaleMedicines'
+import DownloadSaleReport from '../DownloadSaleReport/DownloadSaleReport'
+import { useState } from 'react'
+
 
 
 export const QUERY = gql`
@@ -18,6 +22,9 @@ export const QUERY = gql`
       created_at
       updated_at
       patientId
+      patient{
+        name
+      }
 
       }
       totalSum
@@ -38,7 +45,7 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ saleReport, startDate, endDate }) => {
-
+  const [download, setDownload] = useState(false)
 
   return (
     <>
@@ -47,6 +54,18 @@ export const Success = ({ saleReport, startDate, endDate }) => {
           Total Sale Amount  From {startDate.toLocaleDateString()} to {endDate.toLocaleDateString()} is <span className='font-bold'>
             ₹{saleReport?.totalSum}
           </span>
+
+          {!download && <span className='ml-3 cursor-pointer underline' onClick={()=>setDownload(true)}>
+            Download Excel
+          </span>
+
+
+          }
+          {
+            download && <div className='hidden'>
+                  <DownloadSaleReport saleMedicines={saleReport.data} startDate={startDate.toLocaleDateString()} endDate={endDate.toLocaleDateString()} setDownload={setDownload} />
+            </div>
+          }
         </span>
 
       </div>

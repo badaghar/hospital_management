@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import PurchaseMedicines from 'src/components/PurchaseMedicine/PurchaseMedicines'
+import DownloadPurchaseReport from '../DownloadPurchaseReport/DownloadPurchaseReport'
 
 
 export const QUERY = gql`
@@ -41,6 +43,7 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ purchaseReport, startDate, endDate }) => {
+  const [download, setDownload] = useState(false)
 
 
   return (
@@ -49,12 +52,28 @@ export const Success = ({ purchaseReport, startDate, endDate }) => {
         <span>
           Total Purchase Amount  From {startDate.toLocaleDateString()} to {endDate.toLocaleDateString()} is <span className='font-bold'>
             ₹{purchaseReport.totalSum}
+
           </span>
+
+          {!download && <span className='ml-3 cursor-pointer underline' onClick={()=>setDownload(true)}>
+            Download Excel
+          </span>
+
+
+          }
+          {
+            download && <div className='hidden'>
+                  <DownloadPurchaseReport purchaseMedicines={purchaseReport.data} startDate={startDate.toLocaleDateString()} endDate={endDate.toLocaleDateString()} setDownload={setDownload} />
+            </div>
+          }
+
+
+
         </span>
 
       </div>
       <div className='bg-white text-black'>
-      <PurchaseMedicines purchaseMedicines={purchaseReport.data} />
+        <PurchaseMedicines purchaseMedicines={purchaseReport.data} />
       </div>
 
 

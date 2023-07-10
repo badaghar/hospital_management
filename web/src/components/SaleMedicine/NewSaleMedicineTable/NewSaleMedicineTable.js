@@ -51,9 +51,9 @@ const NewSaleMedicineTable = (props) => {
     })
 
     let newBatchList = dublicatList.filter((item)=>item.name==name.name)
-    // console.log(newBatchList)
+    console.log(newBatchList)
      newBatchList = newBatchList.map((item) => {
-      return {label:item.data.batch,value:item.data.batch,batch:item.data.batch,id:item.id,data:item}
+      return {label:item.data.batch + " - " + item.data.quantity,value:item.data.batch,batch:item.data.batch,id:item.id,data:item}
     })
 
     setBatchList(newBatchList)
@@ -109,9 +109,10 @@ const NewSaleMedicineTable = (props) => {
       'cgst/sgst':parseFloat(finalList?.cgst)+parseFloat(finalList?.sgst),
       'amount': parseFloat((quantity*finalList?.mrp).toFixed(5))
     }
+    let q = parseFloat(finalList?.quantity)-parseFloat(quantity)
 
     let medObj = {
-      'quantity': parseFloat(finalList?.quantity)-parseFloat(quantity),
+      'quantity':q==0 ? -1 : q,
       'productId':finalList?.productId,
       'batch':finalList?.batch
     }

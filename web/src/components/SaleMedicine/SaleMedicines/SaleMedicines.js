@@ -63,6 +63,14 @@ const SaleMedicinesList = ({ saleMedicines }) => {
    },
     {
       headerClassName: 'text-left',
+     Header:  'Patient Name',
+     // accessor: 'id',
+           Cell: ({original}) => (
+           original.patient.name
+       )
+   },
+    {
+      headerClassName: 'text-left',
       Header: 'Bill No',
       accessor: 'billNo',
     },

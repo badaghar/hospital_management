@@ -34,13 +34,29 @@ export const createSaleMedicine = async ({ input }) => {
 
     data: data,
   })
+  console.log("\n\n\n\n\n\n\n\n permedicine",permedicine)
 
   for(let i=0;i<permedicine.length;i++)
   {
+    // console.log("\n\n\n\n\n\n\n\n i value is ",i)s
+
+    let q
+    if(permedicine[i].quantity==-1)
+    {
+      q = 0
+      // console.log("\n\n\n\n\n\n\n\n quantity",q)
+
+    }else{
+      q = permedicine[i].quantity
+      // console.log("\n\n\n\n\n\n\n\n quantity")
+    }
+
+
+
 
      await db.medicine.update({
       data:{
-        'quantity': permedicine[i].quantity
+        'quantity': q
       },
       where: {
         productId_batch: {
