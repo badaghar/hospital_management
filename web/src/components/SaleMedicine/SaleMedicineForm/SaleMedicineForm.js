@@ -126,6 +126,28 @@ const SaleMedicineForm = (props) => {
 
 
   const onSubmit = (data) => {
+
+        const seen = {};
+
+    for (let i = 0; i < permedicineObj.length; i++) {
+      const { productId, batch } = permedicineObj[i];
+      if(!productId || !batch)
+      {
+        continue
+      }
+
+      const key = `${productId}-${batch}`;
+      console.log(key)
+
+      if (seen[key]) {
+        console.log(`Duplicate found for productId: ${productId} and batch: ${batch}`);
+        toast.error(`Duplicate found for batch: ${batch}`)
+        return
+        // You can customize the message or perform any other action here
+      } else {
+        seen[key] = true;
+      }
+    }
     // console.log(isSave)
     // console.log(data)
     const newmedicine = medicineObj.filter((val) => {
@@ -134,6 +156,9 @@ const SaleMedicineForm = (props) => {
     const newperMedicine = permedicineObj.filter((val) => {
       return val['quantity']
     })
+
+
+
     let input = {}
     input = {
       // 'billNo': data['billNo'],
@@ -193,6 +218,32 @@ const SaleMedicineForm = (props) => {
     set_actual_grand_total(parseFloat(grand_total - dis).toFixed(2))
   }, [discount])
 
+  // check dublicate permedicine obj
+
+  // useEffect(()=>{
+    // console.log("changed")
+    // const seen = {};
+
+    // for (let i = 0; i < permedicineObj.length; i++) {
+    //   const { productId, batch } = permedicineObj[i];
+    //   if(!productId || !batch)
+    //   {
+    //     continue
+    //   }
+
+    //   const key = `${productId}-${batch}`;
+    //   console.log(key)
+
+    //   if (seen[key]) {
+    //     console.log(`Duplicate found for productId: ${productId} and batch: ${batch}`);
+    //     toast.error(`Duplicate found for productId: ${productId} and batch: ${batch}`)
+    //     // You can customize the message or perform any other action here
+    //   } else {
+    //     seen[key] = true;
+    //   }
+    // }
+  // },[permedicineObj])
+
 
   const ShowHeadMedicine = () => {
     if (show_medicine_heading) {
@@ -213,6 +264,7 @@ const SaleMedicineForm = (props) => {
       setmedicineObj={setmedicineObj}
       setPermedicineObj={setPermedicineObj}
       medicines={medicine}
+      permedicineObj={permedicineObj}
 
     />)
   }

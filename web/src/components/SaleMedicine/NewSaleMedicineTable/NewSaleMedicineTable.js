@@ -30,7 +30,7 @@ const NewSaleMedicineTable = (props) => {
         index === self.findIndex((o) => o.name === obj.name)
     );
     setMedicineList(uniqueArray)
-    console.log(uniqueArray)
+    // console.log(uniqueArray)
     // console.log(newList)
 
   },[props.medicines])
@@ -50,7 +50,7 @@ const NewSaleMedicineTable = (props) => {
       return updatedList;
     })
 
-    let newBatchList = dublicatList.filter((item)=>item.name==name.name)
+    let newBatchList = dublicatList.filter((item)=>(item.name==name.name && item.data.quantity>0))
     console.log(newBatchList)
      newBatchList = newBatchList.map((item) => {
       return {label:item.data.batch + " - " + item.data.quantity,value:item.data.batch,batch:item.data.batch,id:item.id,data:item}
@@ -130,12 +130,20 @@ const NewSaleMedicineTable = (props) => {
       return updatedList;
     })
 
-    console.log(obj,medObj)
+    // console.log(obj,medObj)
+
+    // checking for dublicate medicine
+
+
+
+
 
     // console.log()
 
 
   },[quantity,medicineList,batchList])
+
+
 
 
 

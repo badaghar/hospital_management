@@ -52,7 +52,7 @@ export const Success = ({ saleReport, startDate, endDate }) => {
       <div className='text-white p-10 text-center'>
         <span>
           Total Sale Amount  From {startDate.toLocaleDateString()} to {endDate.toLocaleDateString()} is <span className='font-bold'>
-            ₹{saleReport?.totalSum}
+            ₹{saleReport?.totalSum.toFixed(2)}
           </span>
 
           {!download && <span className='ml-3 cursor-pointer underline' onClick={()=>setDownload(true)}>
