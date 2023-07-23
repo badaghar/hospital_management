@@ -1,6 +1,7 @@
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
+import axios from 'axios'
 import { timeTag } from 'src/lib/formatters'
 
 
@@ -13,6 +14,45 @@ const DISCHARGE_PATIENT = gql`
 `
 
 const IpdOverview = ({ipd}) => {
+
+
+
+  function getPDF(id) {
+    return axios.get(
+      `/.redwood/functions/downloadOpdForm?id=` +
+      id,
+      {
+        responseType: 'arraybuffer',
+        headers: {
+          Accept: 'application/pdf',
+        },
+      }
+    )
+  }
+  const printPDF = (id) => {
+    return getPDF(id) // API call
+      .then((response) => {
+        const blob = new Blob([response.data], { type: 'application/pdf' })
+        var blobURL = URL.createObjectURL(blob)
+        var iframe =  document.createElement('iframe')
+        document.body.appendChild(iframe)
+        iframe.style.display = 'none'
+
+        iframe.src = blobURL
+     iframe.onload = function() {
+      setTimeout(function() {
+        iframe.focus()
+        iframe.contentWindow.print()
+      }, 1)
+    }
+        toast.success('Download Complete')
+      })
+      .catch((err) => {
+        toast.error('something wrong happened try again')
+        console.log(err)
+      })
+  }
+
   const [dischargePatients, { loading, error }] = useMutation(
     DISCHARGE_PATIENT,
     {
@@ -31,9 +71,11 @@ const IpdOverview = ({ipd}) => {
       console.log('here')
     }
     console.log('here2')
-
   }
 
+    const printForm = () => {
+      printPDF(ipd.id)
+    }
 
 
 
@@ -105,6 +147,12 @@ const IpdOverview = ({ipd}) => {
             <span>{timeTag(ipd.date_of_admission)}</span>
 
           </div>}
+
+          <div className='flex justify-center mt-2 pb-3'>
+          <button className='bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2' onClick={printForm}>Print Form</button>
+
+        </div>
+
 
 
 

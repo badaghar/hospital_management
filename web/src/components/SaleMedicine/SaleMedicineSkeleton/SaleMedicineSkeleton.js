@@ -18,16 +18,10 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
     }
     setCount(noOfPage-1)
     setPages(page)
-    // console.log(saleMedicine.date.split('T00:00:00.000Z')[0])
-    // const date = new Date("2023-05-31");
-
-    // console.log(formattedDate);
-    // setFormatedDate(fD)
 
     const array = saleMedicine.medicine;
 
       const chunkSize = 15;
-      // const chunks = [];
       let i = 0;
 
       while (i < array.length) {

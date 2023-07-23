@@ -22,7 +22,7 @@ export const schema = gql`
 
   type Query {
     ipds(type: String!): [Ipd!]! @requireAuth
-    ipd(id: Int!): Ipd @requireAuth
+    ipd(id: Int!): Ipd @skipAuth
   }
 
   input CreateIpdInput {

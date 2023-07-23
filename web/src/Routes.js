@@ -23,6 +23,37 @@ const Routes = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <Route path="/download-opd-form/{id:Int}" page={DownloadsDownloadOpdFormPage} name="downloadOpdForm" />
+      <Route path="/download-other-charges/{id:Int}" page={DownloadsDownloadOtherChargesPage} name="downloadOtherCharges" />
+      <Route path="/download-lab-charges/{id:Int}" page={DownloadsDownloadLabChargesPage} name="downloadLabCharges" />
       <Route path="/download-discharge-summary/{id:Int}" page={DownloadsDownloadDischargeSummaryPage} name="downloadDischargeSummary" />
       <Route path="/download-purchase-medicine" page={DownloadsDownloadPurchaseMedicinePage} name="downloadPurchaseMedicine" />
       <Route path="/download-sale-medicine/{id:Int}" page={DownloadsDownloadSaleMedicinePage} name="downloadSaleMedicine" />

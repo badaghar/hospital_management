@@ -6,6 +6,7 @@ import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import { QUERY } from 'src/components/Ipd/IpdCell'
+import axios from "axios"
 const CREATE_IPD_LAB_CHARGES_MUTATION = gql`
   mutation CreateIpdLabChargesMutation($input: [CreateIpdLabChargesInput]!) {
     createIpdLabCharges(input: $input) {
@@ -17,12 +18,57 @@ const CREATE_IPD_LAB_CHARGES_MUTATION = gql`
 
 const LabChargesIpd = ({ ipd, users, labChargeses }) => {
   const [labChargesArray, setLabChargesArray] = useState([])
+  const [isPrint,setIsPrint] = useState(false)
+
+
+  function getPDF(id) {
+    return axios.get(
+      `/.redwood/functions/downloadLabCharges?id=` +
+      id,
+      {
+        responseType: 'arraybuffer',
+        headers: {
+          Accept: 'application/pdf',
+        },
+      }
+    )
+  }
+  const printPDF = (id) => {
+    return getPDF(id) // API call
+      .then((response) => {
+        const blob = new Blob([response.data], { type: 'application/pdf' })
+        var blobURL = URL.createObjectURL(blob)
+        var iframe =  document.createElement('iframe')
+        document.body.appendChild(iframe)
+        iframe.style.display = 'none'
+
+        iframe.src = blobURL
+     iframe.onload = function() {
+      setTimeout(function() {
+        iframe.focus()
+        iframe.contentWindow.print()
+      }, 1)
+    }
+        toast.success('Download Complete')
+      })
+      .catch((err) => {
+        toast.error('something wrong happened try again')
+        console.log(err)
+      })
+  }
+
   const [createIpdLabCharges, { loading, error }] = useMutation(
     CREATE_IPD_LAB_CHARGES_MUTATION,
     {
       onCompleted: () => {
         toast.success('IpdLabCharges added')
         setLabChargesArray([])
+        if(isPrint)
+        {
+          printPDF(ipd.id)
+
+
+        }
         navigate(routes.ipd({id:ipd.id}))
       },
       onError: (error) => {
@@ -45,6 +91,20 @@ const LabChargesIpd = ({ ipd, users, labChargeses }) => {
       toast.error('Enter All The Details')
       return
     }
+    createIpdLabCharges({ variables: { input: labChargesArray } })
+  }
+  const onSaveAndPrint = () => {
+    // console.log(doctorChargesArray)
+    const hasEmptyValue = labChargesArray.some((obj) => {
+      // Check if any value in the object is empty
+      return Object.values(obj).some((value) => value === null || value === '' || !value);
+    });
+    if(hasEmptyValue)
+    {
+      toast.error('Enter All The Details')
+      return
+    }
+    setIsPrint(true)
     createIpdLabCharges({ variables: { input: labChargesArray } })
   }
 
@@ -107,7 +167,8 @@ const LabChargesIpd = ({ ipd, users, labChargeses }) => {
 
         </div>
         <div className='flex justify-center mt-2 pb-3'>
-          <div className='bg-green-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={onSave}>Save Changes</div>
+          <button className='bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2' onClick={onSave}>Save Changes</button>
+          <button className="bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2" onClick={onSaveAndPrint}>Save & Print</button>
         </div>
 
       </div>
