@@ -46,7 +46,12 @@ const ReturnMedicinesList = ({ returnMedicines }) => {
         val.patient.name
           .toString()
           .toLowerCase()
-          .includes(search_val.toLowerCase())
+          .includes(search_val.toLowerCase()) ||
+
+          val.patient.name
+            .toString()
+            .toLowerCase()
+            .includes(search_val.toLowerCase())
       )
     })
     setRows_count(filterData.length <= 5 ? 5 : 10)
