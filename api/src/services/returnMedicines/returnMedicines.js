@@ -48,10 +48,38 @@ export const updateReturnMedicine = ({ id, input }) => {
   })
 }
 
-export const deleteReturnMedicine = ({ id }) => {
-  return db.returnMedicine.delete({
+export const deleteReturnMedicine = async ({ id }) => {
+
+  const data = await db.returnMedicine.delete({
     where: { id },
   })
+
+  data.medicine.map(async (med) => {
+    // const qty = (med.free_qty + med.paid_qty) * med.pack
+    const qty =  parseInt(med.quantity)
+
+    const medData =  await db.medicine.findFirst({
+      where:{
+        batch: med['batch No'],
+        pid:{
+          name:med['medicine Name']
+        }
+      }
+    })
+    await db.medicine.update({
+      where: {
+        id:medData.id
+      },
+      data: {
+        quantity: {
+          increment: qty
+        }
+      }
+
+    })
+  })
+
+  return data
 }
 
 export const ReturnMedicine = {

@@ -3,6 +3,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { jsonDisplay, timeTag } from 'src/lib/formatters'
+import { useAuth } from "src/auth"
 
 const DELETE_RETURN_MEDICINE_MUTATION = gql`
   mutation DeleteReturnMedicineMutation($id: Int!) {
@@ -13,6 +14,8 @@ const DELETE_RETURN_MEDICINE_MUTATION = gql`
 `
 
 const ReturnMedicine = ({ returnMedicine }) => {
+  const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
+
   const [deleteReturnMedicine] = useMutation(DELETE_RETURN_MEDICINE_MUTATION, {
     onCompleted: () => {
       toast.success('ReturnMedicine deleted')
@@ -176,6 +179,22 @@ const ReturnMedicine = ({ returnMedicine }) => {
             </tbody>
           </table>
         </div>
+
+        <nav className="rw-button-group">
+        {/* <Link
+          to={routes.editReturnMedicine({ id: returnMedicine.id })}
+          className="rw-button rw-button-blue"
+        >
+          Edit
+        </Link> */}
+      { hasRole('admin') &&   <button
+          type="button"
+          className="rw-button rw-button-red"
+          onClick={() => onDeleteClick(returnMedicine.id)}
+        >
+          Delete
+        </button>}
+      </nav>
       </div>
     </>
   )

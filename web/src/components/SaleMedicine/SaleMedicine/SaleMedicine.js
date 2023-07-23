@@ -1,6 +1,7 @@
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useAuth } from "src/auth"
 
 import { jsonDisplay, timeTag } from 'src/lib/formatters'
 
@@ -13,6 +14,9 @@ const DELETE_SALE_MEDICINE_MUTATION = gql`
 `
 
 const SaleMedicine = ({ saleMedicine }) => {
+  const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
+  console.log(saleMedicine)
+
   const [deleteSaleMedicine] = useMutation(DELETE_SALE_MEDICINE_MUTATION, {
     onCompleted: () => {
       toast.success('SaleMedicine deleted')
@@ -108,28 +112,28 @@ const SaleMedicine = ({ saleMedicine }) => {
               </tr>
             </tbody>
           </table>
-          </div>
+        </div>
 
 
-          {/* <nav className="rw-button-group">
-        <Link
+        <nav className="rw-button-group">
+          {/* <Link
           to={routes.editSaleMedicine({ id: saleMedicine.id })}
           className="rw-button rw-button-blue"
         >
           Edit
-        </Link>
-        <button
-          type="button"
-          className="rw-button rw-button-red"
-          onClick={() => onDeleteClick(saleMedicine.id)}
-        >
-          Delete
-        </button>
-      </nav> */}
-        </div>
+        </Link> */}
+          {hasRole('admin') && <button
+            type="button"
+            className="rw-button rw-button-red"
+            onClick={() => onDeleteClick(saleMedicine.id)}
+          >
+            Delete
+          </button>}
+        </nav>
+      </div>
 
-      </>
-      )
+    </>
+  )
 }
 
-      export default SaleMedicine
+export default SaleMedicine

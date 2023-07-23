@@ -1,6 +1,7 @@
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useAuth } from "src/auth"
 
 import { jsonDisplay, timeTag } from 'src/lib/formatters'
 
@@ -13,6 +14,8 @@ const DELETE_PURCHASE_MEDICINE_MUTATION = gql`
 `
 
 const PurchaseMedicine = ({ purchaseMedicine }) => {
+  const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
+
   console.log(purchaseMedicine)
   const [deletePurchaseMedicine] = useMutation(
     DELETE_PURCHASE_MEDICINE_MUTATION,
@@ -137,14 +140,14 @@ const PurchaseMedicine = ({ purchaseMedicine }) => {
           className="rw-button rw-button-blue"
         >
           Edit
-        </Link>
-        <button
+        </Link> */}
+      { hasRole('admin') && <button
           type="button"
           className="rw-button rw-button-red"
           onClick={() => onDeleteClick(purchaseMedicine.id)}
         >
           Delete
-        </button> */}
+        </button>}
         </nav>
       </>
       )

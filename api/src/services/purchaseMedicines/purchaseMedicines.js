@@ -22,7 +22,7 @@ export const checkInvoiceNumber = ({ invoiceNo }) => {
 }
 
 export const createPurchaseMedicine = async ({ input }) => {
-  const {permedicine,newperMedicineManu,...data} =  input
+  const { permedicine, newperMedicineManu, ...data } = input
 
 
   const med = await db.purchaseMedicine.create({
@@ -45,24 +45,23 @@ export const createPurchaseMedicine = async ({ input }) => {
     data: newperMedicineManu
   })
 
-  for(let i=0;i<permedicine.length;i++)
-  {
+  for (let i = 0; i < permedicine.length; i++) {
     try {
       await db.medicine.create({
-        data:permedicine[i]
+        data: permedicine[i]
       })
 
     } catch (error) {
       const getdata = await db.medicine.findFirst({
-        where:{
-          'productId':permedicine[i].productId,
-          'batch':permedicine[i].batch
+        where: {
+          'productId': permedicine[i].productId,
+          'batch': permedicine[i].batch
         }
 
       })
 
       await db.medicine.update({
-        data:{
+        data: {
           'quantity': getdata.quantity + permedicine[i].quantity
         },
         where: {
@@ -85,41 +84,59 @@ export const updatePurchaseMedicine = ({ id, input }) => {
   })
 }
 
-export const deletePurchaseMedicine = ({ id }) => {
-  return db.purchaseMedicine.delete({
+export const deletePurchaseMedicine = async ({ id }) => {
+  const data = await db.purchaseMedicine.delete({
     where: { id },
   })
+  data.medicine.map(async (med) => {
+    const qty = (med.free_qty + med.paid_qty) * med.pack
+    await db.medicine.update({
+      where: {
+        productId_batch: {
+          productId: med.product.id,
+          batch: med.batch
+        },
+      },
+      data: {
+        quantity: {
+          decrement: qty
+        }
+      }
+
+    })
+  })
+  return data
 }
 
 
 // pharmacy Report
-export const distributersReport = async ({ id,startDate,endDate }) => {
+export const distributersReport = async ({ id, startDate, endDate }) => {
 
   const data = await db.purchaseMedicine.findMany({
     where: {
-      distributerId:id,
+      distributerId: id,
       date: {
         gte: new Date(startDate),
         lte: new Date(endDate),
       },
     },
-      orderBy: [
-        {
-          date: 'asc'
-        }
-      ]
+    orderBy: [
+      {
+        date: 'asc'
+      }
+    ]
 
   });
 
   const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
-  return {data,totalSum}
+  return { data, totalSum }
 }
-export const manufacturerReport = async ({ id,startDate,endDate }) => {
+export const manufacturerReport = async ({ id, startDate, endDate }) => {
 
   const data = await db.manufacturerPurchaseMedicine.findMany({
     where: {
-      pid:{
-        manufacturerId:id
+      pid: {
+        manufacturerId: id
       },
       created_at: {
         gte: new Date(startDate),
@@ -137,9 +154,9 @@ export const manufacturerReport = async ({ id,startDate,endDate }) => {
   const totalSum = data.reduce((sum, item) => sum + item.amount, 0);
   const gstSum = data.reduce((sum, item) => sum + item.net_amount, 0);
   // const totalSum = 0;
-  return {data,totalSum,gstSum}
+  return { data, totalSum, gstSum }
 }
-export const purchaseReport = async ({ startDate,endDate }) => {
+export const purchaseReport = async ({ startDate, endDate }) => {
   const data = await db.purchaseMedicine.findMany({
     where: {
       date: {
@@ -156,9 +173,9 @@ export const purchaseReport = async ({ startDate,endDate }) => {
   });
 
   const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
-  return {data,totalSum}
+  return { data, totalSum }
 }
-export const saleReport = async ({ startDate,endDate }) => {
+export const saleReport = async ({ startDate, endDate }) => {
   const data = await db.saleMedicine.findMany({
     where: {
       date: {
@@ -175,9 +192,9 @@ export const saleReport = async ({ startDate,endDate }) => {
   });
 
   const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
-  return {data,totalSum}
+  return { data, totalSum }
 }
-export const returnMedicinesReport = async ({ startDate,endDate }) => {
+export const returnMedicinesReport = async ({ startDate, endDate }) => {
   const data = await db.returnMedicine.findMany({
     where: {
       date: {
@@ -194,11 +211,11 @@ export const returnMedicinesReport = async ({ startDate,endDate }) => {
   });
 
   const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
-  return {data,totalSum}
+  return { data, totalSum }
 }
 export const pharmacyExpiryMedicineReport = async () => {
   const date = new Date()
-  date.setMonth(date.getMonth()+2)
+  date.setMonth(date.getMonth() + 2)
 
   const data = await db.medicine.findMany({
     where: {
@@ -217,15 +234,15 @@ export const pharmacyExpiryMedicineReport = async () => {
 
 // hospital Report
 
-export const ipdReport = async ({ startDate,endDate,type }) => {
+export const ipdReport = async ({ startDate, endDate, type }) => {
   const data = await db.ipd.findMany({
     where: {
-      date_of_admission : {
+      date_of_admission: {
 
         gte: new Date(startDate),
         lte: new Date(endDate),
       },
-      patientType:type
+      patientType: type
     },
     orderBy: [
       {
@@ -235,12 +252,12 @@ export const ipdReport = async ({ startDate,endDate,type }) => {
   });
 
   const totalSum = data.reduce((sum, item) => sum + item.paid_amount, 0);
-  return {data,totalSum}
+  return { data, totalSum }
 }
-export const opdReport = async ({ startDate,endDate }) => {
+export const opdReport = async ({ startDate, endDate }) => {
   const data = await db.opd.findMany({
     where: {
-      created_at : {
+      created_at: {
 
         gte: new Date(startDate),
         lte: new Date(endDate),
@@ -254,16 +271,15 @@ export const opdReport = async ({ startDate,endDate }) => {
   });
 
   const totalSum = data.reduce((sum, item) => sum + item.amount, 0);
-  return {data,totalSum}
+  return { data, totalSum }
 }
 
-export const pharmacyPayment = async ({ id,startDate,endDate }) => {
+export const pharmacyPayment = async ({ id, startDate, endDate }) => {
   let data;
-  if(id==1)
-  {
+  if (id == 1) {
     data = await db.paymentPurchaseMedicine.findMany({
       where: {
-        balance:0,
+        balance: 0,
         updated_at: {
           gte: new Date(startDate),
           lte: new Date(endDate),
@@ -300,7 +316,7 @@ export const pharmacyPayment = async ({ id,startDate,endDate }) => {
 
 
   const totalSum = data.reduce((sum, item) => sum + item.paid, 0);
-  return {data,totalSum}
+  return { data, totalSum }
 }
 
 export const PurchaseMedicine = {
