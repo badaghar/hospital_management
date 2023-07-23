@@ -53,6 +53,9 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
         val.invoiceNo
           .toString()
           .toLowerCase()
+          .includes(search_val.toLowerCase()) ||        val.did.name
+          .toString()
+          .toLowerCase()
           .includes(search_val.toLowerCase())
       )
     })
