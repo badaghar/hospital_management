@@ -3,8 +3,9 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/Patient/PatientsCell'
+import { useState } from 'react'
 import { timeTag, truncate } from 'src/lib/formatters'
-
+import SearchTable from 'src/components/SearchTable/SearchTable'
 const DELETE_PATIENT_MUTATION = gql`
   mutation DeletePatientMutation($id: Int!) {
     deletePatient(id: $id) {
@@ -14,6 +15,8 @@ const DELETE_PATIENT_MUTATION = gql`
 `
 
 const PatientsList = ({ patients }) => {
+  const [search_data, setSearch_data] = useState(patients)
+  const [rows_count, setRows_count] = useState(patients.length <= 5 ? 5 : 10)
   const [deletePatient] = useMutation(DELETE_PATIENT_MUTATION, {
     onCompleted: () => {
       toast.success('Patient deleted')
@@ -34,64 +37,156 @@ const PatientsList = ({ patients }) => {
     }
   }
 
+  const change = (search)=>{
+    const search_val = search.target.value
+
+    let filterData = patients.filter((val) => {
+      return (
+        val.name
+          .toString()
+          .toLowerCase()
+          .includes(search_val.toLowerCase()) ||
+        val.phone_no
+          .toString()
+          .toLowerCase()
+          .includes(search_val.toLowerCase())
+      )
+    })
+    setRows_count(filterData.length <= 5 ? 5 : 10)
+    setSearch_data(filterData)
+  }
+
+  const columns = [
+    {
+       headerClassName: 'text-left',
+      Header:  'SL. No',
+            Cell: ({index}) => (
+            index+1
+        )
+    },
+    {
+       headerClassName: 'text-left',
+      Header:  'Name',
+      accessor: 'name',
+    },
+    {
+       headerClassName: 'text-left',
+      Header:  'Age',
+      accessor: 'age',
+    },
+    {
+       headerClassName: 'text-left',
+      Header:  'Phone no',
+      accessor: 'phone_no',
+    },
+    {
+       headerClassName: 'text-left',
+      Header:  'Gender',
+      accessor: 'gender',
+    },
+
+
+    {
+       headerClassName: 'text-left',
+      Header:  'Action',
+      accessor: 'actionColumn',
+      disableSortBy: true,
+      Cell: ({ original }) => (
+        <nav className="rw-table-actions">
+        <Link
+          to={routes.patient({ id: original.id })}
+          title={'Show patient ' + original.id + ' detail'}
+          className="rw-button rw-button-small"
+        >
+          Show
+        </Link>
+        <Link
+          to={routes.editPatient({ id: original.id })}
+          title={'Edit patient ' + original.id}
+          className="rw-button rw-button-small rw-button-blue"
+        >
+          Edit
+        </Link>
+        <button
+          type="button"
+          title={'Delete patient ' + original.id}
+          className="rw-button rw-button-small rw-button-red"
+          onClick={() => onDeleteClick(original.id)}
+        >
+          Delete
+        </button>
+      </nav>
+      ),
+    },
+  ]
+
   return (
-    <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Phone no</th>
-            <th>Gender</th>
-            <th>Address</th>
-            <th>Created at</th>
-            <th>Updated at</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          {patients.map((patient) => (
-            <tr key={patient.id}>
-              <td>{truncate(patient.id)}</td>
-              <td>{truncate(patient.name)}</td>
-              <td>{truncate(patient.age)}</td>
-              <td>{truncate(patient.phone_no)}</td>
-              <td>{truncate(patient.gender)}</td>
-              <td>{truncate(patient.address)}</td>
-              <td>{timeTag(patient.created_at)}</td>
-              <td>{timeTag(patient.updated_at)}</td>
-              <td>
-                <nav className="rw-table-actions">
-                  <Link
-                    to={routes.patient({ id: patient.id })}
-                    title={'Show patient ' + patient.id + ' detail'}
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link>
-                  <Link
-                    to={routes.editPatient({ id: patient.id })}
-                    title={'Edit patient ' + patient.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    type="button"
-                    title={'Delete patient ' + patient.id}
-                    className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(patient.id)}
-                  >
-                    Delete
-                  </button>
-                </nav>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+            <SearchTable
+    change={change}
+    placeholder={"Search By Typing Patient Name and Phone No."}
+    columns={columns}
+    rows_count={rows_count}
+    search_data={search_data}
+    />
+    </>
+    // <div className="rw-segment rw-table-wrapper-responsive">
+    //   <table className="rw-table">
+    //     <thead>
+    //       <tr>
+    //         <th>Id</th>
+    //         <th>Name</th>
+    //         <th>Age</th>
+    //         <th>Phone no</th>
+    //         <th>Gender</th>
+    //         <th>Address</th>
+    //         <th>Created at</th>
+    //         <th>Updated at</th>
+    //         <th>&nbsp;</th>
+    //       </tr>
+    //     </thead>
+    //     <tbody>
+    //       {patients.map((patient) => (
+    //         <tr key={patient.id}>
+    //           <td>{truncate(patient.id)}</td>
+    //           <td>{truncate(patient.name)}</td>
+    //           <td>{truncate(patient.age)}</td>
+    //           <td>{truncate(patient.phone_no)}</td>
+    //           <td>{truncate(patient.gender)}</td>
+    //           <td>{truncate(patient.address)}</td>
+    //           <td>{timeTag(patient.created_at)}</td>
+    //           <td>{timeTag(patient.updated_at)}</td>
+    //           <td>
+    //             <nav className="rw-table-actions">
+    //               <Link
+    //                 to={routes.patient({ id: patient.id })}
+    //                 title={'Show patient ' + patient.id + ' detail'}
+    //                 className="rw-button rw-button-small"
+    //               >
+    //                 Show
+    //               </Link>
+    //               <Link
+    //                 to={routes.editPatient({ id: patient.id })}
+    //                 title={'Edit patient ' + patient.id}
+    //                 className="rw-button rw-button-small rw-button-blue"
+    //               >
+    //                 Edit
+    //               </Link>
+    //               <button
+    //                 type="button"
+    //                 title={'Delete patient ' + patient.id}
+    //                 className="rw-button rw-button-small rw-button-red"
+    //                 onClick={() => onDeleteClick(patient.id)}
+    //               >
+    //                 Delete
+    //               </button>
+    //             </nav>
+    //           </td>
+    //         </tr>
+    //       ))}
+    //     </tbody>
+    //   </table>
+    // </div>
   )
 }
 

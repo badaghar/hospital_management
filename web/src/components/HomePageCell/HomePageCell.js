@@ -38,6 +38,8 @@ export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
   const [totalOpd,setTotalOpd] = useState(0)
   const [todayPurchase,setTodayPurchase] = useState(0)
   const [todaySale,setTodaySale] = useState(0)
+  const [monthSale,setMonthSale] = useState(0)
+  const [monthPurchase,setMonthPurchase] = useState(0)
 
   // const [totalPurchase,setTotalPurchase] = useState(0)
 
@@ -49,6 +51,8 @@ export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
     setTotalIpd(ipds.length)
     setTotalOpd(opds.length)
     const today = new Date()
+    const month = new Date()
+    month.setDate(1)
     today.setHours(0)
     today.setMinutes(0)
     today.setSeconds(0)
@@ -65,8 +69,24 @@ export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
 
     const tSale =  tos.reduce((prev,item)=> prev + item.grand_total,0)
     const tPurchase =  top.reduce((prev,item)=> prev + item.grand_total,0)
+    const monthtos = saleMedicines.filter((item)=> {
+      const newDate = new Date(item.date)
+      console.log(newDate,today)
+      return newDate>=month
+    })
+    const monthtop = purchaseMedicines.filter((item)=> {
+      const newDate = new Date(item.date)
+      console.log(newDate,today)
+      return newDate>=month
+    })
+
+    const msale = monthtos.reduce((prev,item)=> prev + item.grand_total,0)
+    const mpurchase = monthtop.reduce((prev,item)=> prev + item.grand_total,0)
+
     setTodaySale(tSale)
     setTodayPurchase(tPurchase)
+    setMonthPurchase(mpurchase)
+    setMonthSale(msale)
     // console.log(tos)
 
   },[])
@@ -91,6 +111,16 @@ export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
         <div className="flex flex-col bg-slate-800 shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>Today Sale Medicine</h1>
           <p> ₹ {todaySale.toFixed(2)} </p>
+
+        </div>
+        <div className="flex flex-col bg-slate-800 shadow-lg rounded-2xl p-6 items-center m-4">
+          <h1>This Month Purchase Medicine</h1>
+          <p> ₹ {monthPurchase.toFixed(2)} </p>
+
+        </div>
+        <div className="flex flex-col bg-slate-800 shadow-lg rounded-2xl p-6 items-center m-4">
+          <h1>This Month Sale Medicine</h1>
+          <p> ₹ {monthSale.toFixed(2)} </p>
 
         </div>
 

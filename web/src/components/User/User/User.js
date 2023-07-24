@@ -51,22 +51,22 @@ const User = ({ user }) => {
               <th>Email</th>
               <td>{user.email}</td>
             </tr>
-            <tr>
+            {/* <tr>
               <th>Hashed password</th>
               <td>{user.hashedPassword}</td>
             </tr>
             <tr>
               <th>Salt</th>
               <td>{user.salt}</td>
-            </tr>
-            <tr>
+            </tr> */}
+            {/* <tr>
               <th>Reset token</th>
               <td>{user.resetToken}</td>
             </tr>
             <tr>
               <th>Reset token expires at</th>
               <td>{timeTag(user.resetTokenExpiresAt)}</td>
-            </tr>
+            </tr> */}
             <tr>
               <th>Roles</th>
               <td>{user.roles}</td>
@@ -83,7 +83,7 @@ const User = ({ user }) => {
         </table>
       </div>
       <nav className="rw-button-group">
-        <Link
+        {/* <Link
           to={routes.editUser({ id: user.id })}
           className="rw-button rw-button-blue"
         >
@@ -95,7 +95,7 @@ const User = ({ user }) => {
           onClick={() => onDeleteClick(user.id)}
         >
           Delete
-        </button>
+        </button> */}
       </nav>
     </>
   )

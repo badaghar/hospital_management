@@ -20,37 +20,6 @@ const Routes = () => {
   return (
     <Router useAuth={useAuth}>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <Route path="/download-opd-form/{id:Int}" page={DownloadsDownloadOpdFormPage} name="downloadOpdForm" />
       <Route path="/download-other-charges/{id:Int}" page={DownloadsDownloadOtherChargesPage} name="downloadOtherCharges" />
       <Route path="/download-lab-charges/{id:Int}" page={DownloadsDownloadLabChargesPage} name="downloadLabCharges" />
@@ -62,7 +31,6 @@ const Routes = () => {
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
 
 
-      <Route path="/signup" page={SignupPage} name="signup" />
 
       <Private unauthenticated='login' >
 
@@ -104,7 +72,9 @@ const Routes = () => {
             <Route path="/sale-medicines/{id:Int}" page={SaleMedicineSaleMedicinePage} name="saleMedicine" />
             <Route path="/sale-medicines" page={SaleMedicineSaleMedicinesPage} name="saleMedicines" />
           </Set>
-          <Set wrap={ScaffoldLayout} title="Users" titleTo="users" buttonLabel="New User" buttonTo="newUser">
+          <Set wrap={ScaffoldLayout} title="Users" titleTo="users" buttonLabel="New User" buttonTo="signup">
+        <Route path="/signup" page={SignupPage} name="signup" />
+
             <Route path="/users/new" page={UserNewUserPage} name="newUser" />
             <Route path="/users/{id:Int}/edit" page={UserEditUserPage} name="editUser" />
             <Route path="/users/{id:Int}" page={UserUserPage} name="user" />
