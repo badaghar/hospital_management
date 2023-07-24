@@ -128,8 +128,16 @@ export const distributersReport = async ({ id, startDate, endDate }) => {
 
   });
 
+  const data2 = await db.paymentPurchaseMedicine.findMany({
+    where:{
+      purchaseMedicine:{
+        distributerId:id
+      }
+    }
+  })
+
   const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
-  return { data, totalSum }
+  return { data,data2, totalSum }
 }
 export const manufacturerReport = async ({ id, startDate, endDate }) => {
 

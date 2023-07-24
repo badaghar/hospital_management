@@ -1,3 +1,5 @@
+import { useEffect,useState } from 'react';
+// import { useState } from 'react-js-dialog-box';
 import PurchaseMedicines from 'src/components/PurchaseMedicine/PurchaseMedicines'
 
 
@@ -23,6 +25,11 @@ export const QUERY = gql`
       updated_at
       }
       totalSum
+      data2{
+        id
+        balance
+        paid
+      }
     },
 
   }
@@ -46,6 +53,15 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ distributersReport, startDate, endDate }) => {
+  const [totalBalanace,setTotalBalanace] = useState(0)
+  const [totalPaid,setTotalPaid] = useState(0)
+  useEffect(()=>{
+    const tb = distributersReport.data2.reduce((prev,item)=> prev + item.balance,0)
+    const tp = distributersReport.data2.reduce((prev,item)=> prev + item.paid,0)
+    setTotalBalanace(tb)
+    setTotalPaid(tp)
+
+  },[distributersReport])
 
 
   return (
@@ -53,7 +69,8 @@ export const Success = ({ distributersReport, startDate, endDate }) => {
       <div className='text-white p-10 text-center'>
         <span>
           Total Purchase Amount From Distributer {distributersReport.data[0]?.did?.name} From {startDate.toLocaleDateString()} to {endDate.toLocaleDateString()} is <span className='font-bold'>
-            ₹{distributersReport.totalSum}
+            ₹{distributersReport.totalSum} <br />
+            Total Amount Paid to the Distributer is ₹{totalBalanace} and Total Balance To Be Paid is ₹{totalPaid}
           </span>
         </span>
 
