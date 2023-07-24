@@ -76,7 +76,20 @@ export const Success = ({ downloadOtherCharge }) => {
   // let count = 0
   const [formatedDate, setFormatedDate] = useState("")
   useEffect(() => {
-    const noOfPage = Math.ceil(downloadOtherCharge.IpdCharges.length / 15)
+    // charge_type
+    // charge
+    // quantity
+    // total
+    const myArray  = [...downloadOtherCharge.IpdCharges]
+    const myArray2 = downloadOtherCharge.IpdOperationPayment.map((val,ind)=>{
+      return { 'charge_type':val.operation_name,'charge':val.amount,'quantity':1,'total':val.amount }
+    })
+    const myArray3 = downloadOtherCharge.IpdConsultation.map((val,ind)=>{
+      return { 'charge_type':val.consultation_type,'charge':val.amount,'quantity':1,'total':val.amount }
+    })
+
+    const actualArray = [...myArray,...myArray2,...myArray3]
+    const noOfPage = Math.ceil(actualArray.length / 15)
     // setPages(noOfPage)
     let page = []
     for (let i = 0; i < noOfPage; i++) {
@@ -86,7 +99,7 @@ export const Success = ({ downloadOtherCharge }) => {
     setCount(noOfPage - 1)
     setPages(page)
 
-    const array = downloadOtherCharge.IpdCharges;
+    const array = actualArray;
 
     const chunkSize = 15;
     let i = 0;
