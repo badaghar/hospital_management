@@ -38,7 +38,7 @@ const IpdsList = ({ ipds }) => {
     }
   }
 
-  const change = (search)=>{
+  const change = (search) => {
     const search_val = search.target.value
 
     let filterData = ipds.filter((val) => {
@@ -46,7 +46,10 @@ const IpdsList = ({ ipds }) => {
         val.patient.name
           .toString()
           .toLowerCase()
-          .includes(search_val.toLowerCase())
+          .includes(search_val.toLowerCase()) || val.patient.phone_no
+            .toString()
+            .toLowerCase()
+            .includes(search_val.toLowerCase())
       )
     })
     setRows_count(filterData.length <= 5 ? 5 : 10)
@@ -55,73 +58,78 @@ const IpdsList = ({ ipds }) => {
   const columns = [
     {
       headerClassName: 'text-left',
-     Header:  'SL. No',
-     // accessor: 'id',
-           Cell: ({index}) => (
-           index+1
-       )
-   },
+      Header: 'SL. No',
+      // accessor: 'id',
+      Cell: ({ index }) => (
+        index + 1
+      )
+    },
     {
-       headerClassName: 'text-left',
-      Header:  'Name',
+      headerClassName: 'text-left',
+      Header: 'Name',
       accessor: 'patient.name',
     },
     {
-       headerClassName: 'text-left',
-      Header:  'Consultant doctor',
+      headerClassName: 'text-left',
+      Header: 'Phone No',
+      accessor: 'patient.phone_no',
+    },
+    {
+      headerClassName: 'text-left',
+      Header: 'Consultant doctor',
       accessor: 'consultant_doctor',
     },
     {
-       headerClassName: 'text-left',
-      Header:  'Date of admission',
+      headerClassName: 'text-left',
+      Header: 'Date of admission',
       accessor: 'date_of_admission',
       Cell: ({ original }) => (
-          timeTag(original.created_at)
-        )
+        timeTag(original.created_at)
+      )
     },
     {
-       headerClassName: 'text-left',
-      Header:  'Paid Amount',
+      headerClassName: 'text-left',
+      Header: 'Paid Amount',
       accessor: 'paid_amount',
     },
     {
-       headerClassName: 'text-left',
-      Header:  'Date of Discharge',
+      headerClassName: 'text-left',
+      Header: 'Date of Discharge',
       accessor: 'discharge_date',
       Cell: ({ original }) => (
-          timeTag(original.created_at)
-        )
+        timeTag(original.created_at)
+      )
     },
     {
-       headerClassName: 'text-left',
-      Header:  'Action',
+      headerClassName: 'text-left',
+      Header: 'Action',
       accessor: 'actionColumn',
       disableSortBy: true,
       Cell: ({ original }) => (
-                   <nav className="rw-table-actions">
-                  <Link
-                    to={routes.ipd({ id: original.id })}
-                    title={'Show ipd ' + original.id + ' detail'}
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link>
+        <nav className="rw-table-actions">
+          <Link
+            to={routes.ipd({ id: original.id })}
+            title={'Show ipd ' + original.id + ' detail'}
+            className="rw-button rw-button-small"
+          >
+            Show
+          </Link>
 
-                </nav>
+        </nav>
       ),
     },
   ]
 
   return (
     <>
-    <SearchTable
-change={change}
-placeholder={"Search By Typing Patient Name"}
-columns={columns}
-rows_count={rows_count}
-search_data={search_data}
-/>
-</>
+      <SearchTable
+        change={change}
+        placeholder={"Search By Typing Patient Name"}
+        columns={columns}
+        rows_count={rows_count}
+        search_data={search_data}
+      />
+    </>
     // <div className="rw-segment rw-table-wrapper-responsive">
     //   <table className="rw-table">
     //     <thead>
