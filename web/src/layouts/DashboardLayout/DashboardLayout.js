@@ -1,7 +1,7 @@
 import { Link, routes } from "@redwoodjs/router"
 import { useState } from "react";
 import { useAuth } from "src/auth"
-import { MdLocalPharmacy,MdPayments } from "react-icons/md";
+import { MdLocalPharmacy, MdPayments } from "react-icons/md";
 import { TbReportMedical } from "react-icons/tb";
 import { FaBed } from "react-icons/fa";
 import { BsPersonFillAdd } from "react-icons/bs";
@@ -10,13 +10,12 @@ import { Toaster } from "@redwoodjs/web/toast";
 
 const DashboardLayout = ({ children }) => {
   const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
-  const [dropDownOpen,setDropDownOpen] = useState('')
-  const [prevtext,setPrevText] = useState('')
+  const [dropDownOpen, setDropDownOpen] = useState('')
+  const [prevtext, setPrevText] = useState('')
 
 
   const toggleDropDown = (text) => {
-    if(prevtext==text)
-    {
+    if (prevtext == text) {
       setDropDownOpen('')
       setPrevText('')
       return
@@ -36,7 +35,7 @@ const DashboardLayout = ({ children }) => {
       //  :class="{'dark': isDark }"
       >
 
-<Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
+        <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
         <div className="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-700 text-white">
           {/* Header */}
           <div className="fixed w-full flex items-center justify-between h-14 text-white z-10">
@@ -85,7 +84,7 @@ const DashboardLayout = ({ children }) => {
                 <li className="relative">
                   <button
                     className="flex flex-row w-full items-center h-11 focus:outline-none  hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                    onClick={toggleDropDown.bind(this,'pharmacy')}
+                    onClick={toggleDropDown.bind(this, 'pharmacy')}
                   >
                     <span className="inline-flex justify-center items-center ml-4">
                       <MdLocalPharmacy />
@@ -94,7 +93,7 @@ const DashboardLayout = ({ children }) => {
                     <span className="ml-2 text-sm tracking-wide truncate">Pharmacy</span>
 
                   </button>
-                  {dropDownOpen=='pharmacy' && (
+                  {dropDownOpen == 'pharmacy' && (
                     <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                       <li>
                         <Link
@@ -331,7 +330,7 @@ const DashboardLayout = ({ children }) => {
                 <li className="relative">
                   <button
                     className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                    onClick={toggleDropDown.bind(this,'pharmacyPayment')}
+                    onClick={toggleDropDown.bind(this, 'pharmacyPayment')}
                   >
                     <span className="inline-flex justify-center items-center ml-4">
                       <MdPayments />
@@ -340,7 +339,7 @@ const DashboardLayout = ({ children }) => {
                     <span className="ml-2 text-sm tracking-wide truncate">Pharmacy Payment</span>
 
                   </button>
-                  {dropDownOpen=='pharmacyPayment' && (
+                  {dropDownOpen == 'pharmacyPayment' && (
                     <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                       <li>
                         <Link
@@ -380,7 +379,7 @@ const DashboardLayout = ({ children }) => {
                 <li className="relative">
                   <button
                     className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                    onClick={toggleDropDown.bind(this,'pharmacyReport')}
+                    onClick={toggleDropDown.bind(this, 'pharmacyReport')}
                   >
                     <span className="inline-flex justify-center items-center ml-4">
                       <TbReportMedical />
@@ -389,11 +388,11 @@ const DashboardLayout = ({ children }) => {
                     <span className="ml-2 text-sm tracking-wide truncate">Pharmacy Report</span>
 
                   </button>
-                  {dropDownOpen=='pharmacyReport' && (
+                  {dropDownOpen == 'pharmacyReport' && (
                     <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                       <li>
                         <Link
-                          to={routes.pharmacyReport({ id:1 } )}
+                          to={routes.pharmacyReport({ id: 1 })}
                           className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         >
                           <span className="inline-flex justify-center items-center ml-4">
@@ -418,7 +417,7 @@ const DashboardLayout = ({ children }) => {
                       </li>
                       <li>
                         <Link
-                          to={routes.pharmacyReport({ id:12 } )}
+                          to={routes.pharmacyReport({ id: 12 })}
                           className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         >
                           <span className="inline-flex justify-center items-center ml-4">
@@ -443,7 +442,7 @@ const DashboardLayout = ({ children }) => {
                       </li>
                       <li>
                         <Link
-                          to={routes.pharmacyReport( { id:2 } )}
+                          to={routes.pharmacyReport({ id: 2 })}
                           className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         >
                           <span className="inline-flex justify-center items-center ml-4">
@@ -468,7 +467,7 @@ const DashboardLayout = ({ children }) => {
                       </li>
                       <li>
                         <Link
-                          to={routes.pharmacyReport( { id:3 } )}
+                          to={routes.pharmacyReport({ id: 3 })}
                           className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         >
                           <span className="inline-flex justify-center items-center ml-4">
@@ -493,7 +492,7 @@ const DashboardLayout = ({ children }) => {
                       </li>
                       <li>
                         <Link
-                          to={routes.pharmacyReport( { id:11 } )}
+                          to={routes.pharmacyReport({ id: 11 })}
                           className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         >
                           <span className="inline-flex justify-center items-center ml-4">
@@ -518,7 +517,7 @@ const DashboardLayout = ({ children }) => {
                       </li>
                       <li>
                         <Link
-                          to={routes.pharmacyReport( { id:4 } )}
+                          to={routes.pharmacyReport({ id: 4 })}
                           className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         >
                           <span className="inline-flex justify-center items-center ml-4">
@@ -543,7 +542,7 @@ const DashboardLayout = ({ children }) => {
                       </li>
                       <li>
                         <Link
-                          to={routes.pharmacyReport( { id:13 } )}
+                          to={routes.pharmacyReport({ id: 13 })}
                           className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         >
                           <span className="inline-flex justify-center items-center ml-4">
@@ -585,7 +584,7 @@ const DashboardLayout = ({ children }) => {
                 <li className="relative">
                   <button
                     className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                    onClick={toggleDropDown.bind(this,'charges')}
+                    onClick={toggleDropDown.bind(this, 'charges')}
                   >
                     <span className="inline-flex justify-center items-center ml-4">
                       <MdPayments />
@@ -594,7 +593,7 @@ const DashboardLayout = ({ children }) => {
                     <span className="ml-2 text-sm tracking-wide truncate">Charges</span>
 
                   </button>
-                  {dropDownOpen=='charges' && (
+                  {dropDownOpen == 'charges' && (
                     <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                       <li>
                         <Link
@@ -702,7 +701,7 @@ const DashboardLayout = ({ children }) => {
                 <li className="relative">
                   <button
                     className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                    onClick={toggleDropDown.bind(this,'ipd')}
+                    onClick={toggleDropDown.bind(this, 'ipd')}
                   >
                     <span className="inline-flex justify-center items-center ml-4">
                       <FaBed />
@@ -711,11 +710,11 @@ const DashboardLayout = ({ children }) => {
                     <span className="ml-2 text-sm tracking-wide truncate">IPD - Patient</span>
 
                   </button>
-                  {dropDownOpen=='ipd' && (
+                  {dropDownOpen == 'ipd' && (
                     <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                       <li>
                         <Link
-                          to={routes.ipds({type:'IPD'})}
+                          to={routes.ipds({ type: 'IPD' })}
                           className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         >
                           <span className="inline-flex justify-center items-center ml-4">
@@ -744,7 +743,7 @@ const DashboardLayout = ({ children }) => {
                 <li className="relative">
                   <button
                     className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                    onClick={toggleDropDown.bind(this,'opd')}
+                    onClick={toggleDropDown.bind(this, 'opd')}
                   >
                     <span className="inline-flex justify-center items-center ml-4">
                       <BsPersonFillAdd />
@@ -753,11 +752,11 @@ const DashboardLayout = ({ children }) => {
                     <span className="ml-2 text-sm tracking-wide truncate">OPD - Patients</span>
 
                   </button>
-                  {dropDownOpen=='opd' && (
+                  {dropDownOpen == 'opd' && (
                     <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                       <li>
                         <Link
-                           to={routes.ipds({type:'OPD'})}
+                          to={routes.ipds({ type: 'OPD' })}
                           className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         >
                           <span className="inline-flex justify-center items-center ml-4">
@@ -786,7 +785,7 @@ const DashboardLayout = ({ children }) => {
                 <li className="relative">
                   <button
                     className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                    onClick={toggleDropDown.bind(this,'bed')}
+                    onClick={toggleDropDown.bind(this, 'bed')}
                   >
                     <span className="inline-flex justify-center items-center ml-4">
                       <FaBed />
@@ -795,7 +794,7 @@ const DashboardLayout = ({ children }) => {
                     <span className="ml-2 text-sm tracking-wide truncate">BED</span>
 
                   </button>
-                  {dropDownOpen=='bed' && (
+                  {dropDownOpen == 'bed' && (
                     <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                       <li>
                         <Link
@@ -878,7 +877,7 @@ const DashboardLayout = ({ children }) => {
                 <li className="relative">
                   <button
                     className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                    onClick={toggleDropDown.bind(this,'user')}
+                    onClick={toggleDropDown.bind(this, 'user')}
                   >
                     <span className="inline-flex justify-center items-center ml-4">
                       <MdPayments />
@@ -887,7 +886,7 @@ const DashboardLayout = ({ children }) => {
                     <span className="ml-2 text-sm tracking-wide truncate">Users</span>
 
                   </button>
-                  {dropDownOpen=='user' && (
+                  {dropDownOpen == 'user' && (
                     <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                       <li>
                         <Link
@@ -921,7 +920,7 @@ const DashboardLayout = ({ children }) => {
                 <li className="relative">
                   <button
                     className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                    onClick={toggleDropDown.bind(this,'hospitalReport')}
+                    onClick={toggleDropDown.bind(this, 'hospitalReport')}
                   >
                     <span className="inline-flex justify-center items-center ml-4">
                       <TbReportMedical />
@@ -930,11 +929,11 @@ const DashboardLayout = ({ children }) => {
                     <span className="ml-2 text-sm tracking-wide truncate">Hospital Report</span>
 
                   </button>
-                  {dropDownOpen=='hospitalReport' && (
+                  {dropDownOpen == 'hospitalReport' && (
                     <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                       <li>
                         <Link
-                          to={routes.pharmacyReport({ id:5} )}
+                          to={routes.pharmacyReport({ id: 5 })}
                           className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         >
                           <span className="inline-flex justify-center items-center ml-4">
@@ -959,7 +958,7 @@ const DashboardLayout = ({ children }) => {
                       </li>
                       <li>
                         <Link
-                          to={routes.pharmacyReport({ id:6} )}
+                          to={routes.pharmacyReport({ id: 6 })}
                           className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         >
                           <span className="inline-flex justify-center items-center ml-4">
@@ -998,12 +997,12 @@ const DashboardLayout = ({ children }) => {
 
 
 
-                <li className="px-5 hidden md:block">
+                {/* <li className="px-5 hidden md:block">
                   <div className="flex flex-row items-center mt-5 h-8">
                     <div className="text-sm font-light tracking-wide text-gray-400 uppercase">Settings</div>
                   </div>
-                </li>
-
+                </li> */}
+{/*
                 <li>
                   <Link to={routes.home()} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
                     <span className="inline-flex justify-center items-center ml-4">
@@ -1011,9 +1010,9 @@ const DashboardLayout = ({ children }) => {
                     </span>
                     <span className="ml-2 text-sm tracking-wide truncate">Profile</span>
                   </Link>
-                </li>
+                </li> */}
 
-                <li>
+                {/* <li>
                   <a href="#" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
                     <span className="inline-flex justify-center items-center ml-4">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1023,7 +1022,7 @@ const DashboardLayout = ({ children }) => {
                     </span>
                     <span className="ml-2 text-sm tracking-wide truncate">Settings</span>
                   </a>
-                </li>
+                </li> */}
               </ul>
               <p className="mb-14 px-5 py-3 hidden md:block text-center text-xs">Copyright @2021</p>
             </div>
