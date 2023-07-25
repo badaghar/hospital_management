@@ -92,7 +92,7 @@ export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
   },[])
   return (
     <>
-      <div className="flex m-4 flex-wrap">
+      <div className="flex m-4 flex-wrap relative z-10">
         <div className="flex flex-col bg-slate-800 shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>Total Purchase Medicine</h1>
           <p> ₹ {totalPurchase.toFixed(2)} </p>
