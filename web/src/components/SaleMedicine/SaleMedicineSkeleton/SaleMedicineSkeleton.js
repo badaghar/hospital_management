@@ -78,7 +78,7 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
 
                   <div className="flex f justify-between px-6">
                     <div className="space-x-4">
-                      <span className="font-bold text-xs ">Name</span> <span className="text-xs">{saleMedicine.patient.name} ({saleMedicine.patient.age})</span>
+                      <span className="font-bold text-xs ">Name</span> <span className="text-xs">{saleMedicine.patient.name.split('(')[0]} ({saleMedicine.patient.age})</span>
                     </div>
                     <div className="space-x-4">
                     <span className="font-bold text-xs">Phone</span> <span className="text-xs">{saleMedicine.patient.phone_no}</span>

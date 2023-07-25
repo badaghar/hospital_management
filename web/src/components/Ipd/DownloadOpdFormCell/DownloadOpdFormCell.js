@@ -105,7 +105,7 @@ export const Success = ({ downloadOpdForm }) => {
                   <div className="flex f justify-between px-6">
                     <div className="space-x-4">
                       <span className="font-bold text-xs ">Name : </span> <span className="text-xs">
-                        {downloadOpdForm.patient.name}
+                        {downloadOpdForm.patient.name.split('(')[0]}
                       </span>
                     </div>
                     <div className="space-x-4">

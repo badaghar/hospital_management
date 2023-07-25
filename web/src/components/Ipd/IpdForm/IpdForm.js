@@ -291,6 +291,7 @@ const IpdForm = (props) => {
                     name="phone_no"
                     className="rw-label mt-0 "
                     errorClassName="rw-label rw-label-error mt-0"
+                    validation={{ required: true }}
                   >
                     Phone
                   </Label>

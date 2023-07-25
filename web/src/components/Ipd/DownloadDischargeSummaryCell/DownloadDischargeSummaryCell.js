@@ -49,7 +49,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                     Name :
                   </span>
                   <span className="ml-3 flex-1">
-                    {downloadDischargeSummary.ipd.patient.name}
+                    {downloadDischargeSummary.ipd.patient.name.split('(')[0]}
                   </span>
                   <span >
                     Age :
