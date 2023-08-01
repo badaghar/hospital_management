@@ -1,11 +1,12 @@
+import { useState } from 'react'
+
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
+import SearchTable from 'src/components/SearchTable/SearchTable'
 import { QUERY } from 'src/components/User/UsersCell'
 import { timeTag, truncate } from 'src/lib/formatters'
-import { useState } from 'react'
-import SearchTable from 'src/components/SearchTable/SearchTable'
 
 const DELETE_USER_MUTATION = gql`
   mutation DeleteUserMutation($id: Int!) {
@@ -43,28 +44,19 @@ const UsersList = ({ users }) => {
 
     let filterData = users.filter((val) => {
       return (
-        val.email
-          .toString()
-          .toLowerCase()
-          .includes(search_val.toLowerCase()) ||
-        val.roles
-          .toString()
-          .toLowerCase()
-          .includes(search_val.toLowerCase())
+        val.email.toString().toLowerCase().includes(search_val.toLowerCase()) ||
+        val.roles.toString().toLowerCase().includes(search_val.toLowerCase())
       )
     })
     setRows_count(filterData.length <= 5 ? 5 : 10)
     setSearch_data(filterData)
   }
 
-
   const columns = [
     {
       headerClassName: 'text-left',
       Header: 'SL. No',
-      Cell: ({ index }) => (
-        index + 1
-      )
+      Cell: ({ index }) => index + 1,
     },
     {
       headerClassName: 'text-left',
@@ -87,7 +79,6 @@ const UsersList = ({ users }) => {
     //   accessor: 'gender',
     // },
 
-
     {
       headerClassName: 'text-left',
       Header: 'Action',
@@ -108,7 +99,7 @@ const UsersList = ({ users }) => {
             className="rw-button rw-button-small rw-button-blue"
           >
             Edit
-          </Link>
+          </Link> */}
           <button
             type="button"
             title={'Delete user ' + original.id}
@@ -116,18 +107,17 @@ const UsersList = ({ users }) => {
             onClick={() => onDeleteClick(original.id)}
           >
             Delete
-          </button> */}
+          </button>
         </nav>
       ),
     },
   ]
 
   return (
-
     <>
       <SearchTable
         change={change}
-        placeholder={"Search By Typing User Email And Roles ."}
+        placeholder={'Search By Typing User Email And Roles .'}
         columns={columns}
         rows_count={rows_count}
         search_data={search_data}

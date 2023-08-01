@@ -82,15 +82,17 @@ export const Success = ({ paymentPurchaseMedicine }) => {
   const onSubmit = (data) => {
 
     try {
-      const balance = parseFloat(paymentPurchaseMedicine.balance) - parseFloat(data['paid'])
-      const paid = parseFloat(paymentPurchaseMedicine.paid) + parseFloat(data['paid'])
-      if (balance < 0 && paid > parseFloat(paymentPurchaseMedicine.total)) {
-        throw new Error("this is an error")
+      // const balance = parseFloat(paymentPurchaseMedicine.balance) - parseFloat(data['paid'])
+      // const paid = parseFloat(paymentPurchaseMedicine.paid) + parseFloat(data['paid'])
+      if (paymentPurchaseMedicine.balance == 0) {
+        // throw new Error("this is an error")
+        toast.success('Payment Already Completed')
+        return
 
       }
       const obj = {
-        balance: balance,
-        paid: paid,
+        balance: 0,
+        paid: paymentPurchaseMedicine.total,
         remark: data['remark'],
         method: data['method']
 
@@ -98,10 +100,25 @@ export const Success = ({ paymentPurchaseMedicine }) => {
       updatePaymentPurchaseMedicine({ variables: { id:paymentPurchaseMedicine.id, input:obj } })
       reset()
     } catch (error) {
+      console.log(error)
         toast.error("Invalid Amount")
     }
 
   }
+
+
+  const isPaid = ( ) =>{
+
+    if(paymentPurchaseMedicine.balance == 0){
+      return 'PAYMENT COMPLETED'
+    }
+    else{
+      return 'SUBMIT PAYMENT'
+    }
+
+  }
+
+
   return (
     <div>
       <div className="flex justify-center flex-col items-center">
@@ -109,8 +126,8 @@ export const Success = ({ paymentPurchaseMedicine }) => {
         <span>Total :- {paymentPurchaseMedicine.total}</span>
         <span>Balance :- {paymentPurchaseMedicine.balance}</span>
         <span>Paid :- {paymentPurchaseMedicine.paid}</span>
-        <span>Last Payment Method :- {paymentPurchaseMedicine.method || "No Payment Done Yet"}</span>
-        <span>Last Payment Remark :- {paymentPurchaseMedicine.remark || "No Payment Done Yet"}</span>
+        <span> Payment Method :- {paymentPurchaseMedicine.method || "No Payment Done Yet"}</span>
+        <span> Payment Remark :- {paymentPurchaseMedicine.remark || "No Payment Done Yet"}</span>
         <nav className="rw-button-group">
           <Link
             to={routes.purchaseMedicine({ id: paymentPurchaseMedicine.purchaseMedicine.id })}
@@ -128,13 +145,14 @@ export const Success = ({ paymentPurchaseMedicine }) => {
         <div className="justify-items-start">
           <Form onSubmit={onSubmit} formMethods={formMethods} >
 
-            <div className='flex items-center mt-3  gap-x-4'>
+            <div className='items-center mt-3  gap-x-4 hidden'>
 
 
               <Label
                 name="paid"
                 className="rw-label mt-0"
                 errorClassName="rw-label mt-0 rw-label-error"
+                // defaultValue={paymentPurchaseMedicine.total}
               >
                 Pay Amount
               </Label>
@@ -144,6 +162,8 @@ export const Success = ({ paymentPurchaseMedicine }) => {
                 <TextField
                   name="paid"
                   className="rw-input mt-0"
+                  // defaultValue={parseFloat(paymentPurchaseMedicine.total)}
+                  defaultValue={parseFloat(paymentPurchaseMedicine.total)}
                   errorClassName="rw-input mt-0 rw-input-error"
                   validation={{ valueAsNumber: true, required: true }}
                 />
@@ -152,7 +172,7 @@ export const Success = ({ paymentPurchaseMedicine }) => {
               <FieldError name="paid" className="rw-field-error mt-0" />
             </div>
 
-            <div className='flex items-center mt-3  gap-x-4'>
+            <div className=' items-center mt-3  gap-x-4 hidden'>
 
               <Label
                 name="method"
@@ -167,12 +187,13 @@ export const Success = ({ paymentPurchaseMedicine }) => {
                   name="method"
                   className="rw-input mt-0"
                   errorClassName="rw-input mt-0 rw-input-error"
+                  defaultValue="cash"
                   validation={{ required: true }}
                 />
               </div>
               <FieldError name="method" className="rw-field-error mt-0" />
             </div>
-            <div className='flex items-center mt-3  gap-x-4'>
+            <div className={` items-center mt-3  gap-x-4 ${isPaid()=='PAYMENT COMPLETED' && 'hidden'}`}>
 
               <Label
                 name="remark"
@@ -195,7 +216,9 @@ export const Success = ({ paymentPurchaseMedicine }) => {
 
             <div className="rw-button-group">
               <Submit className="rw-button rw-button-blue">
-                Submit Payment
+                {
+                  isPaid()
+                }
               </Submit>
             </div>
           </Form>

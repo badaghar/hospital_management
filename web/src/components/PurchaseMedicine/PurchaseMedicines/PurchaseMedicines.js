@@ -6,20 +6,60 @@ import { useState } from 'react'
 import { QUERY } from 'src/components/PurchaseMedicine/PurchaseMedicinesCell'
 import SearchTable from 'src/components/SearchTable/SearchTable'
 import { jsonTruncate, timeTag, truncate } from 'src/lib/formatters'
+import { ReactDialogBox, useEffect } from 'react-js-dialog-box'
+import 'react-js-dialog-box/dist/index.css'
+import {
+  Form,
+  FormError,
+  FieldError,
+  Label,
+  NumberField,
+  TextField,
+  Submit,
+} from '@redwoodjs/forms'
+
+
+const UPDATE_PAYMENT_PURCHASE_MEDICINE_MUTATION = gql`
+  mutation UpdatePaymentPurchaseMedicineMutation(
+    $id: Int!
+    $input: UpdatePaymentPurchaseMedicineInput!
+  ) {
+    updatePaymentPurchaseMedicine(id: $id, input: $input) {
+      id
+      purchaseMedicineId
+      purchaseMedicine{
+        id
+        invoiceNo
+      }
+      total
+      balance
+      paid
+      method
+      remark
+      created_at
+      updated_at
+    }
+  }
+`
+
 
 const DELETE_PURCHASE_MEDICINE_MUTATION = gql`
   mutation DeletePurchaseMedicineMutation($id: Int!) {
     deletePurchaseMedicine(id: $id) {
       id
+
     }
   }
 `
 
-const PurchaseMedicinesList = ({ purchaseMedicines }) => {
+const PurchaseMedicinesList = ({ purchaseMedicines ,paymentPurchaseMedicines}) => {
 
 
   const [search_data, setSearch_data] = useState(purchaseMedicines)
   const [rows_count, setRows_count] = useState(purchaseMedicines.length <= 5 ? 5 : 10)
+  const [paymentIsOPen, setPaymentIsOpen] = useState(false)
+  const [paymentAmount,setPaymentAmount] = useState(0)
+  const [paymentId,setPaymentId] = useState(0)
   const [deletePurchaseMedicine] = useMutation(
     DELETE_PURCHASE_MEDICINE_MUTATION,
     {
@@ -37,6 +77,24 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
     }
   )
 
+  const [updatePaymentPurchaseMedicine, { loading, error }] = useMutation(
+    UPDATE_PAYMENT_PURCHASE_MEDICINE_MUTATION,
+    {
+      onCompleted: (val) => {
+        toast.success('Payment Completed Successfully')
+        console.log(val)
+        isPaid(val.updatePaymentPurchaseMedicine.purchaseMedicine.invoiceNo)
+        // navigate(routes.medicinePayment())
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+
+      refetchQueries: [{ query: QUERY }],
+      awaitRefetchQueries: true,
+    }
+  )
+
   const onDeleteClick = (id) => {
     if (
       confirm('Are you sure you want to delete purchaseMedicine ' + id + '?')
@@ -44,6 +102,55 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
       deletePurchaseMedicine({ variables: { id } })
     }
   }
+
+
+  const onPayment = (data) => {
+    console.log('data')
+    const data1 = paymentPurchaseMedicines.filter((val)=>paymentId==val.purchaseMedicine.invoiceNo)
+    // console.log(paymentId)
+    const data2 = purchaseMedicines.filter((val)=>data1[0].purchaseMedicine.invoiceNo==val.invoiceNo)
+
+    const balance = 0
+    const paid = data2[0]?.grand_total
+    const obj = {
+      balance: balance,
+      paid: paid,
+      remark: data['remark'],
+      method: data['method']
+
+    }
+    updatePaymentPurchaseMedicine({ variables: { id:data1[0].id, input:obj } })
+    setPaymentIsOpen(false)
+
+
+  }
+
+  const isPaid = ( invoiceNo ) =>{
+    const data1 = paymentPurchaseMedicines.filter((val)=>invoiceNo==val.purchaseMedicine.invoiceNo)
+    if(data1[0]?.balance == 0){
+      return 'Paid'
+    }
+    else{
+      return 'Pay'
+    }
+
+  }
+
+
+
+  // useEffect(()=>{
+
+  // })
+
+
+
+
+
+
+
+
+
+
 
   const change = (search) => {
     const search_val = search.target.value
@@ -53,10 +160,10 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
         val.invoiceNo
           .toString()
           .toLowerCase()
-          .includes(search_val.toLowerCase()) ||        val.did.name
-          .toString()
-          .toLowerCase()
-          .includes(search_val.toLowerCase())
+          .includes(search_val.toLowerCase()) || val.did.name
+            .toString()
+            .toLowerCase()
+            .includes(search_val.toLowerCase())
       )
     })
     setRows_count(filterData.length <= 5 ? 5 : 10)
@@ -66,12 +173,12 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
   const columns = [
     {
       headerClassName: 'text-left',
-     Header:  'SL. No',
-     // accessor: 'id',
-           Cell: ({index}) => (
-           index+1
-       )
-   },
+      Header: 'SL. No',
+      // accessor: 'id',
+      Cell: ({ index }) => (
+        index + 1
+      )
+    },
     {
       headerClassName: 'text-left',
       Header: 'Invoice No',
@@ -141,6 +248,29 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
       disableSortBy: true,
       Cell: ({ original }) => (
         <nav className="rw-table-actions">
+
+          <button
+            type="button"
+            title={'Pay ' + original.id}
+            className="rw-button rw-button-small "
+            onClick={() => {
+              if (isPaid(original.invoiceNo)=='Paid') {
+                toast.success('Payment Already Completed')
+                return
+
+              }
+
+
+              setPaymentIsOpen(true)
+                      setPaymentAmount(original.grand_total)
+                      setPaymentId(original.invoiceNo)
+            }}
+          >
+            {
+              isPaid(original.invoiceNo)
+            }
+          </button>
+
           <Link
             to={routes.purchaseMedicine({ id: original.id })}
             title={
@@ -151,6 +281,7 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
             Show
           </Link>
 
+
         </nav>
       ),
     },
@@ -160,13 +291,117 @@ const PurchaseMedicinesList = ({ purchaseMedicines }) => {
   return (
 
     <>
-            <SearchTable
-    change={change}
-    placeholder={"Search By Typing Invoice No"}
-    columns={columns}
-    rows_count={rows_count}
-    search_data={search_data}
-    />
+
+      {
+        paymentIsOPen && (
+          <>
+            <ReactDialogBox
+              closeBox={setPaymentIsOpen.bind(this, false)}
+              modalWidth='50%'
+              headerBackgroundColor='#000000'
+              headerTextColor='white'
+              headerHeight='60px'
+              closeButtonColor='white'
+              bodyBackgroundColor='#2c2c2c'
+              bodyTextColor='white'
+              bodyHeight='200px'
+
+              headerText={<span className="flex items-end h-14 text-xl">Add Payment Details</span>}
+
+            >
+
+              <Form onSubmit={onPayment}  >
+
+                <div className=' items-center mt-3  gap-x-4  hidden'>
+
+
+                  <Label
+                    name="paid"
+                    className="rw-label mt-0"
+                    errorClassName="rw-label mt-0 rw-label-error"
+                  >
+                    Pay Amount
+                  </Label>
+                  <div className="flex">
+
+
+                    <TextField
+                      name="paid"
+                      className="rw-input mt-0"
+                      errorClassName="rw-input mt-0 rw-input-error"
+
+                      defaultValue={parseInt(paymentAmount)}
+                      // value={parseFloat(paymentAmount)}
+                      validation={{ valueAsNumber: true, required: true }}
+                    />
+                  </div>
+
+                  <FieldError name="paid" className="rw-field-error mt-0" />
+                </div>
+
+                <div className=' items-center mt-3  gap-x-4  hidden'>
+
+                  <Label
+                    name="method"
+                    className="rw-label mt-0"
+                    errorClassName="rw-label mt-0 rw-label-error"
+
+                  >
+                    Payment Method
+                  </Label>
+                  <div className="flex">
+
+                    <TextField
+                      name="method"
+                      className="rw-input mt-0"
+                      errorClassName="rw-input mt-0 rw-input-error"
+                      defaultValue="cash"
+                      validation={{ required: true }}
+                    />
+                  </div>
+                  <FieldError name="method" className="rw-field-error mt-0" />
+                </div>
+                <div className='flex items-center mt-3  gap-x-4'>
+
+                  <Label
+                    name="remark"
+                    className="rw-label mt-0"
+                    errorClassName="rw-label mt-0 rw-label-error"
+                  >
+                    Remark
+                  </Label>
+                  <div className="flex">
+
+                    <TextField
+                      name="remark"
+                      className="rw-input"
+                      errorClassName="rw-input rw-input-error"
+                      validation={{ required: true }}
+                    />
+                  </div>
+                  <FieldError name="remark" className="rw-field-error" />
+                </div>
+
+                <div className="rw-button-group">
+                  <Submit className="rw-button rw-button-blue">
+                    Submit Payment
+                  </Submit>
+                </div>
+              </Form>
+
+            </ReactDialogBox>
+          </>
+        )
+      }
+
+
+      <SearchTable
+        change={change}
+        placeholder={"Search By Typing Invoice No"}
+        columns={columns}
+        rows_count={rows_count}
+        search_data={search_data}
+      />
 
     </>
     // <div className="rw-segment rw-table-wrapper-responsive">

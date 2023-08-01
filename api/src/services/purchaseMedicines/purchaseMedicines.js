@@ -122,7 +122,7 @@ export const distributersReport = async ({ id, startDate, endDate }) => {
     },
     orderBy: [
       {
-        date: 'asc'
+        date: 'desc'
       }
     ]
 
@@ -175,7 +175,7 @@ export const purchaseReport = async ({ startDate, endDate }) => {
     },
     orderBy: [
       {
-        date: 'asc'
+        date: 'desc'
       }
     ]
   });
@@ -194,7 +194,7 @@ export const saleReport = async ({ startDate, endDate }) => {
     },
     orderBy: [
       {
-        date: 'asc'
+        date: 'desc'
       }
     ]
   });
@@ -213,7 +213,7 @@ export const returnMedicinesReport = async ({ startDate, endDate }) => {
     },
     orderBy: [
       {
-        date: 'asc'
+        date: 'desc'
       }
     ]
   });

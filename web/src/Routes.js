@@ -73,7 +73,7 @@ const Routes = () => {
             <Route path="/sale-medicines" page={SaleMedicineSaleMedicinesPage} name="saleMedicines" />
           </Set>
           <Set wrap={ScaffoldLayout} title="Users" titleTo="users" buttonLabel="New User" buttonTo="signup">
-        <Route path="/signup" page={SignupPage} name="signup" />
+            <Route path="/signup" page={SignupPage} name="signup" />
 
             <Route path="/users/new" page={UserNewUserPage} name="newUser" />
             <Route path="/users/{id:Int}/edit" page={UserEditUserPage} name="editUser" />

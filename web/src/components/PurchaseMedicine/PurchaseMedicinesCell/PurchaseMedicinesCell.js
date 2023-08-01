@@ -23,6 +23,20 @@ export const QUERY = gql`
       created_at
       updated_at
     }
+
+    paymentPurchaseMedicines{
+      id
+      purchaseMedicine{
+        id
+        invoiceNo
+      }
+      total
+      balance
+      paid
+      remark
+      method
+    }
+
   }
 `
 
@@ -43,12 +57,12 @@ export const Failure = ({ error }) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ purchaseMedicines }) => {
+export const Success = ({ purchaseMedicines,paymentPurchaseMedicines }) => {
 
   const [obj,setObj] = useState({})
   // useEffect(()=>{
   //   setObj({...purchaseMedicines,'sgst':purchaseMedicines})
 
   // },[])
-  return <PurchaseMedicines purchaseMedicines={purchaseMedicines} />
+  return <PurchaseMedicines purchaseMedicines={purchaseMedicines}  paymentPurchaseMedicines={paymentPurchaseMedicines} />
 }
