@@ -111,6 +111,7 @@ const PurchaseMedicineForm = (props) => {
 
   const [Distributers, setDistributers] = useState(0)
   const [selectDistributer, setSelectDistributer] = useState()
+  const [invoiceNo,setInvoiceNumber] = useState()
 
   const [manufacturers, setManufacturers] = useState([])
   const [product, setProduct] = useState([])
@@ -139,6 +140,10 @@ const PurchaseMedicineForm = (props) => {
     }
     // console.log(name)
     // Distributers = name[0].id
+
+    // checkinf]g for dublicate entry [invoiceno,distributer]
+
+
     setDistributers(name.value)
   }
   const onSub = (data) => {
@@ -255,20 +260,7 @@ const PurchaseMedicineForm = (props) => {
     }
     else {
     }
-    // const { data, error, loading } = useQuery(GET_INVOICE_BILL, {
-    //   variables: { invoiceNo: val.target.value },
-    // })
-    // const data = await getBill(val.target.value)
-    // if(data.length)
-    // {
-    //   toast.error("Purchase Bill Already")
-
-    // }
-
-    // const setProductFormVisible = () =>{
-
-    // }
-
+    setInvoiceNumber(val.target.value)
   }
 
 

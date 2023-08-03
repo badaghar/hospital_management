@@ -108,7 +108,7 @@ const DownloadPurchaseReport = ({ purchaseMedicines,startDate,endDate,setDownloa
           <th colSpan={8}>Purchase Medicine Report</th>
         </tr>
         <tr>
-          <th colSpan={8}>Sidhdhi Vinayak Pharmacy</th>
+          <th colSpan={8}>siddhi vinayak pharmacy</th>
         </tr>
         <tr>
           <th colSpan={8}>Near Tank Bund,Beside Saba School, Main Road Yadggiri 585202</th>

@@ -85,7 +85,7 @@ export const Success = ({ distributersReport, startDate, endDate,paymentPurchase
         <span>
           Total Purchase Amount From Distributer {distributersReport.data[0]?.did?.name} From {startDate.toLocaleDateString()} to {endDate.toLocaleDateString()} is <span className='font-bold'>
             ₹{distributersReport.totalSum} <br />
-            Total Amount Paid to the Distributer is ₹{totalBalanace} and Total Balance To Be Paid is ₹{totalPaid}
+            Total Amount Paid to the Distributer is ₹{totalPaid} and Total Balance To Be Paid is ₹{totalBalanace}
           </span>
         </span>
 
