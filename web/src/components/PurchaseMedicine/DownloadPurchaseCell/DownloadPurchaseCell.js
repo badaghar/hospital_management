@@ -56,7 +56,7 @@ export const Success = ({ purchaseMedicines }) => {
           <th colSpan={8}>Purchase Medicine Report</th>
         </tr>
         <tr>
-          <th colSpan={8}>Sidhdhi Vinayak Multi Speciality Hospital</th>
+          <th colSpan={8}>Sidhdhi Vinayak Pharmacy</th>
         </tr>
         <tr>
           <th colSpan={8}>Near Tank Bund,Beside Saba School, Main Road Yadggiri 585202</th>

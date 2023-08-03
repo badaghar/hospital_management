@@ -9,19 +9,47 @@ import { jsonTruncate, timeTag, truncate } from 'src/lib/formatters'
 var XLSX = require('xlsx')
 
 const DownloadSaleReport = ({ saleMedicines, startDate, endDate, setDownload }) => {
+
+  const [total, setTotal] = useState('')
+  const [sgst, setsgst] = useState('')
+  const [cgst, setcgst] = useState('')
+  const [discount, setdiscount] = useState('')
+  const [grandTotal, setgrandTotal] = useState('')
+
+  const sum = async () => {
+    let t = 0, s = 0, c = 0, d = 0, g = 0;
+    saleMedicines.forEach((val) => {
+      t += val.total
+      s += val.sgst
+      c += val.cgst
+      d += val.discount
+      g += val.grand_total
+    })
+
+    setTotal(t.toFixed(2))
+    setsgst(s.toFixed(2))
+    setcgst(c.toFixed(2))
+    setdiscount(d.toFixed(2))
+    setgrandTotal(t.toFixed(2))
+  }
+
   // const [date, setDate] = useState(new Date(1990))
   // const [preDate, setPreDate] = useState(new Date(1990))
   // console.log(date)
   useEffect(() => {
-    var data = document.getElementById('download_excel')
+    sum()
+    setTimeout(() => {
+      var data = document.getElementById('download_excel')
 
-    var file = XLSX.utils.table_to_book(data, { sheet: 'sheet1' })
+      var file = XLSX.utils.table_to_book(data, { sheet: 'sheet1' })
 
-    XLSX.write(file, { bookType: 'xlsx', bookSST: true, type: 'base64' })
+      XLSX.write(file, { bookType: 'xlsx', bookSST: true, type: 'base64' })
 
-    XLSX.writeFile(file, 'saleMedicineReport.' + 'xlsx')
-    // navigate(routes.saleMedicines())
-    setDownload(false)
+      XLSX.writeFile(file, 'saleMedicineReport.' + 'xlsx')
+      // navigate(routes.saleMedicines())
+      setDownload(false)
+    }, 2000);
+
   }, [])
 
   const newFormateDate = (dt) => {
@@ -60,7 +88,7 @@ const DownloadSaleReport = ({ saleMedicines, startDate, endDate, setDownload }) 
           <th colSpan={8}>Sale Medicine Report</th>
         </tr>
         <tr>
-          <th colSpan={8}>Sidhdhi Vinayak Multi Speciality Hospital</th>
+          <th colSpan={8}>Sidhdhi Vinayak Pharmacy</th>
         </tr>
         <tr>
           <th colSpan={8}>Near Tank Bund,Beside Saba School, Main Road Yadggiri 585202</th>
@@ -107,6 +135,24 @@ const DownloadSaleReport = ({ saleMedicines, startDate, endDate, setDownload }) 
             </tr>
           </>
         ))}
+        <tr></tr>
+        <tr></tr>
+        <tr>
+          <td colSpan={10}></td>
+          <td colSpan={2}>Total</td>
+          <td colSpan={2}>Discount</td>
+          <td colSpan={2}>Sgst</td>
+          <td colSpan={2}>Cgst</td>
+          <td colSpan={2}>Grand Total</td>
+        </tr>
+        <tr>
+          <td colSpan={10}></td>
+          <td colSpan={2}>{total}</td>
+          <td colSpan={2}> {discount} </td>
+          <td colSpan={2}>{sgst}</td>
+          <td colSpan={2}>{cgst}</td>
+          <td colSpan={2}>{grandTotal}</td>
+        </tr>
       </tbody>
     </table>
   </>)

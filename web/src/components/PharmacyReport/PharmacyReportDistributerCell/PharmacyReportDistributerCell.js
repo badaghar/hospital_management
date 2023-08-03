@@ -1,6 +1,7 @@
 import { useEffect,useState } from 'react';
 // import { useState } from 'react-js-dialog-box';
 import PurchaseMedicines from 'src/components/PurchaseMedicine/PurchaseMedicines'
+import DownloadPurchaseReport from '../DownloadPurchaseReport/DownloadPurchaseReport';
 
 
 export const QUERY = gql`
@@ -30,7 +31,20 @@ export const QUERY = gql`
         balance
         paid
       }
+
     },
+    paymentPurchaseMedicines{
+      id
+      purchaseMedicine{
+        id
+        invoiceNo
+      }
+      total
+      balance
+      paid
+      remark
+      method
+    }
 
   }
 `
@@ -52,7 +66,8 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ distributersReport, startDate, endDate }) => {
+export const Success = ({ distributersReport, startDate, endDate,paymentPurchaseMedicines }) => {
+  const [download, setDownload] = useState(false)
   const [totalBalanace,setTotalBalanace] = useState(0)
   const [totalPaid,setTotalPaid] = useState(0)
   useEffect(()=>{
@@ -74,9 +89,21 @@ export const Success = ({ distributersReport, startDate, endDate }) => {
           </span>
         </span>
 
+        {!download && <span className='ml-3 cursor-pointer underline' onClick={()=>setDownload(true)}>
+            Download Excel
+          </span>
+
+
+          }
+          {
+            download && <div className='hidden'>
+                  <DownloadPurchaseReport purchaseMedicines={distributersReport.data} startDate={startDate.toLocaleDateString()} endDate={endDate.toLocaleDateString()} setDownload={setDownload} />
+            </div>
+          }
+
       </div>
       <div className='bg-white text-black'>
-      <PurchaseMedicines purchaseMedicines={distributersReport.data} />
+      <PurchaseMedicines purchaseMedicines={distributersReport.data} paymentPurchaseMedicines={paymentPurchaseMedicines} />
 
       </div>
 

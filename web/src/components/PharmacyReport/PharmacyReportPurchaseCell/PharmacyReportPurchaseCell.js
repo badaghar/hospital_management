@@ -26,6 +26,18 @@ export const QUERY = gql`
       }
       totalSum
     },
+    paymentPurchaseMedicines{
+      id
+      purchaseMedicine{
+        id
+        invoiceNo
+      }
+      total
+      balance
+      paid
+      remark
+      method
+    }
 
   }
 `
@@ -42,7 +54,7 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ purchaseReport, startDate, endDate }) => {
+export const Success = ({ purchaseReport, startDate, endDate,paymentPurchaseMedicines }) => {
   const [download, setDownload] = useState(false)
 
 
@@ -73,7 +85,7 @@ export const Success = ({ purchaseReport, startDate, endDate }) => {
 
       </div>
       <div className='bg-white text-black'>
-        <PurchaseMedicines purchaseMedicines={purchaseReport.data} />
+        <PurchaseMedicines purchaseMedicines={purchaseReport.data} paymentPurchaseMedicines={paymentPurchaseMedicines} />
       </div>
 
 
