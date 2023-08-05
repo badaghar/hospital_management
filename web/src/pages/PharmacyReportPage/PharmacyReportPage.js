@@ -98,14 +98,25 @@ const PharmacyReportPage = ({id}) => {
     setSearchId(value)
   }
 
-  // useEffect(()=>{
-  //   // SetComponentRender(1)
-  //       if(id==1)
-  //   {
-  //     SetComponentRender(1)
-  //   }
+  useEffect(()=>{
+    // // SetComponentRender(1)
+    //     if(id==1)
+    // {
+    //   SetComponentRender(1)
+    // }
+    // console.log('qwerty')
+    // if(searchId)
+    SetComponentRender(0)
+    const timeoutId = setTimeout(() => {
+      if(endDate){
 
-  // },[searchId,startDate,endDate])
+        SetComponentRender(id)
+      }
+    }, 10);
+
+    // Cleanup the timeout when the component unmounts
+    return () => clearTimeout(timeoutId);
+  },[searchId])
 
 
   const getReport = (data) =>{
@@ -195,7 +206,15 @@ const PharmacyReportPage = ({id}) => {
         <div>
           {/* <ComponentRender /> */}
           {
-            ComponentRender==1 ? <PharmacyReportDistributerCell id={searchId} startDate={startDate} endDate={endDate} /> : ComponentRender==2 ? <PharmacyReportPurchaseCell startDate={startDate} endDate={endDate}  /> : ComponentRender==3 ?  <PharmacyReportSaleCell startDate={startDate} endDate={endDate}  /> : ComponentRender==4 ? <PharmacyPaymentCell id={searchId} startDate={startDate} endDate={endDate} /> : ComponentRender==5 ? <IpdReportCell  startDate={startDate} endDate={endDate} type={'IPD'} />  :  ComponentRender==6 ? <IpdReportCell  startDate={startDate} endDate={endDate} type={'OPD'} /> :  ComponentRender==11 ?  <PharmacyReturnMedicinesCell startDate={startDate} endDate={endDate}  /> :  ComponentRender==12 ? <PharmacyManufacturerCell id={searchId} startDate={startDate} endDate={endDate} />   :   ComponentRender==13 ? <PharmacyExpiryMedicineReportCell />   :      <></>
+            ComponentRender==1 ? <PharmacyReportDistributerCell id={searchId} startDate={startDate} endDate={endDate} /> :
+            ComponentRender==2 ? <PharmacyReportPurchaseCell startDate={startDate} endDate={endDate}  /> :
+            ComponentRender==3 ?  <PharmacyReportSaleCell startDate={startDate} endDate={endDate}  /> :
+             ComponentRender==4 ? <PharmacyPaymentCell id={searchId} startDate={startDate} endDate={endDate} /> :
+              ComponentRender==5 ? <IpdReportCell  startDate={startDate} endDate={endDate} type={'IPD'} />  :
+              ComponentRender==6 ? <IpdReportCell  startDate={startDate} endDate={endDate} type={'OPD'} /> :
+               ComponentRender==11 ?  <PharmacyReturnMedicinesCell startDate=   {startDate} endDate={endDate}  /> :
+                 ComponentRender==12 ? <PharmacyManufacturerCell id={searchId} startDate={startDate} endDate={endDate} />   :
+              ComponentRender==13 ? <PharmacyExpiryMedicineReportCell />   :      <></>
           }
 
         </div>
