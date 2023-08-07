@@ -17,6 +17,7 @@ import {
   TextField,
   Submit,
 } from '@redwoodjs/forms'
+import { useAuth } from "src/auth"
 
 
 const UPDATE_PAYMENT_PURCHASE_MEDICINE_MUTATION = gql`
@@ -54,6 +55,7 @@ const DELETE_PURCHASE_MEDICINE_MUTATION = gql`
 
 const PurchaseMedicinesList = ({ purchaseMedicines ,paymentPurchaseMedicines}) => {
 
+  const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
 
   const [search_data, setSearch_data] = useState(purchaseMedicines)
   const [rows_count, setRows_count] = useState(purchaseMedicines.length <= 5 ? 5 : 10)
@@ -249,6 +251,8 @@ const PurchaseMedicinesList = ({ purchaseMedicines ,paymentPurchaseMedicines}) =
       Cell: ({ original }) => (
         <nav className="rw-table-actions">
 
+          {hasRole('admin') &&
+
           <button
             type="button"
             title={'Pay ' + original.id}
@@ -270,6 +274,8 @@ const PurchaseMedicinesList = ({ purchaseMedicines ,paymentPurchaseMedicines}) =
               isPaid(original.invoiceNo)
             }
           </button>
+
+    }
 
           <Link
             to={routes.purchaseMedicine({ id: original.id })}

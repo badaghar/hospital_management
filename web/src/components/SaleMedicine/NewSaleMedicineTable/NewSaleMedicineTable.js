@@ -50,7 +50,13 @@ const NewSaleMedicineTable = (props) => {
       return updatedList;
     })
 
-    let newBatchList = dublicatList.filter((item)=>(item.name==name.name && item.data.quantity>0))
+    console.log(dublicatList)
+    const today = new Date()
+    let year = today.getFullYear()
+    let month = today.getMonth()
+    let newBatchList = dublicatList.filter((item)=>(item.name==name.name && item.data.quantity>0
+      && new Date(item.data.exp).getFullYear<=year && new Date(item.data.exp).getMonth<month
+         ))
     console.log(newBatchList)
      newBatchList = newBatchList.map((item) => {
       return {label:item.data.batch + " - " + item.data.quantity,value:item.data.batch,batch:item.data.batch,id:item.id,data:item}

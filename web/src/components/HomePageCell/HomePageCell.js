@@ -40,6 +40,7 @@ export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
   const [todaySale,setTodaySale] = useState(0)
   const [monthSale,setMonthSale] = useState(0)
   const [monthPurchase,setMonthPurchase] = useState(0)
+  const [profit,setProfit] = useState(0)
 
   // const [totalPurchase,setTotalPurchase] = useState(0)
 
@@ -48,6 +49,7 @@ export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
     setTotalPurchase(tp)
     const ts = saleMedicines.reduce((prev,item)=> prev + item.grand_total,0)
     setTotalSale(ts)
+    setProfit(ts-tp)
     setTotalIpd(ipds.length)
     setTotalOpd(opds.length)
     const today = new Date()
@@ -76,7 +78,7 @@ export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
     })
     const monthtop = purchaseMedicines.filter((item)=> {
       const newDate = new Date(item.date)
-      console.log(newDate,today)
+      // console.log(newDate,today)
       return newDate>=month
     })
 
@@ -93,6 +95,11 @@ export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
   return (
     <>
       <div className="flex m-4 flex-wrap relative z-10">
+        <div className="flex flex-col bg-slate-800 shadow-lg rounded-2xl p-6 items-center m-4">
+          <h1>Total Profit</h1>
+          <p> ₹ {profit.toFixed(2)} </p>
+
+        </div>
         <div className="flex flex-col bg-slate-800 shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>Total Purchase Medicine</h1>
           <p> ₹ {totalPurchase.toFixed(2)} </p>
