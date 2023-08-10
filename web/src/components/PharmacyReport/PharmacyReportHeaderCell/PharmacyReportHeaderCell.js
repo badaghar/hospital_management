@@ -28,7 +28,7 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ distributers, changeId, text, id, SetComponentRender, manufacturers }) => {
+export const Success = ({ distributers, changeId, text, id, SetComponentRender, manufacturers,users }) => {
   const [options, setOptions] = useState([])
   const location = useLocation();
   useEffect(() => {
@@ -47,6 +47,13 @@ export const Success = ({ distributers, changeId, text, id, SetComponentRender, 
     else if (id == 12) {
       // setOptions(manufacturers)
       const obj = manufacturers.map((item)=>{
+        return {id:item.id,name:item.name,value:item.id,label:item.name}
+      })
+      setOptions(obj)
+    }
+    else if (id == 22) {
+      // setOptions(manufacturers)
+      const obj = users.map((item)=>{
         return {id:item.id,name:item.name,value:item.id,label:item.name}
       })
       setOptions(obj)
