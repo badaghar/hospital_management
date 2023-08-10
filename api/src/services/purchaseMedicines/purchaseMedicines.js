@@ -1,4 +1,5 @@
 import { db } from 'src/lib/db'
+import { medicine } from '../medicines/medicines'
 
 export const purchaseMedicines = () => {
   return db.purchaseMedicine.findMany({
@@ -326,6 +327,52 @@ export const pharmacyPayment = async ({ id, startDate, endDate }) => {
   const totalSum = data.reduce((sum, item) => sum + item.paid, 0);
   return { data, totalSum }
 }
+
+
+// Medicine Show bill
+export const medicineHistory = async ({ time,productId,batch }) => {
+  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n\n\n\n',time,'\n\n\n\n\n\\n\n\n\n\n',productId,'\n\n\n\n\n\n\n/',batch)
+
+  var startDate = new Date(time); // Clone the date object
+  startDate.setDate(time.getDate() - 1); // Subtract 1 day
+
+  var endDate = new Date(time); // Clone the date object
+  endDate.setDate(time.getDate() + 1); // Add 1 day
+  const data = await db.purchaseMedicine.findMany({
+    where: {
+      created_at: {
+
+        gte: startDate,
+        lte: endDate,
+      },
+    },
+    orderBy: [
+      {
+        created_at: 'desc'
+      }
+    ]
+  });
+  console.log('/n\\n\n\n\n\n\n\n\n\n',data)
+  const newData = data.filter((pm,ind)=>{
+    const meds = pm.medicine
+    console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n',pm.medicine)
+    const purchaseId = meds.filter((med)=>{
+      med.product.id == productId && med.batch==batch
+    })
+    if(purchaseId){
+      return pm
+    }else{
+      return false
+    }
+
+
+  })
+
+  console.log(newData[0])
+  return newData[0]
+}
+
+
 
 export const PurchaseMedicine = {
   did: (_obj, { root }) => {

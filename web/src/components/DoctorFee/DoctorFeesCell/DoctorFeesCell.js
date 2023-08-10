@@ -9,6 +9,9 @@ export const QUERY = gql`
       type
       amount
       userId
+      did{
+        name
+      }
       created_at
       updated_at
     }

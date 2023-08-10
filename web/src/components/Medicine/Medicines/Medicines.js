@@ -1,11 +1,12 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { QUERY } from 'src/components/Medicine/MedicinesCell'
 import SearchTable from 'src/components/SearchTable/SearchTable'
 import { timeTag, truncate } from 'src/lib/formatters'
+import MedicineHistoryCell from '../MedicineHistoryCell'
 
 const DELETE_MEDICINE_MUTATION = gql`
   mutation DeleteMedicineMutation($id: Int!) {
@@ -18,6 +19,8 @@ const DELETE_MEDICINE_MUTATION = gql`
 const MedicinesList = ({ medicines }) => {
   const [search_data, setSearch_data] = useState(medicines)
   const [rows_count, setRows_count] = useState(medicines.length <= 5 ? 5 : 10)
+  const [show, setShow] = useState(false)
+  const [s, setS] = useState(false)
   const [deleteMedicine] = useMutation(DELETE_MEDICINE_MUTATION, {
     onCompleted: () => {
       toast.success('Medicine deleted')
@@ -38,7 +41,7 @@ const MedicinesList = ({ medicines }) => {
     }
   }
 
-  const change = (search)=>{
+  const change = (search) => {
     const search_val = search.target.value
 
     let filterData = medicines.filter((val) => {
@@ -53,15 +56,46 @@ const MedicinesList = ({ medicines }) => {
     setSearch_data(filterData)
   }
 
+  const showBill = (show) => {
+
+    if (show) {
+
+
+      console.log('hellooooo', show)
+      return (
+        <MedicineHistoryCell
+          time={new Date(show.updated_at)}
+          productId={show.productId}
+          batch={show.batch}
+        />
+      )
+    }
+  }
+
+  // useEffect(()=>{
+  //   if(show==false)
+  //   {
+  //     return
+  //   }
+  //         console.log('hellooooo',show)
+  //     return (
+  //       <MedicineHistoryCell
+  //         time={new Date(show.updated_at)}
+  //         productId={show.productId}
+  //         batch={show.batch}
+  //       />)
+
+  // },[show])
+
   const columns = [
     {
       headerClassName: 'text-left',
-     Header:  'SL. No',
-     // accessor: 'id',
-           Cell: ({index}) => (
-           index+1
-       )
-   },
+      Header: 'SL. No',
+      // accessor: 'id',
+      Cell: ({ index }) => (
+        index + 1
+      )
+    },
     {
       headerClassName: 'text-left',
       Header: 'Name',
@@ -77,8 +111,8 @@ const MedicinesList = ({ medicines }) => {
       Header: 'Exp Date',
       accessor: 'exp',
       Cell: ({ original }) => (
-          original.exp.split('-')[1] + '-'+ original.exp.split('-')[0]
-        )
+        original.exp.split('-')[1] + '-' + original.exp.split('-')[0]
+      )
     },
     {
       headerClassName: 'text-left',
@@ -101,14 +135,32 @@ const MedicinesList = ({ medicines }) => {
       Cell: ({ original }) => (
 
         <nav className="rw-table-actions">
-                  <Link
-                    to={routes.medicine({ id: original.id })}
-                    title={'Show medicine ' + original.id + ' detail'}
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link>
-                  {/* <Link
+          <Link
+            to={routes.medicine({ id: original.id })}
+            title={'Show medicine ' + original.id + ' detail'}
+            className="rw-button rw-button-small"
+          >
+            Show
+          </Link>
+          <button
+            type="View"
+            title={'View medicine  ' + original.id}
+            className="rw-button rw-button-small rw-button-red"
+            onClick={() => {
+              setShow(original)
+              setS((val) => !val)
+            }
+            }
+
+          >
+            View Bill
+          </button>
+
+
+
+
+
+          {/* <Link
                     to={routes.editMedicine({ id: original.id })}
                     title={'Edit medicine ' + original.id}
                     className="rw-button rw-button-small rw-button-blue"
@@ -123,21 +175,26 @@ const MedicinesList = ({ medicines }) => {
                   >
                     Delete
                   </button> */}
-                </nav>
+        </nav>
       ),
     },
   ]
 
   return (
     <>
-            <SearchTable
-    change={change}
-    placeholder={"Search By Typing Medicine Name"}
-    columns={columns}
-    rows_count={rows_count}
-    search_data={search_data}
-    className=''
-    />
+      <SearchTable
+        change={change}
+        placeholder={"Search By Typing Medicine Name"}
+        columns={columns}
+        rows_count={rows_count}
+        search_data={search_data}
+        className=''
+      />
+
+      {
+        s &&
+        showBill(show)
+      }
     </>
     // <div className="rw-segment rw-table-wrapper-responsive">
     //   <table className="rw-table">

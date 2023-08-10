@@ -378,6 +378,9 @@ model User {
   resetTokenExpiresAt DateTime?
   roles               String
   DoctorFee           DoctorFee[]
+  permissions         Json?
   created_at          DateTime    @default(now())
   updated_at          DateTime    @updatedAt
 }
+
+// model Permissi

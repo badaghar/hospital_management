@@ -20,6 +20,8 @@ const Routes = () => {
   return (
     <Router useAuth={useAuth}>
 
+
+
       <Route path="/download-opd-form/{id:Int}" page={DownloadsDownloadOpdFormPage} name="downloadOpdForm" />
       <Route path="/download-other-charges/{id:Int}" page={DownloadsDownloadOtherChargesPage} name="downloadOtherCharges" />
       <Route path="/download-lab-charges/{id:Int}" page={DownloadsDownloadLabChargesPage} name="downloadLabCharges" />
@@ -60,6 +62,7 @@ const Routes = () => {
               <Route path="/payment-purchase-medicines/{id:Int}" page={PaymentPurchaseMedicinePaymentPurchaseMedicinePage} name="paymentPurchaseMedicine" />
               <Route path="/payment-purchase-medicines" page={PaymentPurchaseMedicinePaymentPurchaseMedicinesPage} name="paymentPurchaseMedicines" />
             </Set>
+            <Route path="/user-roles" page={UserRolesPage} name="userRoles" />
             <Set wrap={ScaffoldLayout} title="Users" titleTo="users" buttonLabel="New User" buttonTo="signup">
               <Route path="/signup" page={SignupPage} name="signup" />
 
