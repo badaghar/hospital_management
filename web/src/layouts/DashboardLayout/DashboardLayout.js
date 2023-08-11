@@ -79,13 +79,16 @@ const DashboardLayout = ({ children }) => {
                   </Link>
                 </li>
 
-                {!hasRole('reciptionist') && !hasRole('doctor') &&
+                {currentUser.permissions?.pharmacy?.length > 0 &&
                   <>
                     <li className="px-5 hidden md:block">
                       <div className="flex flex-row items-center h-8">
                         <div className="text-sm font-light tracking-wide text-gray-400 uppercase">Pharmacy</div>
                       </div>
                     </li>
+
+
+
 
 
                     <li className="relative">
@@ -102,6 +105,8 @@ const DashboardLayout = ({ children }) => {
                       </button>
                       {dropDownOpen == 'pharmacy' && (
                         <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+
+
                           <li>
                             <Link
                               to={routes.distributers()}
