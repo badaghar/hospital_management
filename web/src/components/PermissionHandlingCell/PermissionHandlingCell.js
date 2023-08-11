@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useLayoutEffect, useState } from "react"
 import PharmacyReportHeaderCell from "../PharmacyReport/PharmacyReportHeaderCell"
 import PermissionHandling from "../PermissionHandling/PermissionHandling"
 
@@ -8,6 +8,7 @@ export const QUERY = gql`
       id
       name
       email
+      permissions
       hashedPassword
       salt
       resetToken
@@ -29,6 +30,15 @@ export const Failure = ({ error }) => (
 
 export const Success = ({ users }) => {
   const [changeId, setChangeId] = useState(0)
+  const [user,setUser] = useState()
+
+  console.log(changeId)/////s
+  useLayoutEffect(()=>{
+    const u = users.filter((ele)=>ele.roles!=='admin')
+    setUser(u)
+  },[])
+
+
   return (
 
     <>
@@ -36,13 +46,14 @@ export const Success = ({ users }) => {
         <div className='p-10 text-white'>
           <div >
 
-            <PharmacyReportHeaderCell id={22} changeId={setChangeId} users={users} />
+            <PharmacyReportHeaderCell id={32} changeId={setChangeId} users={user} />
           </div>
         </div>
 
 
         <div>
-          <PermissionHandling users={users} />
+        {  changeId!=0 &&
+          <PermissionHandling users={users} id={changeId} />}
         </div>
 
 

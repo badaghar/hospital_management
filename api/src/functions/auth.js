@@ -109,7 +109,8 @@ export const handler = async (event, context) => {
           hashedPassword: hashedPassword,
           salt: salt,
           roles: userAttributes.roles,
-          name: userAttributes.name
+          name: userAttributes.name,
+          permissions:userAttributes.permissions
         },
       })
     },

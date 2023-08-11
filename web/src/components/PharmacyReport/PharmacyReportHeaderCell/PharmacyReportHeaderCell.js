@@ -51,7 +51,7 @@ export const Success = ({ distributers, changeId, text, id, SetComponentRender, 
       })
       setOptions(obj)
     }
-    else if (id == 22) {
+    else if (id == 32) {
       // setOptions(manufacturers)
       const obj = users.map((item)=>{
         return {id:item.id,name:item.name,value:item.id,label:item.name}

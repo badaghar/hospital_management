@@ -3,6 +3,7 @@ export const schema = gql`
     id: Int!
     name: String
     email: String!
+    permissions: JSON
     hashedPassword: String!
     salt: String!
     resetToken: String
@@ -37,6 +38,7 @@ export const schema = gql`
     salt: String
     resetToken: String
     resetTokenExpiresAt: DateTime
+    permissions: JSON
     roles: String
     created_at: DateTime
     updated_at: DateTime

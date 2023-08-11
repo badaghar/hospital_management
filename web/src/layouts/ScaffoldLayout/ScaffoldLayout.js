@@ -1,6 +1,6 @@
 import { Link, routes } from '@redwoodjs/router'
 import { Toaster } from '@redwoodjs/web/toast'
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 
 const ScaffoldLayout = ({
   title,
@@ -12,6 +12,16 @@ const ScaffoldLayout = ({
 }) => {
 
   const [type, settype] = useState("");
+
+  useLayoutEffect(()=>{
+    let name = window.location.pathname.split('/');
+    name = name[name.length - 1]
+    let pt
+    if (name == 'IPD' || name == 'OPD') {
+      pt=name
+    }
+
+  },[])
 
   useEffect(() => {
     // const location = useLocation();

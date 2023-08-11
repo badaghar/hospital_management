@@ -32,11 +32,28 @@ const SignupPage = () => {
   }, [])
 
   const onSubmit = async (data) => {
+    const obj = {}
+    let permissions = ''
+    if (data.roles == 'pharmacy') {
+      permissions = { pharmacy: ["Return Medicines", "SaleMedicines", "Medicines", "PurchaseMedicines", "Products", "Compositions", "Manufacturers", "Distributers", "PaymentPurchaseMedicinest"] }
+
+    }
+    else if (data.roles == 'doctor' || data.roles == 'reciptionist') {
+      permissions = {
+        charges: ['DoctorFees', 'Chargeses', 'LabChargeses', 'operations'],
+        bed: ['floors', 'beds'],
+        patientType: ['IPD', 'OPD']
+      }
+    }
+    else if (data.roles == 'admin') {
+      permissions = { admin: 'all' }
+    }
     const response = await signUp({
       username: data.email,
       password: data.password,
       roles: data.roles,
-      name: data.username
+      name: data.username,
+      permissions
     })
 
     if (response.message) {
@@ -133,36 +150,36 @@ const SignupPage = () => {
                   <div className='text-black'>
 
 
-                  <Label
-                    name="roles"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Select the Roles
-                  </Label>
+                    <Label
+                      name="roles"
+                      className="rw-label"
+                      errorClassName="rw-label rw-label-error"
+                    >
+                      Select the Roles
+                    </Label>
 
-                  <SelectField
-                    name="roles"
-                    validation={{
-                      required: true,
-                      validate: {
-                        matchesInitialValue: (value) => {
-                          return (
-                            value !== 'Please select an option' || 'Select an Option'
-                          )
+                    <SelectField
+                      name="roles"
+                      validation={{
+                        required: true,
+                        validate: {
+                          matchesInitialValue: (value) => {
+                            return (
+                              value !== 'Please select an option' || 'Select an Option'
+                            )
+                          },
                         },
-                      },
-                    }}
-                  >
-                    <option>Please select an option</option>
-                    <option value={'admin'}>Admin</option>
-                    <option value={'reciptionist'}>Reciptionist</option>
-                    <option value={'pharmacy'}>Pharmacy</option>
-                    <option value={'doctor'}>Doctor</option>
+                      }}
+                    >
+                      <option>Please select an option</option>
+                      <option value={'admin'}>Admin</option>
+                      <option value={'reciptionist'}>Reciptionist</option>
+                      <option value={'pharmacy'}>Pharmacy</option>
+                      <option value={'doctor'}>Doctor</option>
 
-                  </SelectField>
+                    </SelectField>
 
-                  <FieldError name="roles" className="rw-field-error" />
+                    <FieldError name="roles" className="rw-field-error" />
                   </div>
 
                   <div className="rw-button-group">

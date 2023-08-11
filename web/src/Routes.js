@@ -75,7 +75,7 @@ const Routes = () => {
 
 
 
-          <Private unauthenticated="home" roles={["admin","pharmacy"]}>
+          <Private unauthenticated="home" roles={["admin", "pharmacy"]}>
             <Set wrap={ScaffoldLayout} title="Return Medicines" titleTo="returnMedicines" buttonLabel="New ReturnMedicine" buttonTo="newReturnMedicine">
               <Route path="/return-medicines/new" page={ReturnMedicineNewReturnMedicinePage} name="newReturnMedicine" />
               <Route path="/return-medicines/{id:Int}/edit" page={ReturnMedicineEditReturnMedicinePage} name="editReturnMedicine" />
@@ -143,98 +143,98 @@ const Routes = () => {
 
           {/* hospitals */}
 
-          <Private unauthenticated="home" roles={["admin","reciptionist","doctor"]}>
+          <Private unauthenticated="home" roles={["admin", "reciptionist", "doctor"]}>
 
-          <Set wrap={ScaffoldLayout} title="DoctorFees" titleTo="doctorFees" buttonLabel="New DoctorFee" buttonTo="newDoctorFee">
-            <Route path="/doctor-fees/new" page={DoctorFeeNewDoctorFeePage} name="newDoctorFee" />
-            <Route path="/doctor-fees/{id:Int}/edit" page={DoctorFeeEditDoctorFeePage} name="editDoctorFee" />
-            <Route path="/doctor-fees/{id:Int}" page={DoctorFeeDoctorFeePage} name="doctorFee" />
-            <Route path="/doctor-fees" page={DoctorFeeDoctorFeesPage} name="doctorFees" />
-          </Set>
-          <Set wrap={ScaffoldLayout} title="Chargeses" titleTo="chargeses" buttonLabel="New Charges" buttonTo="newCharges">
-            <Route path="/chargeses/new" page={ChargesNewChargesPage} name="newCharges" />
-            <Route path="/chargeses/{id:Int}/edit" page={ChargesEditChargesPage} name="editCharges" />
-            <Route path="/chargeses/{id:Int}" page={ChargesChargesPage} name="charges" />
-            <Route path="/chargeses" page={ChargesChargesesPage} name="chargeses" />
-          </Set>
-          <Set wrap={ScaffoldLayout} title="LabChargeses" titleTo="labChargeses" buttonLabel="New LabCharges" buttonTo="newLabCharges">
-            <Route path="/lab-chargeses/new" page={LabChargesNewLabChargesPage} name="newLabCharges" />
-            <Route path="/lab-chargeses/{id:Int}" page={LabChargesLabChargesPage} name="labCharges" />
-            <Route path="/lab-chargeses" page={LabChargesLabChargesesPage} name="labChargeses" />
-            <Route path="/lab-chargeses/{id:Int}/edit" page={LabChargesEditLabChargesPage} name="editLabCharges" />
-          </Set>
-          <Set wrap={ScaffoldLayout} title="IpdPayments" titleTo="ipdPayments" buttonLabel="New IpdPayment" buttonTo="newIpdPayment">
-            <Route path="/ipd-payments/new" page={IpdPaymentNewIpdPaymentPage} name="newIpdPayment" />
-            <Route path="/ipd-payments/{id:Int}/edit" page={IpdPaymentEditIpdPaymentPage} name="editIpdPayment" />
-            <Route path="/ipd-payments/{id:Int}" page={IpdPaymentIpdPaymentPage} name="ipdPayment" />
-            <Route path="/ipd-payments" page={IpdPaymentIpdPaymentsPage} name="ipdPayments" />
-          </Set>
-          <Set wrap={ScaffoldLayout} title="IpdConsultations" titleTo="ipdConsultations" buttonLabel="New IpdConsultation" buttonTo="newIpdConsultation">
-            <Route path="/ipd-consultations/new" page={IpdConsultationNewIpdConsultationPage} name="newIpdConsultation" />
-            <Route path="/ipd-consultations/{id:Int}/edit" page={IpdConsultationEditIpdConsultationPage} name="editIpdConsultation" />
-            <Route path="/ipd-consultations/{id:Int}" page={IpdConsultationIpdConsultationPage} name="ipdConsultation" />
-            <Route path="/ipd-consultations" page={IpdConsultationIpdConsultationsPage} name="ipdConsultations" />
-          </Set>
-          <Set wrap={ScaffoldLayout} title="IpdChargeses" titleTo="ipdChargeses" buttonLabel="New IpdCharges" buttonTo="newIpdCharges">
-            <Route path="/ipd-chargeses/new" page={IpdChargesNewIpdChargesPage} name="newIpdCharges" />
-            <Route path="/ipd-chargeses/{id:Int}/edit" page={IpdChargesEditIpdChargesPage} name="editIpdCharges" />
-            <Route path="/ipd-chargeses/{id:Int}" page={IpdChargesIpdChargesPage} name="ipdCharges" />
-            <Route path="/ipd-chargeses" page={IpdChargesIpdChargesesPage} name="ipdChargeses" />
-          </Set>
-          <Set wrap={ScaffoldLayout} title="Operations" titleTo="operations" buttonLabel="New Operation" buttonTo="newOperation">
-            <Route path="/operations/new" page={OperationNewOperationPage} name="newOperation" />
-            <Route path="/operations/{id:Int}/edit" page={OperationEditOperationPage} name="editOperation" />
-            <Route path="/operations/{id:Int}" page={OperationOperationPage} name="operation" />
-            <Route path="/operations" page={OperationOperationsPage} name="operations" />
-          </Set>
-          <Set wrap={ScaffoldLayout} title="Ipds" titleTo="ipds" buttonLabel="New Ipd" buttonTo="newIpd" hide='hide'>
-            <Route path="/ipds/new/{type:String}" page={IpdNewIpdPage} name="newIpd" />
-            <Route path="/ipds/{id:Int}/edit" page={IpdEditIpdPage} name="editIpd" />
-            <Route path="/ipds/{id:Int}" page={IpdIpdPage} name="ipd" />
-            <Route path="/ipds/{type:String}" page={IpdIpdsPage} name="ipds" />
-          </Set>
-          <Set wrap={ScaffoldLayout} title="Opds" titleTo="opds" buttonLabel="New Opd" buttonTo="newOpd">
-            <Route path="/opds/new" page={OpdNewOpdPage} name="newOpd" />
-            <Route path="/opds/{id:Int}/edit" page={OpdEditOpdPage} name="editOpd" />
-            <Route path="/opds/{id:Int}" page={OpdOpdPage} name="opd" />
-            <Route path="/opds" page={OpdOpdsPage} name="opds" />
-          </Set>
-          <Set wrap={ScaffoldLayout} title="Beds" titleTo="beds" buttonLabel="New Bed" buttonTo="newBed">
-            <Route path="/beds/new" page={BedNewBedPage} name="newBed" />
-            <Route path="/beds/{id:Int}/edit" page={BedEditBedPage} name="editBed" />
-            <Route path="/beds/{id:Int}" page={BedBedPage} name="bed" />
-            <Route path="/beds" page={BedBedsPage} name="beds" />
-          </Set>
-          <Set wrap={ScaffoldLayout} title="Floors" titleTo="floors" buttonLabel="New Floor" buttonTo="newFloor">
-            <Route path="/floors/new" page={FloorNewFloorPage} name="newFloor" />
-            <Route path="/floors/{id:Int}/edit" page={FloorEditFloorPage} name="editFloor" />
-            <Route path="/floors/{id:Int}" page={FloorFloorPage} name="floor" />
-            <Route path="/floors" page={FloorFloorsPage} name="floors" />
-          </Set>
-          <Set wrap={ScaffoldLayout} title="IpdLabChargeses" titleTo="ipdLabChargeses" buttonLabel="New IpdLabCharges" buttonTo="newIpdLabCharges">
-            <Route path="/ipd-lab-chargeses/new" page={IpdLabChargesNewIpdLabChargesPage} name="newIpdLabCharges" />
-            <Route path="/ipd-lab-chargeses/{id:Int}/edit" page={IpdLabChargesEditIpdLabChargesPage} name="editIpdLabCharges" />
-            <Route path="/ipd-lab-chargeses/{id:Int}" page={IpdLabChargesIpdLabChargesPage} name="ipdLabCharges" />
-            <Route path="/ipd-lab-chargeses" page={IpdLabChargesIpdLabChargesesPage} name="ipdLabChargeses" />
-          </Set>
-          <Set wrap={ScaffoldLayout} title="IpdOperationPayments" titleTo="ipdOperationPayments" buttonLabel="New IpdOperationPayment" buttonTo="newIpdOperationPayment">
-            <Route path="/ipd-operation-payments/new" page={IpdOperationPaymentNewIpdOperationPaymentPage} name="newIpdOperationPayment" />
-            <Route path="/ipd-operation-payments/{id:Int}/edit" page={IpdOperationPaymentEditIpdOperationPaymentPage} name="editIpdOperationPayment" />
-            <Route path="/ipd-operation-payments/{id:Int}" page={IpdOperationPaymentIpdOperationPaymentPage} name="ipdOperationPayment" />
-            <Route path="/ipd-operation-payments" page={IpdOperationPaymentIpdOperationPaymentsPage} name="ipdOperationPayments" />
-          </Set>
-          <Set wrap={ScaffoldLayout} title="IpdSummaries" titleTo="ipdSummaries" buttonLabel="New IpdSummary" buttonTo="newIpdSummary">
-            <Route path="/ipd-summaries/new" page={IpdSummaryNewIpdSummaryPage} name="newIpdSummary" />
-            <Route path="/ipd-summaries/{id:Int}/edit" page={IpdSummaryEditIpdSummaryPage} name="editIpdSummary" />
-            <Route path="/ipd-summaries/{id:Int}" page={IpdSummaryIpdSummaryPage} name="ipdSummary" />
-            <Route path="/ipd-summaries" page={IpdSummaryIpdSummariesPage} name="ipdSummaries" />
-          </Set>
-          <Set wrap={ScaffoldLayout} title="IpdChats" titleTo="ipdChats" buttonLabel="New IpdChat" buttonTo="newIpdChat">
-            <Route path="/ipd-chats/new" page={IpdChatNewIpdChatPage} name="newIpdChat" />
-            <Route path="/ipd-chats/{id:Int}/edit" page={IpdChatEditIpdChatPage} name="editIpdChat" />
-            <Route path="/ipd-chats/{id:Int}" page={IpdChatIpdChatPage} name="ipdChat" />
-            <Route path="/ipd-chats" page={IpdChatIpdChatsPage} name="ipdChats" />
-          </Set>
+            <Set wrap={ScaffoldLayout} title="DoctorFees" titleTo="doctorFees" buttonLabel="New DoctorFee" buttonTo="newDoctorFee">
+              <Route path="/doctor-fees/new" page={DoctorFeeNewDoctorFeePage} name="newDoctorFee" />
+              <Route path="/doctor-fees/{id:Int}/edit" page={DoctorFeeEditDoctorFeePage} name="editDoctorFee" />
+              <Route path="/doctor-fees/{id:Int}" page={DoctorFeeDoctorFeePage} name="doctorFee" />
+              <Route path="/doctor-fees" page={DoctorFeeDoctorFeesPage} name="doctorFees" />
+            </Set>
+            <Set wrap={ScaffoldLayout} title="Chargeses" titleTo="chargeses" buttonLabel="New Charges" buttonTo="newCharges">
+              <Route path="/chargeses/new" page={ChargesNewChargesPage} name="newCharges" />
+              <Route path="/chargeses/{id:Int}/edit" page={ChargesEditChargesPage} name="editCharges" />
+              <Route path="/chargeses/{id:Int}" page={ChargesChargesPage} name="charges" />
+              <Route path="/chargeses" page={ChargesChargesesPage} name="chargeses" />
+            </Set>
+            <Set wrap={ScaffoldLayout} title="LabChargeses" titleTo="labChargeses" buttonLabel="New LabCharges" buttonTo="newLabCharges">
+              <Route path="/lab-chargeses/new" page={LabChargesNewLabChargesPage} name="newLabCharges" />
+              <Route path="/lab-chargeses/{id:Int}" page={LabChargesLabChargesPage} name="labCharges" />
+              <Route path="/lab-chargeses" page={LabChargesLabChargesesPage} name="labChargeses" />
+              <Route path="/lab-chargeses/{id:Int}/edit" page={LabChargesEditLabChargesPage} name="editLabCharges" />
+            </Set>
+            <Set wrap={ScaffoldLayout} title="IpdPayments" titleTo="ipdPayments" buttonLabel="New IpdPayment" buttonTo="newIpdPayment">
+              <Route path="/ipd-payments/new" page={IpdPaymentNewIpdPaymentPage} name="newIpdPayment" />
+              <Route path="/ipd-payments/{id:Int}/edit" page={IpdPaymentEditIpdPaymentPage} name="editIpdPayment" />
+              <Route path="/ipd-payments/{id:Int}" page={IpdPaymentIpdPaymentPage} name="ipdPayment" />
+              <Route path="/ipd-payments" page={IpdPaymentIpdPaymentsPage} name="ipdPayments" />
+            </Set>
+            <Set wrap={ScaffoldLayout} title="IpdConsultations" titleTo="ipdConsultations" buttonLabel="New IpdConsultation" buttonTo="newIpdConsultation">
+              <Route path="/ipd-consultations/new" page={IpdConsultationNewIpdConsultationPage} name="newIpdConsultation" />
+              <Route path="/ipd-consultations/{id:Int}/edit" page={IpdConsultationEditIpdConsultationPage} name="editIpdConsultation" />
+              <Route path="/ipd-consultations/{id:Int}" page={IpdConsultationIpdConsultationPage} name="ipdConsultation" />
+              <Route path="/ipd-consultations" page={IpdConsultationIpdConsultationsPage} name="ipdConsultations" />
+            </Set>
+            <Set wrap={ScaffoldLayout} title="IpdChargeses" titleTo="ipdChargeses" buttonLabel="New IpdCharges" buttonTo="newIpdCharges">
+              <Route path="/ipd-chargeses/new" page={IpdChargesNewIpdChargesPage} name="newIpdCharges" />
+              <Route path="/ipd-chargeses/{id:Int}/edit" page={IpdChargesEditIpdChargesPage} name="editIpdCharges" />
+              <Route path="/ipd-chargeses/{id:Int}" page={IpdChargesIpdChargesPage} name="ipdCharges" />
+              <Route path="/ipd-chargeses" page={IpdChargesIpdChargesesPage} name="ipdChargeses" />
+            </Set>
+            <Set wrap={ScaffoldLayout} title="Operations" titleTo="operations" buttonLabel="New Operation" buttonTo="newOperation">
+              <Route path="/operations/new" page={OperationNewOperationPage} name="newOperation" />
+              <Route path="/operations/{id:Int}/edit" page={OperationEditOperationPage} name="editOperation" />
+              <Route path="/operations/{id:Int}" page={OperationOperationPage} name="operation" />
+              <Route path="/operations" page={OperationOperationsPage} name="operations" />
+            </Set>
+            <Set wrap={ScaffoldLayout} title="Ipds" titleTo="ipds" buttonLabel="New Ipd" buttonTo="newIpd" hide='hide'>
+              <Route path="/ipds/new/{type:String}" page={IpdNewIpdPage} name="newIpd" />
+              <Route path="/ipds/{id:Int}/edit" page={IpdEditIpdPage} name="editIpd" />
+              <Route path="/ipds/{id:Int}" page={IpdIpdPage} name="ipd" />
+              <Route path="/ipds/{type:String}" page={IpdIpdsPage} name="ipds" />
+            </Set>
+            <Set wrap={ScaffoldLayout} title="Opds" titleTo="opds" buttonLabel="New Opd" buttonTo="newOpd">
+              <Route path="/opds/new" page={OpdNewOpdPage} name="newOpd" />
+              <Route path="/opds/{id:Int}/edit" page={OpdEditOpdPage} name="editOpd" />
+              <Route path="/opds/{id:Int}" page={OpdOpdPage} name="opd" />
+              <Route path="/opds" page={OpdOpdsPage} name="opds" />
+            </Set>
+            <Set wrap={ScaffoldLayout} title="Beds" titleTo="beds" buttonLabel="New Bed" buttonTo="newBed">
+              <Route path="/beds/new" page={BedNewBedPage} name="newBed" />
+              <Route path="/beds/{id:Int}/edit" page={BedEditBedPage} name="editBed" />
+              <Route path="/beds/{id:Int}" page={BedBedPage} name="bed" />
+              <Route path="/beds" page={BedBedsPage} name="beds" />
+            </Set>
+            <Set wrap={ScaffoldLayout} title="Floors" titleTo="floors" buttonLabel="New Floor" buttonTo="newFloor">
+              <Route path="/floors/new" page={FloorNewFloorPage} name="newFloor" />
+              <Route path="/floors/{id:Int}/edit" page={FloorEditFloorPage} name="editFloor" />
+              <Route path="/floors/{id:Int}" page={FloorFloorPage} name="floor" />
+              <Route path="/floors" page={FloorFloorsPage} name="floors" />
+            </Set>
+            <Set wrap={ScaffoldLayout} title="IpdLabChargeses" titleTo="ipdLabChargeses" buttonLabel="New IpdLabCharges" buttonTo="newIpdLabCharges">
+              <Route path="/ipd-lab-chargeses/new" page={IpdLabChargesNewIpdLabChargesPage} name="newIpdLabCharges" />
+              <Route path="/ipd-lab-chargeses/{id:Int}/edit" page={IpdLabChargesEditIpdLabChargesPage} name="editIpdLabCharges" />
+              <Route path="/ipd-lab-chargeses/{id:Int}" page={IpdLabChargesIpdLabChargesPage} name="ipdLabCharges" />
+              <Route path="/ipd-lab-chargeses" page={IpdLabChargesIpdLabChargesesPage} name="ipdLabChargeses" />
+            </Set>
+            <Set wrap={ScaffoldLayout} title="IpdOperationPayments" titleTo="ipdOperationPayments" buttonLabel="New IpdOperationPayment" buttonTo="newIpdOperationPayment">
+              <Route path="/ipd-operation-payments/new" page={IpdOperationPaymentNewIpdOperationPaymentPage} name="newIpdOperationPayment" />
+              <Route path="/ipd-operation-payments/{id:Int}/edit" page={IpdOperationPaymentEditIpdOperationPaymentPage} name="editIpdOperationPayment" />
+              <Route path="/ipd-operation-payments/{id:Int}" page={IpdOperationPaymentIpdOperationPaymentPage} name="ipdOperationPayment" />
+              <Route path="/ipd-operation-payments" page={IpdOperationPaymentIpdOperationPaymentsPage} name="ipdOperationPayments" />
+            </Set>
+            <Set wrap={ScaffoldLayout} title="IpdSummaries" titleTo="ipdSummaries" buttonLabel="New IpdSummary" buttonTo="newIpdSummary">
+              <Route path="/ipd-summaries/new" page={IpdSummaryNewIpdSummaryPage} name="newIpdSummary" />
+              <Route path="/ipd-summaries/{id:Int}/edit" page={IpdSummaryEditIpdSummaryPage} name="editIpdSummary" />
+              <Route path="/ipd-summaries/{id:Int}" page={IpdSummaryIpdSummaryPage} name="ipdSummary" />
+              <Route path="/ipd-summaries" page={IpdSummaryIpdSummariesPage} name="ipdSummaries" />
+            </Set>
+            <Set wrap={ScaffoldLayout} title="IpdChats" titleTo="ipdChats" buttonLabel="New IpdChat" buttonTo="newIpdChat">
+              <Route path="/ipd-chats/new" page={IpdChatNewIpdChatPage} name="newIpdChat" />
+              <Route path="/ipd-chats/{id:Int}/edit" page={IpdChatEditIpdChatPage} name="editIpdChat" />
+              <Route path="/ipd-chats/{id:Int}" page={IpdChatIpdChatPage} name="ipdChat" />
+              <Route path="/ipd-chats" page={IpdChatIpdChatsPage} name="ipdChats" />
+            </Set>
           </Private>
 
 
