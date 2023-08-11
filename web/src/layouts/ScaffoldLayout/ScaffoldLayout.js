@@ -1,6 +1,9 @@
-import { Link, routes } from '@redwoodjs/router'
+import { Link, navigate, routes } from '@redwoodjs/router'
 import { Toaster } from '@redwoodjs/web/toast'
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useState,useLayoutEffect,useEffect } from 'react';
+// import { useLayoutEffect } from 'react-js-dialog-box';
+import { useAuth } from 'src/auth'
+
 
 const ScaffoldLayout = ({
   title,
@@ -12,6 +15,8 @@ const ScaffoldLayout = ({
 }) => {
 
   const [type, settype] = useState("");
+  const { isAuthenticated,currentUser, signUp } = useAuth()
+
 
   useLayoutEffect(()=>{
     let name = window.location.pathname.split('/');
@@ -19,6 +24,25 @@ const ScaffoldLayout = ({
     let pt
     if (name == 'IPD' || name == 'OPD') {
       pt=name
+    }
+    const isAdmin = currentUser?.roles=='admin'
+
+    if(
+      currentUser?.permissions?.pharmacy?.includes(title) ||
+      currentUser?.permissions?.pharma   ==false ||
+      currentUser?.permissions?.charges?.includes(title) ||
+      currentUser?.permissions?.beds?.includes(title) ||
+      currentUser?.permissions?.patientType?.includes(pt) ||
+      // currentUser?.permissions?.patientType?.includes('OPD') ||
+
+
+     isAdmin
+    ){
+      console.log(currentUser?.permissions)
+
+    }
+    else{
+      navigate(routes.home(), { replace: true })
     }
 
   },[])
