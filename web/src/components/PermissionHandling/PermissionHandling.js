@@ -37,11 +37,11 @@ const PermissionHandling = ({ id, users }) => {
     const input = {
       permissions:{
         pharmacy:covertObjectOfArrayToArray(pharmacyArrayList), //finished
-        pharmacyReport: pharmacyOptionArray,
-        // pharma, finished
+        pharmacyReport:  covertObjectOfArrayToArray(pharmacyOptionArray),
+        pharma, //finished
         charges:covertObjectOfArrayToArray(chargesArrayList), //finished
         patientType: covertObjectOfArrayToArray(patientTypeArray), //finished
-        hospitalReport: hospitalReportArray,
+        hospitalReport: covertObjectOfArrayToArray(hospitalReportArray),
         bed:covertObjectOfArrayToArray(beds), //  finished
         // phsam\Report: covertObjectOfArrayToArray(pharmacyOptionArray),
 
@@ -104,9 +104,9 @@ const PermissionHandling = ({ id, users }) => {
     if (items.length == 0) {
       return
     }
-    const objectArray = items.map((str) => (str.value));
-    setPharmacyOptionArray(objectArray)
-    // console.log(objectArray)
+    // const objectArray = items.map((str) => (str.value));
+    setPharmacyOptionArray(items)
+    console.log(items)
 
   }
   const giveHospitalReportpermission = (items) => {
@@ -114,10 +114,11 @@ const PermissionHandling = ({ id, users }) => {
     if (items.length == 0) {
       return
     }
-    const objectArray = items.map((str) => (str.value));
-    setPharmacyOptionArray(objectArray)
+    // const objectArray = items.map((str) => (str.value));
+    // setPharmacyOptionArray(objectArray)
     // console.log(objectArray)
-    setHospitalReportArray(objectArray)
+    console.log(items)
+    setHospitalReportArray(items)
 
   }
   const giveHospitalChargespermission = (items) => {
@@ -171,9 +172,11 @@ const PermissionHandling = ({ id, users }) => {
       ?.patientType
       ?.map((str) => ({ name: str }));
     const objectArray5 = user.permissions
-      ?.pharmacyReport;
+      ?.pharmacyReport
+      ?.map((str) => ({ name: str }));;
     const objectArray6 = user.permissions
-      ?.hospitalReport;
+      ?.hospitalReport
+      ?.map((str) => ({ name: str }));;
     const objectArray7 = user.permissions
       ?.pharma;
 
@@ -305,8 +308,8 @@ const PermissionHandling = ({ id, users }) => {
             <Multiselect
               options={HospitalReportAyyay} // Options to display in the dropdown
               selectedValues={hospitalReportArray}
-              onSelect={(event) => setHospitalReportArray(event)} // Function will trigger on select event
-              onRemove={(event) => setHospitalReportArray(event)} // Function will trigger on remove event
+              onSelect={(event) => giveHospitalReportpermission(event)} // Function will trigger on select event
+              onRemove={(event) => giveHospitalReportpermission(event)} // Function will trigger on remove event
               displayValue="name" // Property name to display in the dropdown options
               placeholder='Select The Hospital Report Options'
             />

@@ -12,6 +12,8 @@ const DashboardLayout = ({ children }) => {
   const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
   const [dropDownOpen, setDropDownOpen] = useState('')
   const [prevtext, setPrevText] = useState('')
+  const isAdmin = currentUser?.roles == 'admin'
+  console.log(currentUser.permissions)
 
 
   const toggleDropDown = (text) => {
@@ -79,7 +81,7 @@ const DashboardLayout = ({ children }) => {
                   </Link>
                 </li>
 
-                {currentUser.permissions?.pharmacy?.length > 0 &&
+                {(currentUser.permissions?.pharmacy?.length > 0 || isAdmin) &&
                   <>
                     <li className="px-5 hidden md:block">
                       <div className="flex flex-row items-center h-8">
@@ -103,226 +105,269 @@ const DashboardLayout = ({ children }) => {
                         <span className="ml-2 text-sm tracking-wide truncate">Pharmacy</span>
 
                       </button>
+
+
                       {dropDownOpen == 'pharmacy' && (
                         <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
 
+                          {
+                            (currentUser.permissions?.pharmacy?.includes('Distributers') || isAdmin) &&
 
-                          <li>
-                            <Link
-                              to={routes.distributers()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Distributers</span>
-                              <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
-                                New
-                              </span>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.manufacturers()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Manufacturers</span>
-                              <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
-                                New
-                              </span>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.compositions()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Composition</span>
-                              <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
-                                New
-                              </span>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.products()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Product</span>
-                              <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
-                                New
-                              </span>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.purchaseMedicines()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Purchase Medicine</span>
-                              <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
-                                New
-                              </span>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.saleMedicines()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Sale Medicine</span>
-                              <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
-                                New
-                              </span>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.returnMedicines()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Return Medicine</span>
-                              <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
-                                New
-                              </span>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.medicines()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Medicines</span>
-                              <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
-                                New
-                              </span>
-                            </Link>
-                          </li>
+                            <li>
+                              <Link
+                                to={routes.distributers()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Distributers</span>
+                                <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
+                                  New
+                                </span>
+                              </Link>
+                            </li>
+
+                          }
+
+
+                          {
+                            (currentUser.permissions?.pharmacy?.includes('Manufacturers') || isAdmin) &&
+
+                            <li>
+                              <Link
+                                to={routes.manufacturers()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Manufacturers</span>
+                                <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
+                                  New
+                                </span>
+                              </Link>
+                            </li>
+                          }
+
+
+
+                          {
+                            (currentUser.permissions?.pharmacy?.includes('Compositions') || isAdmin) &&
+                            <li>
+                              <Link
+                                to={routes.compositions()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Composition</span>
+                                <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
+                                  New
+                                </span>
+                              </Link>
+                            </li>
+                          }
+
+
+
+                          {
+                            (currentUser.permissions?.pharmacy?.includes('Products') || isAdmin) &&
+                            <li>
+                              <Link
+                                to={routes.products()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Product</span>
+                                <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
+                                  New
+                                </span>
+                              </Link>
+                            </li>
+                          }
+
+
+                          {
+                            (currentUser.permissions?.pharmacy?.includes('PurchaseMedicines') || isAdmin) &&
+                            <li>
+                              <Link
+                                to={routes.purchaseMedicines()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Purchase Medicine</span>
+                                <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
+                                  New
+                                </span>
+                              </Link>
+                            </li>
+                          }
+
+                          {
+                            (currentUser.permissions?.pharmacy?.includes('SaleMedicines') || isAdmin) &&
+                            <li>
+                              <Link
+                                to={routes.saleMedicines()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Sale Medicine</span>
+                                <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
+                                  New
+                                </span>
+                              </Link>
+                            </li>
+                          }
+
+                          {
+                            (currentUser.permissions?.pharmacy?.includes('Return Medicines') || isAdmin) &&
+
+                            <li>
+                              <Link
+                                to={routes.returnMedicines()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Return Medicine</span>
+                                <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
+                                  New
+                                </span>
+                              </Link>
+                            </li>
+                          }
+
+                          {
+                            (currentUser.permissions?.pharmacy?.includes('Medicines') || isAdmin) &&
+
+                            <li>
+                              <Link
+                                to={routes.medicines()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Medicines</span>
+                                <span className="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">
+                                  New
+                                </span>
+                              </Link>
+                            </li>
+                          }
 
 
                         </ul>
@@ -334,7 +379,7 @@ const DashboardLayout = ({ children }) => {
 
                 {
 
-                  hasRole('admin') &&
+                  (currentUser.permissions?.pharma || isAdmin) &&
                   <>
 
                     <li className="relative">
@@ -351,35 +396,46 @@ const DashboardLayout = ({ children }) => {
                       </button>
                       {dropDownOpen == 'pharmacyPayment' && (
                         <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
-                          <li>
-                            <Link
-                              to={routes.medicinePayment()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Pay Bills</span>
 
-                            </Link>
-                          </li>
+                          {
+                            <li>
+                              <Link
+                                to={routes.medicinePayment()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Pay Bills</span>
+
+                              </Link>
+                            </li>}
                         </ul>
                       )}
                     </li>
+                  </>
+                }
 
+
+
+
+
+                {(currentUser.permissions?.pharmacyReport?.length > 0 || isAdmin) &&
+
+                  <>
 
                     <li className="relative">
                       <button
@@ -395,181 +451,214 @@ const DashboardLayout = ({ children }) => {
                       </button>
                       {dropDownOpen == 'pharmacyReport' && (
                         <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
-                          <li>
-                            <Link
-                              to={routes.pharmacyReport({ id: 1 })}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Distributers Reports</span>
 
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.pharmacyReport({ id: 12 })}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Manufacturer Reports</span>
+                          {
+                            (currentUser.permissions?.pharmacyReport?.includes('Distributers Reports') || isAdmin) &&
+                            <li>
+                              <Link
+                                to={routes.pharmacyReport({ id: 1 })}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Distributers Reports</span>
 
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.pharmacyReport({ id: 2 })}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Purchase Reports</span>
+                              </Link>
+                            </li>
 
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.pharmacyReport({ id: 3 })}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Sale Reports</span>
+                          }
 
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.pharmacyReport({ id: 11 })}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Return Medicine Reports</span>
+                          {
+                            (currentUser.permissions?.pharmacyReport?.includes('Manufacturer Report') || isAdmin) &&
+                            <li>
+                              <Link
+                                to={routes.pharmacyReport({ id: 12 })}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Manufacturer Reports</span>
 
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.pharmacyReport({ id: 4 })}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Payment Reports</span>
+                              </Link>
+                            </li>
+                          }
 
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.pharmacyReport({ id: 13 })}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Near To Expiry Medicines</span>
+                          {
+                            (currentUser.permissions?.pharmacyReport?.includes('PurchaseMedicines Report') || isAdmin) &&
 
-                            </Link>
-                          </li>
+                            <li>
+                              <Link
+                                to={routes.pharmacyReport({ id: 2 })}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Purchase Reports</span>
+
+                              </Link>
+                            </li>
+
+                          }
+
+                          {
+                            (currentUser.permissions?.pharmacyReport?.includes('SaleMedicines Report') || isAdmin) &&
+
+
+                            <li>
+                              <Link
+                                to={routes.pharmacyReport({ id: 3 })}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Sale Reports</span>
+
+                              </Link>
+                            </li>
+                          }
+
+                          {
+                            (currentUser.permissions?.pharmacyReport?.includes('Return Medicines Report') || isAdmin) &&
+                            <li>
+                              <Link
+                                to={routes.pharmacyReport({ id: 11 })}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Return Medicine Reports</span>
+
+                              </Link>
+                            </li>
+                          }
+
+                          {
+                            (currentUser.permissions?.pharmacyReport?.includes('Payment Report') || isAdmin) &&
+                            <li>
+                              <Link
+                                to={routes.pharmacyReport({ id: 4 })}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Payment Reports</span>
+
+                              </Link>
+                            </li>
+                          }
+                          {
+                            (currentUser.permissions?.pharmacyReport?.includes('Near To Expiry Medicine Report') || isAdmin) &&
+
+                            <li>
+                              <Link
+                                to={routes.pharmacyReport({ id: 13 })}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Near To Expiry Medicines</span>
+
+                              </Link>
+                            </li>
+                          }
 
 
 
@@ -577,7 +666,10 @@ const DashboardLayout = ({ children }) => {
                         </ul>
                       )}
                     </li>
+
+
                   </>
+
 
 
                 }
@@ -597,15 +689,15 @@ const DashboardLayout = ({ children }) => {
 
 
 
-                {!hasRole('pharmacy') &&
-                  <>
-                    <li className="px-5 hidden md:block">
-                      <div className="flex flex-row items-center h-8">
-                        <div className="text-sm font-light tracking-wide text-gray-400 uppercase">Hospital</div>
-                      </div>
-                    </li>
+                {/* {(currentUser.permissions?.charges?.length > 0 || isAdmin) && */}
+                <>
+                  <li className="px-5 hidden md:block">
+                    <div className="flex flex-row items-center h-8">
+                      <div className="text-sm font-light tracking-wide text-gray-400 uppercase">Hospital</div>
+                    </div>
+                  </li>
 
-
+                  {(currentUser.permissions?.charges?.length > 0 || isAdmin) &&
                     <li className="relative">
                       <button
                         className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
@@ -620,193 +712,238 @@ const DashboardLayout = ({ children }) => {
                       </button>
                       {dropDownOpen == 'charges' && (
                         <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
-                          <li>
-                            <Link
-                              to={routes.doctorFees()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Add Doctor Fee</span>
 
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.chargeses()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Add Other Charges</span>
 
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.labChargeses()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Add Lab Charges</span>
+                          {
+                            (currentUser.permissions?.charges?.includes('DoctorFees') || isAdmin) &&
 
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.operations()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Add Operations Name</span>
+                            <li>
+                              <Link
+                                to={routes.doctorFees()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Add Doctor Fee</span>
 
-                            </Link>
-                          </li>
+                              </Link>
+                            </li>
+                          }
+
+
+                          {
+                            (currentUser.permissions?.charges?.includes('Chargeses') || isAdmin) &&
+
+
+                            <li>
+                              <Link
+                                to={routes.chargeses()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Add Other Charges</span>
+
+                              </Link>
+                            </li>
+                          }
+
+                          {
+                            (currentUser.permissions?.charges?.includes('LabChargeses') || isAdmin) &&
+
+                            <li>
+                              <Link
+                                to={routes.labChargeses()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Add Lab Charges</span>
+
+                              </Link>
+                            </li>
+                          }
+
+                          {
+                            (currentUser.permissions?.charges?.includes('operations') || isAdmin) &&
+
+                            <li>
+                              <Link
+                                to={routes.operations()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Add Operations Name</span>
+
+                              </Link>
+                            </li>
+                          }
                         </ul>
                       )}
-                    </li>
-                    <li className="relative">
-                      <button
-                        className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                        onClick={toggleDropDown.bind(this, 'ipd')}
-                      >
-                        <span className="inline-flex justify-center items-center ml-4">
-                          <FaBed />
+                    </li>}
 
-                        </span>
-                        <span className="ml-2 text-sm tracking-wide truncate">IPD - Patient</span>
 
-                      </button>
-                      {dropDownOpen == 'ipd' && (
-                        <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
-                          <li>
-                            <Link
-                              to={routes.ipds({ type: 'IPD' })}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Patients</span>
+                  {
+                    (currentUser.permissions?.patientType?.includes('IPD') || isAdmin) &&
 
-                            </Link>
-                          </li>
-                        </ul>
-                      )}
-                    </li>
-                    <li className="relative">
-                      <button
-                        className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                        onClick={toggleDropDown.bind(this, 'opd')}
-                      >
-                        <span className="inline-flex justify-center items-center ml-4">
-                          <BsPersonFillAdd />
+                    <>
+                      <li className="relative">
+                        <button
+                          className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                          onClick={toggleDropDown.bind(this, 'ipd')}
+                        >
+                          <span className="inline-flex justify-center items-center ml-4">
+                            <FaBed />
 
-                        </span>
-                        <span className="ml-2 text-sm tracking-wide truncate">OPD - Patients</span>
+                          </span>
+                          <span className="ml-2 text-sm tracking-wide truncate">IPD - Patient</span>
 
-                      </button>
-                      {dropDownOpen == 'opd' && (
-                        <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
-                          <li>
-                            <Link
-                              to={routes.ipds({ type: 'OPD' })}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Patients</span>
+                        </button>
+                        {dropDownOpen == 'ipd' && (
+                          <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                            <li>
+                              <Link
+                                to={routes.ipds({ type: 'IPD' })}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Patients</span>
 
-                            </Link>
-                          </li>
-                        </ul>
-                      )}
-                    </li>
+                              </Link>
+                            </li>
+                          </ul>
+                        )}
+                      </li>
+                    </>
+
+                  }
+
+
+                  {
+                    (currentUser.permissions?.patientType?.includes('OPD') || isAdmin) &&
+
+                    <>
+
+                      <li className="relative">
+                        <button
+                          className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                          onClick={toggleDropDown.bind(this, 'opd')}
+                        >
+                          <span className="inline-flex justify-center items-center ml-4">
+                            <BsPersonFillAdd />
+
+                          </span>
+                          <span className="ml-2 text-sm tracking-wide truncate">OPD - Patients</span>
+
+                        </button>
+                        {dropDownOpen == 'opd' && (
+                          <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                            <li>
+                              <Link
+                                to={routes.ipds({ type: 'OPD' })}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Patients</span>
+
+                              </Link>
+                            </li>
+                          </ul>
+                        )}
+                      </li>
+                    </>
+                  }
+
+
+
+                  {(currentUser.permissions?.bed?.length > 0 || isAdmin) &&
                     <li className="relative">
                       <button
                         className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
@@ -821,85 +958,99 @@ const DashboardLayout = ({ children }) => {
                       </button>
                       {dropDownOpen == 'bed' && (
                         <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
-                          <li>
-                            <Link
-                              to={routes.floors()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Add Floors</span>
 
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.beds()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Add Beds</span>
 
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.viewBed()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">View Beds</span>
+                          {
+                            (currentUser.permissions?.bed?.includes('floors') || isAdmin) &&
+                            <li>
+                              <Link
+                                to={routes.floors()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Add Floors</span>
 
-                            </Link>
-                          </li>
+                              </Link>
+                            </li>
+                          }
+
+
+                          {
+                            (currentUser.permissions?.bed?.includes('beds') || isAdmin) &&
+
+                            <>
+                              <li>
+                                <Link
+                                  to={routes.beds()}
+                                  className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                                >
+                                  <span className="inline-flex justify-center items-center ml-4">
+                                    <svg
+                                      className="w-5 h-5"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                      />
+                                    </svg>
+                                  </span>
+                                  <span className="ml-2 text-sm tracking-wide truncate">Add Beds</span>
+
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  to={routes.viewBed()}
+                                  className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                                >
+                                  <span className="inline-flex justify-center items-center ml-4">
+                                    <svg
+                                      className="w-5 h-5"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                      />
+                                    </svg>
+                                  </span>
+                                  <span className="ml-2 text-sm tracking-wide truncate">View Beds</span>
+
+                                </Link>
+                              </li>
+                            </>
+                          }
                         </ul>
                       )}
                     </li>
-                    {/* <li className="relative">
+                  }
+                  {/* <li className="relative">
                       <button
                         className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         onClick={toggleDropDown.bind(this, 'user')}
@@ -944,11 +1095,11 @@ const DashboardLayout = ({ children }) => {
 
 
 
-                  </>
-                }
+                </>
 
-                {
-                  hasRole('admin') &&
+
+                {(currentUser.permissions?.hospitalReport?.length > 0 || isAdmin) &&
+
 
                   <>
                     <li className="relative">
@@ -965,57 +1116,63 @@ const DashboardLayout = ({ children }) => {
                       </button>
                       {dropDownOpen == 'hospitalReport' && (
                         <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
-                          <li>
-                            <Link
-                              to={routes.pharmacyReport({ id: 5 })}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">IPD Report</span>
+                          {
+                            (currentUser.permissions?.hospitalReport?.includes('IPD Reports') || isAdmin) &&
 
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to={routes.pharmacyReport({ id: 6 })}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">OPD Report</span>
+                            <li>
+                              <Link
+                                to={routes.pharmacyReport({ id: 5 })}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">IPD Report</span>
 
-                            </Link>
-                          </li>
+                              </Link>
+                            </li>
+                          }
+                          {
+                            (currentUser.permissions?.hospitalReport?.includes('OPD Report') || isAdmin) &&
+                            <li>
+                              <Link
+                                to={routes.pharmacyReport({ id: 6 })}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">OPD Report</span>
 
+                              </Link>
+                            </li>
+                          }
 
 
 
@@ -1023,15 +1180,7 @@ const DashboardLayout = ({ children }) => {
                         </ul>
                       )}
                     </li>
-                    <li>
-                      <Link to={routes.users()} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
-                        <span className="inline-flex justify-center items-center ml-4">
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
-                        </span>
-                        <span className="ml-2 text-sm tracking-wide truncate">Users</span>
 
-                      </Link>
-                    </li>
                   </>
                 }
 
@@ -1041,23 +1190,38 @@ const DashboardLayout = ({ children }) => {
 
 
 
+                {
+                  hasRole('admin') &&
 
-                <li className="px-5 hidden md:block">
-                  <div className="flex flex-row items-center mt-5 h-8">
-                    <div className="text-sm font-light tracking-wide text-gray-400 uppercase">Settings</div>
-                  </div>
-                </li>
 
-                <li>
-                  <Link to={routes.userRoles()} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
-                    <span className="inline-flex justify-center items-center ml-4">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-                    </span>
-                    <span className="ml-2 text-sm tracking-wide truncate">Roles</span>
-                  </Link>
-                </li>
 
-                {/* <li>
+                  <>
+
+                    <li>
+                      <Link to={routes.users()} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
+                        </span>
+                        <span className="ml-2 text-sm tracking-wide truncate">Users</span>
+
+                      </Link>
+                    </li>
+                    <li className="px-5 hidden md:block">
+                      <div className="flex flex-row items-center mt-5 h-8">
+                        <div className="text-sm font-light tracking-wide text-gray-400 uppercase">Settings</div>
+                      </div>
+                    </li>
+
+                    <li>
+                      <Link to={routes.userRoles()} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                        </span>
+                        <span className="ml-2 text-sm tracking-wide truncate">Roles</span>
+                      </Link>
+                    </li>
+
+                    {/* <li>
                   <a href="#" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
                     <span className="inline-flex justify-center items-center ml-4">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1068,6 +1232,7 @@ const DashboardLayout = ({ children }) => {
                     <span className="ml-2 text-sm tracking-wide truncate">Settings</span>
                   </a>
                 </li> */}
+                  </>}
               </ul>
               <p className="mb-14 px-5 py-3 hidden md:block text-center text-xs">Copyright @2023</p>
             </div>
@@ -1079,7 +1244,7 @@ const DashboardLayout = ({ children }) => {
 
           </div>
         </div>
-      </div>
+      </div >
     </>
   )
 }

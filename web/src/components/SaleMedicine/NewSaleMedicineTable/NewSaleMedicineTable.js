@@ -51,11 +51,11 @@ const NewSaleMedicineTable = (props) => {
     })
 
     console.log(dublicatList)
-    const today = new Date()
-    let year = today.getFullYear()
-    let month = today.getMonth()
+    const date = new Date()
+     date.setMonth(date.getMonth() + 2)
+
     let newBatchList = dublicatList.filter((item)=>(item.name==name.name && item.data.quantity>0
-      && new Date(item.data.exp).getFullYear<=year && new Date(item.data.exp).getMonth<month
+      && (new Date(item.data.exp) >= date)
          ))
     console.log(newBatchList)
      newBatchList = newBatchList.map((item) => {

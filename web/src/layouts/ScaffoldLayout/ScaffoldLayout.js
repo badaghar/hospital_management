@@ -33,6 +33,7 @@ const ScaffoldLayout = ({
       currentUser?.permissions?.charges?.includes(title) ||
       currentUser?.permissions?.beds?.includes(title) ||
       currentUser?.permissions?.patientType?.includes(pt) ||
+      title=='Patients' ||
       // currentUser?.permissions?.patientType?.includes('OPD') ||
 
 

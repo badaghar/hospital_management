@@ -53,15 +53,6 @@ const Routes = () => {
 
 
           <Private unauthenticated="home" roles={["admin"]}>
-            <Route path="/pharmacy-report/{id:Int}" page={PharmacyReportPage} name="pharmacyReport" />
-            <Route path="/view-sale-medicine/{id:Int}" page={ViewSaleMedicinePage} name="viewSaleMedicine" />
-            <Route path="/medicine-payment" page={MedicinePaymentPage} name="medicinePayment" />
-            <Set wrap={ScaffoldLayout} title="PaymentPurchaseMedicines" titleTo="paymentPurchaseMedicines" buttonLabel="" buttonTo="paymentPurchaseMedicines">
-              <Route path="/payment-purchase-medicines/new" page={PaymentPurchaseMedicineNewPaymentPurchaseMedicinePage} name="newPaymentPurchaseMedicine" />
-              <Route path="/payment-purchase-medicines/{id:Int}/edit" page={PaymentPurchaseMedicineEditPaymentPurchaseMedicinePage} name="editPaymentPurchaseMedicine" />
-              <Route path="/payment-purchase-medicines/{id:Int}" page={PaymentPurchaseMedicinePaymentPurchaseMedicinePage} name="paymentPurchaseMedicine" />
-              <Route path="/payment-purchase-medicines" page={PaymentPurchaseMedicinePaymentPurchaseMedicinesPage} name="paymentPurchaseMedicines" />
-            </Set>
             <Route path="/user-roles" page={UserRolesPage} name="userRoles" />
             <Set wrap={ScaffoldLayout} title="Users" titleTo="users" buttonLabel="New User" buttonTo="signup">
               <Route path="/signup" page={SignupPage} name="signup" />
@@ -74,8 +65,19 @@ const Routes = () => {
           </Private>
 
 
+          <Route path="/pharmacy-report/{id:Int}" page={PharmacyReportPage} name="pharmacyReport" />
+            <Route path="/view-sale-medicine/{id:Int}" page={ViewSaleMedicinePage} name="viewSaleMedicine" />
+            <Route path="/medicine-payment" page={MedicinePaymentPage} name="medicinePayment" />
+            <Set wrap={ScaffoldLayout} title="PaymentPurchaseMedicines" titleTo="paymentPurchaseMedicines" buttonLabel="" buttonTo="paymentPurchaseMedicines">
+              <Route path="/payment-purchase-medicines/new" page={PaymentPurchaseMedicineNewPaymentPurchaseMedicinePage} name="newPaymentPurchaseMedicine" />
+              <Route path="/payment-purchase-medicines/{id:Int}/edit" page={PaymentPurchaseMedicineEditPaymentPurchaseMedicinePage} name="editPaymentPurchaseMedicine" />
+              <Route path="/payment-purchase-medicines/{id:Int}" page={PaymentPurchaseMedicinePaymentPurchaseMedicinePage} name="paymentPurchaseMedicine" />
+              <Route path="/payment-purchase-medicines" page={PaymentPurchaseMedicinePaymentPurchaseMedicinesPage} name="paymentPurchaseMedicines" />
+            </Set>
 
-          <Private unauthenticated="home" roles={["admin", "pharmacy"]}>
+
+
+          {/* <Private unauthenticated="home" roles={["admin", "pharmacy"]}> */}
             <Set wrap={ScaffoldLayout} title="Return Medicines" titleTo="returnMedicines" buttonLabel="New ReturnMedicine" buttonTo="newReturnMedicine">
               <Route path="/return-medicines/new" page={ReturnMedicineNewReturnMedicinePage} name="newReturnMedicine" />
               <Route path="/return-medicines/{id:Int}/edit" page={ReturnMedicineEditReturnMedicinePage} name="editReturnMedicine" />
@@ -130,7 +132,7 @@ const Routes = () => {
               <Route path="/distributers/{id:Int}" page={DistributerDistributerPage} name="distributer" />
               <Route path="/distributers" page={DistributerDistributersPage} name="distributers" />
             </Set>
-          </Private>
+          {/* </Private> */}
 
 
 
@@ -143,7 +145,7 @@ const Routes = () => {
 
           {/* hospitals */}
 
-          <Private unauthenticated="home" roles={["admin", "reciptionist", "doctor"]}>
+          {/* <Private unauthenticated="home" roles={["admin", "reciptionist", "doctor"]}> */}
 
             <Set wrap={ScaffoldLayout} title="DoctorFees" titleTo="doctorFees" buttonLabel="New DoctorFee" buttonTo="newDoctorFee">
               <Route path="/doctor-fees/new" page={DoctorFeeNewDoctorFeePage} name="newDoctorFee" />
@@ -235,7 +237,7 @@ const Routes = () => {
               <Route path="/ipd-chats/{id:Int}" page={IpdChatIpdChatPage} name="ipdChat" />
               <Route path="/ipd-chats" page={IpdChatIpdChatsPage} name="ipdChats" />
             </Set>
-          </Private>
+          {/* </Private> */}
 
 
           {/* <Set wrap={ScaffoldLayout} title="ManufacturerPurchaseMedicines" titleTo="manufacturerPurchaseMedicines" buttonLabel="New ManufacturerPurchaseMedicine" buttonTo="newManufacturerPurchaseMedicine">
