@@ -13,7 +13,7 @@ const DashboardLayout = ({ children }) => {
   const [dropDownOpen, setDropDownOpen] = useState('')
   const [prevtext, setPrevText] = useState('')
   const isAdmin = currentUser?.roles == 'admin'
-  console.log(currentUser.permissions)
+  // console.log(currentUser.permissions)
 
 
   const toggleDropDown = (text) => {
