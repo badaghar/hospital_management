@@ -67,6 +67,7 @@ const MedicinesList = ({ medicines }) => {
           time={new Date(show.updated_at)}
           productId={show.productId}
           batch={show.batch}
+          orignal={show}
         />
       )
     }

@@ -36,6 +36,7 @@ export const Success = ({ pharmacyExpiryMedicineReport }) => {
   <div className="bg-white text-black">
     <MedicinesList medicines={pharmacyExpiryMedicineReport} />
 
+
   </div>
 
   )

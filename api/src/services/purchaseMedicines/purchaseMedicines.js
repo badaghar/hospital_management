@@ -228,9 +228,18 @@ export const pharmacyExpiryMedicineReport = async () => {
 
   const data = await db.medicine.findMany({
     where: {
-      exp: {
-        lte: date,
-      },
+      AND: [
+        {
+          exp: {
+            lte: date, // Replace with your desired date
+          },
+        },
+        {
+          quantity: {
+            gt: 0,
+          },
+        },
+      ],
     },
     orderBy: [
       {
@@ -340,11 +349,21 @@ export const medicineHistory = async ({ time,productId,batch }) => {
   endDate.setDate(time.getDate() + 1); // Add 1 day
   const data = await db.purchaseMedicine.findMany({
     where: {
-      created_at: {
+      AND: [
+        {
+          medicine: {
+            path: '$[*].batch',
+            array_contains: batch,
+          },
+        },
+        {
+          medicine: {
+            path: '$[*].product.id',
+            array_contains: productId,
+          },
+        },
 
-        gte: startDate,
-        lte: endDate,
-      },
+      ],
     },
     orderBy: [
       {
@@ -352,24 +371,25 @@ export const medicineHistory = async ({ time,productId,batch }) => {
       }
     ]
   });
-  console.log('/n\\n\n\n\n\n\n\n\n\n',data)
-  const newData = data.filter((pm,ind)=>{
-    const meds = pm.medicine
-    console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n',pm.medicine)
-    const purchaseId = meds.filter((med)=>{
-      med.product.id == productId && med.batch==batch
-    })
-    if(purchaseId){
-      return pm
-    }else{
-      return false
-    }
+  return data[0]
+  // console.log('/n\\n\n\n\n\n\n\n\n\n',data)
+  // const newData = data.filter((pm,ind)=>{
+  //   const meds = pm.medicine
+  //   console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n',pm.medicine)
+  //   const purchaseId = meds.filter((med)=>{
+  //     med.product.id == productId && med.batch==batch
+    // })
+    // if(purchaseId){
+    //   return pm
+    // }else{
+    //   return false
+    // }
 
 
-  })
+  // })
 
-  console.log(newData[0])
-  return newData[0]
+  // console.log(newData[0])
+  // return newData[0]
 }
 
 
