@@ -285,10 +285,11 @@ model PurchaseMedicine {
 }
 
 model ReturnExpiryMedicine {
-  id         Int      @id @default(autoincrement())
-  medicine   Json
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id            Int      @id @default(autoincrement())
+  distributerId Int
+  medicine      Json
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
 }
 
 model PaymentPurchaseMedicine {

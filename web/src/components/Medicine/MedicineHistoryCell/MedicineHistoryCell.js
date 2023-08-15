@@ -102,8 +102,18 @@ export const Success = ({ time, productId, medicineHistory, orignal }) => {
       paid--;
       // free_pack=free
     }
+
+    console.log('====================================');
+    console.log(paid);
+    console.log('====================================');
     let amount =paid*md.rate
-    let net_amount = amount - (amount*md.dis/100) +  (amount*md.cgst/100) +  (amount*md.sgst/100)
+    let dis_amt = amount - (amount*md.dis/100)
+    let gst_amount = (dis_amt*md.cgst/100) + (dis_amt*md.sgst/100)
+    let net_amount = dis_amt + gst_amount
+
+    console.log('====================================');
+    console.log(dis_amt,gst_amount,net_amount);
+    console.log('====================================');
 
 
     setMd((mid)=>{
@@ -143,10 +153,10 @@ export const Success = ({ time, productId, medicineHistory, orignal }) => {
 
 
   }
-  console.log('====================================');
-  console.log('this');
-  console.log('====================================');
-  console.log(medicine)
+  // console.log('====================================');
+  // console.log('this');
+  // console.log('====================================');
+  // console.log(medicine)
 
   return (
     <>
@@ -215,7 +225,7 @@ export const Success = ({ time, productId, medicineHistory, orignal }) => {
                   <td className="p-4">{isNaN(parseFloat(medicineHistory.net_amount).toFixed(2)) ? (0).toFixed(2) : parseFloat(medicineHistory.net_amount).toFixed(2)}</td>
                 </tr>
               ))}
-              {/* {medicine.map((medicineHistory, index) => ( */}
+
                 <tr>
               <td className="p-4">{md.mfr.name}</td>
               <td className="p-4">{md.product.name}</td>
@@ -233,23 +243,6 @@ export const Success = ({ time, productId, medicineHistory, orignal }) => {
               <td className="p-4">{md.amount.toFixed(2)}</td>
               <td className="p-4">{isNaN(parseFloat(md.net_amount).toFixed(2)) ? (0).toFixed(2) : parseFloat(md.net_amount).toFixed(2)}</td>
               </tr>
-              {/* ))} */}
-
-
-              {/* 'mfr':med.medicine[0].mfr.name,
-      'product':med.medicine[0].product.name,
-      'batch':med.medicine[0].batch,
-      'paid_qty':med.medicine[0].paid_qty,
-      'free_qty':med.medicine[0].free_qty,
-      'pack':med.medicine[0].exp ?med.medicine[0].exp.split('-')[1] + '-' +med.medicine[0].exp.split('-')[0] : '04-2026',
-      'exp':med.medicine[0].exp ?med.medicine[0].exp.split('-')[1] + '-' +med.medicine[0].exp.split('-')[0] : '04-2026',
-      'mrp':med.medicine[0].mrp.toFixed(2),
-      'rate':med.medicine[0].rate.toFixed(2),
-      'dis':med.medicine[0].dis.toFixed(2),
-      'sgst':med.medicine[0].sgst,
-      'cgst':med.medicine[0].cgst,
-      'amount':med.medicine[0].amount.toFixed(2),
-      'net_amount': */}
 
 
 
@@ -260,21 +253,12 @@ export const Success = ({ time, productId, medicineHistory, orignal }) => {
           </table>
         </div>
 
-        <div className="col-span-2">
 
-
-        </div>
       </div>
 
-      <nav className="rw-button-group">
-        {/* <Link
-  to={routes.editPurchaseMedicine({ id: purchaseMedicine.id })}
-  className="rw-button rw-button-blue"
->
-  Edit
-</Link> */}
-
-      </nav>
+      <div className="flex justify-center">
+        <button onClick={onSave} className="bg-green-700 text-white hover:bg-green-800 p-3 rounded-lg"  >Add To Return Medicine</button>
+      </div>
 
     </>
   )
