@@ -18,7 +18,7 @@ export const saleMedicine = ({ id }) => {
 }
 
 export const createSaleMedicine = async ({ input }) => {
-  const {permedicine,...data} =  input
+  const { permedicine, ...data } = input
 
   const lastRow = await db.saleMedicine.findFirst({
     orderBy: {
@@ -28,25 +28,23 @@ export const createSaleMedicine = async ({ input }) => {
 
   const no = lastRow ? parseInt(lastRow.id) + 1 : 1;
 
-  const start = 'SVPH632'+no
+  const start = 'SVPH632' + no
   data['billNo'] = start
   const med = await db.saleMedicine.create({
 
     data: data,
   })
-  console.log("\n\n\n\n\n\n\n\n permedicine",permedicine)
+  console.log("\n\n\n\n\n\n\n\n permedicine", permedicine)
 
-  for(let i=0;i<permedicine.length;i++)
-  {
+  for (let i = 0; i < permedicine.length; i++) {
     // console.log("\n\n\n\n\n\n\n\n i value is ",i)s
 
     let q
-    if(permedicine[i].quantity==-1)
-    {
+    if (permedicine[i].quantity == -1) {
       q = 0
       // console.log("\n\n\n\n\n\n\n\n quantity",q)
 
-    }else{
+    } else {
       q = permedicine[i].quantity
       // console.log("\n\n\n\n\n\n\n\n quantity")
     }
@@ -54,8 +52,8 @@ export const createSaleMedicine = async ({ input }) => {
 
 
 
-     await db.medicine.update({
-      data:{
+    await db.medicine.update({
+      data: {
         'quantity': q
       },
       where: {
@@ -83,19 +81,19 @@ export const deleteSaleMedicine = async ({ id }) => {
 
   data.medicine.map(async (med) => {
     // const qty = (med.free_qty + med.paid_qty) * med.pack
-    const qty =  parseInt(med.quantity)
+    const qty = parseInt(med.quantity)
 
-    const medData =  await db.medicine.findFirst({
-      where:{
+    const medData = await db.medicine.findFirst({
+      where: {
         batch: med['batch No'],
-        pid:{
-          name:med['medicine Name']
+        pid: {
+          name: med['medicine Name']
         }
       }
     })
     await db.medicine.update({
       where: {
-        id:medData.id
+        id: medData.id
       },
       data: {
         quantity: {

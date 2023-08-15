@@ -75,6 +75,34 @@ export const createPurchaseMedicine = async ({ input }) => {
 
     }
   }
+
+  // await db.re
+  // const da = await db.returnExpiryMedicine.findMany({
+  //   where:{
+  //     distributerId:med.id
+  //   }
+  // })
+  // console.log('====================================');
+  // // console.log()
+  // console.log('====================================');
+  // // console.log();
+  // console.log('====================================');
+  // // console.log(med.id);
+  // console.log('====================================');
+  // console.log('====================================');
+  // console.log('====================================');
+
+
+  await db.returnExpiryMedicine.updateMany({
+    where:{
+      distributerId:input.distributerId
+    },
+    data: {
+      return_med:true
+    },
+  })
+
+
   return med
 }
 
@@ -130,15 +158,15 @@ export const distributersReport = async ({ id, startDate, endDate }) => {
   });
 
   const data2 = await db.paymentPurchaseMedicine.findMany({
-    where:{
-      purchaseMedicine:{
-        distributerId:id
+    where: {
+      purchaseMedicine: {
+        distributerId: id
       }
     }
   })
 
   const totalSum = data.reduce((sum, item) => sum + item.grand_total, 0);
-  return { data,data2, totalSum }
+  return { data, data2, totalSum }
 }
 export const manufacturerReport = async ({ id, startDate, endDate }) => {
 
@@ -339,8 +367,8 @@ export const pharmacyPayment = async ({ id, startDate, endDate }) => {
 
 
 // Medicine Show bill
-export const medicineHistory = async ({ time,productId,batch }) => {
-  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n\n\n\n',time,'\n\n\n\n\n\\n\n\n\n\n',productId,'\n\n\n\n\n\n\n/',batch)
+export const medicineHistory = async ({ time, productId, batch }) => {
+  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n\n\n\n', time, '\n\n\n\n\n\\n\n\n\n\n', productId, '\n\n\n\n\n\n\n/', batch)
 
   var startDate = new Date(time); // Clone the date object
   startDate.setDate(time.getDate() - 1); // Subtract 1 day
@@ -378,12 +406,12 @@ export const medicineHistory = async ({ time,productId,batch }) => {
   //   console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n',pm.medicine)
   //   const purchaseId = meds.filter((med)=>{
   //     med.product.id == productId && med.batch==batch
-    // })
-    // if(purchaseId){
-    //   return pm
-    // }else{
-    //   return false
-    // }
+  // })
+  // if(purchaseId){
+  //   return pm
+  // }else{
+  //   return false
+  // }
 
 
   // })

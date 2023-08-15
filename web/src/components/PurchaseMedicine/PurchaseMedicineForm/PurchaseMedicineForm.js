@@ -22,6 +22,7 @@ import ProductForm from 'src/components/Product/ProductForm/ProductForm'
 import { useMutation } from '@redwoodjs/web'
 // import
 import { QUERY } from '../CheckPurchasesCell'
+import NewExpiryMedicineTable from '../NewExpiryMedicineTable/NewExpiryMedicineTable'
 // import { useQuery } from '@redwoodjs/web'
 // import { gql } from 'graphql-tag'
 
@@ -92,6 +93,8 @@ const PurchaseMedicineForm = (props) => {
 
   const [no_of_medicine, setNoOfMedicine] = useState(0)
   const [show_medicine_heading, setShowMedicineHeading] = useState(false)
+  // const [show_medicine_heading, setShowMedicineHeading] = useState(false)
+  const [no_of_expiry_medicine, set_no_of_expiry_medicine] = useState(false)
   const [manufacturersList, setManufacturerList] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const [productList, setProductList] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const [total_amount_list, set_total_amount_list] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
@@ -111,11 +114,11 @@ const PurchaseMedicineForm = (props) => {
 
   const [Distributers, setDistributers] = useState(0)
   const [selectDistributer, setSelectDistributer] = useState()
-  const [invoiceNo,setInvoiceNumber] = useState()
+  const [invoiceNo, setInvoiceNumber] = useState()
+  const [exp_total,set_exp_total] = useState(0)
 
   const [manufacturers, setManufacturers] = useState([])
   const [product, setProduct] = useState([])
-
   useEffect(() => {
     const opt = props.distributers.map((item) => {
       return { label: item.name, value: item.id }
@@ -136,15 +139,54 @@ const PurchaseMedicineForm = (props) => {
 
   const modifiyDistributer = (name) => {
     if (name.length === 0) {
+      set_no_of_expiry_medicine(false)
       return
     }
     // console.log(name)
     // Distributers = name[0].id
 
     // checkinf]g for dublicate entry [invoiceno,distributer]
+    set_no_of_expiry_medicine(false)
+    const data = props.returnExpiryMedicines.filter((med) => {
+      return (med.distributerId == name.value && med.return_med == false)
+    })
+
+    // console.log(data,name.value)
+    if (data.length == 0) {
+      set_no_of_expiry_medicine(false)
+
+    }
+    else {
+
+
+      var medicineRows = []
+      let total=0
+      for (var i = 0; i < data.length; i++) {
+        medicineRows.push(<NewExpiryMedicineTable key={'purchase_' + i} value={data[i]}
+          // total={set_exp_total}
+
+
+
+
+        />)
+        total+=data[i].medicine.net_amount
+
+
+
+      }
+      set_exp_total(total.toFixed(2))
+      set_no_of_expiry_medicine(medicineRows)
+      console.log(data)
+
+    }
+
+
 
 
     setDistributers(name.value)
+
+
+
   }
   const onSub = (data) => {
     data['DistributerId'] = Distributers
@@ -174,7 +216,8 @@ const PurchaseMedicineForm = (props) => {
       'cgst': total_cgst_amount,
       'grand_total': grand_total,
       'permedicine': newperMedicine,
-      'newperMedicineManu': newperMedicineManu
+      'newperMedicineManu': newperMedicineManu,
+
     }
 
 
@@ -222,12 +265,12 @@ const PurchaseMedicineForm = (props) => {
       cgstamt += total_cgst_amount_list[i]
     }
 
-    set_grand_total(Math.round(tamt + sgstamt + cgstamt - damt))
+    set_grand_total(Math.round(tamt + sgstamt + cgstamt - damt - exp_total))
     set_total_amount(tamt)
     set_total_dis_amount(damt)
     set_total_sgst_amount(sgstamt)
     set_total_cgst_amount(cgstamt)
-  }, [total_amount_list, total_dis_amount_list, total_cgst_amount_list, total_sgst_amount_list])
+  }, [total_amount_list, total_dis_amount_list, total_cgst_amount_list, total_sgst_amount_list,exp_total])
 
   var medicineRows = []
   for (var i = 0; i < no_of_medicine; i++) {
@@ -397,6 +440,24 @@ const PurchaseMedicineForm = (props) => {
 
             {medicineRows}
           </div>
+
+
+        </div>
+
+        <div>
+       {!!no_of_expiry_medicine &&   <span> Adjustment Details</span>}
+        </div>
+
+        {/* expiry medicine */}
+        <div className="p-2 w-full shadow-sm bg-white ">
+          <div className=" grid grid-cols-18 grid-flow-row gap-x-2 gap-y-2">
+
+            {no_of_expiry_medicine}
+
+
+          </div>
+
+
         </div>
 
 
@@ -488,6 +549,27 @@ const PurchaseMedicineForm = (props) => {
           <FieldError name="cgst" className="rw-field-error" />
         </div>
 
+        <div className='flex items-center mt-3 justify-end gap-x-4'>
+          <Label
+            name="grand_total"
+            className="rw-label"
+            errorClassName="rw-label rw-label-error"
+          >
+            Return Medicine total
+          </Label>
+          <div className="flex">
+            <TextField
+              name="grand_total"
+              defaultValue={props.purchaseMedicine?.grand_total}
+              className="rw-input"
+              errorClassName="rw-input rw-input-error"
+              disabled={true}
+              value={exp_total}
+            // validation={{ valueAsNumber: true, required: true }}
+            />
+          </div>
+          <FieldError name="grand_total" className="rw-field-error" />
+        </div>
         <div className='flex items-center mt-3 justify-end gap-x-4'>
           <Label
             name="grand_total"

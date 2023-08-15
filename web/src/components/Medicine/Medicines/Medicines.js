@@ -16,7 +16,7 @@ const DELETE_MEDICINE_MUTATION = gql`
   }
 `
 
-const MedicinesList = ({ medicines }) => {
+const MedicinesList = ({ medicines,bill }) => {
   const [search_data, setSearch_data] = useState(medicines)
   const [rows_count, setRows_count] = useState(medicines.length <= 5 ? 5 : 10)
   const [show, setShow] = useState(false)
@@ -68,6 +68,7 @@ const MedicinesList = ({ medicines }) => {
           productId={show.productId}
           batch={show.batch}
           orignal={show}
+          bill={bill}
         />
       )
     }

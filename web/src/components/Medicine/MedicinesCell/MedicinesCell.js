@@ -41,5 +41,5 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ medicines }) => {
-  return <Medicines medicines={medicines} />
+  return <Medicines medicines={medicines} bill={true} />
 }

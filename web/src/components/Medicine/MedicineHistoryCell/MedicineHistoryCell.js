@@ -1,7 +1,19 @@
-import { navigate, routes } from "@redwoodjs/router"
-import { concatAST } from "graphql"
+// import { navigate, routes } from "@redwoodjs/router"
 import { useLayoutEffect, useState } from "react"
 import Medicine from "../Medicine/Medicine"
+import { navigate, routes } from '@redwoodjs/router'
+import { useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+const CREATE_RETURN_EXPIRY_MEDICINE_MUTATION = gql`
+  mutation CreateReturnExpiryMedicineMutation(
+    $input: CreateReturnExpiryMedicineInput!
+  ) {
+    createReturnExpiryMedicine(input: $input) {
+      id
+    }
+  }
+`
+
 
 export const QUERY = gql`
   query FindMedicineHistoryQuery($time: DateTime!,$productId:Int!,$batch:String!) {
@@ -11,6 +23,7 @@ export const QUERY = gql`
       distributerId
       did{
         name
+        id
       }
 
       date
@@ -35,15 +48,53 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ time, productId, medicineHistory, orignal }) => {
+export const Success = ({ time, productId, medicineHistory, orignal, bill }) => {
+  const [createReturnExpiryMedicine, { loading, error }] = useMutation(
+    CREATE_RETURN_EXPIRY_MEDICINE_MUTATION,
+    {
+      onCompleted: () => {
+        toast.success('ReturnExpiryMedicine created')
+        navigate(routes.returnExpiryMedicines())
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+    }
+  )
+
+
+
+
+  const onSave = () => {
+
+    const input = {
+      distributerId: medicineHistory.did.id,
+      medicine: md,
+      return_med: false
+    }
+
+    console.log('====================================');
+    console.log(input);
+    console.log('====================================')
+    createReturnExpiryMedicine({ variables: { input } })
+
+  }
+
   const [medicine, setMedicine] = useState([])
   const [meds, setMeds] = useState([])
-  let obj={}
+  let obj = {}
   const med = medicineHistory.medicine.filter((e) => {
     console.log(e)
     return (e.product.name == orignal.pid.name && e.batch == orignal.batch)
   })
-  const [md,setMd] = useState({ ...med[0] })
+  const [md, setMd] = useState({ ...med[0] })
+
+  useLayoutEffect(()=>{
+    if(bill)
+    {
+      navigate(routes.purchaseMedicine({ id: medicineHistory.id }));
+    }
+  },[bill])
 
 
 
@@ -71,6 +122,7 @@ export const Success = ({ time, productId, medicineHistory, orignal }) => {
       qty--
 
     }
+
     let actual_quantity = qty
     let free_pack = 0
     // console.log('====================================');
@@ -106,24 +158,26 @@ export const Success = ({ time, productId, medicineHistory, orignal }) => {
     console.log('====================================');
     console.log(paid);
     console.log('====================================');
-    let amount =paid*md.rate
-    let dis_amt = amount - (amount*md.dis/100)
-    let gst_amount = (dis_amt*md.cgst/100) + (dis_amt*md.sgst/100)
+    let amount = paid * md.rate
+    let dis_amt = amount - (amount * md.dis / 100)
+    let gst_amount = (dis_amt * md.cgst / 100) + (dis_amt * md.sgst / 100)
     let net_amount = dis_amt + gst_amount
 
     console.log('====================================');
-    console.log(dis_amt,gst_amount,net_amount);
+    console.log(dis_amt, gst_amount, net_amount);
     console.log('====================================');
 
+    const quantity_remain = orignal.quantity - qty
 
-    setMd((mid)=>{
-      return{
+    setMd((mid) => {
+      return {
         ...mid,
-        totalQuantity:qty,
-        free_qty:free,
-        paid_qty:paid,
-        amount:amount,
-        net_amount
+        totalQuantity: qty,
+        free_qty: free,
+        paid_qty: paid,
+        amount: amount,
+        net_amount,
+        quantity_remain
       }
     })
 
@@ -148,11 +202,6 @@ export const Success = ({ time, productId, medicineHistory, orignal }) => {
 
   }, [])
 
-
-  const onSave = () => {
-
-
-  }
   // console.log('====================================');
   // console.log('this');
   // console.log('====================================');
@@ -160,106 +209,110 @@ export const Success = ({ time, productId, medicineHistory, orignal }) => {
 
   return (
     <>
-      <div className="bg-white p-6 shadow-lg rounded-lg grid gap-4 grid-cols-2 text-sm">
 
-        <div className="col-span-2">
-          <table className="w-full border border-gray-200 text-center">
-            <tbody>
-              <tr>
-                <th className="p-4">Id</th>
-                <th className="p-4">Invoice no</th>
-                <th className="p-4">Distributor Name</th>
-                <th className="p-4">Date</th>
-              </tr>
-              <tr>
-                <td className="p-4">{medicineHistory.id}</td>
-                <td className="p-4">{medicineHistory.invoiceNo}</td>
-                <td className="p-4">{medicineHistory.did.name}</td>
-                <td className="p-4">{medicineHistory.date.split('T00:00:00.000Z')}</td>
-              </tr>
 
-            </tbody>
-          </table>
-        </div>
+    { !bill && <>
 
-        <div className="col-span-2">
-          <h3 className=" font-bold mb-4">Product Information</h3>
-          <table className="w-full border border-gray-200">
-            <thead>
-              <tr>
-                <th className="p-4">Manufacturer</th>
+        <div className="bg-white p-6 shadow-lg rounded-lg grid gap-4 grid-cols-2 text-sm">
 
-                <th className="p-4">Product</th>
-                <th className="p-4">Batch</th>
-                <th className="p-4">Paid Quantity</th>
-                <th className="p-4">Free Quantity</th>
-                <th className="p-4">Pack</th>
-                <th className="p-4">Total Quantity</th>
-                <th className="p-4">Expiry</th>
-                <th className="p-4">MRP</th>
-                <th className="p-4">Rate</th>
-                <th className="p-4">Discount</th>
-                <th className="p-4">SGST</th>
-                <th className="p-4">CGST</th>
-                <th className="p-4">Amount</th>
-                <th className="p-4">Net Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              {meds.map((medicineHistory, index) => (
+          <div className="col-span-2">
+            <table className="w-full border border-gray-200 text-center">
+              <tbody>
                 <tr>
-                  <td className="p-4">{medicineHistory.mfr.name}</td>
-                  <td className="p-4">{medicineHistory.product.name}</td>
-                  <td className="p-4">{medicineHistory.batch}</td>
-                  <td className="p-4">{medicineHistory.paid_qty}</td>
-                  <td className="p-4">{medicineHistory.free_qty}</td>
-                  <td className="p-4">{medicineHistory.pack}</td>
-                  <td className="p-4">{(medicineHistory.paid_qty + medicineHistory.free_qty) * medicineHistory.pack}</td>
-                  <td className="p-4">{medicineHistory.exp ? medicineHistory.exp.split('-')[1] + '-' + medicineHistory.exp.split('-')[0] : '04-2026'} </td>
-                  <td className="p-4">{medicineHistory.mrp.toFixed(2)}</td>
-                  <td className="p-4">{medicineHistory.rate.toFixed(2)}</td>
-                  <td className="p-4">{medicineHistory.dis.toFixed(2)}</td>
-                  <td className="p-4">{medicineHistory.sgst}</td>
-                  <td className="p-4">{medicineHistory.cgst}</td>
-                  <td className="p-4">{medicineHistory.amount.toFixed(2)}</td>
-                  <td className="p-4">{isNaN(parseFloat(medicineHistory.net_amount).toFixed(2)) ? (0).toFixed(2) : parseFloat(medicineHistory.net_amount).toFixed(2)}</td>
+                  <th className="p-4">Id</th>
+                  <th className="p-4">Invoice no</th>
+                  <th className="p-4">Distributor Name</th>
+                  <th className="p-4">Date</th>
                 </tr>
-              ))}
+                <tr>
+                  <td className="p-4">{medicineHistory.id}</td>
+                  <td className="p-4">{medicineHistory.invoiceNo}</td>
+                  <td className="p-4">{medicineHistory.did.name}</td>
+                  <td className="p-4">{medicineHistory.date.split('T00:00:00.000Z')}</td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <div className="col-span-2">
+            <h3 className=" font-bold mb-4">Product Information</h3>
+            <table className="w-full border border-gray-200">
+              <thead>
+                <tr>
+                  <th className="p-4">Manufacturer</th>
+
+                  <th className="p-4">Product</th>
+                  <th className="p-4">Batch</th>
+                  <th className="p-4">Paid Quantity</th>
+                  <th className="p-4">Free Quantity</th>
+                  <th className="p-4">Pack</th>
+                  <th className="p-4">Total Quantity</th>
+                  <th className="p-4">Expiry</th>
+                  <th className="p-4">MRP</th>
+                  <th className="p-4">Rate</th>
+                  <th className="p-4">Discount</th>
+                  <th className="p-4">SGST</th>
+                  <th className="p-4">CGST</th>
+                  <th className="p-4">Amount</th>
+                  <th className="p-4">Net Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {meds.map((medicineHistory, index) => (
+                  <tr>
+                    <td className="p-4">{medicineHistory.mfr.name}</td>
+                    <td className="p-4">{medicineHistory.product.name}</td>
+                    <td className="p-4">{medicineHistory.batch}</td>
+                    <td className="p-4">{medicineHistory.paid_qty}</td>
+                    <td className="p-4">{medicineHistory.free_qty}</td>
+                    <td className="p-4">{medicineHistory.pack}</td>
+                    <td className="p-4">{(medicineHistory.paid_qty + medicineHistory.free_qty) * medicineHistory.pack}</td>
+                    <td className="p-4">{medicineHistory.exp ? medicineHistory.exp.split('-')[1] + '-' + medicineHistory.exp.split('-')[0] : '04-2026'} </td>
+                    <td className="p-4">{medicineHistory.mrp.toFixed(2)}</td>
+                    <td className="p-4">{medicineHistory.rate.toFixed(2)}</td>
+                    <td className="p-4">{medicineHistory.dis.toFixed(2)}</td>
+                    <td className="p-4">{medicineHistory.sgst}</td>
+                    <td className="p-4">{medicineHistory.cgst}</td>
+                    <td className="p-4">{medicineHistory.amount.toFixed(2)}</td>
+                    <td className="p-4">{isNaN(parseFloat(medicineHistory.net_amount).toFixed(2)) ? (0).toFixed(2) : parseFloat(medicineHistory.net_amount).toFixed(2)}</td>
+                  </tr>
+                ))}
 
                 <tr>
-              <td className="p-4">{md.mfr.name}</td>
-              <td className="p-4">{md.product.name}</td>
-              <td className="p-4">{md.batch}</td>
-              <td className="p-4">{md.paid_qty}</td>
-              <td className="p-4">{md.free_qty}</td>
-              <td className="p-4">{md.pack}</td>
-              <td className="p-4">{md.totalQuantity}</td>
-              <td className="p-4">{md.exp ? md.exp.split('-')[1] + '-' + md.exp.split('-')[0] : '04-2026'} </td>
-              <td className="p-4">{md.mrp.toFixed(2)}</td>
-              <td className="p-4">{md.rate.toFixed(2)}</td>
-              <td className="p-4">{md.dis.toFixed(2)}</td>
-              <td className="p-4">{md.sgst}</td>
-              <td className="p-4">{md.cgst}</td>
-              <td className="p-4">{md.amount.toFixed(2)}</td>
-              <td className="p-4">{isNaN(parseFloat(md.net_amount).toFixed(2)) ? (0).toFixed(2) : parseFloat(md.net_amount).toFixed(2)}</td>
-              </tr>
+                  <td className="p-4">{md.mfr.name}</td>
+                  <td className="p-4">{md.product.name}</td>
+                  <td className="p-4">{md.batch}</td>
+                  <td className="p-4">{md.paid_qty}</td>
+                  <td className="p-4">{md.free_qty}</td>
+                  <td className="p-4">{md.pack}</td>
+                  <td className="p-4">{md.totalQuantity}</td>
+                  <td className="p-4">{md.exp ? md.exp.split('-')[1] + '-' + md.exp.split('-')[0] : '04-2026'} </td>
+                  <td className="p-4">{md.mrp.toFixed(2)}</td>
+                  <td className="p-4">{md.rate.toFixed(2)}</td>
+                  <td className="p-4">{md.dis.toFixed(2)}</td>
+                  <td className="p-4">{md.sgst}</td>
+                  <td className="p-4">{md.cgst}</td>
+                  <td className="p-4">{md.amount.toFixed(2)}</td>
+                  <td className="p-4">{isNaN(parseFloat(md.net_amount).toFixed(2)) ? (0).toFixed(2) : parseFloat(md.net_amount).toFixed(2)}</td>
+                </tr>
 
 
 
 
 
 
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
+
+
         </div>
 
-
-      </div>
-
-      <div className="flex justify-center">
-        <button onClick={onSave} className="bg-green-700 text-white hover:bg-green-800 p-3 rounded-lg"  >Add To Return Medicine</button>
-      </div>
-
+        <div className="flex justify-center">
+          <button onClick={onSave} className="bg-green-700 text-white hover:bg-green-800 p-3 rounded-lg"  >Add To Return Medicine</button>
+        </div>
+      </>}
     </>
   )
 }
