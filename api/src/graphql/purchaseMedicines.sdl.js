@@ -6,6 +6,7 @@ export const schema = gql`
     distributerId: Int!
     date: DateTime!
     medicine: JSON!
+    return: JSON
     total: Float!
     discount: Float!
     sgst: Float!
@@ -82,6 +83,7 @@ export const schema = gql`
     distributerId: Int!
     date: DateTime!
     medicine: JSON!
+    return: JSON
     total: Float!
     discount: Float!
     sgst: Float!

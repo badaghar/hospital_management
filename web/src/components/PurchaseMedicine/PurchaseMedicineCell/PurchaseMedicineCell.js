@@ -11,6 +11,7 @@ export const QUERY = gql`
       }
       date
       medicine
+      return
       total
       discount
       sgst

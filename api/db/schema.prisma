@@ -272,6 +272,7 @@ model PurchaseMedicine {
   distributerId           Int
   date                    DateTime
   medicine                Json
+  return                  Json?
   total                   Float
   discount                Float
   sgst                    Float

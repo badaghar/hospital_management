@@ -178,6 +178,7 @@ const PurchaseMedicineForm = (props) => {
       set_no_of_expiry_medicine(medicineRows)
       console.log(data)
 
+
     }
 
 
@@ -210,6 +211,7 @@ const PurchaseMedicineForm = (props) => {
       'distributerId': Distributers,
       'date': data['date'],
       'medicine': newmedicine,
+      'return':no_of_expiry_medicine,
       'total': total_amount,
       'discount': total_dis_amount,
       'sgst': total_sgst_amount,
@@ -219,6 +221,9 @@ const PurchaseMedicineForm = (props) => {
       'newperMedicineManu': newperMedicineManu,
 
     }
+    console.log('====================================');
+    console.log(no_of_expiry_medicine);
+    console.log('====================================');
 
 
 

@@ -37,6 +37,9 @@ const PurchaseMedicine = ({ purchaseMedicine }) => {
       deletePurchaseMedicine({ variables: { id } })
     }
   }
+  console.log('====================================');
+  console.log(purchaseMedicine);
+  console.log('====================================');
 
   return (
     <>
@@ -92,16 +95,46 @@ const PurchaseMedicine = ({ purchaseMedicine }) => {
                   <td className="p-4">{item.paid_qty}</td>
                   <td className="p-4">{item.free_qty}</td>
                   <td className="p-4">{item.pack}</td>
-                  <td className="p-4">{item.exp  ?  item.exp.split('-')[1] + '-' + item.exp.split('-')[0] : '04-2026'} </td>
+                  <td className="p-4">{item.exp ? item.exp.split('-')[1] + '-' + item.exp.split('-')[0] : '04-2026'} </td>
                   <td className="p-4">{item.mrp.toFixed(2)}</td>
                   <td className="p-4">{item.rate.toFixed(2)}</td>
                   <td className="p-4">{item.dis.toFixed(2)}</td>
                   <td className="p-4">{item.sgst}</td>
                   <td className="p-4">{item.cgst}</td>
                   <td className="p-4">{item.amount.toFixed(2)}</td>
-                  <td className="p-4">{ isNaN(parseFloat(item.net_amount).toFixed(2)) ? (0).toFixed(2) :parseFloat(item.net_amount).toFixed(2) }</td>
+                  <td className="p-4">{isNaN(parseFloat(item.net_amount).toFixed(2)) ? (0).toFixed(2) : parseFloat(item.net_amount).toFixed(2)}</td>
                 </tr>
               ))}
+
+              {
+                purchaseMedicine.return &&
+                <>
+                  <h3 className=" font-bold mb-4">Return Medicine</h3>
+
+               { purchaseMedicine?.return?.map((item, index) => (
+
+                  <tr key={index}>
+                    <td className="p-4">{item.props.value.medicine.mfr.name}</td>
+                    <td className="p-4">{item.props.value.medicine.product.name}</td>
+                    <td className="p-4">{item.props.value.medicine.batch}</td>
+                    <td className="p-4">{item.props.value.medicine.paid_qty}</td>
+                    <td className="p-4">{item.props.value.medicine.free_qty}</td>
+                    <td className="p-4">{item.props.value.medicine.pack}</td>
+                    <td className="p-4">{item.props.value.medicine.exp ? item.props.value.medicine.exp.split('-')[1] + '-' + item.props.value.medicine.exp.split('-')[0] : '04-2026'} </td>
+                    <td className="p-4">{item.props.value.medicine.mrp.toFixed(2)}</td>
+                    <td className="p-4">{item.props.value.medicine.rate.toFixed(2)}</td>
+                    <td className="p-4">{item.props.value.medicine.dis.toFixed(2)}</td>
+                    <td className="p-4">{item.props.value.medicine.sgst}</td>
+                    <td className="p-4">{item.props.value.medicine.cgst}</td>
+                    <td className="p-4">{item.props.value.medicine.amount.toFixed(2)}</td>
+                    <td className="p-4">{isNaN(parseFloat(item.props.value.medicine.net_amount).toFixed(2)) ? (0).toFixed(2) : parseFloat(item.props.value.medicine.net_amount).toFixed(2)}</td>
+                  </tr>
+                  ))}
+
+
+
+                </>
+              }
             </tbody>
           </table>
         </div>
@@ -127,30 +160,30 @@ const PurchaseMedicine = ({ purchaseMedicine }) => {
                 <td className="p-4">{purchaseMedicine.grand_total.toFixed(2)}</td>
                 <td className="p-4">{purchaseMedicine.created_at.split('T')[0]}</td>
               </tr>
-          {/* {    date = new Date().toLocaleDateString() } */}
+              {/* {    date = new Date().toLocaleDateString() } */}
 
             </tbody>
           </table>
-          </div>
         </div>
+      </div>
 
-        <nav className="rw-button-group">
-          {/* <Link
+      <nav className="rw-button-group">
+        {/* <Link
           to={routes.editPurchaseMedicine({ id: purchaseMedicine.id })}
           className="rw-button rw-button-blue"
         >
           Edit
         </Link> */}
-      { hasRole('admin') && <button
+        {hasRole('admin') && <button
           type="button"
           className="rw-button rw-button-red"
           onClick={() => onDeleteClick(purchaseMedicine.id)}
         >
           Delete
         </button>}
-        </nav>
-      </>
-      )
+      </nav>
+    </>
+  )
 }
 
-      export default PurchaseMedicine
+export default PurchaseMedicine
