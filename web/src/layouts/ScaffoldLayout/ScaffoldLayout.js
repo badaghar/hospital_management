@@ -1,29 +1,81 @@
-import { Link, routes } from '@redwoodjs/router'
+import { Link, navigate, routes } from '@redwoodjs/router'
 import { Toaster } from '@redwoodjs/web/toast'
-
+import { useState,useLayoutEffect,useEffect } from 'react';
+// import { useLayoutEffect } from 'react-js-dialog-box';
+import { useAuth } from 'src/auth'
 const ScaffoldLayout = ({
   title,
   titleTo,
   buttonLabel,
   buttonTo,
   children,
+  hide
 }) => {
+  const [type, settype] = useState("");
+  const { isAuthenticated,currentUser, signUp } = useAuth()
+  useLayoutEffect(()=>{
+    let name = window.location.pathname.split('/');
+    name = name[name.length - 1]
+    let pt
+    if (name == 'IPD' || name == 'OPD') {
+      pt=name
+    }
+    const isAdmin = currentUser?.roles=='admin'
+    if(
+      currentUser?.permissions?.pharmacy?.includes(title) ||
+      currentUser?.permissions?.pharma   ==false ||
+      currentUser?.permissions?.charges?.includes(title) ||
+      currentUser?.permissions?.beds?.includes(title) ||
+      currentUser?.permissions?.patientType?.includes(pt) ||
+      title=='Patients' ||
+      // currentUser?.permissions?.patientType?.includes('OPD') ||
+
+
+     isAdmin
+    ){
+      console.log(currentUser?.permissions)
+    }
+    else{
+      navigate(routes.home(), { replace: true })
+    }
+  },[])
+  useEffect(() => {
+    // const location = useLocation();
+    let name = window.location.pathname.split('/');
+    name = name[name.length - 1]
+    if (name == 'IPD' || name == 'OPD') {
+      settype(name)
+    }
+    // console.log(name[name.length-1])
+    // settype(location.);
+  }, [window.location.pathname]);
   return (
     <div className="rw-scaffold">
       <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
       <header className="rw-header">
         <h1 className="rw-heading rw-heading-primary">
-          <Link to={routes[titleTo]()} className="rw-link">
+          {
+            (type != '') &&
+            <Link to={routes[titleTo]({ type })} className="rw-link">
+              {type}
+            </Link>
+          }
+          {!hide && <Link to={routes[titleTo]()} className="rw-link">
             {title}
-          </Link>
+          </Link>}
         </h1>
-        <Link to={routes[buttonTo]()} className="rw-button rw-button-green">
-          <div className="rw-button-icon">+</div> {buttonLabel}
-        </Link>
+        {
+          (type != '') &&
+          <Link to={routes[buttonTo]({ type })} className="rw-button rw-button-green">
+            <div className="rw-button-icon">+</div> {'Add '+type }
+          </Link>
+        }
+                  {!hide &&  <Link to={routes[buttonTo]()} className="rw-button rw-button-green">
+            <div className="rw-button-icon">+</div> {buttonLabel}
+          </Link>}
       </header>
       <main className="rw-main">{children}</main>
     </div>
   )
 }
-
 export default ScaffoldLayout
