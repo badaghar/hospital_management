@@ -13,14 +13,10 @@ export const schema = gql`
 
   input CreateOperationInput {
     name: String!
-    created_at: DateTime!
-    updated_at: DateTime!
   }
 
   input UpdateOperationInput {
     name: String
-    created_at: DateTime
-    updated_at: DateTime
   }
 
   type Mutation {
