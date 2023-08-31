@@ -92,7 +92,12 @@ const SaleMedicineForm = (props) => {
   const [doctors, setDoctors] = useState([])
   const [doctorName, setDoctorName] = useState()
 
-  const [compositionToProductLsit,setCompositionToProductLsit] = useState([])
+  const [compositionToProductLsit, setCompositionToProductLsit] = useState([])
+  const [gender, setGender] = useState('Male');
+
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
 
   useEffect(() => {
     // const opt =props.distributers.map((item)=>{
@@ -127,12 +132,11 @@ const SaleMedicineForm = (props) => {
 
   const onSubmit = (data) => {
 
-        const seen = {};
+    const seen = {};
 
     for (let i = 0; i < permedicineObj.length; i++) {
       const { productId, batch } = permedicineObj[i];
-      if(!productId || !batch)
-      {
+      if (!productId || !batch) {
         continue
       }
 
@@ -221,27 +225,27 @@ const SaleMedicineForm = (props) => {
   // check dublicate permedicine obj
 
   // useEffect(()=>{
-    // console.log("changed")
-    // const seen = {};
+  // console.log("changed")
+  // const seen = {};
 
-    // for (let i = 0; i < permedicineObj.length; i++) {
-    //   const { productId, batch } = permedicineObj[i];
-    //   if(!productId || !batch)
-    //   {
-    //     continue
-    //   }
+  // for (let i = 0; i < permedicineObj.length; i++) {
+  //   const { productId, batch } = permedicineObj[i];
+  //   if(!productId || !batch)
+  //   {
+  //     continue
+  //   }
 
-    //   const key = `${productId}-${batch}`;
-    //   console.log(key)
+  //   const key = `${productId}-${batch}`;
+  //   console.log(key)
 
-    //   if (seen[key]) {
-    //     console.log(`Duplicate found for productId: ${productId} and batch: ${batch}`);
-    //     toast.error(`Duplicate found for productId: ${productId} and batch: ${batch}`)
-    //     // You can customize the message or perform any other action here
-    //   } else {
-    //     seen[key] = true;
-    //   }
-    // }
+  //   if (seen[key]) {
+  //     console.log(`Duplicate found for productId: ${productId} and batch: ${batch}`);
+  //     toast.error(`Duplicate found for productId: ${productId} and batch: ${batch}`)
+  //     // You can customize the message or perform any other action here
+  //   } else {
+  //     seen[key] = true;
+  //   }
+  // }
   // },[permedicineObj])
 
 
@@ -309,21 +313,20 @@ const SaleMedicineForm = (props) => {
   )
 
   const addPatient = (input) => {
+    input['gender'] = gender
     input = convertObjectValuesToUpper(input)
     createPatient({ variables: { input } })
   }
 
-  const modifiyCompositionToProduct = (items) =>{
-    if(items.length==0)
-    {
+  const modifiyCompositionToProduct = (items) => {
+    if (items.length == 0) {
       return
     }
     let cl = []
     let medList = []
     for (let i = 0; i < items.length; i++) {
       cl.push(items[i].id)
-      for(let j=0;j<items[i].ProductToComposition.length;j++)
-      {
+      for (let j = 0; j < items[i].ProductToComposition.length; j++) {
         medList.push(items[i].ProductToComposition[j].pid.name)
 
       }
@@ -331,13 +334,11 @@ const SaleMedicineForm = (props) => {
     console.log(medList)
     let actualList = {}
 
-    for(let i=0;i<medList.length;i++)
-    {
-      if(actualList[medList[i]])
-      {
+    for (let i = 0; i < medList.length; i++) {
+      if (actualList[medList[i]]) {
 
-        actualList[medList[i]] +=1
-      }else{
+        actualList[medList[i]] += 1
+      } else {
         actualList[medList[i]] = 1
       }
     }
@@ -345,12 +346,10 @@ const SaleMedicineForm = (props) => {
     console.log(actualList)
 
     let realList = []
-    for(let key in actualList)
-    {
+    for (let key in actualList) {
       console.log(actualList[key])
-      if(actualList[key]==cl.length)
-      {
-        realList.push({label:key,value:key})
+      if (actualList[key] == cl.length) {
+        realList.push({ label: key, value: key })
 
       }
     }
@@ -379,7 +378,7 @@ const SaleMedicineForm = (props) => {
             closeButtonColor="white"
             bodyBackgroundColor="white"
             bodyTextColor="black"
-            bodyHeight="200px"
+            bodyHeight="250px"
             headerText={<span className="flex items-end h-14 text-xl">Add Patient Details</span>}
           >
             <Form
@@ -451,6 +450,32 @@ const SaleMedicineForm = (props) => {
                 </div>
 
                 <FieldError name="phone_no" className="rw-field-error mt-0" />
+
+                <div className="flex  items-center  space-x-3 col-span-4 ">
+                  <h1 className=" ">Gender Selection</h1>
+                  <div className="text-lg ">
+                    <label className="inline-flex items-center">
+                      <input
+                        type="radio"
+                        value="Male"
+                        checked={gender === 'Male'}
+                        onChange={handleGenderChange}
+                        className="form-radio mr-2"
+                      />
+                      Male
+                    </label>
+                    <label className="inline-flex items-center ml-3">
+                      <input
+                        type="radio"
+                        value="Female"
+                        checked={gender === 'Female'}
+                        onChange={handleGenderChange}
+                        className="form-radio mr-2"
+                      />
+                      Female
+                    </label>
+                  </div>
+                </div>
               </div>
 
 
@@ -581,22 +606,22 @@ const SaleMedicineForm = (props) => {
         <div className='flex items-center mt-3  gap-x-4'>
 
 
-        <div className=" flex-1">
-          <Multiselect
-            options={props.compositions} // Options to display in the dropdown
+          <div className=" flex-1">
+            <Multiselect
+              options={props.compositions} // Options to display in the dropdown
 
-            onSelect={(event) => modifiyCompositionToProduct(event)} // Function will trigger on select event
-            onRemove={(event) => modifiyCompositionToProduct(event)} // Function will trigger on remove event
-            displayValue="name" // Property name to display in the dropdown options
-            placeholder='Select The Medicines'
-          />
+              onSelect={(event) => modifiyCompositionToProduct(event)} // Function will trigger on select event
+              onRemove={(event) => modifiyCompositionToProduct(event)} // Function will trigger on remove event
+              displayValue="name" // Property name to display in the dropdown options
+              placeholder='Select The Medicines'
+            />
           </div>
 
 
 
-            <Select options={compositionToProductLsit}  isClearable={true}
-              placeholder="List Of Medicines"
-            />
+          <Select options={compositionToProductLsit} isClearable={true}
+            placeholder="List Of Medicines"
+          />
 
 
         </div>

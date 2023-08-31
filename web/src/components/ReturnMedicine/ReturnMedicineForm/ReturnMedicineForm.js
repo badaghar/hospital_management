@@ -87,6 +87,11 @@ const ReturnMedicineForm = (props) => {
   const [product, setProduct] = useState([])
   const [patient, setPatient] = useState([])
   const [defaultPatient, setDefaultPatient] = useState()
+  const [gender, setGender] = useState('Male');
+
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
 
   useEffect(() => {
     // const opt =props.distributers.map((item)=>{
@@ -230,6 +235,7 @@ const ReturnMedicineForm = (props) => {
   )
 
   const addPatient = (input) => {
+    input['gender'] = gender
     input = convertObjectValuesToUpper(input)
     createPatient({ variables: { input } })
   }
@@ -251,7 +257,7 @@ const ReturnMedicineForm = (props) => {
             closeButtonColor="white"
             bodyBackgroundColor="white"
             bodyTextColor="black"
-            bodyHeight="200px"
+            bodyHeight="250px"
             headerText={<span className="flex items-end h-14 text-xl">Add Patient Details</span>}
           >
             <Form
@@ -323,7 +329,36 @@ const ReturnMedicineForm = (props) => {
                 </div>
 
                 <FieldError name="phone_no" className="rw-field-error mt-0" />
+
+
+                <div className="flex  items-center  space-x-3 col-span-4 ">
+                  <h1 className=" ">Gender Selection</h1>
+                  <div className="text-lg ">
+                    <label className="inline-flex items-center">
+                      <input
+                        type="radio"
+                        value="Male"
+                        checked={gender === 'Male'}
+                        onChange={handleGenderChange}
+                        className="form-radio mr-2"
+                      />
+                      Male
+                    </label>
+                    <label className="inline-flex items-center ml-3">
+                      <input
+                        type="radio"
+                        value="Female"
+                        checked={gender === 'Female'}
+                        onChange={handleGenderChange}
+                        className="form-radio mr-2"
+                      />
+                      Female
+                    </label>
+                  </div>
+                </div>
               </div>
+
+
 
 
               <div className="rw-button-group">

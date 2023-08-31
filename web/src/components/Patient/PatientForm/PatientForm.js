@@ -7,6 +7,7 @@ import {
   NumberField,
   Submit,
 } from '@redwoodjs/forms'
+import { useState } from 'react';
 function convertObjectValuesToUpper(obj) {
   if (typeof obj !== 'object' || obj === null) {
     // throw new Error('Input must be an object.');
@@ -22,7 +23,14 @@ function convertObjectValuesToUpper(obj) {
   return obj;
 }
 const PatientForm = (props) => {
+
+  const [gender, setGender] = useState('Male');
+
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
   const onSubmit = (data) => {
+    data['gender'] = gender
     data = convertObjectValuesToUpper(data)
     props.onSave(data, props?.patient?.id)
   }
@@ -90,7 +98,7 @@ const PatientForm = (props) => {
 
         <FieldError name="phone_no" className="rw-field-error" />
 
-        <Label
+        {/* <Label
           name="gender"
           className="rw-label"
           errorClassName="rw-label rw-label-error"
@@ -105,7 +113,32 @@ const PatientForm = (props) => {
           errorClassName="rw-input rw-input-error"
         />
 
-        <FieldError name="gender" className="rw-field-error" />
+        <FieldError name="gender" className="rw-field-error" /> */}
+        <div className="flex  items-center  space-x-3 ">
+          <h1 className="text-xl font-bold ">Gender Selection</h1>
+          <div className="text-lg ">
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                value="Male"
+                checked={gender === 'Male'}
+                onChange={handleGenderChange}
+                className="form-radio mr-2"
+              />
+              Male
+            </label>
+            <label className="inline-flex items-center ml-3">
+              <input
+                type="radio"
+                value="Female"
+                checked={gender === 'Female'}
+                onChange={handleGenderChange}
+                className="form-radio mr-2"
+              />
+              Female
+            </label>
+          </div>
+        </div>
 
         <Label
           name="address"
