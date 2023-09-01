@@ -55,7 +55,7 @@ export const Success = ({ downloadDischargeSummary }) => {
   return (
     <>
       <section
-        className="border-black border"
+        className="border-black border font-bold"
         style={{ width: '21cm', height: '29.7cm', padding: '1cm 1cm' }}
       >
         <section
@@ -75,19 +75,19 @@ export const Success = ({ downloadDischargeSummary }) => {
                   <span>
                     Name :
                   </span>
-                  <span className="ml-3 flex-1">
+                  <span className="ml-3 flex-1 font-normal">
                     {downloadDischargeSummary.ipd.patient.name.split('(')[0]}
                   </span>
                   <span >
                     Age :
                   </span>
-                  <span className="mx-3">
+                  <span className="mx-3 font-normal">
                     {downloadDischargeSummary.ipd.patient.age}
                   </span>
                   <span >
                     Sex :
                   </span>
-                  <span className="mx-3 w-24">
+                  <span className="mx-3 w-24 font-normal">
                     {downloadDischargeSummary.ipd.patient.gender}
                   </span>
                   {/* <input type="text" className="border border-black  ml-3 px-2" onChange={(e)=>change('gender',e.target.value)} value={obj.gender}/> */}
@@ -97,7 +97,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                   <span>
                     Address :
                   </span>
-                  <span className="mx-3">
+                  <span className="mx-3 font-normal">
                     {downloadDischargeSummary.summary.address}
                   </span>
                   {/* <input type="text" className="border border-black  ml-3 px-2 flex-1" onChange={(e)=>change('address',e.target.value)}  value={obj.address}/> */}
@@ -109,13 +109,13 @@ export const Success = ({ downloadDischargeSummary }) => {
                   <span>
                     PID NO :
                   </span>
-                  <span className="ml-3 ">
+                  <span className="ml-3 font-normal">
                     SHM6745{downloadDischargeSummary.ipd.patient.name.split('(')[1].split(')')[0].trim()}
                   </span>
                   <span >
                     IP. NO :
                   </span>
-                  <span className="mx-3">
+                  <span className="mx-3 font-normal">
                     SHM7960{downloadDischargeSummary.id}
                   </span>
                   <span >
@@ -143,7 +143,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                     <span>
                       Date of Admission :
                     </span>
-                    <span className="ml-3 ">
+                    <span className="ml-3 font-normal ">
                       {downloadDischargeSummary.ipd.date_of_admission.split('T')[0]}
                     </span>
                   </div>
@@ -152,7 +152,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                     <span>
                       Date of Discharge :
                     </span>
-                    <span className="ml-3 ">
+                    <span className="ml-3 font-normal">
                       {downloadDischargeSummary.ipd.discharge_date.split('T')[0]}
                     </span>
                   </div>
@@ -161,7 +161,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                   <span>
                     Ref by Dr  :
                   </span>
-                  <span className="mx-3">
+                  <span className="mx-3 font-normal">
                     {downloadDischargeSummary.summary.refByDr}
                   </span>
                   {/* <input type="text" className="border border-black  ml-3 px-2 flex-1"  onChange={(e)=>change('refByDr',e.target.value)}  value={obj.refByDr} /> */}
@@ -172,7 +172,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                     Consultante (S)  :
                   </span>
 
-                  <div className="flex flex-wrap space-x-2 ">
+                  <div className="flex flex-wrap space-x-2 font-normal">
 
                     {
                       downloadDischargeSummary.ipd.IpdConsultation?.map((ele) => {
@@ -190,7 +190,7 @@ export const Success = ({ downloadDischargeSummary }) => {
 
                 <div className="flex flex-col">
                   <span>Diagnosis</span>
-                  <span>
+                  <span className="font-normal">
                     {/* {downloadDischargeSummary.summary.diagnosis} */}
                     {addNewLine(downloadDischargeSummary.summary.diagnosis)?.map((ele, ind, arr) => {
                       return (
@@ -206,7 +206,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                 </div>
                 <div className="flex flex-col">
                   <span>Chief Complaint & History : </span>
-                  <span className="">
+                  <span className="font-normal">
                     {/* {downloadDischargeSummary.summary.chief} */}
                     {addNewLine(downloadDischargeSummary.summary.chief)?.map((ele, ind, arr) => {
                       return (
@@ -223,7 +223,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                 </div>
                 <div className="flex flex-col">
                   <span>Clinical Findings : </span>
-                  <span className="">
+                  <span className="font-normal">
                     {/* {downloadDischargeSummary.summary.clinical} */}
                     {addNewLine(downloadDischargeSummary.summary.clinical)?.map((ele, ind, arr) => {
                       return (
@@ -239,7 +239,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                 </div>
                 <div className="flex flex-col">
                   <span>Investigations : </span>
-                  <span className="">
+                  <span className="font-normal">
                     {/* {downloadDischargeSummary.summary.investigations} */}
                     {addNewLine(downloadDischargeSummary.summary.investigations)?.map((ele, ind, arr) => {
                       return (
@@ -256,7 +256,7 @@ export const Success = ({ downloadDischargeSummary }) => {
 
                 <div className="flex flex-col">
                   <span>Treatement / Surgery / Delivery Notes : </span>
-                  <span>
+                  <span className="font-normal">
                     {addNewLine(downloadDischargeSummary.summary.surgery)?.map((ele, ind, arr) => {
                       return (
                         <>
@@ -273,7 +273,7 @@ export const Success = ({ downloadDischargeSummary }) => {
 
                 <div className="flex flex-col">
                   <span>Treatement Advised at the time of Discharge : </span>
-                  <span>
+                  <span className="font-normal">
                     {addNewLine(downloadDischargeSummary.summary.treatement)?.map((ele, ind, arr) => {
                       return (
                         <>
