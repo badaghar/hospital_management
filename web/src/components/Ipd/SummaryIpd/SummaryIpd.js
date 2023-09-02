@@ -145,8 +145,14 @@ const SummaryIpd = ({ ipd }) => {
             <span>
               Sex :
             </span>
-            <span>
+            <span className="mx-3">
               {ipd.patient.gender}
+            </span>
+            <span>
+              Ph .NO :
+            </span>
+            <span>
+              {ipd.patient.phone_no}
             </span>
             {/* <input type="text" className="border border-black  ml-3 px-2" onChange={(e)=>change('gender',e.target.value)} value={obj.gender}/> */}
 

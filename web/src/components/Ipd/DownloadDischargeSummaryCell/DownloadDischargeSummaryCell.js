@@ -87,8 +87,14 @@ export const Success = ({ downloadDischargeSummary }) => {
                   <span >
                     Sex :
                   </span>
-                  <span className="mx-3 w-24 font-normal">
+                  <span className="mx-3  font-normal">
                     {downloadDischargeSummary.ipd.patient.gender}
+                  </span>
+                  <span >
+                    Ph .No :
+                  </span>
+                  <span className="mx-3 font-normal">
+                    {downloadDischargeSummary.ipd.patient.phone_no}
                   </span>
                   {/* <input type="text" className="border border-black  ml-3 px-2" onChange={(e)=>change('gender',e.target.value)} value={obj.gender}/> */}
 
@@ -179,7 +185,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                         return (
 
                           <div>
-                            Dr. {ele.consultation_doctor}
+                             {ele.consultation_doctor}
 
                           </div>
                         )
