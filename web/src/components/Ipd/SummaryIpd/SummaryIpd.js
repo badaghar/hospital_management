@@ -163,6 +163,11 @@ const SummaryIpd = ({ ipd }) => {
             </span>
             <input type="text" className="border border-black  ml-3 px-2 flex-1" onChange={(e) => change('address', e.target.value)} value={obj.address} />
           </div>
+
+
+
+
+
           <div className="flex my-3">
             <span>
               Date of Admission :

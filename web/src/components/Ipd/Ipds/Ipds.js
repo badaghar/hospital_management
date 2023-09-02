@@ -74,11 +74,11 @@ const IpdsList = ({ ipds }) => {
       Header: 'Phone No',
       accessor: 'patient.phone_no',
     },
-    {
-      headerClassName: 'text-left',
-      Header: 'Consultant doctor',
-      accessor: 'consultant_doctor',
-    },
+    // {
+    //   headerClassName: 'text-left',
+    //   Header: 'Consultant doctor',
+    //   accessor: 'consultant_doctor',
+    // },
     {
       headerClassName: 'text-left',
       Header: 'Date of admission',

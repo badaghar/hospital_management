@@ -81,7 +81,7 @@ const IpdForm = (props) => {
 
   const onSubmit = (data) => {
     data['patientId'] = patientId
-    data['consultant_doctor'] = doctorName.value
+    data['consultant_doctor'] = doctorName.value + '----' + bedName.value
     data['patientType'] = props.type
 
 
@@ -234,6 +234,7 @@ const IpdForm = (props) => {
 
   const addPatient = (input) => {
     input['gender'] = gender
+
     input = convertObjectValuesToUpper(input)
     createPatient({ variables: { input } })
   }

@@ -6,6 +6,7 @@ export const QUERY = gql`
       ipd{
         date_of_admission
         discharge_date
+        consultant_doctor
         patient{
         name
         age
@@ -33,7 +34,7 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ downloadDischargeSummary }) => {
-  console.log(downloadDischargeSummary.ipd.IpdConsultation)
+  console.log(downloadDischargeSummary.ipd.consultant_doctor)
 
   const addNewLine = (value) => {
     // if(typeof val!=='string'){
@@ -111,7 +112,7 @@ export const Success = ({ downloadDischargeSummary }) => {
 
 
 
-                <div className="flex justify-between">
+                <div className="flex justify-between flex-wrap">
                   <span>
                     PID NO :
                   </span>
@@ -124,14 +125,23 @@ export const Success = ({ downloadDischargeSummary }) => {
                   <span className="mx-3 font-normal">
                     SHM7960{downloadDischargeSummary.id}
                   </span>
-                  <span >
-                    Ward :
-                  </span>
-                  <span className="mx-3 w-24">
-                    {/* {downloadDischargeSummary.ipd.Bed.bed_name} */}
-                  </span>
+
                   {/* <input type="text" className="border border-black  ml-3 px-2" onChange={(e)=>change('gender',e.target.value)} value={obj.gender}/> */}
 
+                </div>
+
+                <div className="flex my-3">
+                <span >
+                    Ward :
+                  </span>
+                  <span className="mx-3 font-normal">
+                    {
+                      downloadDischargeSummary.ipd.consultant_doctor.split('----')[1]
+
+                    }
+                    {/* {downloadDischargeSummary.ipd.Bed.bed_name} */}
+                  </span>
+                  {/* <input type="text" className="border border-black  ml-3 px-2 flex-1"  onChange={(e)=>change('refByDr',e.target.value)}  value={obj.refByDr} /> */}
                 </div>
 
 
