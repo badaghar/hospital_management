@@ -84,7 +84,7 @@ const IpdsList = ({ ipds }) => {
       Header: 'Date of admission',
       accessor: 'date_of_admission',
       Cell: ({ original }) => (
-        timeTag(original.created_at)
+        timeTag(original.date_of_admission)
       )
     },
     {
@@ -97,7 +97,7 @@ const IpdsList = ({ ipds }) => {
       Header: 'Date of Discharge',
       accessor: 'discharge_date',
       Cell: ({ original }) => (
-        timeTag(original.created_at)
+        timeTag(original.discharge_date) || '-'
       )
     },
     {

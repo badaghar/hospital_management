@@ -216,10 +216,13 @@ const IpdForm = (props) => {
       onCompleted: (data) => {
         const name = data.createPatient.name
         const id = data.createPatient.id
-        toast.success('Patient Added ')
+        console.log(data)
+        // toast.success('Patient Added ')
+        toast.success(name)
         const value = { 'label': name, 'value': id }
         setPatient((item) => [...item, value])
         setDefaultPatient(value)
+        setPatientId(id)
         setIsOpen(false)
 
       },

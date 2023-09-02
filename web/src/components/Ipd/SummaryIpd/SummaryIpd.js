@@ -185,7 +185,7 @@ const SummaryIpd = ({ ipd }) => {
           </div>
           <div className="flex my-3">
             <span>
-              Consultante (S)  :
+              Consultant (S)  :
             </span>
 
             <div className="flex flex-wrap space-x-2 ">
@@ -195,7 +195,7 @@ const SummaryIpd = ({ ipd }) => {
                   return (
 
                     <div>
-                     Dr. {ele.consultation_doctor}
+                      {ele.consultation_doctor}
 
                     </div>
                   )

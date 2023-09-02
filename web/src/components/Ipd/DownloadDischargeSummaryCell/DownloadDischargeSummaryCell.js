@@ -175,7 +175,7 @@ export const Success = ({ downloadDischargeSummary }) => {
 
                 <div className="flex my-3">
                   <span>
-                    Consultante (S)  :
+                    Consultant (S)  :
                   </span>
 
                   <div className="flex flex-wrap space-x-2 font-normal">
