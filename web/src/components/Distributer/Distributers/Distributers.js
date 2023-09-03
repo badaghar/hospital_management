@@ -1,7 +1,7 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 
 import { QUERY } from 'src/components/Distributer/DistributersCell'
 import SearchTable from 'src/components/SearchTable/SearchTable'
@@ -17,6 +17,13 @@ const DELETE_DISTRIBUTER_MUTATION = gql`
 
 const DistributersList = ({ distributers }) => {
   const [search_data, setSearch_data] = useState(distributers)
+
+  useEffect(()=>{
+    setSearch_data(distributers)
+
+  },[distributers])
+
+  console.log(distributers)
   const [rows_count, setRows_count] = useState(distributers.length <= 5 ? 5 : 10)
   const [deleteDistributer] = useMutation(DELETE_DISTRIBUTER_MUTATION, {
     onCompleted: () => {

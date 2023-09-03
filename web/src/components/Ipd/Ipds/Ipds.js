@@ -20,6 +20,10 @@ const IpdsList = ({ ipds }) => {
   const [search_data, setSearch_data] = useState(ipds)
   const [rows_count, setRows_count] = useState(ipds.length <= 5 ? 5 : 10)
   const [refresh, setRefresh] = useState(false)
+    useEffect(()=>{
+    setSearch_data(ipds)
+
+  },[ipds])
   const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
   const isAdmin = currentUser?.roles == 'admin'
   const [deleteIpd] = useMutation(DELETE_IPD_MUTATION, {
