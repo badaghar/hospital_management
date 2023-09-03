@@ -382,7 +382,7 @@ const DashboardLayout = ({ children }) => {
                   (currentUser.permissions?.pharma || isAdmin) &&
                   <>
 
-                    <li className="relative">
+                    {/* <li className="relative">
                       <button
                         className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                         onClick={toggleDropDown.bind(this, 'pharmacyPayment')}
@@ -425,7 +425,16 @@ const DashboardLayout = ({ children }) => {
                             </li>}
                         </ul>
                       )}
-                    </li>
+                    </li> */}
+                                          <li onClick={toggleDropDown.bind(this, 'pharmacyPayment')}>
+                        <Link to={routes.ipds({ type: 'IPD' })} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
+                          <span className="inline-flex justify-center items-center ml-4">
+                          <MdPayments />
+                          </span>
+                          <span className="ml-2 text-sm tracking-wide truncate">Pharmacy Payment</span>
+
+                        </Link>
+                      </li>
                   </>
                 }
 
@@ -660,7 +669,7 @@ const DashboardLayout = ({ children }) => {
                             </li>
                           }
                           {
-                            ( isAdmin) &&
+                            (isAdmin) &&
 
                             <li>
                               <Link
@@ -873,7 +882,7 @@ const DashboardLayout = ({ children }) => {
                     (currentUser.permissions?.patientType?.includes('IPD') || isAdmin) &&
 
                     <>
-                      <li className="relative">
+                      {/* <li className="relative">
                         <button
                           className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                           onClick={toggleDropDown.bind(this, 'ipd')}
@@ -914,6 +923,17 @@ const DashboardLayout = ({ children }) => {
                             </li>
                           </ul>
                         )}
+                      </li> */}
+
+
+                      <li onClick={toggleDropDown.bind(this, 'ipd')}>
+                        <Link to={routes.ipds({ type: 'IPD' })} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
+                          <span className="inline-flex justify-center items-center ml-4">
+                            <FaBed />
+                          </span>
+                          <span className="ml-2 text-sm tracking-wide truncate">IPD - Patient</span>
+
+                        </Link>
                       </li>
                     </>
 
@@ -925,7 +945,7 @@ const DashboardLayout = ({ children }) => {
 
                     <>
 
-                      <li className="relative">
+                      {/* <li className="relative">
                         <button
                           className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
                           onClick={toggleDropDown.bind(this, 'opd')}
@@ -966,6 +986,16 @@ const DashboardLayout = ({ children }) => {
                             </li>
                           </ul>
                         )}
+                      </li> */}
+
+                      <li  onClick={toggleDropDown.bind(this, 'opd')}>
+                        <Link to={routes.ipds({ type: 'OPD' })} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
+                          <span className="inline-flex justify-center items-center ml-4">
+                            <BsPersonFillAdd />
+                          </span>
+                          <span className="ml-2 text-sm tracking-wide truncate">OPD - Patient</span>
+
+                        </Link>
                       </li>
                     </>
                   }
