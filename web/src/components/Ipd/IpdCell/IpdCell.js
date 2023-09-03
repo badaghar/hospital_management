@@ -13,6 +13,7 @@ export const QUERY = gql`
       discharge_date
       patientType
       patient{
+        id
         name
         age
         address

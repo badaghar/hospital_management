@@ -31,6 +31,7 @@ const PatientForm = (props) => {
   };
   const onSubmit = (data) => {
     data['gender'] = gender
+    data['name'] = data['name'].split('(')[0]
     data = convertObjectValuesToUpper(data)
     props.onSave(data, props?.patient?.id)
   }
