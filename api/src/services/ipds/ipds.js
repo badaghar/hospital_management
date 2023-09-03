@@ -52,6 +52,37 @@ export const dischargePatient = async ({id}) => {
     }
   })
 }
+export const undischargePatient = async ({id,bed}) => {
+
+  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',id,bed)
+
+  await db.ipd.update(
+    {
+      data: {
+        discharge_date: null
+      },
+      where:{
+        id:id
+      }
+    }
+  )
+  try {
+    await db.bed.update({
+      where: {
+        id: bed
+      },
+      data :{
+        occupied: true,
+        ipdId:id
+      }
+    })
+
+  } catch (error) {
+    console.log(error)
+  }
+
+
+}
 
 export const createIpd = async ({ input }) => {
 
@@ -111,6 +142,7 @@ export const updateIpd = ({ id, input }) => {
 }
 
 export const deleteIpd = ({ id }) => {
+
   return db.ipd.delete({
     where: { id },
   })

@@ -45,10 +45,13 @@ export const schema = gql`
     patientType: String
   }
 
+
+
   type Mutation {
     createIpd(input: CreateIpdInput!): Ipd! @requireAuth
     updateIpd(id: Int!, input: UpdateIpdInput!): Ipd! @requireAuth
-    deleteIpd(id: Int!): Ipd! @requireAuth
+    deleteIpd(id: Int!): Ipd @requireAuth
     dischargePatient(id: Int!) : Ipd @requireAuth
+    undischargePatient(id: Int!,bed: Int!) : Ipd @requireAuth
   }
 `

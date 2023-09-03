@@ -3,6 +3,7 @@ import { useMutation } from "@redwoodjs/web"
 import { toast } from "@redwoodjs/web/dist/toast"
 import axios from "axios"
 import { useState, useLayoutEffect } from "react"
+import { useAuth } from "src/auth"
 // import { useLayoutEffect } from "react-js-dialog-box"
 
 const CREATE_IPD_SUMMARY_MUTATION = gql`
@@ -13,11 +14,21 @@ const CREATE_IPD_SUMMARY_MUTATION = gql`
   }
 `
 
-const SummaryIpd = ({ ipd }) => {
+const UN_DISCHARGE_PATIENT = gql`
+  mutation undischargePatient($id: Int!,$bed: Int!) {
+    undischargePatient(id: $id,bed: $bed ) {
+      id
+    }
+  }
+`
+
+const SummaryIpd = ({ ipd,floors }) => {
 
   const [obj, setObj] = useState({})
   const [isPrint, setIsPrint] = useState(false)
   const [isUpdate, setIsUpdate] = useState(!!ipd.IpdSummary[0])
+  const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
+  const isAdmin = currentUser?.roles == 'admin'
   function getPDF(id) {
     return axios.get(
       `/.redwood/functions/downloadDischargeSummary?id=` +
@@ -80,6 +91,19 @@ const SummaryIpd = ({ ipd }) => {
     }
   )
 
+  const [undischargePatient, { loading1, error1 }] = useMutation(
+    UN_DISCHARGE_PATIENT,
+    {
+      onCompleted: () => {
+        toast.success('Readmited Done Successfully')
+        navigate(routes.ipds({type:ipd.patientType}))
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+    }
+  )
+
   const change = (name, val) => {
     setObj((obj2) => {
       return {
@@ -120,12 +144,46 @@ const SummaryIpd = ({ ipd }) => {
     }
     setIsPrint(true)
     createIpdSummary({ variables: { input } })
+  }
+
+
+  const undischarge = () => {
+
+    const bed = ipd.consultant_doctor.split('----')[1].trim()
+    let floor_name = bed.split('Floor')[1].trim()
+    let bed_name = bed.split('Floor')[0].split('Bed')[1].trim()
+    // console.log(floor_name,bed_name)
+    let floorId = floors.filter((ele,ind)=>{
+      return ele.floor_name == floor_name
+    })
+    // .filter((ele,ind)=>{
+    //   return ele.Bed.bed_name == bed_name
+    // })
+    let bedId = floorId[0].Bed.filter((ele,ind)=>{
+      return ele.bed_name == bed_name
+
+    })
+
+    bedId = bedId[0].id
+
+    // let bedId = 0;
+    console.log(bedId)
+    if (confirm('Are you sure you want to readmit the patient')) {
+      undischargePatient({ variables: { id:ipd.id,bed:bedId } })
+    }
 
   }
+
+
+
+
   return (
     <div className="m-3">
-      <div className="flex justify-center">
+      <div className="flex justify-center space-x-3">
         <h1 className="uppercase bg-black text-white p-2">discharge summary</h1>
+        <h1 className="uppercase bg-red-700 text-white p-2 cursor-pointer hover:opacity-40" onClick={undischarge}>Un discharge Patient</h1>
+
+
       </div>
       <div className="my-3">
         <div>

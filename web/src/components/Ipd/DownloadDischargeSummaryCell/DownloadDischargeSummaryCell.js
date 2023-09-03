@@ -136,7 +136,8 @@ export const Success = ({ downloadDischargeSummary }) => {
                   </span>
                   <span className="mx-3 font-normal">
                     {
-                      downloadDischargeSummary.ipd.consultant_doctor.split('----')[1]
+                      downloadDischargeSummary.ipd.consultant_doctor.split('----')[1].split('Floor')[0].split('Bed')[1].trim()
+                      // downloadDischargeSummary.ipd.consultant_doctor.split('----')[1]
 
                     }
                     {/* {downloadDischargeSummary.ipd.Bed.bed_name} */}

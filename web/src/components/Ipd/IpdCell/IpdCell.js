@@ -84,6 +84,14 @@ export const QUERY = gql`
     operations{
       name
     }
+    floors{
+      floor_name
+      id
+      Bed{
+        id
+        bed_name
+      }
+    }
 
   }
 `
@@ -96,6 +104,6 @@ export const Failure = ({ error }) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ ipd, users, doctorFees, chargeses,labChargeses,operations }) => {
-  return <Ipd ipd={ipd} users={users} doctorFees={doctorFees} chargeses={chargeses} labChargeses={labChargeses} operations={operations}/>
+export const Success = ({ ipd, users, doctorFees, chargeses,labChargeses,operations,floors }) => {
+  return <Ipd ipd={ipd} users={users} doctorFees={doctorFees} chargeses={chargeses} labChargeses={labChargeses} operations={operations} floors={floors}/>
 }

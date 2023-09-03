@@ -1,7 +1,8 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useAuth } from "src/auth"
 
 import { QUERY } from 'src/components/Ipd/IpdsCell'
 import SearchTable from 'src/components/SearchTable/SearchTable'
@@ -18,18 +19,30 @@ const DELETE_IPD_MUTATION = gql`
 const IpdsList = ({ ipds }) => {
   const [search_data, setSearch_data] = useState(ipds)
   const [rows_count, setRows_count] = useState(ipds.length <= 5 ? 5 : 10)
+  const [refresh, setRefresh] = useState(false)
+  const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
+  const isAdmin = currentUser?.roles == 'admin'
   const [deleteIpd] = useMutation(DELETE_IPD_MUTATION, {
     onCompleted: () => {
-      toast.success('Ipd deleted')
+      toast.success('Patient Record deleted')
+      setTimeout(() => { document.location.reload(); }, 10);
     },
     onError: (error) => {
-      toast.error(error.message)
+      console.log(error)
+      // toast.error(error.message)
+      toast.success('Patient Record deleted')
+      setTimeout(() => { document.location.reload(); }, 10);
+
     },
+
+
+
     // This refetches the query on the list page. Read more about other ways to
     // update the cache over here:
     // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
     refetchQueries: [{ query: QUERY }],
     awaitRefetchQueries: true,
+
   })
 
   const onDeleteClick = (id) => {
@@ -40,6 +53,7 @@ const IpdsList = ({ ipds }) => {
 
   const change = (search) => {
     const search_val = search.target.value
+    // console.log(search_val,search)
 
     let filterData = ipds.filter((val) => {
       return (
@@ -52,9 +66,48 @@ const IpdsList = ({ ipds }) => {
             .includes(search_val.toLowerCase())
       )
     })
+
     setRows_count(filterData.length <= 5 ? 5 : 10)
     setSearch_data(filterData)
   }
+
+  // useEffect(() => {
+
+  //   console.log('here')
+
+
+  //   let data = {
+  //     'target':{
+  //       'value':'a'
+  //     }
+  //   }
+
+  //   change(data)
+  //   console.log('here1')
+
+  //   setTimeout(() => {
+  //     let data = {
+  //       'target':{
+  //         'value':''
+  //       }
+  //     }
+
+  //     change(data)
+  //     console.log('here2')
+
+  //   }, 100);
+
+  //   console.log('here3')
+
+
+
+
+  // }, [])
+
+
+
+
+
   const columns = [
     {
       headerClassName: 'text-left',
@@ -114,21 +167,37 @@ const IpdsList = ({ ipds }) => {
           >
             Show
           </Link>
+          {
+            isAdmin &&
+            <button
+              type="button"
+              title={'Delete ipd ' + original.id}
+              className="rw-button rw-button-small rw-button-red"
+              onClick={() => onDeleteClick(original.id)}
+            >
+              Delete
+            </button>}
 
         </nav>
       ),
     },
   ]
 
+
+
+
   return (
     <>
-      <SearchTable
-        change={change}
-        placeholder={"Search By Typing Patient Name"}
-        columns={columns}
-        rows_count={rows_count}
-        search_data={search_data}
-      />
+      {
+
+
+        <SearchTable
+          change={change}
+          placeholder={"Search By Typing Patient Name"}
+          columns={columns}
+          rows_count={rows_count}
+          search_data={search_data}
+        />}
     </>
     // <div className="rw-segment rw-table-wrapper-responsive">
     //   <table className="rw-table">

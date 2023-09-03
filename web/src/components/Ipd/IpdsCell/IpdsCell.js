@@ -39,5 +39,6 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ ipds,type }) => {
+
   return <Ipds ipds={ipds} />
 }
