@@ -14,6 +14,7 @@ export const QUERY = gql`
       created_at
       updated_at
       paid_amount
+      discharge_date
       patientId
     }
   }

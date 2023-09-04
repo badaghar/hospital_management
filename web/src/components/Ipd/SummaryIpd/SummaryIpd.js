@@ -231,13 +231,26 @@ const SummaryIpd = ({ ipd,floors }) => {
               Date of Admission :
             </span>
             <span className="ml-3 flex-1">
-              {ipd.date_of_admission.split('T')[0]}
+              {
+              ipd.date_of_admission.split('T')[0].split('-')[2]+'-'+
+              ipd.date_of_admission.split('T')[0].split('-')[1]+'-'+
+              ipd.date_of_admission.split('T')[0].split('-')[0]
+
+
+
+              }
             </span>
             <span>
               Date of Discharge :
             </span>
             <span className="ml-3 flex-1">
-              {ipd.discharge_date.split('T')[0]}
+              {
+              // ipd.discharge_date.split('T')[0]
+              ipd.discharge_date.split('T')[0].split('-')[2]+'-'+
+              ipd.discharge_date.split('T')[0].split('-')[1]+'-'+
+              ipd.discharge_date.split('T')[0].split('-')[0]
+
+              }
             </span>
           </div>
           <div className="flex my-3">
@@ -250,8 +263,11 @@ const SummaryIpd = ({ ipd,floors }) => {
             <span>
               Consultant (S)  :
             </span>
+            <span className="px-3">
+            {ipd.consultant_doctor.split('----')[0]}
+            </span>
 
-            <div className="flex flex-wrap space-x-2 ">
+            {/* <div className="flex flex-wrap space-x-2 ">
 
               {
                 ipd.IpdConsultation?.map((ele) => {
@@ -264,7 +280,7 @@ const SummaryIpd = ({ ipd,floors }) => {
                   )
                 })
               }
-            </div>
+            </div> */}
           </div>
 
 

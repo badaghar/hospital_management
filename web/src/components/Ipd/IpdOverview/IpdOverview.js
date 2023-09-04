@@ -27,6 +27,14 @@ const DISCHARGE_PATIENT = gql`
   }
 `
 
+const UPDATE_IPD_MUTATION = gql`
+  mutation UpdateIpdMutation($id: Int!, $input: UpdateIpdInput!) {
+    updateIpd(id: $id, input: $input) {
+      date_of_admission
+    }
+  }
+`
+
 const UPDATE_PATIENT_MUTATION = gql`
   mutation UpdatePatientMutation($id: Int!, $input: UpdatePatientInput!) {
     updatePatient(id: $id, input: $input) {
@@ -60,6 +68,7 @@ function convertObjectValuesToUpper(obj) {
 const IpdOverview = ({ ipd }) => {
 
   const [isOpen, setIsOpen] = useState(false)
+  const [changeDateOpen, setIsChangeDateOpen] = useState(false)
   const [gender, setGender] = useState(ipd.patient.gender);
   const handleGenderChange = (event) => {
     setGender(event.target.value.toUpperCase());
@@ -78,6 +87,16 @@ const IpdOverview = ({ ipd }) => {
       },
     }
   )
+
+  const [updateIpd, { loading1, error1 }] = useMutation(UPDATE_IPD_MUTATION, {
+    onCompleted: () => {
+      toast.success('Discharge Date Updated')
+      setTimeout(() => { document.location.reload(); }, 10);
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
 
   // console.log(gender)
 
@@ -144,11 +163,17 @@ const IpdOverview = ({ ipd }) => {
     printPDF(ipd.id)
   }
 
-  const editPatient = (data) =>{
+  const editPatient = (data) => {
     data['gender'] = gender
     data['name'] = data['name'].split('(')[0]
     data = convertObjectValuesToUpper(data)
-    updatePatient({ variables: { id:ipd.patient.id, input:data } })
+    updatePatient({ variables: { id: ipd.patient.id, input: data } })
+
+  }
+  const changedischargePatientDate = (data) =>{
+
+    console.log(data)
+    updateIpd({ variables: { id:ipd.id, input:data } })
 
   }
 
@@ -158,7 +183,7 @@ const IpdOverview = ({ ipd }) => {
 
   return (
     <>
-          {isOpen && (
+      {isOpen && (
         <>
           <ReactDialogBox
             closeBox={() => {
@@ -288,93 +313,177 @@ const IpdOverview = ({ ipd }) => {
           </ReactDialogBox>
         </>
       )}
+      {changeDateOpen && (
+        <>
+          <ReactDialogBox
+            closeBox={() => {
+              setIsChangeDateOpen(false)
+            }}
+            modalWidth="25%"
+            headerBackgroundColor="#2c2c2c"
+            headerTextColor="white"
+            headerHeight="60px"
+            closeButtonColor="white"
+            bodyBackgroundColor="white"
+            bodyTextColor="black"
+            bodyHeight="150px"
+            headerText={<span className="flex items-end h-14 text-xl">change Discharge Date</span>}
+          >
+            <Form
+              onSubmit={changedischargePatientDate}
+            >
 
-    <div className="m-3 p-4">
+              <div className="grid grid-cols-4 space-y-3">
 
-      <div className="shadow-lg p-3 rounded-md">
+                <div className='col-span-4 flex items-center space-x-3'>
+                  <Label
+                    name="discharge_date"
+                    className="rw-label  mt-0"
+                    errorClassName="rw-label rw-label-error mt-0"
+                  >
+                    Change Date
+                  </Label>
+
+                  <DateField
+                    name="discharge_date"
+
+                    className="rw-input mt-0"
+                    errorClassName="rw-input rw-input-error mt-0"
+                    validation={{ required: true }}
+                    defaultValue={ipd.discharge_date}
+                  />
+
+                  <FieldError name="discharge_date" className="rw-field-error mt-0" />
+                </div>
 
 
-        <div className="flex items-center space-x-3">
-          <span>
-            Patient Name :-
-          </span>
-          <span>
-            {ipd.patient.name}
-          </span>
-          <button className='bg-red-800 text-white hover:opacity-40 p-1 px-3 rounded-xl' onClick={()=>setIsOpen(true)}>
-            Edit Patient
-          </button>
-          {
-            ipd.patientType == 'IPD' &&
-            (!ipd.discharge_date ?
-              <span className="bg-green-800 p-1 px-3 text-white rounded-3xl hover:bg-white hover:text-green-800 cursor-pointer " onClick={dischargePatient}>
-                Discharge Patient
-              </span> :
-              <span className="bg-green-800 p-1 px-3 text-white rounded-3xl hover:bg-white hover:text-green-800 cursor-pointer ">
-                Patient is Discharged At {timeTag(ipd.discharge_date)}
-              </span>)
 
-          }
+
+
+
+
+
+
+
+              </div>
+
+
+              <div className="rw-button-group">
+                <Submit className="rw-button bg-gray-800 text-white">
+                  change Discharge Date
+                </Submit>
+              </div>
+            </Form>
+          </ReactDialogBox>
+        </>
+      )}
+
+      <div className="m-3 p-4">
+
+        <div className="shadow-lg p-3 rounded-md">
+
+
+          <div className="flex items-center space-x-3">
+            <span>
+              Patient Name :-
+            </span>
+            <span>
+              {ipd.patient.name}
+            </span>
+            <button className='bg-red-800 text-white hover:opacity-40 p-1 px-3 rounded-xl' onClick={() => setIsOpen(true)}>
+              Edit Patient
+            </button>
+            {
+              ipd.patientType == 'IPD' &&
+              (!ipd.discharge_date ?
+                <span className="bg-green-800 p-1 px-3 text-white rounded-3xl hover:bg-white hover:text-green-800 cursor-pointer " onClick={dischargePatient}>
+                  Discharge Patient
+                </span> :
+                <>
+                  <span className="bg-green-800 p-1 px-3 text-white rounded-3xl hover:bg-white hover:text-green-800 cursor-pointer ">
+                    Patient is Discharged At {            ipd.date_of_admission.split('T')[0].split('-')[2]+'-'+
+            ipd.date_of_admission.split('T')[0].split('-')[1]+'-'+
+            ipd.date_of_admission.split('T')[0].split('-')[0]}
+                  </span>
+                  <span className="bg-green-800 p-1 px-3 text-white rounded-3xl hover:bg-white hover:text-green-800 cursor-pointer " onClick={()=>setIsChangeDateOpen(true)}>
+                  Change Discharge Patient Date
+                </span>
+
+
+
+
+                </>
+              )
+
+            }
+          </div>
+
+
+
+
+
+          <div className="flex items-center space-x-3">
+            <span>
+              Age :-
+            </span>
+            <span>
+              {ipd.patient.age}
+            </span>
+            <span>
+              Phone No :-
+            </span>
+            <span>
+              {ipd.patient.phone_no}
+            </span>
+            <span>
+              Gender :-
+            </span>
+            <span>
+              {ipd.patient.gender || 'Not Entered'}
+
+            </span>
+
+          </div>
+
+          <div className="flex items-center space-x-3">
+            <span>Address :- </span>
+            <span>{ipd.patient.address || 'Not Entered'}</span>
+          </div>
+
+          <div className="flex items-center space-x-3">
+            <span>Total Charges Till Now</span>
+            <span>5000</span>
+          </div>
+
+          <div className="flex items-center space-x-3">
+            <span>Total Charges Paid Till Now</span>
+            <span>{ipd.paid_amount}</span>
+          </div>
+
+          {ipd.patientType == 'IPD' && <div className="flex items-center space-x-3">
+            <span>Date Of Admitted :- </span>
+            <span>{
+
+            ipd.date_of_admission.split('T')[0].split('-')[2]+'-'+
+            ipd.date_of_admission.split('T')[0].split('-')[1]+'-'+
+            ipd.date_of_admission.split('T')[0].split('-')[0]
+
+
+
+            } </span>
+
+          </div>}
+
+          <div className='flex justify-center mt-2 pb-3'>
+            <button className='bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2' onClick={printForm}>Print Form</button>
+
+          </div>
+
+
+
+
         </div>
-
-
-
-
-
-        <div className="flex items-center space-x-3">
-          <span>
-            Age :-
-          </span>
-          <span>
-            {ipd.patient.age}
-          </span>
-          <span>
-            Phone No :-
-          </span>
-          <span>
-            {ipd.patient.phone_no}
-          </span>
-          <span>
-            Gender :-
-          </span>
-          <span>
-            {ipd.patient.gender || 'Not Entered'}
-
-          </span>
-
-        </div>
-
-        <div className="flex items-center space-x-3">
-          <span>Address :- </span>
-          <span>{ipd.patient.address || 'Not Entered'}</span>
-        </div>
-
-        <div className="flex items-center space-x-3">
-          <span>Total Charges Till Now</span>
-          <span>5000</span>
-        </div>
-
-        <div className="flex items-center space-x-3">
-          <span>Total Charges Paid Till Now</span>
-          <span>{ipd.paid_amount}</span>
-        </div>
-
-        {ipd.patientType == 'IPD' && <div className="flex items-center space-x-3">
-          <span>Date Of Admitted :- </span>
-          <span>{timeTag(ipd.date_of_admission)}</span>
-
-        </div>}
-
-        <div className='flex justify-center mt-2 pb-3'>
-          <button className='bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2' onClick={printForm}>Print Form</button>
-
-        </div>
-
-
-
-
       </div>
-    </div>
     </>
   )
 }

@@ -136,7 +136,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                   </span>
                   <span className="mx-3 font-normal">
                     {
-                      downloadDischargeSummary.ipd.consultant_doctor.split('----')[1].split('Floor')[0].split('Bed')[1].trim()
+                      downloadDischargeSummary.ipd.consultant_doctor?.split('----')[1]?.split('Floor')[0]?.split('Bed')[1]?.trim()
                       // downloadDischargeSummary.ipd.consultant_doctor.split('----')[1]
 
                     }
@@ -161,7 +161,13 @@ export const Success = ({ downloadDischargeSummary }) => {
                       Date of Admission :
                     </span>
                     <span className="ml-3 font-normal ">
-                      {downloadDischargeSummary.ipd.date_of_admission.split('T')[0]}
+                      {
+                      // downloadDischargeSummary.ipd.date_of_admission.split('T')[0]
+                      downloadDischargeSummary.ipd.date_of_admission.split('T')[0].split('-')[2]+'-'+
+                      downloadDischargeSummary.ipd.date_of_admission.split('T')[0].split('-')[1]+'-'+
+                      downloadDischargeSummary.ipd.date_of_admission.split('T')[0].split('-')[0]
+
+                      }
                     </span>
                   </div>
                   <div>
@@ -170,7 +176,12 @@ export const Success = ({ downloadDischargeSummary }) => {
                       Date of Discharge :
                     </span>
                     <span className="ml-3 font-normal">
-                      {downloadDischargeSummary.ipd.discharge_date.split('T')[0]}
+                      {
+                      // downloadDischargeSummary.ipd.discharge_date.split('T')[0]
+                      downloadDischargeSummary.ipd.discharge_date.split('T')[0].split('-')[2]+'-'+
+                      downloadDischargeSummary.ipd.discharge_date.split('T')[0].split('-')[1]+'-'+
+                      downloadDischargeSummary.ipd.discharge_date.split('T')[0].split('-')[0]
+                      }
                     </span>
                   </div>
                 </div>
@@ -188,8 +199,12 @@ export const Success = ({ downloadDischargeSummary }) => {
                   <span>
                     Consultant (S)  :
                   </span>
+                  <span className="mx-3 font-normal">
+                    {downloadDischargeSummary.ipd.consultant_doctor.split('----')[0]}
+                  </span>
 
-                  <div className="flex flex-wrap space-x-2 font-normal">
+
+                  {/* <div className="flex flex-wrap space-x-2 font-normal">
 
                     {
                       downloadDischargeSummary.ipd.IpdConsultation?.map((ele) => {
@@ -202,7 +217,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                         )
                       })
                     }
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="flex flex-col">
