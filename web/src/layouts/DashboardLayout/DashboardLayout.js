@@ -108,7 +108,7 @@ const DashboardLayout = ({ children }) => {
 
 
                       {dropDownOpen == 'pharmacy' && (
-                        <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
 
                           {
                             (currentUser.permissions?.pharmacy?.includes('Distributers') || isAdmin) &&
@@ -395,7 +395,7 @@ const DashboardLayout = ({ children }) => {
 
                       </button>
                       {dropDownOpen == 'pharmacyPayment' && (
-                        <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
 
                           {
                             <li>
@@ -459,7 +459,7 @@ const DashboardLayout = ({ children }) => {
 
                       </button>
                       {dropDownOpen == 'pharmacyReport' && (
-                        <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
 
                           {
                             (currentUser.permissions?.pharmacyReport?.includes('Distributers Reports') || isAdmin) &&
@@ -749,7 +749,7 @@ const DashboardLayout = ({ children }) => {
 
                       </button>
                       {dropDownOpen == 'charges' && (
-                        <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
 
 
                           {
@@ -895,7 +895,7 @@ const DashboardLayout = ({ children }) => {
 
                         </button>
                         {dropDownOpen == 'ipd' && (
-                          <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                          <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                             <li>
                               <Link
                                 to={routes.ipds({ type: 'IPD' })}
@@ -958,7 +958,7 @@ const DashboardLayout = ({ children }) => {
 
                         </button>
                         {dropDownOpen == 'opd' && (
-                          <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                          <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                             <li>
                               <Link
                                 to={routes.ipds({ type: 'OPD' })}
@@ -1016,7 +1016,7 @@ const DashboardLayout = ({ children }) => {
 
                       </button>
                       {dropDownOpen == 'bed' && (
-                        <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
 
 
                           {
@@ -1122,7 +1122,7 @@ const DashboardLayout = ({ children }) => {
 
                       </button>
                       {dropDownOpen == 'user' && (
-                        <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                           <li>
                             <Link
                               to={routes.signup()}
@@ -1174,7 +1174,7 @@ const DashboardLayout = ({ children }) => {
 
                       </button>
                       {dropDownOpen == 'hospitalReport' && (
-                        <ul className="absolute left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
                           {
                             (currentUser.permissions?.hospitalReport?.includes('IPD Reports') || isAdmin) &&
 
