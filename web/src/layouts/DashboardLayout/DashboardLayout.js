@@ -4,7 +4,7 @@ import { useAuth } from "src/auth"
 import { MdLocalPharmacy, MdPayments } from "react-icons/md";
 import { TbReportMedical } from "react-icons/tb";
 import { FaBed } from "react-icons/fa";
-import { BsPersonFillAdd } from "react-icons/bs";
+import { BsPersonFillAdd, BsFillArrowRightCircleFill, BsFillArrowDownCircleFill } from "react-icons/bs";
 // import { FaPersonCirclePlus } from "react-icons/fi";
 import { Toaster } from "@redwoodjs/web/toast";
 
@@ -103,6 +103,12 @@ const DashboardLayout = ({ children }) => {
 
                         </span>
                         <span className="ml-2 text-sm tracking-wide truncate">Pharmacy</span>
+                        <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
+                          {
+                            dropDownOpen == 'pharmacy' ? <BsFillArrowDownCircleFill /> : <BsFillArrowRightCircleFill />
+
+                          }
+                        </span>
 
                       </button>
 
@@ -426,15 +432,15 @@ const DashboardLayout = ({ children }) => {
                         </ul>
                       )}
                     </li> */}
-                                          <li onClick={toggleDropDown.bind(this, 'pharmacyPayment')}>
-                        <Link to={routes.ipds({ type: 'IPD' })} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
-                          <span className="inline-flex justify-center items-center ml-4">
+                    <li onClick={toggleDropDown.bind(this, 'pharmacyPayment')}>
+                      <Link to={routes.ipds({ type: 'IPD' })} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
+                        <span className="inline-flex justify-center items-center ml-4">
                           <MdPayments />
-                          </span>
-                          <span className="ml-2 text-sm tracking-wide truncate">Pharmacy Payment</span>
+                        </span>
+                        <span className="ml-2 text-sm tracking-wide truncate">Pharmacy Payment</span>
 
-                        </Link>
-                      </li>
+                      </Link>
+                    </li>
                   </>
                 }
 
@@ -456,6 +462,12 @@ const DashboardLayout = ({ children }) => {
 
                         </span>
                         <span className="ml-2 text-sm tracking-wide truncate">Pharmacy Report</span>
+                        <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
+                          {
+                            dropDownOpen == 'pharmacyReport' ? <BsFillArrowDownCircleFill /> : <BsFillArrowRightCircleFill />
+
+                          }
+                        </span>
 
                       </button>
                       {dropDownOpen == 'pharmacyReport' && (
@@ -746,6 +758,12 @@ const DashboardLayout = ({ children }) => {
 
                         </span>
                         <span className="ml-2 text-sm tracking-wide truncate">Charges</span>
+                        <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
+                          {
+                            dropDownOpen == 'charges' ? <BsFillArrowDownCircleFill /> : <BsFillArrowRightCircleFill />
+
+                          }
+                        </span>
 
                       </button>
                       {dropDownOpen == 'charges' && (
@@ -988,7 +1006,7 @@ const DashboardLayout = ({ children }) => {
                         )}
                       </li> */}
 
-                      <li  onClick={toggleDropDown.bind(this, 'opd')}>
+                      <li onClick={toggleDropDown.bind(this, 'opd')}>
                         <Link to={routes.ipds({ type: 'OPD' })} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
                           <span className="inline-flex justify-center items-center ml-4">
                             <BsPersonFillAdd />
@@ -1013,6 +1031,12 @@ const DashboardLayout = ({ children }) => {
 
                         </span>
                         <span className="ml-2 text-sm tracking-wide truncate">BED</span>
+                        <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
+                          {
+                            dropDownOpen == 'bed' ? <BsFillArrowDownCircleFill /> : <BsFillArrowRightCircleFill />
+
+                          }
+                        </span>
 
                       </button>
                       {dropDownOpen == 'bed' && (
@@ -1171,6 +1195,12 @@ const DashboardLayout = ({ children }) => {
 
                         </span>
                         <span className="ml-2 text-sm tracking-wide truncate">Hospital Report</span>
+                        <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
+                          {
+                            dropDownOpen == 'hospitalReport' ? <BsFillArrowDownCircleFill /> : <BsFillArrowRightCircleFill />
+
+                          }
+                        </span>
 
                       </button>
                       {dropDownOpen == 'hospitalReport' && (
