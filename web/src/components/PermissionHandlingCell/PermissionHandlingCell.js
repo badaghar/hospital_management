@@ -30,7 +30,7 @@ export const Failure = ({ error }) => (
 
 export const Success = ({ users }) => {
   const [changeId, setChangeId] = useState(0)
-  const [user,setUser] = useState()
+  const [user,setUser] = useState([])
 
   console.log(changeId)/////s
   useLayoutEffect(()=>{

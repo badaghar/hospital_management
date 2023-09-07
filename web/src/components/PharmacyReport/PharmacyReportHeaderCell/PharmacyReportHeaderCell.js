@@ -29,6 +29,7 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ distributers, changeId, text, id, SetComponentRender, manufacturers,users }) => {
+  console.log(users)
   const [options, setOptions] = useState([])
   const location = useLocation();
   useEffect(() => {
