@@ -346,6 +346,17 @@ model ManufacturerPurchaseMedicine {
   updated_at DateTime @updatedAt
 }
 
+model BirthCertificate {
+  id         Int      @id @default(autoincrement())
+  name       String
+  birth_date DateTime
+  weight     Float?
+  type       Int
+  extra      Json?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
 model SaleMedicine {
   id          Int      @id @default(autoincrement())
   billNo      String
