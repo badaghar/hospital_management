@@ -20,6 +20,7 @@ model Patient {
   address        String?
   created_at     DateTime         @default(now())
   updated_at     DateTime         @updatedAt
+  extra          Json?
   Ipd            Ipd[]
   SaleMedicine   SaleMedicine[]
   ReturnMedicine ReturnMedicine[]
@@ -37,6 +38,7 @@ model Opd {
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
   patientId         Int
+  extra             Json?
 }
 
 model Ipd {
@@ -50,6 +52,7 @@ model Ipd {
   paid_amount         Float
   discharge_date      DateTime?
   patientType         String
+  extra               Json?
   IpdCharges          IpdCharges[]
   IpdConsultation     IpdConsultation[]
   IpdPayment          IpdPayment[]
@@ -68,6 +71,7 @@ model IpdChat {
   date       DateTime
   drug       String
   dose       String
+  extra      Json?
   route      String
   updated_at DateTime @updatedAt
 }
@@ -77,6 +81,7 @@ model IpdSummary {
   ipd        Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ipdId      Int
   summary    Json
+  extra      Json?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
@@ -85,6 +90,7 @@ model IpdOperationPayment {
   id             Int      @id @default(autoincrement())
   operation_name String
   amount         Float
+  extra          Json?
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
   ipd            Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -110,6 +116,7 @@ model IpdCharges {
   charge      Float
   quantity    Int
   total       Float
+  extra       Json?
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   ipd         Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -121,6 +128,7 @@ model IpdConsultation {
   consultation_doctor String
   consultation_type   String
   amount              Float
+  extra               Json?
   ipd                 Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ipdId               Int
   created_at          DateTime @default(now())
@@ -133,6 +141,7 @@ model IpdLabCharges {
   ipd        Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ipdId      Int
   amount     Float
+  extra      Json?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
@@ -143,6 +152,7 @@ model IpdPayment {
   payment_mode String
   ipd          Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ipdId        Int
+  extra        Json?
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
 }
@@ -150,6 +160,7 @@ model IpdPayment {
 model Floor {
   id         Int      @id @default(autoincrement())
   floor_name String
+  extra      Json?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   Bed        Bed[]
@@ -167,6 +178,7 @@ model Bed {
   updated_at DateTime @updatedAt
   floorId    Int
   ipdId      Int?
+  extra      Json?
 
   @@unique([floorId, bed_name])
 }
@@ -175,6 +187,7 @@ model Charges {
   id         Int      @id @default(autoincrement())
   name       String
   amount     Float
+  extra      Json?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -185,6 +198,7 @@ model LabCharges {
   id         Int      @id @default(autoincrement())
   name       String
   amount     Float
+  extra      Json?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -194,6 +208,7 @@ model LabCharges {
 model Operation {
   id         Int      @id @default(autoincrement())
   name       String
+  extra      Json?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -206,6 +221,7 @@ model DoctorFee {
   amount     Float
   did        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId     Int
+  extra      Json?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
@@ -216,6 +232,7 @@ model Distributer {
   phoneNo           String
   gstNo             String?
   dlNo              String?
+  extra             Json?
   created_at        DateTime           @default(now())
   updated_at        DateTime           @updatedAt
   purchase_medicine PurchaseMedicine[]
@@ -226,6 +243,7 @@ model Distributer {
 model Manufacturer {
   id         Int       @id @default(autoincrement())
   name       String
+  extra      Json?
   Product    Product[]
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
@@ -236,6 +254,7 @@ model Manufacturer {
 model Composition {
   id                   Int                    @id @default(autoincrement())
   name                 String
+  extra                Json?
   created_at           DateTime               @default(now())
   updated_at           DateTime               @updatedAt
   ProductToComposition ProductToComposition[]
@@ -258,6 +277,7 @@ model Product {
   name                         String
   mid                          Manufacturer                   @relation(fields: [manufacturerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   manufacturerId               Int
+  extra                        Json?
   created_at                   DateTime                       @default(now())
   updated_at                   DateTime                       @updatedAt
   Medicine                     Medicine[]
@@ -278,6 +298,7 @@ model PurchaseMedicine {
   sgst                    Float
   cgst                    Float
   grand_total             Float
+  extra                   Json?
   created_at              DateTime                  @default(now())
   updated_at              DateTime                  @updatedAt
   PaymentPurchaseMEdicine PaymentPurchaseMedicine[]
@@ -290,6 +311,7 @@ model ReturnExpiryMedicine {
   distributerId Int
   medicine      Json
   return_med    Boolean
+  extra         Json?
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
 }
@@ -303,6 +325,7 @@ model PaymentPurchaseMedicine {
   paid               Float
   method             String
   remark             String
+  extra              Json?
   created_at         DateTime         @default(now())
   updated_at         DateTime         @updatedAt
 
@@ -320,6 +343,7 @@ model Medicine {
   sgst       Float
   cgst       Float
   discount   Float
+  extra      Json?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -342,6 +366,7 @@ model ManufacturerPurchaseMedicine {
   cgst       Float
   amount     Float
   net_amount Float
+  extra      Json?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
@@ -361,6 +386,7 @@ model SaleMedicine {
   updated_at  DateTime @updatedAt
   patientId   Int
   doctor_name String
+  extra       Json?
 }
 
 model ReturnMedicine {
@@ -376,6 +402,27 @@ model ReturnMedicine {
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   patientId   Int
+  extra       Json?
+}
+
+model BirthCertificate {
+  id         Int      @id @default(autoincrement())
+  name       String
+  birth_date DateTime
+  date       DateTime
+  extra      Json?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model DeadCertificate {
+  id         Int      @id @default(autoincrement())
+  name       String
+  dead_date  DateTime
+  date       DateTime
+  extra      Json?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model User {
@@ -387,6 +434,7 @@ model User {
   resetToken          String?
   resetTokenExpiresAt DateTime?
   roles               String
+  extra               Json?
   DoctorFee           DoctorFee[]
   permissions         Json?
   created_at          DateTime    @default(now())
