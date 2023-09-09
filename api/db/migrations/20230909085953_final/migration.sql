@@ -8,6 +8,7 @@ CREATE TABLE `Patient` (
     `address` VARCHAR(191) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -22,6 +23,7 @@ CREATE TABLE `Opd` (
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
     `patientId` INTEGER NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -37,6 +39,7 @@ CREATE TABLE `Ipd` (
     `paid_amount` DOUBLE NOT NULL,
     `discharge_date` DATETIME(3) NULL,
     `patientType` VARCHAR(191) NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -51,6 +54,7 @@ CREATE TABLE `IpdChat` (
     `dose` VARCHAR(191) NOT NULL,
     `route` VARCHAR(191) NOT NULL,
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -62,6 +66,7 @@ CREATE TABLE `IpdSummary` (
     `summary` JSON NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -74,6 +79,7 @@ CREATE TABLE `IpdOperationPayment` (
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
     `ipdId` INTEGER NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -88,6 +94,7 @@ CREATE TABLE `IpdCharges` (
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
     `ipdId` INTEGER NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -101,6 +108,7 @@ CREATE TABLE `IpdConsultation` (
     `ipdId` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -113,6 +121,7 @@ CREATE TABLE `IpdLabCharges` (
     `amount` DOUBLE NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -125,6 +134,7 @@ CREATE TABLE `IpdPayment` (
     `ipdId` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -135,6 +145,7 @@ CREATE TABLE `Floor` (
     `floor_name` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     UNIQUE INDEX `Floor_floor_name_key`(`floor_name`),
     PRIMARY KEY (`id`)
@@ -149,6 +160,7 @@ CREATE TABLE `Bed` (
     `updated_at` DATETIME(3) NOT NULL,
     `floorId` INTEGER NOT NULL,
     `ipdId` INTEGER NULL,
+    `extra` JSON NULL,
 
     UNIQUE INDEX `Bed_floorId_bed_name_key`(`floorId`, `bed_name`),
     PRIMARY KEY (`id`)
@@ -161,6 +173,7 @@ CREATE TABLE `Charges` (
     `amount` DOUBLE NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     UNIQUE INDEX `Charges_name_key`(`name`),
     PRIMARY KEY (`id`)
@@ -173,6 +186,7 @@ CREATE TABLE `LabCharges` (
     `amount` DOUBLE NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     UNIQUE INDEX `LabCharges_name_key`(`name`),
     PRIMARY KEY (`id`)
@@ -184,6 +198,7 @@ CREATE TABLE `Operation` (
     `name` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     UNIQUE INDEX `Operation_name_key`(`name`),
     PRIMARY KEY (`id`)
@@ -197,6 +212,7 @@ CREATE TABLE `DoctorFee` (
     `userId` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -210,6 +226,7 @@ CREATE TABLE `Distributer` (
     `dlNo` VARCHAR(191) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     UNIQUE INDEX `Distributer_name_key`(`name`),
     PRIMARY KEY (`id`)
@@ -221,6 +238,7 @@ CREATE TABLE `Manufacturer` (
     `name` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     UNIQUE INDEX `Manufacturer_name_key`(`name`),
     PRIMARY KEY (`id`)
@@ -232,6 +250,7 @@ CREATE TABLE `Composition` (
     `name` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     UNIQUE INDEX `Composition_name_key`(`name`),
     PRIMARY KEY (`id`)
@@ -254,6 +273,7 @@ CREATE TABLE `Product` (
     `manufacturerId` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -273,6 +293,7 @@ CREATE TABLE `PurchaseMedicine` (
     `grand_total` DOUBLE NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     UNIQUE INDEX `PurchaseMedicine_invoiceNo_key`(`invoiceNo`),
     PRIMARY KEY (`id`)
@@ -286,6 +307,7 @@ CREATE TABLE `ReturnExpiryMedicine` (
     `return_med` BOOLEAN NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -301,6 +323,7 @@ CREATE TABLE `PaymentPurchaseMedicine` (
     `remark` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     UNIQUE INDEX `PaymentPurchaseMedicine_purchaseMedicineId_key`(`purchaseMedicineId`),
     PRIMARY KEY (`id`)
@@ -319,6 +342,7 @@ CREATE TABLE `Medicine` (
     `discount` DOUBLE NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     UNIQUE INDEX `Medicine_productId_batch_key`(`productId`, `batch`),
     PRIMARY KEY (`id`)
@@ -342,6 +366,7 @@ CREATE TABLE `ManufacturerPurchaseMedicine` (
     `net_amount` DOUBLE NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -375,6 +400,7 @@ CREATE TABLE `SaleMedicine` (
     `updated_at` DATETIME(3) NOT NULL,
     `patientId` INTEGER NOT NULL,
     `doctor_name` VARCHAR(191) NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -392,6 +418,7 @@ CREATE TABLE `ReturnMedicine` (
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
     `patientId` INTEGER NOT NULL,
+    `extra` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -409,6 +436,7 @@ CREATE TABLE `User` (
     `permissions` JSON NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
 
     UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)

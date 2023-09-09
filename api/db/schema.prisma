@@ -24,6 +24,7 @@ model Patient {
   SaleMedicine   SaleMedicine[]
   ReturnMedicine ReturnMedicine[]
   Opd            Opd[]
+  extra          Json?
 }
 
 // delete
@@ -37,6 +38,7 @@ model Opd {
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
   patientId         Int
+  extra             Json?
 }
 
 model Ipd {
@@ -58,6 +60,7 @@ model Ipd {
   IpdOperationPayment IpdOperationPayment[]
   IpdChat             IpdChat[]
   IpdSummary          IpdSummary[]
+  extra               Json?
 }
 
 model IpdChat {
@@ -70,6 +73,7 @@ model IpdChat {
   dose       String
   route      String
   updated_at DateTime @updatedAt
+  extra      Json?
 }
 
 model IpdSummary {
@@ -79,6 +83,7 @@ model IpdSummary {
   summary    Json
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  extra      Json?
 }
 
 model IpdOperationPayment {
@@ -89,6 +94,7 @@ model IpdOperationPayment {
   updated_at     DateTime @updatedAt
   ipd            Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ipdId          Int
+  extra          Json?
 }
 
 // model Operation {
@@ -114,6 +120,7 @@ model IpdCharges {
   updated_at  DateTime @updatedAt
   ipd         Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ipdId       Int
+  extra       Json?
 }
 
 model IpdConsultation {
@@ -125,6 +132,7 @@ model IpdConsultation {
   ipdId               Int
   created_at          DateTime @default(now())
   updated_at          DateTime @updatedAt
+  extra               Json?
 }
 
 model IpdLabCharges {
@@ -135,6 +143,7 @@ model IpdLabCharges {
   amount     Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  extra      Json?
 }
 
 model IpdPayment {
@@ -145,6 +154,7 @@ model IpdPayment {
   ipdId        Int
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
+  extra        Json?
 }
 
 model Floor {
@@ -153,6 +163,7 @@ model Floor {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   Bed        Bed[]
+  extra      Json?
 
   @@unique([floor_name])
 }
@@ -167,6 +178,7 @@ model Bed {
   updated_at DateTime @updatedAt
   floorId    Int
   ipdId      Int?
+  extra      Json?
 
   @@unique([floorId, bed_name])
 }
@@ -177,6 +189,7 @@ model Charges {
   amount     Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  extra      Json?
 
   @@unique([name])
 }
@@ -187,6 +200,7 @@ model LabCharges {
   amount     Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  extra      Json?
 
   @@unique([name])
 }
@@ -196,6 +210,7 @@ model Operation {
   name       String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  extra      Json?
 
   @@unique([name])
 }
@@ -208,6 +223,7 @@ model DoctorFee {
   userId     Int
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  extra      Json?
 }
 
 model Distributer {
@@ -219,6 +235,7 @@ model Distributer {
   created_at        DateTime           @default(now())
   updated_at        DateTime           @updatedAt
   purchase_medicine PurchaseMedicine[]
+  extra             Json?
 
   @@unique([name])
 }
@@ -229,6 +246,7 @@ model Manufacturer {
   Product    Product[]
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
+  extra      Json?
 
   @@unique([name])
 }
@@ -239,6 +257,7 @@ model Composition {
   created_at           DateTime               @default(now())
   updated_at           DateTime               @updatedAt
   ProductToComposition ProductToComposition[]
+  extra                Json?
 
   @@unique([name])
 }
@@ -263,6 +282,7 @@ model Product {
   Medicine                     Medicine[]
   ProductToComposition         ProductToComposition[]
   ManufacturerPurchaseMedicine ManufacturerPurchaseMedicine[]
+  extra                        Json?
 }
 
 model PurchaseMedicine {
@@ -281,6 +301,7 @@ model PurchaseMedicine {
   created_at              DateTime                  @default(now())
   updated_at              DateTime                  @updatedAt
   PaymentPurchaseMEdicine PaymentPurchaseMedicine[]
+  extra                   Json?
 
   @@unique([invoiceNo])
 }
@@ -292,6 +313,7 @@ model ReturnExpiryMedicine {
   return_med    Boolean
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
+  extra         Json?
 }
 
 model PaymentPurchaseMedicine {
@@ -305,6 +327,7 @@ model PaymentPurchaseMedicine {
   remark             String
   created_at         DateTime         @default(now())
   updated_at         DateTime         @updatedAt
+  extra              Json?
 
   @@unique([purchaseMedicineId])
 }
@@ -322,6 +345,7 @@ model Medicine {
   discount   Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  extra      Json?
 
   @@unique([productId, batch])
 }
@@ -344,6 +368,7 @@ model ManufacturerPurchaseMedicine {
   net_amount Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  extra      Json?
 }
 
 model BirthCertificate {
@@ -372,6 +397,7 @@ model SaleMedicine {
   updated_at  DateTime @updatedAt
   patientId   Int
   doctor_name String
+  extra       Json?
 }
 
 model ReturnMedicine {
@@ -387,6 +413,7 @@ model ReturnMedicine {
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   patientId   Int
+  extra       Json?
 }
 
 model User {
@@ -402,4 +429,5 @@ model User {
   permissions         Json?
   created_at          DateTime    @default(now())
   updated_at          DateTime    @updatedAt
+  extra               Json?
 }
