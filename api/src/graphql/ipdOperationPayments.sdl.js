@@ -5,6 +5,7 @@ export const schema = gql`
     amount: Float!
     created_at: DateTime!
     updated_at: DateTime!
+    extra: JSON
     ipd: Ipd!
     ipdId: Int!
   }
@@ -18,12 +19,14 @@ export const schema = gql`
     operation_name: String!
     amount: Float!
     ipdId: Int!
+    extra: JSON
   }
 
   input UpdateIpdOperationPaymentInput {
     operation_name: String
     amount: Float
     ipdId: Int
+    extra: JSON
   }
 
   type Mutation {

@@ -35,16 +35,20 @@ export const Failure = ({ error }) => (
 export const Success = ({ floors,beds }) => {
   return (
    <>
+
+<div className='bg-white pb-9'>
+
+
     <div className="text-3xl flex justify-center p-7  text-white">
       <h1 className=" bg-slate-800 p-3 rounded-3xl ">Hospital - Bed Map</h1>
     </div>
 
-    <div>
+    <div className='text-black'>
       {
         floors.map((floor)=>{
           return(
             <>
-              <div className='border border-white rounded-xl mx-11 my-3 p-4'>
+              <div className='border border-black rounded-xl mx-11 my-3 p-4'>
                 <div className=' flex justify-center p-2'>
                   <h1 className='underline'>{floor.floor_name}</h1>
                 </div>
@@ -68,6 +72,8 @@ export const Success = ({ floors,beds }) => {
           )
         })
       }
+    </div>
+
     </div>
 
 

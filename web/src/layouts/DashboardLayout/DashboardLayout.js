@@ -4,7 +4,7 @@ import { useAuth } from "src/auth"
 import { MdLocalPharmacy, MdPayments } from "react-icons/md";
 import { TbReportMedical } from "react-icons/tb";
 import { FaBed } from "react-icons/fa";
-import { BsPersonFillAdd, BsFillArrowRightCircleFill, BsFillArrowDownCircleFill } from "react-icons/bs";
+import { BsPersonFillAdd, BsFillArrowRightCircleFill, BsFillArrowDownCircleFill,BsFillArrowUpCircleFill } from "react-icons/bs";
 // import { FaPersonCirclePlus } from "react-icons/fi";
 import { Toaster } from "@redwoodjs/web/toast";
 
@@ -105,7 +105,7 @@ const DashboardLayout = ({ children }) => {
                         <span className="ml-2 text-sm tracking-wide truncate">Pharmacy</span>
                         <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
                           {
-                            dropDownOpen == 'pharmacy' ? <BsFillArrowDownCircleFill /> : <BsFillArrowRightCircleFill />
+                            dropDownOpen == 'pharmacy' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
 
                           }
                         </span>
@@ -448,7 +448,7 @@ const DashboardLayout = ({ children }) => {
                         <span className="ml-2 text-sm tracking-wide truncate">Pharmacy Report</span>
                         <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
                           {
-                            dropDownOpen == 'pharmacyReport' ? <BsFillArrowDownCircleFill /> : <BsFillArrowRightCircleFill />
+                            dropDownOpen == 'pharmacyReport' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
 
                           }
                         </span>
@@ -744,7 +744,7 @@ const DashboardLayout = ({ children }) => {
                         <span className="ml-2 text-sm tracking-wide truncate">Charges</span>
                         <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
                           {
-                            dropDownOpen == 'charges' ? <BsFillArrowDownCircleFill /> : <BsFillArrowRightCircleFill />
+                            dropDownOpen == 'charges' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
 
                           }
                         </span>
@@ -1017,7 +1017,7 @@ const DashboardLayout = ({ children }) => {
                         <span className="ml-2 text-sm tracking-wide truncate">BED</span>
                         <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
                           {
-                            dropDownOpen == 'bed' ? <BsFillArrowDownCircleFill /> : <BsFillArrowRightCircleFill />
+                            dropDownOpen == 'bed' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
 
                           }
                         </span>
@@ -1181,7 +1181,7 @@ const DashboardLayout = ({ children }) => {
                         <span className="ml-2 text-sm tracking-wide truncate">Hospital Report</span>
                         <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
                           {
-                            dropDownOpen == 'hospitalReport' ? <BsFillArrowDownCircleFill /> : <BsFillArrowRightCircleFill />
+                            dropDownOpen == 'hospitalReport' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
 
                           }
                         </span>

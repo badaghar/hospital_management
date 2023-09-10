@@ -19,6 +19,7 @@ const CREATE_IPD_OPERATION_PAYMENT_MUTATION = gql`
 `
 
 const IpdOperation = ({ ipd, users, operations }) => {
+  console.log(operations)
   const [operationChargesArray, setoperationChargesArray] = useState([])
   const [createIpdOperationPayment, { loading, error }] = useMutation(
     CREATE_IPD_OPERATION_PAYMENT_MUTATION,
@@ -52,7 +53,7 @@ const IpdOperation = ({ ipd, users, operations }) => {
   }
 
   const addOperationCharge = () => {
-    setoperationChargesArray((item) => [...item, { operation_name: '', amount: 0, ipdId: ipd.id }])
+    setoperationChargesArray((item) => [...item, { operation_name: '', amount: 0, ipdId: ipd.id,extra:{} }])
   }
 
   const deleteLabCharges = (index) => {
@@ -69,19 +70,27 @@ const IpdOperation = ({ ipd, users, operations }) => {
       <div className="shadow-md rounded-md">
 
         <div className="p-2 w-full shadow-sm bg-white ">
-          <div className=" grid grid-cols-3 grid-flow-row gap-x-2 gap-y-2">
+          <div className=" grid grid-cols-4 grid-flow-row gap-x-2 gap-y-2">
 
             <div className="flex col-span-1 justify-center">Operation Type</div>
             <div className="flex col-span-1 justify-center">Amount</div>
+            <div className="flex col-span-1 justify-center">Date & Time</div>
             <div className="flex col-span-1 justify-center">Action</div>
 
             {
               ipd.IpdOperationPayment.map((item, index) => {
+                // new Date().toISOString()
+                let date = new Date(item.extra?.date).toUTCString()
+
                 return (
                   <>
                     <div className="flex col-span-1 justify-center">{item.operation_name}</div>
                     <div className="flex col-span-1 justify-center">{item.amount}</div>
+                    <div className="flex col-span-1 justify-center">{date || ''}</div>
+                    {/* <div className="flex col-span-1 justify-center">{item}</div> */}
+                    {/* <div className="flex col-span-1 justify-center">No Action</div> */}
                     <div className="flex col-span-1 justify-center">No Action</div>
+                    {/* <div className="flex col-span-1 justify-center">No Action</div> */}
 
                   </>
                 )
@@ -123,6 +132,7 @@ const OperationChargeBody = ({ operations, item, operationChargesArray, del, set
   // const [labchargeType, setlabChargeType] = useState()
   const [obj, setObj] = useState([])
   const [amount, setAmount] = useState(0)
+  const [date,setDate] = useState(new Date())
 
 
 
@@ -146,6 +156,7 @@ const OperationChargeBody = ({ operations, item, operationChargesArray, del, set
       newArray[index] = {
         ...newArray[index],
         amount: parseInt(amount),
+        extra : {date:new Date(date)}
 
       };
       return newArray;
@@ -185,6 +196,9 @@ const OperationChargeBody = ({ operations, item, operationChargesArray, del, set
       </div>
       <div className="flex col-span-1 justify-center text-black">
         <input type="number" onChange={(e)=>setAmount(e.target.value)} value={amount} />
+      </div>
+      <div className="flex col-span-1 justify-center text-black">
+        <input type="datetime-local" onChange={(e)=>setDate(e.target.value)} value={date} />
       </div>
       <div className="flex col-span-1 justify-center">
 

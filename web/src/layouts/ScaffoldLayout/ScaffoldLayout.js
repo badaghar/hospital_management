@@ -17,25 +17,39 @@ const ScaffoldLayout = ({
     let name = window.location.pathname.split('/');
     name = name[name.length - 1]
     let pt
+    // let refresh
     if (name == 'IPD' || name == 'OPD') {
       pt=name
+
+
+
+      // let str = ''.toLowerCase()
     }
+
+    // if(name)
     const isAdmin = currentUser?.roles=='admin'
+    console.log(currentUser.permissions,'title',title)
+    console.log('====================================');
+    console.log(currentUser?.permissions?.bed,title.toLowerCase());
+    console.log('====================================');
     if(
       currentUser?.permissions?.pharmacy?.includes(title) ||
       currentUser?.permissions?.pharma   ==false ||
       currentUser?.permissions?.charges?.includes(title) ||
-      currentUser?.permissions?.beds?.includes(title) ||
+      currentUser?.permissions?.bed?.includes(title.toLowerCase()) ||
       currentUser?.permissions?.patientType?.includes(pt) ||
+      // currentUser?.permissions?.patientType?.includes(p) ||
       title=='Patients' ||
+      window.location.pathname.toLowerCase().includes('ipds') ||
+      window.location.pathname.toLowerCase().includes('opds') ||
+      // title
       // currentUser?.permissions?.patientType?.includes('OPD') ||
-
-
      isAdmin
     ){
       console.log(currentUser?.permissions)
     }
     else{
+
       navigate(routes.home(), { replace: true })
     }
   },[])

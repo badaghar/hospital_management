@@ -401,9 +401,9 @@ const IpdOverview = ({ ipd }) => {
                 </span> :
                 <>
                   <span className="bg-green-800 p-1 px-3 text-white rounded-3xl hover:bg-white hover:text-green-800 cursor-pointer ">
-                    Patient is Discharged At {            ipd.date_of_admission.split('T')[0].split('-')[2]+'-'+
-            ipd.date_of_admission.split('T')[0].split('-')[1]+'-'+
-            ipd.date_of_admission.split('T')[0].split('-')[0]}
+                    Patient is Discharged At {            ipd.discharge_date.split('T')[0].split('-')[2]+'-'+
+            ipd.discharge_date.split('T')[0].split('-')[1]+'-'+
+            ipd.discharge_date.split('T')[0].split('-')[0]}
                   </span>
                   <span className="bg-green-800 p-1 px-3 text-white rounded-3xl hover:bg-white hover:text-green-800 cursor-pointer " onClick={()=>setIsChangeDateOpen(true)}>
                   Change Discharge Patient Date

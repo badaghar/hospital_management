@@ -44,6 +44,7 @@ export const QUERY = gql`
       IpdOperationPayment{
         operation_name
         amount
+        extra
       }
       IpdChat{
         date
@@ -84,6 +85,7 @@ export const QUERY = gql`
     }
     operations{
       name
+      extra
     }
     floors{
       floor_name

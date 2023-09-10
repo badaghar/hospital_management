@@ -4,6 +4,7 @@ export const schema = gql`
     name: String!
     created_at: DateTime!
     updated_at: DateTime!
+    extra: JSON
   }
 
   type Query {
