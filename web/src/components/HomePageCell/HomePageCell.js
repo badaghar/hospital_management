@@ -60,12 +60,12 @@ export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
     today.setSeconds(0)
     const tos = saleMedicines.filter((item)=> {
       const newDate = new Date(item.date)
-      console.log(newDate,today)
+      // console.log(newDate,today)
       return newDate>=today
     })
     const top = purchaseMedicines.filter((item)=> {
       const newDate = new Date(item.date)
-      console.log(newDate,today)
+      // console.log(newDate,today)
       return newDate>=today
     })
 
@@ -73,7 +73,7 @@ export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
     const tPurchase =  top.reduce((prev,item)=> prev + item.grand_total,0)
     const monthtos = saleMedicines.filter((item)=> {
       const newDate = new Date(item.date)
-      console.log(newDate,today)
+      // console.log(newDate,today)
       return newDate>=month
     })
     const monthtop = purchaseMedicines.filter((item)=> {

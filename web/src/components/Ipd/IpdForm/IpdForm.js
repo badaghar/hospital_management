@@ -81,7 +81,7 @@ const IpdForm = (props) => {
 
   const onSubmit = (data) => {
     data['patientId'] = patientId
-    data['consultant_doctor'] = doctorName.value + '----' + bedName.value
+    data['consultant_doctor'] =  isOPD ? doctorName.value + '----' :doctorName.value + '----' + bedName.value
     data['patientType'] = props.type
 
 
@@ -95,6 +95,7 @@ const IpdForm = (props) => {
     else {
       data['date_of_admission'] = data['date_of_admission']
     }
+
     data['extra_data'] = {
       'DoctorCharges': doctorChargesArray,
       'OtherCharges': otherChargesArray,

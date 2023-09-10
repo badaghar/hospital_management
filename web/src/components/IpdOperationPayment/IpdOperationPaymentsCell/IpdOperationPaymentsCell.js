@@ -11,6 +11,14 @@ export const QUERY = gql`
       created_at
       updated_at
       ipdId
+      extra
+
+      ipd{
+        patient{
+          name,
+          phone_no
+        }
+      }
     }
   }
 `
@@ -29,7 +37,7 @@ export const Empty = () => {
 }
 
 export const Failure = ({ error }) => (
-  <div className="rw-cell-error">{error?.message}</div>
+  <div className="rw-cell-error z-10">{error?.message + error?.message}</div>
 )
 
 export const Success = ({ ipdOperationPayments }) => {
