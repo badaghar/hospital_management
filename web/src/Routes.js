@@ -22,6 +22,10 @@ const Routes = () => {
 
 
 
+
+
+
+
       {/* <Set wrap={ScaffoldLayout} title="ReturnExpiryMedicines" titleTo="returnExpiryMedicines" buttonLabel="New ReturnExpiryMedicine" buttonTo="newReturnExpiryMedicine">
         <Route path="/return-expiry-medicines/new" page={ReturnExpiryMedicineNewReturnExpiryMedicinePage} name="newReturnExpiryMedicine" />
         <Route path="/return-expiry-medicines/{id:Int}/edit" page={ReturnExpiryMedicineEditReturnExpiryMedicinePage} name="editReturnExpiryMedicine" />
@@ -164,6 +168,13 @@ const Routes = () => {
           {/* hospitals */}
 
           {/* <Private unauthenticated="home" roles={["admin", "reciptionist", "doctor"]}> */}
+
+          <Set wrap={ScaffoldLayout} title="BirthCertificates" titleTo="birthCertificates" buttonLabel="New BirthCertificate" buttonTo="newBirthCertificate">
+            <Route path="/birth-certificates/new" page={BirthCertificateNewBirthCertificatePage} name="newBirthCertificate" />
+            <Route path="/birth-certificates/{id:Int}/edit" page={BirthCertificateEditBirthCertificatePage} name="editBirthCertificate" />
+            <Route path="/birth-certificates/{id:Int}" page={BirthCertificateBirthCertificatePage} name="birthCertificate" />
+            <Route path="/birth-certificates" page={BirthCertificateBirthCertificatesPage} name="birthCertificates" />
+          </Set>
 
           <Set wrap={ScaffoldLayout} title="DoctorFees" titleTo="doctorFees" buttonLabel="New DoctorFee" buttonTo="newDoctorFee">
             <Route path="/doctor-fees/new" page={DoctorFeeNewDoctorFeePage} name="newDoctorFee" />
