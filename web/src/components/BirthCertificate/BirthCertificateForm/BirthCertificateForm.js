@@ -32,6 +32,49 @@ const BirthCertificateForm = (props) => {
         />
 
         <Label
+          name="type"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Type
+        </Label>
+
+        {/* Radio buttons */}
+        <div className='flex space-x-5'>
+
+
+          <div className="mt-1">
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                className="form-radio text-indigo-600 h-5 w-5"
+                name="type"
+                value="option1"
+                defaultChecked={props.birthCertificate?.type === "option1"}
+              />
+              <span className="ml-2">Birth Certificate</span>
+            </label>
+          </div>
+
+          <div className="mt-1">
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                className="form-radio text-indigo-600 h-5 w-5"
+                name="type"
+                value="2"
+                defaultChecked={props.birthCertificate?.type === "option2"}
+              />
+              <span className="ml-2">Dead Certificate</span>
+            </label>
+          </div>
+
+        </div>
+
+        <FieldError name="type" className="rw-field-error" />
+
+
+        <Label
           name="name"
           className="rw-label"
           errorClassName="rw-label rw-label-error"

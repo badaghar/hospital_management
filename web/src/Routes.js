@@ -169,7 +169,7 @@ const Routes = () => {
 
           {/* <Private unauthenticated="home" roles={["admin", "reciptionist", "doctor"]}> */}
 
-          <Set wrap={ScaffoldLayout} title="BirthCertificates" titleTo="birthCertificates" buttonLabel="New BirthCertificate" buttonTo="newBirthCertificate">
+          <Set wrap={ScaffoldLayout} title="Certificate" titleTo="birthCertificates" buttonLabel="New Certificate" buttonTo="newBirthCertificate">
             <Route path="/birth-certificates/new" page={BirthCertificateNewBirthCertificatePage} name="newBirthCertificate" />
             <Route path="/birth-certificates/{id:Int}/edit" page={BirthCertificateEditBirthCertificatePage} name="editBirthCertificate" />
             <Route path="/birth-certificates/{id:Int}" page={BirthCertificateBirthCertificatePage} name="birthCertificate" />

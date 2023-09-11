@@ -107,7 +107,7 @@ const IpdOperationPaymentsList = ({ ipdOperationPayments }) => {
       Header: 'Operation Date',
       // accessor: 'discharge_date',
       Cell: ({ original }) => (
-        timeTag(original.extra.date) || '-'
+        timeTag(original.extra?.date) || '-'
       )
     },
 
