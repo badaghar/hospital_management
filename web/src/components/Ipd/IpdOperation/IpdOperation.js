@@ -190,8 +190,6 @@ const OperationChargeBody = ({ operations, item, operationChargesArray, del, set
     <>
       <div className="flex col-span-1 justify-center">
         <Select options={obj} isClearable={true} required onChange={operationChargeTypeChange}
-
-        // value={item.name !== '' ? labchargeType : ''}
         />
       </div>
       <div className="flex col-span-1 justify-center text-black">

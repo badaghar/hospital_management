@@ -28,10 +28,10 @@ const ScaffoldLayout = ({
 
     // if(name)
     const isAdmin = currentUser?.roles=='admin'
-    console.log(currentUser.permissions,'title',title)
-    console.log('====================================');
-    console.log(currentUser?.permissions?.bed,title.toLowerCase());
-    console.log('====================================');
+    // console.log(currentUser.permissions,'title',title)
+    // console.log('====================================');
+    // console.log(currentUser?.permissions?.bed,title.toLowerCase());
+    // console.log('====================================');
     if(
       currentUser?.permissions?.pharmacy?.includes(title) ||
       currentUser?.permissions?.pharma   ==false ||
