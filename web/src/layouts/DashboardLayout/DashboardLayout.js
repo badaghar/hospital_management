@@ -4,7 +4,7 @@ import { useAuth } from "src/auth"
 import { MdLocalPharmacy, MdPayments } from "react-icons/md";
 import { TbReportMedical } from "react-icons/tb";
 import { FaBed } from "react-icons/fa";
-import { BsPersonFillAdd, BsFillArrowRightCircleFill, BsFillArrowDownCircleFill,BsFillArrowUpCircleFill } from "react-icons/bs";
+import { BsPersonFillAdd, BsFillArrowRightCircleFill, BsFillArrowDownCircleFill, BsFillArrowUpCircleFill } from "react-icons/bs";
 // import { FaPersonCirclePlus } from "react-icons/fi";
 import { Toaster } from "@redwoodjs/web/toast";
 
@@ -720,15 +720,7 @@ const DashboardLayout = ({ children }) => {
 
                   </Link>
                 </li>
-                <li>
-                  <Link to={routes.ipdOperationPayments()} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
-                    <span className="inline-flex justify-center items-center ml-4">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
-                    </span>
-                    <span className="ml-2 text-sm tracking-wide truncate">Operation</span>
 
-                  </Link>
-                </li>
 
 
 
@@ -742,56 +734,56 @@ const DashboardLayout = ({ children }) => {
 
 
                   <li className="relative">
-                      <button
-                        className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                        onClick={toggleDropDown.bind(this, 'Certificate')}
-                      >
-                        <span className="inline-flex justify-center items-center ml-4">
-                          <MdPayments />
+                    <button
+                      className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                      onClick={toggleDropDown.bind(this, 'Certificate')}
+                    >
+                      <span className="inline-flex justify-center items-center ml-4">
+                        <MdPayments />
 
-                        </span>
-                        <span className="ml-2 text-sm tracking-wide truncate">Certificate</span>
-                        <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
-                          {
-                            dropDownOpen == 'Certificate' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
+                      </span>
+                      <span className="ml-2 text-sm tracking-wide truncate">Certificate</span>
+                      <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
+                        {
+                          dropDownOpen == 'Certificate' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
 
-                          }
-                        </span>
+                        }
+                      </span>
 
-                      </button>
-                      {dropDownOpen == 'Certificate' && (
-                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                    </button>
+                    {dropDownOpen == 'Certificate' && (
+                      <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
 
 
-                          {/* {
+                        {/* {
                             (currentUser.permissions?.charges?.includes('DoctorFees') || isAdmin) && */}
 
-                            <li>
-                              <Link
-                                to={routes.newBirthCertificate()}
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                        <li>
+                          <Link
+                            to={routes.newBirthCertificate()}
+                            className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                          >
+                            <span className="inline-flex justify-center items-center ml-4">
+                              <svg
+                                className="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
                               >
-                                <span className="inline-flex justify-center items-center ml-4">
-                                  <svg
-                                    className="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                    />
-                                  </svg>
-                                </span>
-                                <span className="ml-2 text-sm tracking-wide truncate">Add Birth/Death Certificate</span>
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                />
+                              </svg>
+                            </span>
+                            <span className="ml-2 text-sm tracking-wide truncate">Add Birth/Death Certificate</span>
 
-                              </Link>
-                            </li>
-                          {/* } */}
+                          </Link>
+                        </li>
+                        {/* } */}
 
 
 
@@ -800,9 +792,9 @@ const DashboardLayout = ({ children }) => {
 
 
 
-                        </ul>
-                      )}
-                    </li>
+                      </ul>
+                    )}
+                  </li>
 
                   {(currentUser.permissions?.charges?.length > 0 || isAdmin) &&
                     <li className="relative">
@@ -1015,6 +1007,8 @@ const DashboardLayout = ({ children }) => {
                   }
 
 
+
+
                   {
                     (currentUser.permissions?.patientType?.includes('OPD') || isAdmin) &&
 
@@ -1073,6 +1067,18 @@ const DashboardLayout = ({ children }) => {
                         </Link>
                       </li>
                     </>
+                  }
+
+                  {(currentUser.permissions?.patientType?.includes('IPD') || isAdmin) &&
+                    <li>
+                      <Link to={routes.ipdOperationPayments()} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
+                        </span>
+                        <span className="ml-2 text-sm tracking-wide truncate">Operation</span>
+
+                      </Link>
+                    </li>
                   }
 
 

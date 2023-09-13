@@ -248,7 +248,7 @@ const Routes = () => {
             <Route path="/ipd-lab-chargeses/{id:Int}" page={IpdLabChargesIpdLabChargesPage} name="ipdLabCharges" />
             <Route path="/ipd-lab-chargeses" page={IpdLabChargesIpdLabChargesesPage} name="ipdLabChargeses" />
           </Set>
-          <Set wrap={ScaffoldLayout} title="IpdOperationPayments" titleTo="ipdOperationPayments" buttonLabel="New IpdOperationPayment" buttonTo="newIpdOperationPayment">
+          <Set wrap={ScaffoldLayout} title="Operations" titleTo="ipdOperationPayments" buttonLabel="New Operations" buttonTo="newIpdOperationPayment">
             <Route path="/ipd-operation-payments/new" page={IpdOperationPaymentNewIpdOperationPaymentPage} name="newIpdOperationPayment" />
             <Route path="/ipd-operation-payments/{id:Int}/edit" page={IpdOperationPaymentEditIpdOperationPaymentPage} name="editIpdOperationPayment" />
             <Route path="/ipd-operation-payments/{id:Int}" page={IpdOperationPaymentIpdOperationPaymentPage} name="ipdOperationPayment" />

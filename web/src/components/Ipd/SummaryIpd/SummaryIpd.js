@@ -83,7 +83,10 @@ const SummaryIpd = ({ ipd,floors }) => {
 
 
         }
-        navigate(routes.ipds({ type: 'IPD' }))
+        // setTimeout(() => { document.location.reload(); }, 10);
+
+        // navigate(routes.ipds({ type: 'IPD' }))
+        navigate(routes.ipd({id:ipd.id}))
       },
       onError: (error) => {
         toast.error(error.message)
@@ -96,7 +99,9 @@ const SummaryIpd = ({ ipd,floors }) => {
     {
       onCompleted: () => {
         toast.success('Readmited Done Successfully')
-        navigate(routes.ipds({type:ipd.patientType}))
+        // navigate(routes.ipds({type:ipd.patientType}))
+        setTimeout(() => { document.location.reload(); }, 10);
+        // navigate(routes.ipd({id:ipd.id}))
       },
       onError: (error) => {
         toast.error(error.message)
