@@ -38,7 +38,7 @@ const ScaffoldLayout = ({
       currentUser?.permissions?.charges?.includes(title) ||
       currentUser?.permissions?.bed?.includes(title.toLowerCase()) ||
       currentUser?.permissions?.patientType?.includes(pt) ||
-      (currentUser?.permissions?.patientType?.includes('IPD') && title=='Operations' ) ||
+      (currentUser?.permissions?.patientType?.includes(title)) ||
       // currentUser?.permissions?.patientType?.includes(p) ||
       title=='Patients' ||
       window.location.pathname.toLowerCase().includes('ipds') ||

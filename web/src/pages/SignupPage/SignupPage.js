@@ -42,7 +42,7 @@ const SignupPage = () => {
       permissions = {
         charges: ['DoctorFees', 'Chargeses', 'LabChargeses', 'operations'],
         bed: ['floors', 'beds'],
-        patientType: ['IPD', 'OPD']
+        patientType: ['IPD', 'OPD','Operations']
       }
     }
     else if (data.roles == 'admin') {

@@ -23,9 +23,9 @@ const PermissionHandling = ({ id, users }) => {
   const [updateUser, { loading, error }] = useMutation(UPDATE_USER_MUTATION, {
     onCompleted: () => {
       toast.success('User Permission  Updated')
-          // if (isAuthenticated) {
+      // if (isAuthenticated) {
       navigate(routes.home())
-    // }
+      // }
       // navigate(routes.Home())
     },
     onError: (error) => {
@@ -35,26 +35,27 @@ const PermissionHandling = ({ id, users }) => {
 
   const onSave = () => {
     const input = {
-      permissions:{
-        pharmacy:covertObjectOfArrayToArray(pharmacyArrayList), //finished
-        pharmacyReport:  covertObjectOfArrayToArray(pharmacyOptionArray),
+      permissions: {
+        pharmacy: covertObjectOfArrayToArray(pharmacyArrayList), //finished
+        pharmacyReport: covertObjectOfArrayToArray(pharmacyOptionArray),
         pharma, //finished
-        charges:covertObjectOfArrayToArray(chargesArrayList), //finished
+        charges: covertObjectOfArrayToArray(chargesArrayList), //finished
         patientType: covertObjectOfArrayToArray(patientTypeArray), //finished
         hospitalReport: covertObjectOfArrayToArray(hospitalReportArray),
-        bed:covertObjectOfArrayToArray(beds), //  finished
+        bed: covertObjectOfArrayToArray(beds), //  finished
         // phsam\Report: covertObjectOfArrayToArray(pharmacyOptionArray),
 
       }
     }
+    // console.log(patientTypeArray)
 
     console.log(input)
     updateUser({ variables: { id, input } })
   }
 
-  const covertObjectOfArrayToArray = (aobj) =>{
+  const covertObjectOfArrayToArray = (aobj) => {
     console.log(aobj)
-    let arr = aobj?.map((ele)=>ele.name)
+    let arr = aobj?.map((ele) => ele.name)
     return arr;
   }
 
@@ -71,9 +72,9 @@ const PermissionHandling = ({ id, users }) => {
 
   const Charges = [{ name: 'DoctorFees' }, { name: 'Chargeses' }, { name: 'LabChargeses' }, { name: 'operations' }]
   const Bed = [{ name: 'floors' }, { name: 'beds' }]
-  const patientType = [{ name: 'IPD' }, { name: 'OPD' }]
+  const patientType = [{ name: 'IPD' }, { name: 'OPD' }, { name: 'Operations' },{name:'Certificate'}]
 
-  const HospitalReportAyyay = [{ name: 'IPD Reports', value: 1 }, { name: 'OPD Report', value: 1 }, ]
+  const HospitalReportAyyay = [{ name: 'IPD Reports', value: 1 }, { name: 'OPD Report', value: 1 },]
 
 
 
@@ -81,16 +82,17 @@ const PermissionHandling = ({ id, users }) => {
   const [pharma, setPharma] = useState(false)
   const [pharmacyArrayList, setPharmacyArrayList] = useState({})
   const [pharmacyOptionArray, setPharmacyOptionArray] = useState({})
-  const [chargesArrayList,setChargesArrayList] = useState({})
-  const [beds,setBeds] = useState({})
-  const [patientTypeArray,setPatientTypeArray] = useState({})
-  const [hospitalReportArray,setHospitalReportArray] = useState({})
+  const [chargesArrayList, setChargesArrayList] = useState({})
+  const [beds, setBeds] = useState({})
+  const [patientTypeArray, setPatientTypeArray] = useState({})
+  const [hospitalReportArray, setHospitalReportArray] = useState({})
   // const [pharmacyOptionList,setPharmacyArrayList]
 
 
   const givepharmacypermission = (items) => {
 
     if (items.length == 0) {
+      setPharmacyArrayList(undefined)
       return
     }
     // const objectArray = items.map((str) => ({ name: str }));
@@ -102,6 +104,7 @@ const PermissionHandling = ({ id, users }) => {
   const givepharmacyReportpermission = (items) => {
 
     if (items.length == 0) {
+      setPharmacyOptionArray(undefined)
       return
     }
     // const objectArray = items.map((str) => (str.value));
@@ -112,6 +115,7 @@ const PermissionHandling = ({ id, users }) => {
   const giveHospitalReportpermission = (items) => {
 
     if (items.length == 0) {
+      setHospitalReportArray(undefined)
       return
     }
     // const objectArray = items.map((str) => (str.value));
@@ -124,6 +128,7 @@ const PermissionHandling = ({ id, users }) => {
   const giveHospitalChargespermission = (items) => {
 
     if (items.length == 0) {
+      setChargesArrayList(undefined)
       return
     }
     // const objectArray = items.map((str) => (str.value));
@@ -132,8 +137,10 @@ const PermissionHandling = ({ id, users }) => {
 
   }
   const giveHospitalPatientspermission = (items) => {
+    console.log(items)
 
     if (items.length == 0) {
+      setPatientTypeArray(undefined)
       return
     }
     // const objectArray = items.map((str) => (str.value));
@@ -144,6 +151,7 @@ const PermissionHandling = ({ id, users }) => {
   const giveHospitalBedpermission = (items) => {
 
     if (items.length == 0) {
+      setBeds(undefined)
       return
     }
     // const objectArray = items.map((str) => (str.value));
@@ -181,16 +189,16 @@ const PermissionHandling = ({ id, users }) => {
       ?.pharma;
 
 
-      console.log(user.permissions)
+    console.log(user.permissions)
 
-    setPharmacyArrayList(objectArray )
+    setPharmacyArrayList(objectArray)
+    setChargesArrayList(objectArray2)
+    setBeds(objectArray3)
+    setPatientTypeArray(objectArray4)
     setPharmacyOptionArray(objectArray5)
+    setHospitalReportArray(objectArray6)
     setPharma(objectArray7)
 
-    setChargesArrayList(objectArray2)
-    setPatientTypeArray(objectArray4)
-    setHospitalReportArray(objectArray6)
-    setBeds(objectArray3)
   }, [id])
 
   return (
@@ -319,24 +327,24 @@ const PermissionHandling = ({ id, users }) => {
 
       <div className='m-4'>
 
-<div className="flex items-center space-x-4 mx-3 text-black">
-  <div className='text-white'>
-    Select Bed Type Options
-  </div>
-  <div className='flex-1'>
+        <div className="flex items-center space-x-4 mx-3 text-black">
+          <div className='text-white'>
+            Select Bed Type Options
+          </div>
+          <div className='flex-1'>
 
-    <Multiselect
-      options={Bed} // Options to display in the dropdown
-      selectedValues={beds}
+            <Multiselect
+              options={Bed} // Options to display in the dropdown
+              selectedValues={beds}
 
-      onSelect={(event) => giveHospitalBedpermission(event)} // Function will trigger on select event
-      onRemove={(event) => giveHospitalBedpermission(event)} // Function will trigger on remove event
-      displayValue="name" // Property name to display in the dropdown options
-      placeholder='Select Beds Options'
-    />
-  </div>
-</div>
-</div>
+              onSelect={(event) => giveHospitalBedpermission(event)} // Function will trigger on select event
+              onRemove={(event) => giveHospitalBedpermission(event)} // Function will trigger on remove event
+              displayValue="name" // Property name to display in the dropdown options
+              placeholder='Select Beds Options'
+            />
+          </div>
+        </div>
+      </div>
 
 
 
