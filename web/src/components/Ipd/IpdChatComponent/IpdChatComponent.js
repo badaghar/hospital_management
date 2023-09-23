@@ -14,6 +14,13 @@ const CREATE_IPD_CHAT_MUTATION = gql`
     }
   }
 `
+const DELETE_IPD_CHAT_MUTATION = gql`
+  mutation DeleteIpdChatMutation($id: Int!) {
+    deleteIpdChat(id: $id) {
+      id
+    }
+  }
+`
 
 const IpdChatComponent = ({ ipd, users }) => {
   const [medicationChargeArray, setmedicationChargeArray] = useState([])
@@ -34,6 +41,28 @@ const IpdChatComponent = ({ ipd, users }) => {
       awaitRefetchQueries: true,
     }
   )
+
+  const [deleteIpdChat] = useMutation(DELETE_IPD_CHAT_MUTATION, {
+    onCompleted: () => {
+      toast.success('IpdChat deleted')
+      // navigate(routes.ipdChats())
+
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+    refetchQueries: [{ query: QUERY,  variables: {
+      id: ipd.id,
+    }, }],
+    awaitRefetchQueries: true,
+  })
+
+  const onDeleteClick = (id) => {
+    if (confirm('Are you sure you want to delete ipdChat ' + id + '?')) {
+      deleteIpdChat({ variables: { id } })
+    }
+  }
+
   const onSave = () => {
     console.log(medicationChargeArray)
     const hasEmptyValue = medicationChargeArray.some((obj) => {
@@ -82,7 +111,11 @@ const IpdChatComponent = ({ ipd, users }) => {
                     <div className="flex col-span-1 justify-center">{item.drug}</div>
                     <div className="flex col-span-1 justify-center">{item.dose}</div>
                     <div className="flex col-span-1 justify-center">{item.route}</div>
-                    <div className="flex col-span-1 justify-center">No Action</div>
+                    <div className="flex col-span-1 justify-center">    <span className='cursor-pointer text-xl text-red-600'
+                    onClick={()=>onDeleteClick(item.id)}
+                    >
+                      <MdDeleteForever />
+                    </span></div>
 
                   </>
                 )

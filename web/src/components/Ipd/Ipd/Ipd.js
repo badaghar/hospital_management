@@ -47,6 +47,9 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors }) 
     ipd.IpdOperationPayment.map((it)=>{
       tamt += it.amount
     })
+
+
+
     setTotalAmount(tamt)
     console.log(ipd)
 

@@ -15,11 +15,41 @@ const CREATE_IPD_CHARGES_MUTATION = gql`
   }
 `
 
+const DELETE_IPD_CHARGES_MUTATION = gql`
+  mutation DeleteIpdChargesMutation($id: Int!) {
+    deleteIpdCharges(id: $id) {
+      id
+    }
+  }
+`
+
 
 const IpdOtherCharges = ({ ipd, users, chargeses }) => {
   const [otherChargesArray, setOtherChargesArray] = useState([])
-  const [isPrint,setIsPrint] = useState(false)
+  const [isPrint, setIsPrint] = useState(false)
 
+
+  const [deleteIpdCharges] = useMutation(DELETE_IPD_CHARGES_MUTATION, {
+    onCompleted: () => {
+      toast.success('IpdCharges deleted')
+      // navigate(routes.ipd({ id: ipd.id }))
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+    refetchQueries: [{
+      query: QUERY, variables: {
+        id: ipd.id,
+      },
+    }],
+    awaitRefetchQueries: true,
+  })
+
+  const onDeleteClick = (id) => {
+    if (confirm('Are you sure you want to delete ipdCharges ' + id + '?')) {
+      deleteIpdCharges({ variables: { id } })
+    }
+  }
 
   function getPDF(id) {
     return axios.get(
@@ -38,17 +68,17 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/pdf' })
         var blobURL = URL.createObjectURL(blob)
-        var iframe =  document.createElement('iframe')
+        var iframe = document.createElement('iframe')
         document.body.appendChild(iframe)
         iframe.style.display = 'none'
 
         iframe.src = blobURL
-     iframe.onload = function() {
-      setTimeout(function() {
-        iframe.focus()
-        iframe.contentWindow.print()
-      }, 1)
-    }
+        iframe.onload = function () {
+          setTimeout(function () {
+            iframe.focus()
+            iframe.contentWindow.print()
+          }, 1)
+        }
         toast.success('Download Complete')
       })
       .catch((err) => {
@@ -64,20 +94,21 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
       onCompleted: () => {
         toast.success('IpdCharges added')
         setOtherChargesArray([])
-        if(isPrint)
-        {
+        if (isPrint) {
           printPDF(ipd.id)
 
 
         }
-        navigate(routes.ipd({id:ipd.id}))
+        navigate(routes.ipd({ id: ipd.id }))
       },
       onError: (error) => {
         toast.error(error.message)
       },
-      refetchQueries: [{ query: QUERY,  variables: {
-        id: ipd.id,
-      }, }],
+      refetchQueries: [{
+        query: QUERY, variables: {
+          id: ipd.id,
+        },
+      }],
       awaitRefetchQueries: true,
     }
   )
@@ -87,8 +118,7 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
       // Check if any value in the object is empty
       return Object.values(obj).some((value) => value === null || value === '' || !value);
     });
-    if(hasEmptyValue)
-    {
+    if (hasEmptyValue) {
       toast.error('Enter All The Details')
       return
     }
@@ -100,8 +130,7 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
       // Check if any value in the object is empty
       return Object.values(obj).some((value) => value === null || value === '' || !value);
     });
-    if(hasEmptyValue)
-    {
+    if (hasEmptyValue) {
       toast.error('Enter All The Details')
       return
     }
@@ -149,7 +178,11 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
                     <div className="flex col-span-1 justify-center">{item.charge}</div>
                     <div className="flex col-span-1 justify-center">{item.quantity}</div>
                     <div className="flex col-span-1 justify-center">{item.total}</div>
-                    <div className="flex col-span-1 justify-center">No Action</div>
+                    <div className="flex col-span-1 justify-center">        <span className='cursor-pointer text-xl text-red-600'
+                    onClick={()=>onDeleteClick(item.id)}
+                    >
+                      <MdDeleteForever />
+                    </span></div>
 
                   </>
                 )
@@ -178,7 +211,7 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
 
         </div>
         <div className='flex justify-center mt-2 pb-3'>
-        <button className='bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2' onClick={onSave}>Save Changes</button>
+          <button className='bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2' onClick={onSave}>Save Changes</button>
           <button className="bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2" onClick={onSaveAndPrint}>Save & Print</button>
         </div>
 

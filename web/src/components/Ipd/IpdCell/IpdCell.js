@@ -21,11 +21,13 @@ export const QUERY = gql`
         gender
       }
       IpdConsultation{
+        id
         consultation_doctor
         consultation_type
         amount
       }
       IpdCharges{
+        id
         charge_type
         charge
         quantity
@@ -38,15 +40,18 @@ export const QUERY = gql`
       created_at
       }
       IpdLabCharges{
+        id
         lab_name
         amount
       }
       IpdOperationPayment{
+        id
         operation_name
         amount
         extra
       }
       IpdChat{
+        id
         date
         drug
         dose

@@ -15,10 +15,38 @@ const CREATE_IPD_LAB_CHARGES_MUTATION = gql`
   }
 `
 
+const DELETE_IPD_LAB_CHARGES_MUTATION = gql`
+  mutation DeleteIpdLabChargesMutation($id: Int!) {
+    deleteIpdLabCharges(id: $id) {
+      id
+    }
+  }
+`
+
 
 const LabChargesIpd = ({ ipd, users, labChargeses }) => {
   const [labChargesArray, setLabChargesArray] = useState([])
   const [isPrint,setIsPrint] = useState(false)
+
+  const [deleteIpdLabCharges] = useMutation(DELETE_IPD_LAB_CHARGES_MUTATION, {
+    onCompleted: () => {
+      toast.success('IpdLabCharges deleted')
+      // navigate(routes.ipdLabChargeses())
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+    refetchQueries: [{ query: QUERY,  variables: {
+      id: ipd.id,
+    }, }],
+    awaitRefetchQueries: true,
+  })
+
+  const onDeleteClick = (id) => {
+    if (confirm('Are you sure you want to delete ipdLabCharges ' + id + '?')) {
+      deleteIpdLabCharges({ variables: { id } })
+    }
+  }
 
 
   function getPDF(id) {
@@ -138,7 +166,11 @@ const LabChargesIpd = ({ ipd, users, labChargeses }) => {
                   <>
                     <div className="flex col-span-1 justify-center">{item.lab_name}</div>
                     <div className="flex col-span-1 justify-center">{item.amount}</div>
-                    <div className="flex col-span-1 justify-center">No Action</div>
+                    <div className="flex col-span-1 justify-center">    <span className='cursor-pointer text-xl text-red-600'
+                    onClick={()=>onDeleteClick(item.id)}
+                    >
+                      <MdDeleteForever />
+                    </span></div>
 
                   </>
                 )

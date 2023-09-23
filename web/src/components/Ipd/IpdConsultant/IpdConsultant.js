@@ -14,6 +14,14 @@ const CREATE_IPD_CONSULTATION_MUTATION = gql`
   }
 `
 
+const DELETE_IPD_CONSULTATION_MUTATION = gql`
+  mutation DeleteIpdConsultationMutation($id: Int!) {
+    deleteIpdConsultation(id: $id) {
+      id
+    }
+  }
+`
+
 
 const IpdConsultant = ({ ipd, users, doctorFees }) => {
   const [doctors, setDoctors] = useState()
@@ -36,6 +44,30 @@ const IpdConsultant = ({ ipd, users, doctorFees }) => {
       awaitRefetchQueries: true,
     }
   )
+
+  const [deleteIpdConsultation] = useMutation(
+    DELETE_IPD_CONSULTATION_MUTATION,
+    {
+      onCompleted: () => {
+        toast.success('IpdConsultation deleted')
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+      refetchQueries: [{ query: QUERY,  variables: {
+        id: ipd.id,
+      }, }],
+      awaitRefetchQueries: true,
+    }
+  )
+
+  const onDeleteClick = (id) => {
+    if (
+      confirm('Are you sure you want to delete ipdConsultation ' + id + '?')
+    ) {
+      deleteIpdConsultation({ variables: { id } })
+    }
+  }
 
   const onSave = () => {
     console.log(doctorChargesArray)
@@ -96,7 +128,11 @@ const IpdConsultant = ({ ipd, users, doctorFees }) => {
                     <div className="flex col-span-1 justify-center">{item.consultation_doctor}</div>
                     <div className="flex col-span-1 justify-center">{item.consultation_type}</div>
                     <div className="flex col-span-1 justify-center">{item.amount}</div>
-                    <div className="flex col-span-1 justify-center">No Action</div>
+                    <div className="flex col-span-1 justify-center">   <span className='cursor-pointer text-xl text-red-600'
+                    onClick={()=>onDeleteClick(item.id)}
+                    >
+                      <MdDeleteForever />
+                    </span></div>
 
                   </>
                 )

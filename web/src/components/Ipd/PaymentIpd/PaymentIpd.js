@@ -13,7 +13,7 @@ import { toast } from '@redwoodjs/web/toast'
 
 import { useEffect, useState } from 'react'
 import Multiselect from 'multiselect-react-dropdown'
-import { Link, routes,navigate } from '@redwoodjs/router'
+import { Link, routes, navigate } from '@redwoodjs/router'
 import { ReactDialogBox } from 'react-js-dialog-box'
 import 'react-js-dialog-box/dist/index.css'
 import React from 'react'
@@ -34,8 +34,10 @@ const CREATE_IPD_PAYMENT_MUTATION = gql`
 
 
 const PaymentIpd = ({ totalAmount, ipd }) => {
-  const [payment,setPayment] = useState('')
-  const [advancePayment,setAdvancePayment] = useState(0)
+  const [payment, setPayment] = useState('')
+  const [advancePayment, setAdvancePayment] = useState(0)
+  const [discountAmount, setDiscountAmount] = useState(0)
+  const [disAmt, setDisAmt] = useState(0)
 
   const [createIpdPayment, { loading, error }] = useMutation(
     CREATE_IPD_PAYMENT_MUTATION,
@@ -44,25 +46,27 @@ const PaymentIpd = ({ totalAmount, ipd }) => {
         toast.success('Payment Done Successfully')
         setPayment('')
         setAdvancePayment(0)
-        navigate(routes.ipd({id:ipd.id}))
+        setDiscountAmount(0)
+        navigate(routes.ipd({ id: ipd.id }))
       },
       onError: (error) => {
         toast.error(error.message)
       },
-      refetchQueries: [{ query: QUERY,  variables: {
-        id: ipd.id,
-      }, }],
+      refetchQueries: [{
+        query: QUERY, variables: {
+          id: ipd.id,
+        },
+      }],
       awaitRefetchQueries: true,
     }
   )
 
-  const [paymentOption,setPaymentOption] = useState([
-    {value:'cheque',label:'cheque'},{value:'cash',label:'cash'}
+  const [paymentOption, setPaymentOption] = useState([
+    { value: 'cheque', label: 'cheque' }, { value: 'cash', label: 'cash' }
   ])
 
-  const changePayment = (item) =>{
-    if(!item)
-    {
+  const changePayment = (item) => {
+    if (!item) {
       setPayment('')
       return
     }
@@ -72,18 +76,44 @@ const PaymentIpd = ({ totalAmount, ipd }) => {
 
 
   const onSave = (input) => {
-    if(payment=='' || advancePayment==0)
-    {
+    if (payment == '' || advancePayment == 0) {
       toast.error('Plz enter all the details')
       return
     }
     let data = {
-      'amount':parseFloat(advancePayment),
-      'payment_mode':payment,
-      'ipdId':ipd.id
+      'amount': parseFloat(advancePayment),
+      'payment_mode': payment,
+      'ipdId': ipd.id
     }
-    createIpdPayment({ variables: { input:data } })
+
+    createIpdPayment({ variables: { input: data } })
   }
+  const onDisc = (input) => {
+    if (discountAmount == 0) {
+      toast.error('Plz enter Discount Amount')
+      return
+    }
+    let data = {
+      'amount': parseFloat(discountAmount) * -1,
+      'payment_mode': 'disc',
+      'ipdId': ipd.id
+
+    }
+    createIpdPayment({ variables: { input: data } })
+  }
+
+  useEffect(() => {
+    let dis =0
+    ipd.IpdPayment.map((item) => {
+      if (item.payment_mode == 'disc') {
+        dis += item.amount
+
+      }
+    })
+    setDisAmt(dis)
+
+
+  })
 
   return (
     <div className="m-3 p-3">
@@ -91,12 +121,17 @@ const PaymentIpd = ({ totalAmount, ipd }) => {
         <div className="text-center text-xl uppercase font-bold">
           <h1>Payment</h1>
         </div>
+
         <div>
           <span>Total Amount To be Paid is :- {totalAmount}</span>
         </div>
         <div>
-          <span>Balance Amount To be Paid is :- {totalAmount - ipd.paid_amount}</span>
+          <span>Total Amount To be Paid After Discount is :- {totalAmount+disAmt}</span>
         </div>
+        <div>
+          <span>Balance Amount To be Paid is :- {totalAmount + disAmt - ipd.paid_amount}</span>
+        </div>
+
 
         <div className=" grid grid-cols-3 grid-flow-row gap-x-2 gap-y-2">
 
@@ -106,71 +141,121 @@ const PaymentIpd = ({ totalAmount, ipd }) => {
 
           {
             ipd.IpdPayment.map((item) => {
-              return (
-                    <>
-          <div className="flex col-span-1 justify-center">{item.created_at}</div>
-          <div className="flex col-span-1 justify-center">{item.amount}</div>
-          <div className="flex col-span-1 justify-center">{item.payment_mode}</div>
+              // if (item.payment_mode == 'disc') {
+              //   <>
+              //   </>
+              // }
+              // else {
+                return (
+                  <>
+                    <div className="flex col-span-1 justify-center">{item.created_at}</div>
+                    <div className="flex col-span-1 justify-center">{item.payment_mode == 'disc' ? 'Discount Amount is '+ item.amount*-1 : item.amount}</div>
+                    <div className="flex col-span-1 justify-center">{item.payment_mode}</div>
 
 
 
-                    </>
-              )
+                  </>
+                )
+              // }
             })
           }
         </div>
 
+
+        <Form onSubmit={onDisc}>
+
+          <div>
+            <div className='flex items-center mt-3 justify-end gap-x-4 font-bold'>
+
+              <span>Discount Amount </span>
+            </div>
+
+
+            <div className='flex items-center mt-3 justify-end gap-x-4'>
+
+              <Label
+                name="amount1"
+                className="rw-label mt-0"
+                errorClassName="rw-label mt-0 rw-label-error"
+              >
+                Discount Amount
+              </Label>
+              <div className="flex">
+
+                <TextField
+                  name="amount1"
+                  value={discountAmount}
+                  onChange={(e) => setDiscountAmount(e.target.value)}
+                  className="rw-input mt-0"
+                  errorClassName="rw-input mt-0 rw-input-error"
+                  validation={{ valueAsNumber: true, required: true }}
+                />
+              </div>
+              <FieldError name="amount1" className="rw-field-error mt-0" />
+            </div>
+            <div className="rw-button-group">
+              <Submit className="rw-button rw-button-blue">
+                Save Discount Amount
+              </Submit>
+            </div>
+
+
+          </div>
+        </Form>
+
+
+
         <Form onSubmit={onSave}>
 
-        <div>
-          <div className='flex items-center mt-3 justify-end gap-x-4 font-bold'>
+          <div>
+            <div className='flex items-center mt-3 justify-end gap-x-4 font-bold'>
 
-          <span>Pay Amount </span>
+              <span>Pay Amount </span>
+            </div>
+            <div className='flex items-center mt-3 justify-end gap-x-4'>
+              <Label
+                name="paymentMode"
+                className="rw-label mt-0"
+                errorClassName="rw-label mt-0 rw-label-error"
+              >
+                Payment mode
+              </Label>
+              <div className="flex">
+
+              </div>
+              <Select options={paymentOption} onChange={changePayment} isClearable={true} required />
+            </div>
+
+            <div className='flex items-center mt-3 justify-end gap-x-4'>
+
+              <Label
+                name="amount1"
+                className="rw-label mt-0"
+                errorClassName="rw-label mt-0 rw-label-error"
+              >
+                Payment Amount
+              </Label>
+              <div className="flex">
+
+                <TextField
+                  name="amount1"
+                  value={advancePayment}
+                  onChange={(e) => setAdvancePayment(e.target.value)}
+                  className="rw-input mt-0"
+                  errorClassName="rw-input mt-0 rw-input-error"
+                  validation={{ valueAsNumber: true, required: true }}
+                />
+              </div>
+              <FieldError name="amount1" className="rw-field-error mt-0" />
+            </div>
+            <div className="rw-button-group">
+              <Submit className="rw-button rw-button-blue">
+                Save
+              </Submit>
+            </div>
+
+
           </div>
-          <div className='flex items-center mt-3 justify-end gap-x-4'>
-          <Label
-            name="paymentMode"
-            className="rw-label mt-0"
-            errorClassName="rw-label mt-0 rw-label-error"
-          >
-            Payment mode
-          </Label>
-          <div className="flex">
-
-          </div>
-          <Select options={paymentOption} onChange={changePayment} isClearable={true} required  />
-        </div>
-
-        <div className='flex items-center mt-3 justify-end gap-x-4'>
-
-          <Label
-            name="amount1"
-            className="rw-label mt-0"
-            errorClassName="rw-label mt-0 rw-label-error"
-          >
-           Payment Amount
-          </Label>
-          <div className="flex">
-
-            <TextField
-              name="amount1"
-              value={advancePayment}
-              onChange={(e)=>setAdvancePayment(e.target.value)}
-              className="rw-input mt-0"
-              errorClassName="rw-input mt-0 rw-input-error"
-              validation={{ valueAsNumber: true, required: true }}
-            />
-          </div>
-          <FieldError name="amount1" className="rw-field-error mt-0" />
-        </div>
-        <div className="rw-button-group">
-          <Submit  className="rw-button rw-button-blue">
-            Save
-          </Submit>
-        </div>
-
-
-        </div>
         </Form>
 
       </div>

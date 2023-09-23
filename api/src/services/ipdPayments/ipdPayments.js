@@ -15,6 +15,9 @@ export const createIpdPayment = async ({ input }) => {
     data: input,
   })
   const ipd = await db.ipd.findFirst({where:{id:data.ipdId}})
+  if(input.amount < 0) {
+    return data
+  }
   await db.ipd.update({
     where:{
       id:data.ipdId
