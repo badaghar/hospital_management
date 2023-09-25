@@ -1,7 +1,7 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { useState } from 'react'
+import { useState ,useEffect} from 'react'
 
 import { QUERY } from 'src/components/Manufacturer/ManufacturersCell'
 import SearchTable from 'src/components/SearchTable/SearchTable'
@@ -18,6 +18,10 @@ const DELETE_MANUFACTURER_MUTATION = gql`
 const ManufacturersList = ({ manufacturers }) => {
     const [search_data, setSearch_data] = useState(manufacturers)
   const [rows_count, setRows_count] = useState(manufacturers.length <= 5 ? 5 : 10)
+  useEffect(()=>{
+    setSearch_data(manufacturers)
+
+  },[manufacturers])
   const [deleteManufacturer] = useMutation(DELETE_MANUFACTURER_MUTATION, {
     onCompleted: () => {
       toast.success('Manufacturer deleted')

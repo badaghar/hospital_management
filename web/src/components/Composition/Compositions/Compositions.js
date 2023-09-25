@@ -1,7 +1,7 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 
 import { QUERY } from 'src/components/Composition/CompositionsCell'
 import SearchTable from 'src/components/SearchTable/SearchTable'
@@ -18,6 +18,10 @@ const DELETE_COMPOSITION_MUTATION = gql`
 const CompositionsList = ({ compositions }) => {
   const [search_data, setSearch_data] = useState(compositions)
   const [rows_count, setRows_count] = useState(compositions.length <= 5 ? 5 : 10)
+  useEffect(()=>{
+    setSearch_data(compositions)
+
+  },[compositions])
   const [deleteComposition] = useMutation(DELETE_COMPOSITION_MUTATION, {
     onCompleted: () => {
       toast.success('Composition deleted')

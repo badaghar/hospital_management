@@ -5,7 +5,7 @@ import { toast } from '@redwoodjs/web/toast'
 import { QUERY } from 'src/components/DoctorFee/DoctorFeesCell'
 import { timeTag, truncate } from 'src/lib/formatters'
 import SearchTable from 'src/components/SearchTable/SearchTable'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 
 const DELETE_DOCTOR_FEE_MUTATION = gql`
   mutation DeleteDoctorFeeMutation($id: Int!) {
@@ -18,6 +18,10 @@ const DELETE_DOCTOR_FEE_MUTATION = gql`
 const DoctorFeesList = ({ doctorFees }) => {
   const [search_data, setSearch_data] = useState(doctorFees)
   const [rows_count, setRows_count] = useState(doctorFees.length <= 5 ? 5 : 10)
+  useEffect(()=>{
+    setSearch_data(doctorFees)
+
+  },[doctorFees])
   const [deleteDoctorFee] = useMutation(DELETE_DOCTOR_FEE_MUTATION, {
     onCompleted: () => {
       toast.success('DoctorFee deleted')
