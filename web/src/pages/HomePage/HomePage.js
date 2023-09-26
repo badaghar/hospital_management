@@ -4,6 +4,7 @@ import HomePageCell from 'src/components/HomePageCell'
 import { useAuth } from "src/auth"
 import IpdOperationPaymentCell from 'src/components/IpdOperationPayment/IpdOperationPaymentCell'
 import IpdOperationPaymentsCell from 'src/components/IpdOperationPayment/IpdOperationPaymentsCell'
+import HomePage2Cell from 'src/components/HomePage2Cell'
 const HomePage = () => {
   const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
   return (
@@ -16,6 +17,10 @@ const HomePage = () => {
         {
           hasRole('admin') &&
           <HomePageCell />
+        }
+        {
+          (hasRole('admin') || hasRole('doctor')) &&
+          <HomePage2Cell />
         }
         {/* {
           (hasRole('admin') || hasRole('doctor')) &&

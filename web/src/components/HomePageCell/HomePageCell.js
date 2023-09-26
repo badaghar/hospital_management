@@ -31,25 +31,25 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
-  const [totalPurchase,setTotalPurchase] = useState(0)
-  const [totalSale,setTotalSale] = useState(0)
-  const [totalIpd,setTotalIpd] = useState(0)
-  const [totalOpd,setTotalOpd] = useState(0)
-  const [todayPurchase,setTodayPurchase] = useState(0)
-  const [todaySale,setTodaySale] = useState(0)
-  const [monthSale,setMonthSale] = useState(0)
-  const [monthPurchase,setMonthPurchase] = useState(0)
-  const [profit,setProfit] = useState(0)
+export const Success = ({ purchaseMedicines, saleMedicines, ipds, opds }) => {
+  const [totalPurchase, setTotalPurchase] = useState(0)
+  const [totalSale, setTotalSale] = useState(0)
+  const [totalIpd, setTotalIpd] = useState(0)
+  const [totalOpd, setTotalOpd] = useState(0)
+  const [todayPurchase, setTodayPurchase] = useState(0)
+  const [todaySale, setTodaySale] = useState(0)
+  const [monthSale, setMonthSale] = useState(0)
+  const [monthPurchase, setMonthPurchase] = useState(0)
+  const [profit, setProfit] = useState(0)
 
   // const [totalPurchase,setTotalPurchase] = useState(0)
 
-  useEffect(()=>{
-    const tp = purchaseMedicines.reduce((prev,item)=> prev + item.grand_total,0)
+  useEffect(() => {
+    const tp = purchaseMedicines.reduce((prev, item) => prev + item.grand_total, 0)
     setTotalPurchase(tp)
-    const ts = saleMedicines.reduce((prev,item)=> prev + item.grand_total,0)
+    const ts = saleMedicines.reduce((prev, item) => prev + item.grand_total, 0)
     setTotalSale(ts)
-    setProfit(ts-tp)
+    setProfit(ts - tp)
     setTotalIpd(ipds.length)
     setTotalOpd(opds.length)
     const today = new Date()
@@ -58,32 +58,32 @@ export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
     today.setHours(0)
     today.setMinutes(0)
     today.setSeconds(0)
-    const tos = saleMedicines.filter((item)=> {
+    const tos = saleMedicines.filter((item) => {
       const newDate = new Date(item.date)
       // console.log(newDate,today)
-      return newDate>=today
+      return newDate >= today
     })
-    const top = purchaseMedicines.filter((item)=> {
+    const top = purchaseMedicines.filter((item) => {
       const newDate = new Date(item.date)
       // console.log(newDate,today)
-      return newDate>=today
-    })
-
-    const tSale =  tos.reduce((prev,item)=> prev + item.grand_total,0)
-    const tPurchase =  top.reduce((prev,item)=> prev + item.grand_total,0)
-    const monthtos = saleMedicines.filter((item)=> {
-      const newDate = new Date(item.date)
-      // console.log(newDate,today)
-      return newDate>=month
-    })
-    const monthtop = purchaseMedicines.filter((item)=> {
-      const newDate = new Date(item.date)
-      // console.log(newDate,today)
-      return newDate>=month
+      return newDate >= today
     })
 
-    const msale = monthtos.reduce((prev,item)=> prev + item.grand_total,0)
-    const mpurchase = monthtop.reduce((prev,item)=> prev + item.grand_total,0)
+    const tSale = tos.reduce((prev, item) => prev + item.grand_total, 0)
+    const tPurchase = top.reduce((prev, item) => prev + item.grand_total, 0)
+    const monthtos = saleMedicines.filter((item) => {
+      const newDate = new Date(item.date)
+      // console.log(newDate,today)
+      return newDate >= month
+    })
+    const monthtop = purchaseMedicines.filter((item) => {
+      const newDate = new Date(item.date)
+      // console.log(newDate,today)
+      return newDate >= month
+    })
+
+    const msale = monthtos.reduce((prev, item) => prev + item.grand_total, 0)
+    const mpurchase = monthtop.reduce((prev, item) => prev + item.grand_total, 0)
 
     setTodaySale(tSale)
     setTodayPurchase(tPurchase)
@@ -91,7 +91,7 @@ export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
     setMonthSale(msale)
     // console.log(tos)
 
-  },[])
+  }, [])
   return (
     <>
       <div className="flex m-4 flex-wrap relative z-10">
@@ -132,6 +132,8 @@ export const Success = ({ purchaseMedicines,saleMedicines ,ipds,opds}) => {
         </div>
 
       </div>
+
+
     </>
   )
 }
