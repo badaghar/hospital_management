@@ -74,12 +74,14 @@ export const Success = ({ ipdOperationPayments }) => {
           height={'40rem'}
           plugins={[dayGridPlugin]}
           initialView="dayGridMonth"
+
           // events={[
           //   { title: 'event 1', date: '2023-09-26' },
           //   { title: 'event 2', date: '2023-09-26' }
           // ]}
           events={events}
         eventClick={handleEventClick}
+
         />
       </div>
 

@@ -94,38 +94,38 @@ export const Success = ({ purchaseMedicines, saleMedicines, ipds, opds }) => {
   }, [])
   return (
     <>
-      <div className="flex m-4 flex-wrap relative z-10">
-        <div className="flex flex-col bg-slate-800 shadow-lg rounded-2xl p-6 items-center m-4">
+      <div className="flex m-4 flex-wrap relative text-white">
+        <div className="flex flex-col bg-orange-800 shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>Total Profit</h1>
           <p> ₹ {profit.toFixed(2)} </p>
 
         </div>
-        <div className="flex flex-col bg-slate-800 shadow-lg rounded-2xl p-6 items-center m-4">
+        <div className="flex flex-col bg-green-800 shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>Total Purchase Medicine</h1>
           <p> ₹ {totalPurchase.toFixed(2)} </p>
 
         </div>
-        <div className="flex flex-col bg-slate-800 shadow-lg rounded-2xl p-6 items-center m-4">
+        <div className="flex flex-col bg-red-500 shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>Total Sale Medicine</h1>
           <p> ₹ {totalSale.toFixed(2)} </p>
 
         </div>
-        <div className="flex flex-col bg-slate-800 shadow-lg rounded-2xl p-6 items-center m-4">
+        <div className="flex flex-col bg-purple-700 shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>Today Purchase Medicine</h1>
           <p> ₹ {todayPurchase.toFixed(2)} </p>
 
         </div>
-        <div className="flex flex-col bg-slate-800 shadow-lg rounded-2xl p-6 items-center m-4">
+        <div className="flex flex-col bg-gray-800  shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>Today Sale Medicine</h1>
           <p> ₹ {todaySale.toFixed(2)} </p>
 
         </div>
-        <div className="flex flex-col bg-slate-800 shadow-lg rounded-2xl p-6 items-center m-4">
+        <div className="flex flex-col bg-purple-950 shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>This Month Purchase Medicine</h1>
           <p> ₹ {monthPurchase.toFixed(2)} </p>
 
         </div>
-        <div className="flex flex-col bg-slate-800 shadow-lg rounded-2xl p-6 items-center m-4">
+        <div className="flex flex-col bg-[#AED2FF] shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>This Month Sale Medicine</h1>
           <p> ₹ {monthSale.toFixed(2)} </p>
 

@@ -10,8 +10,14 @@ const HomePage = () => {
   return (
     <>
       <MetaTags title="Home" description="Home page" />
-      <div  className='relative'>
+
+   { (!hasRole('admin') || !hasRole('doctor')) &&  <div  className='relative'>
         <img src="/SVMH_log.jpg" alt="" srcset="" className='absolute h-[90vh] z-0 rounded-full left-[20vw] opacity-20 ' />
+
+
+      </div>}
+  {  (hasRole('admin') || hasRole('doctor')) &&  <div  className='relative bg-white text-black'>
+
 
 
         {
@@ -22,12 +28,9 @@ const HomePage = () => {
           (hasRole('admin') || hasRole('doctor')) &&
           <HomePage2Cell />
         }
-        {/* {
-          (hasRole('admin') || hasRole('doctor')) &&
-          <IpdOperationPaymentsCell />
-        } */}
 
-      </div>
+
+      </div>}
     </>
   )
 }

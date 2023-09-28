@@ -86,6 +86,9 @@ const IpdOperationPaymentForm = (props) => {
 
         <FieldError name="operation_name" className="rw-field-error" /> */}
 
+        <div className='flex space-x-4 justify-center'>
+
+
         <Label
           name="amount"
           className="rw-label"
@@ -103,11 +106,11 @@ const IpdOperationPaymentForm = (props) => {
         />
 
         <FieldError name="amount" className="rw-field-error" />
-
+        </div>
         <div className="flex  justify-center p-3 space-x-4 items-center">
 
           <div className='font-bold'>
-            <span>Operation Name</span>
+            <span>Patient Name & Ipd ID</span>
           </div>
 
           <Select options={objIpd} isClearable={true} required className='flex-1'
