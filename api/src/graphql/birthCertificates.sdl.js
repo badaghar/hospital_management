@@ -11,8 +11,8 @@ export const schema = gql`
   }
 
   type Query {
-    birthCertificates: [BirthCertificate!]! @requireAuth
-    birthCertificate(id: Int!): BirthCertificate @requireAuth
+    birthCertificates: [BirthCertificate!]! @skipAuth
+    birthCertificate(id: Int!): BirthCertificate @skipAuth
   }
 
   input CreateBirthCertificateInput {

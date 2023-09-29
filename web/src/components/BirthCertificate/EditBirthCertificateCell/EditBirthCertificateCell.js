@@ -48,7 +48,7 @@ export const Success = ({ birthCertificate }) => {
     UPDATE_BIRTH_CERTIFICATE_MUTATION,
     {
       onCompleted: () => {
-        toast.success('BirthCertificate updated')
+        toast.success('Certificate updated')
         navigate(routes.birthCertificates())
       },
       onError: (error) => {
@@ -65,7 +65,7 @@ export const Success = ({ birthCertificate }) => {
     <div className="rw-segment">
       <header className="rw-segment-header">
         <h2 className="rw-heading rw-heading-secondary">
-          Edit BirthCertificate {birthCertificate?.id}
+          Edit Certificate {birthCertificate?.id}
         </h2>
       </header>
       <div className="rw-segment-main">

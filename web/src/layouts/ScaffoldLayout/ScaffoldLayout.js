@@ -26,6 +26,7 @@ const ScaffoldLayout = ({
       // let str = ''.toLowerCase()
     }
 
+
     // if(name)
     const isAdmin = currentUser?.roles=='admin'
     // console.log(currentUser.permissions,'title',title)
@@ -58,8 +59,9 @@ const ScaffoldLayout = ({
     // const location = useLocation();
     let name = window.location.pathname.split('/');
     name = name[name.length - 1]
-    if (name == 'IPD' || name == 'OPD') {
+    if (name == 'IPD' || name == 'OPD' || name == 'Birth' || name == 'Dead') {
       settype(name)
+      // console.log(na)
     }
     // console.log(name[name.length-1])
     // settype(location.);

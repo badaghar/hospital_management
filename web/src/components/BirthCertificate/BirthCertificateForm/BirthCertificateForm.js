@@ -9,6 +9,8 @@ import {
   TextAreaField,
   Submit,
 } from '@redwoodjs/forms'
+import { isDefinitionNode } from 'graphql'
+import { useState } from 'react'
 
 const formatDatetime = (value) => {
   if (value) {
@@ -17,7 +19,17 @@ const formatDatetime = (value) => {
 }
 
 const BirthCertificateForm = (props) => {
+  let ty = props.birthCertificate?.type == 1 ? 'Birth' : 'Dead'
+  const [type, setType] = useState(ty || 'Birth')
   const onSubmit = (data) => {
+    // console.log(type)
+    let ty = type
+    if (ty == 'Birth') {
+      ty = 1
+    } else if (ty == 'Dead') {
+      ty = 2
+    }
+    data['type'] = ty
     props.onSave(data, props?.birthCertificate?.id)
   }
 
@@ -31,49 +43,56 @@ const BirthCertificateForm = (props) => {
           listClassName="rw-form-error-list"
         />
 
-        <Label
-          name="type"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Type
-        </Label>
+        {
+          props?.birthCertificate?.id ? '' :
 
-        {/* Radio buttons */}
-        <div className='flex space-x-5'>
-
-
-          <div className="mt-1">
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                className="form-radio text-indigo-600 h-5 w-5"
-                name="type"
-                value="option1"
-                defaultChecked={props.birthCertificate?.type === "option1"}
-              />
-              <span className="ml-2">Birth Certificate</span>
-            </label>
-          </div>
-
-          <div className="mt-1">
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                className="form-radio text-indigo-600 h-5 w-5"
-                name="type"
-                value="2"
-                defaultChecked={props.birthCertificate?.type === "option2"}
-              />
-              <span className="ml-2">Dead Certificate</span>
-            </label>
-          </div>
-
-        </div>
-
-        <FieldError name="type" className="rw-field-error" />
+          <><Label
+            name="type"
+            className="rw-label"
+            errorClassName="rw-label rw-label-error"
+          >
+            Type
+          </Label>
 
 
+            <div className='flex space-x-5'>
+
+
+              <div className="mt-1">
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    className="form-radio text-indigo-600 h-5 w-5"
+                    name="type"
+                    value="Birth"
+                    defaultChecked={type === "Birth"}
+                    onChange={(e) => setType(e.target.value)}
+                  />
+                  <span className="ml-2">Birth Certificate</span>
+                </label>
+              </div>
+
+              <div className="mt-1">
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    className="form-radio text-indigo-600 h-5 w-5"
+                    name="type"
+                    value="Dead"
+                    defaultChecked={type === "Dead"}
+                    onChange={(e) => setType(e.target.value)}
+                  />
+                  <span className="ml-2">Dead Certificate</span>
+                </label>
+              </div>
+
+            </div>
+
+            <FieldError name="type" className="rw-field-error" />
+
+          </>
+
+        }
         <Label
           name="name"
           className="rw-label"
@@ -97,7 +116,7 @@ const BirthCertificateForm = (props) => {
           className="rw-label"
           errorClassName="rw-label rw-label-error"
         >
-          Birth date
+          {type} date
         </Label>
 
         <DatetimeLocalField
@@ -110,25 +129,33 @@ const BirthCertificateForm = (props) => {
 
         <FieldError name="birth_date" className="rw-field-error" />
 
-        <Label
-          name="weight"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Weight
-        </Label>
+        {
 
-        <TextField
-          name="weight"
-          defaultValue={props.birthCertificate?.weight}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ valueAsNumber: true }}
-        />
+          type == 'Birth' &&
 
-        <FieldError name="weight" className="rw-field-error" />
 
-        <Label
+          <><Label
+            name="weight"
+            className="rw-label"
+            errorClassName="rw-label rw-label-error"
+          >
+            Weight
+          </Label>
+
+            <TextField
+              name="weight"
+              defaultValue={props.birthCertificate?.weight || 0}
+              className="rw-input"
+              errorClassName="rw-input rw-input-error"
+              validation={{ valueAsNumber: true }}
+            />
+
+            <FieldError name="weight" className="rw-field-error" />
+
+          </>
+        }
+
+        {/* <Label
           name="type"
           className="rw-label"
           errorClassName="rw-label rw-label-error"
@@ -144,7 +171,7 @@ const BirthCertificateForm = (props) => {
           validation={{ required: true }}
         />
 
-        <FieldError name="type" className="rw-field-error" />
+        <FieldError name="type" className="rw-field-error" /> */}
 
         {/* <Label
           name="extra"

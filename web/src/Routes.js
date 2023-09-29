@@ -41,6 +41,7 @@ const Routes = () => {
       <Route path="/download-discharge-summary/{id:Int}" page={DownloadsDownloadDischargeSummaryPage} name="downloadDischargeSummary" />
       <Route path="/download-purchase-medicine" page={DownloadsDownloadPurchaseMedicinePage} name="downloadPurchaseMedicine" />
       <Route path="/download-sale-medicine/{id:Int}" page={DownloadsDownloadSaleMedicinePage} name="downloadSaleMedicine" />
+      <Route path="/birth-certificates/{id:Int}" page={BirthCertificateBirthCertificatePage} name="birthCertificate" />
       <Route path="/login" page={LoginPage} name="login" />
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
@@ -169,11 +170,11 @@ const Routes = () => {
 
           {/* <Private unauthenticated="home" roles={["admin", "reciptionist", "doctor"]}> */}
 
-          <Set wrap={ScaffoldLayout} title="Certificate" titleTo="birthCertificates" buttonLabel="New Certificate" buttonTo="newBirthCertificate">
+          <Set wrap={ScaffoldLayout} title="Certificate" titleTo="birthCertificates" buttonLabel="New Certificate" buttonTo="newBirthCertificate" hide='hide'>
             <Route path="/birth-certificates/new" page={BirthCertificateNewBirthCertificatePage} name="newBirthCertificate" />
             <Route path="/birth-certificates/{id:Int}/edit" page={BirthCertificateEditBirthCertificatePage} name="editBirthCertificate" />
-            <Route path="/birth-certificates/{id:Int}" page={BirthCertificateBirthCertificatePage} name="birthCertificate" />
-            <Route path="/birth-certificates" page={BirthCertificateBirthCertificatesPage} name="birthCertificates" />
+
+            <Route path="/birth-certificates/{type:String}" page={BirthCertificateBirthCertificatesPage} name="birthCertificates" />
           </Set>
 
           <Set wrap={ScaffoldLayout} title="DoctorFees" titleTo="doctorFees" buttonLabel="New DoctorFee" buttonTo="newDoctorFee">

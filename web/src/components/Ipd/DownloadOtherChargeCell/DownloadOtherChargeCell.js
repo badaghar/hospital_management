@@ -140,7 +140,7 @@ export const Success = ({ downloadOtherCharge }) => {
                   style={{ width: '19.6cm', height: '2.8cm' }}
                 >
                   <div style={{ padding: '0cm 0.1cm' }}>
-                    <img src="/sri.jpg" alt="" srcset="" />
+                    <img src="/srihos.jpg" alt="" srcset="" />
                   </div>
                   {/* <div className="flex font-bold text-xs justify-between px-6">
                   <div>

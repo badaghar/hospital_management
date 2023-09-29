@@ -1,6 +1,7 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import axios from 'axios'
 
 import { QUERY } from 'src/components/BirthCertificate/BirthCertificatesCell'
 import { jsonTruncate, timeTag, truncate } from 'src/lib/formatters'
@@ -14,6 +15,7 @@ const DELETE_BIRTH_CERTIFICATE_MUTATION = gql`
 `
 
 const BirthCertificatesList = ({ birthCertificates }) => {
+  console.log(birthCertificates)
   const [deleteBirthCertificate] = useMutation(
     DELETE_BIRTH_CERTIFICATE_MUTATION,
     {
@@ -37,6 +39,43 @@ const BirthCertificatesList = ({ birthCertificates }) => {
     ) {
       deleteBirthCertificate({ variables: { id } })
     }
+  }
+
+
+  function getPDF(id) {
+    return axios.get(
+      `/.redwood/functions/downloadCertificate?id=` +
+      id,
+      {
+        responseType: 'arraybuffer',
+        headers: {
+          Accept: 'application/pdf',
+        },
+      }
+    )
+  }
+  const printPDF = (id) => {
+    return getPDF(id) // API call
+      .then((response) => {
+        const blob = new Blob([response.data], { type: 'application/pdf' })
+        var blobURL = URL.createObjectURL(blob)
+        var iframe = document.createElement('iframe')
+        document.body.appendChild(iframe)
+        iframe.style.display = 'none'
+
+        iframe.src = blobURL
+        iframe.onload = function () {
+          setTimeout(function () {
+            iframe.focus()
+            iframe.contentWindow.print()
+          }, 1)
+        }
+        toast.success('Download Complete')
+      })
+      .catch((err) => {
+        toast.error('something wrong happened try again')
+        console.log(err)
+      })
   }
 
   return (
@@ -68,7 +107,7 @@ const BirthCertificatesList = ({ birthCertificates }) => {
               <td>{timeTag(birthCertificate.updated_at)}</td>
               <td>
                 <nav className="rw-table-actions">
-                  <Link
+                  {/* <Link
                     to={routes.birthCertificate({ id: birthCertificate.id })}
                     title={
                       'Show birthCertificate ' + birthCertificate.id + ' detail'
@@ -76,7 +115,15 @@ const BirthCertificatesList = ({ birthCertificates }) => {
                     className="rw-button rw-button-small"
                   >
                     Show
-                  </Link>
+                  </Link> */}
+                           <button
+                    type="button"
+                    title={'Delete birthCertificate ' + birthCertificate.id}
+                    className="rw-button rw-button-small rw-button-red"
+                    onClick={() => printPDF(birthCertificate.id)}
+                  >
+                    Print
+                  </button>
                   <Link
                     to={routes.editBirthCertificate({
                       id: birthCertificate.id,

@@ -1,4 +1,5 @@
 import { Link, routes } from '@redwoodjs/router'
+import { useEffect, useState } from 'react'
 
 import BirthCertificates from 'src/components/BirthCertificate/BirthCertificates'
 
@@ -34,6 +35,24 @@ export const Failure = ({ error }) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ birthCertificates }) => {
-  return <BirthCertificates birthCertificates={birthCertificates} />
+export const Success = ({ birthCertificates,type }) => {
+
+
+  let ty;
+  if(type=='Birth')
+  {
+    ty=1
+  }
+  else if(type=='Dead')
+  {
+    ty=2
+  }
+
+    let cert = birthCertificates.filter((val)=>val.type==ty)
+
+  return (
+  <BirthCertificates birthCertificates={cert} />
+  // <></>
+
+  )
 }

@@ -83,17 +83,9 @@ export const Success = ({ downloadOpdForm }) => {
                   style={{ width: '19.6cm', height: '2.8cm' }}
                 >
                   <div style={{ padding: '0cm 0.1cm' }}>
-                    <img src="/sri.jpg" alt="" srcset="" />
-                  </div>
-                  {/* <div className="flex font-bold text-xs justify-between px-6">
-                  <div>
-                    Bill No :
-                  </div>
-                  <div>
-                    Date :
+                    <img src="/srihos.jpg" alt="" srcset="" />
                   </div>
 
-                </div> */}
                 </section>
                 <section
                   id="secondLayer"
@@ -102,7 +94,7 @@ export const Success = ({ downloadOpdForm }) => {
 
                 >
 
-                  <div className="flex f justify-between px-6">
+                  <div className="flex  justify-between px-6">
                     <div className="space-x-4">
                       <span className="font-bold text-xs ">Name : </span> <span className="text-xs">
                         {downloadOpdForm.patient.name.split('(')[0]}
