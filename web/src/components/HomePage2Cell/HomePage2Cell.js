@@ -1,6 +1,7 @@
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import { navigate, routes } from '@redwoodjs/router'
+import { useEffect } from 'react'
 
 export const QUERY = gql`
   query FindHomePage2Query {
@@ -20,19 +21,68 @@ export const QUERY = gql`
           phone_no
         }
       }
+    },
+    ipds(type: "IPD"){
+      id
+    }
+    opds:ipds(type: "OPD"){
+      id
     }
   }
 `
 
 export const Loading = () => <div>Loading...</div>
 
-export const Empty = () => <div>Empty</div>
+export const Empty = () => <div>      <div className=''>
+
+<FullCalendar
+  height={'40rem'}
+  plugins={[dayGridPlugin]}
+  initialView="dayGridMonth"
+
+
+/>
+</div></div>
 
 export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ ipdOperationPayments }) => {
+export const Success = ({ ipdOperationPayments,ipds,opds }) => {
+
+  let totalTodayIpd,totalTodayOpd,totalMonthIpd,totalMonthOpd
+
+  const today = new Date()
+  const month = new Date()
+  month.setDate(1)
+  today.setHours(0)
+  today.setMinutes(0)
+  today.setSeconds(0)
+  const toIPD = ipds.filter((item) => {
+    const newDate = new Date(item.created_at)
+    // console.log(newDate,today)
+    return newDate >= today
+  })
+  totalTodayIpd = toIPD.length
+  const toOPD = opds.filter((item) => {
+    const newDate = new Date(item.created_at)
+    // console.log(newDate,today)
+    return newDate >= today
+  })
+  totalTodayOpd = toOPD.length
+  const monthIPD = ipds.filter((item) => {
+    const newDate = new Date(item.created_at)
+    // console.log(newDate,today)
+    return newDate >= month
+  })
+  totalMonthIpd = monthIPD.length
+  const monthOPD = opds.filter((item) => {
+    const newDate = new Date(item.created_at)
+    // console.log(newDate,today)
+    return newDate >= month
+  })
+  totalMonthOpd = monthOPD.length
+
 
 
 
@@ -68,6 +118,31 @@ export const Success = ({ ipdOperationPayments }) => {
 
   return (
     <>
+
+<div className="flex m-4 flex-wrap relative text-white">
+
+        <div className="flex flex-col bg-purple-700 shadow-lg rounded-2xl p-6 items-center m-4">
+          <h1>Today Ipd Patients</h1>
+          <p>  {totalTodayIpd} </p>
+
+        </div>
+        <div className="flex flex-col bg-gray-800  shadow-lg rounded-2xl p-6 items-center m-4">
+          <h1>Today Opd Patient</h1>
+          <p>  {totalTodayOpd} </p>
+
+        </div>
+        <div className="flex flex-col bg-purple-950 shadow-lg rounded-2xl p-6 items-center m-4">
+          <h1>This Month Ipd Patients</h1>
+          <p>  {totalMonthIpd} </p>
+
+        </div>
+        <div className="flex flex-col bg-[#AED2FF] shadow-lg rounded-2xl p-6 items-center m-4">
+          <h1>This Month Opd Patient</h1>
+          <p>  {totalMonthOpd} </p>
+
+        </div>
+
+      </div>
       <div className=''>
 
         <FullCalendar

@@ -127,8 +127,10 @@ const IpdForm = (props) => {
     setDoctors(obj)
     let obj2 = props.beds.filter((item) => !item.occupied).map((it) => {
       let text = 'Bed ' + it.bed_name + ' Floor ' + it.floor.floor_name
+
       return { 'label': text, 'value': text, 'id': it.id }
     })
+    // console.log(obj2)
     setBedOptions(obj2)
     // console.log(obj2)
   }, [])

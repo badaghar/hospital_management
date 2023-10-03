@@ -69,6 +69,9 @@ export const Success = ({ patients,users,doctorFees,chargeses,beds,floors,type }
   const [createIpd, { loading, error }] = useMutation(CREATE_IPD_MUTATION, {
     onCompleted: () => {
       toast.success(type + ' Patient Info Added')
+      setTimeout(function() {
+        location.reload();
+      }, 100);
       navigate(routes.ipds({type}))
     },
     onError: (error) => {

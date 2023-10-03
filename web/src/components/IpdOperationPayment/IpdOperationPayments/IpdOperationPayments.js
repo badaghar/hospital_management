@@ -1,11 +1,12 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import { QUERY } from 'src/components/IpdOperationPayment/IpdOperationPaymentsCell'
 import SearchTable from 'src/components/SearchTable/SearchTable'
 import { timeTag, truncate } from 'src/lib/formatters'
+import { MdDeleteForever } from 'react-icons/md'
 
 const DELETE_IPD_OPERATION_PAYMENT_MUTATION = gql`
   mutation DeleteIpdOperationPaymentMutation($id: Int!) {
@@ -19,10 +20,10 @@ const IpdOperationPaymentsList = ({ ipdOperationPayments }) => {
   const [search_data, setSearch_data] = useState(ipdOperationPayments)
   const [rows_count, setRows_count] = useState(ipdOperationPayments.length <= 5 ? 5 : 10)
   const [refresh, setRefresh] = useState(false)
-    useEffect(()=>{
+  useEffect(() => {
     setSearch_data(ipdOperationPayments)
 
-  },[ipdOperationPayments])
+  }, [ipdOperationPayments])
   const [deleteIpdOperationPayment] = useMutation(
     DELETE_IPD_OPERATION_PAYMENT_MUTATION,
     {
@@ -61,10 +62,10 @@ const IpdOperationPaymentsList = ({ ipdOperationPayments }) => {
             .toString()
             .toLowerCase()
             .includes(search_val.toLowerCase())
-           || val.extra.date
-            .toString()
-            .toLowerCase()
-            .includes(search_val.toLowerCase())
+        || val.extra.date
+          .toString()
+          .toLowerCase()
+          .includes(search_val.toLowerCase())
       )
     })
 
@@ -110,30 +111,42 @@ const IpdOperationPaymentsList = ({ ipdOperationPayments }) => {
         timeTag(original.extra?.date) || '-'
       )
     },
+    {
+      headerClassName: 'text-left',
+      Header: 'Action',
+      Cell: ({ original }) => (
+        <>
+          <span className='cursor-pointer text-xl text-red-600' onClick={onDeleteClick.bind(this, original.id)}>
+            <MdDeleteForever />
+          </span>
+
+        </>
+      )
+    },
 
   ]
 
   return (
 
     <>
-    {
+      {
 
         <div className='z-10 text-black bg-white'>
 
           <span className='px-16'>
-           Note :- Date Formate For Search is YYYY-MM--DD
+            Note :- Date Formate For Search is YYYY-MM--DD
           </span>
 
-      <SearchTable
-        change={change}
-        placeholder={"Search By Typing Operation date or patient name or phone no"}
-        columns={columns}
-        rows_count={rows_count}
-        search_data={search_data}
-        />
+          <SearchTable
+            change={change}
+            placeholder={"Search By Typing Operation date or patient name or phone no"}
+            columns={columns}
+            rows_count={rows_count}
+            search_data={search_data}
+          />
         </div>
-        }
-  </>
+      }
+    </>
     // <div className="rw-segment rw-table-wrapper-responsive">
     //   <table className="rw-table">
     //     <thead>

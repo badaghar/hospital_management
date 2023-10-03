@@ -141,11 +141,36 @@ export const updateIpd = ({ id, input }) => {
   })
 }
 
-export const deleteIpd = ({ id }) => {
+export const deleteIpd = async ({ id }) => {
+  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',id)
 
-  return db.ipd.delete({
+  const data = await db.ipd.delete({
     where: { id },
   })
+    try {
+  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',id)
+
+
+    await db.bed.updateMany({
+      where:{
+        ipdId:null
+      },
+
+      data :{
+        occupied: false,
+
+      }
+    })
+
+  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',id)
+
+
+  } catch (error) {
+  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',error)
+
+    console.log(error)
+  }
+  return data
 }
 
 export const Ipd = {

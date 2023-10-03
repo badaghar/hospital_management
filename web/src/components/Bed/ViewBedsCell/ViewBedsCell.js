@@ -48,7 +48,7 @@ export const Success = ({ floors,beds }) => {
         floors.map((floor)=>{
           return(
             <>
-              <div className='border border-black rounded-xl mx-11 my-3 p-4'>
+              <div className='border border-black rounded-xl mx-11 my-3 p-4 text-xl'>
                 <div className=' flex justify-center p-2'>
                   <h1 className='underline'>{floor.floor_name}</h1>
                 </div>

@@ -74,7 +74,7 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ medicines, patients, users,compositions }) => {
+export const Success = ({ medicines, patients, users, compositions }) => {
 
 
   function getPDF(id) {
@@ -94,17 +94,26 @@ export const Success = ({ medicines, patients, users,compositions }) => {
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/pdf' })
         var blobURL = URL.createObjectURL(blob)
-        var iframe =  document.createElement('iframe')
+        var iframe = document.createElement('iframe')
         document.body.appendChild(iframe)
         iframe.style.display = 'none'
 
         iframe.src = blobURL
-     iframe.onload = function() {
-      setTimeout(function() {
-        iframe.focus()
-        iframe.contentWindow.print()
-      }, 1)
-    }
+        iframe.onload = function () {
+          setTimeout(function () {
+            iframe.focus()
+            iframe.contentWindow.print()
+          }, 1)
+
+          // Add an event listener for the 'afterprint' event
+          window.onafterprint = function () {
+            // This code will run after the user interacts with the print dialog
+            console.log('User closed the print dialog or printed the PDF');
+
+            // Reload the page after the user interacts with the print dialog
+            window.location.reload();
+          };
+        }
         toast.success('Download Complete')
       })
       .catch((err) => {
@@ -120,14 +129,20 @@ export const Success = ({ medicines, patients, users,compositions }) => {
   const [createSaleMedicine, { loading, error }] = useMutation(
     CREATE_SALE_MEDICINE_MUTATION,
     {
-      onCompleted: (data) => {
+      onCompleted: async (data) => {
         toast.success('SaleMedicine created')
+
         if (isSave) {
+          setTimeout(function () {
+            location.reload();
+          }, 1);
           navigate(routes.saleMedicines())
+
 
         }
         else {
           printPDF(data.createSaleMedicine.id)
+
           navigate(routes.saleMedicines())
 
           // navigate(routes.viewSaleMedicine({ id: data.createSaleMedicine.id }))

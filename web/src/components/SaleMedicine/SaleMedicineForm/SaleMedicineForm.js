@@ -797,9 +797,9 @@ const SaleMedicineForm = (props) => {
 
           </button>
 
-          <Submit disabled={props.loading} className="rw-button rw-button-blue" onClick={() => setIsSave(false)}>
+          {/* <Submit disabled={props.loading} className="rw-button rw-button-blue" onClick={() => setIsSave(false)}>
             Save and Print
-          </Submit>
+          </Submit> */}
 
 
         </div>
