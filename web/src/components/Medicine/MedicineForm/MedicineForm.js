@@ -45,8 +45,10 @@ const MedicineForm = (props) => {
           errorClassName="rw-input rw-input-error"
           validation={{ required: true }}
         />
+       <FieldError name="quantity" className="rw-field-error" />
+   {!props.medicine.id &&
+   <>
 
-        <FieldError name="quantity" className="rw-field-error" />
 
         <Label
           name="productId"
@@ -173,7 +175,8 @@ const MedicineForm = (props) => {
         />
 
         <FieldError name="discount" className="rw-field-error" />
-
+        </>
+}
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">
             Save

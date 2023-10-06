@@ -7,6 +7,8 @@ import { QUERY } from 'src/components/Medicine/MedicinesCell'
 import SearchTable from 'src/components/SearchTable/SearchTable'
 import { timeTag, truncate } from 'src/lib/formatters'
 import MedicineHistoryCell from '../MedicineHistoryCell'
+import { useAuth } from 'src/auth'
+import ExportMedicneStoreReport from 'src/components/PharmacyReport/ExportMedicneStoreReport/ExportMedicneStoreReport'
 
 const DELETE_MEDICINE_MUTATION = gql`
   mutation DeleteMedicineMutation($id: Int!) {
@@ -17,6 +19,8 @@ const DELETE_MEDICINE_MUTATION = gql`
 `
 
 const MedicinesList = ({ medicines,bill }) => {
+  const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
+  const [download, setDownload] = useState(false)
   const [search_data, setSearch_data] = useState(medicines)
   const [rows_count, setRows_count] = useState(medicines.length <= 5 ? 5 : 10)
   const [show, setShow] = useState(false)
@@ -161,15 +165,15 @@ const MedicinesList = ({ medicines,bill }) => {
 
 
 
-
-          {/* <Link
+{ hasRole('admin') &&
+          <Link
                     to={routes.editMedicine({ id: original.id })}
                     title={'Edit medicine ' + original.id}
                     className="rw-button rw-button-small rw-button-blue"
                   >
                     Edit
-                  </Link>
-                  <button
+                  </Link>}
+                  {/* <button
                     type="button"
                     title={'Delete medicine ' + original.id}
                     className="rw-button rw-button-small rw-button-red"
@@ -182,8 +186,27 @@ const MedicinesList = ({ medicines,bill }) => {
     },
   ]
 
+
   return (
     <>
+
+{!download && <span className='flex justify-center cursor-pointer underline' onClick={()=>setDownload(true)}>
+  <span>
+
+            Export Excel
+  </span>
+          </span>
+
+
+          }
+          {
+            download && <div className='hidden'>
+                  <ExportMedicneStoreReport setDownload={setDownload} medicines={search_data} />
+            </div>
+          }
+
+
+
       <SearchTable
         change={change}
         placeholder={"Search By Typing Medicine Name"}
