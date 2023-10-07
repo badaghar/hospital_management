@@ -24,9 +24,12 @@ export const QUERY = gql`
     },
     ipds(type: "IPD"){
       id
+      created_at
+      date_of_admission
     }
     opds:ipds(type: "OPD"){
       id
+      created_at
     }
   }
 `
@@ -50,7 +53,7 @@ export const Failure = ({ error }) => (
 
 export const Success = ({ ipdOperationPayments,ipds,opds }) => {
 
-  let totalTodayIpd,totalTodayOpd,totalMonthIpd,totalMonthOpd
+  let totalTodayIpd,totalTodayOpd,totalMonthIpd,totalMonthOpd,totalTodayOperation,totalMonthOperation
 
   const today = new Date()
   const month = new Date()
@@ -59,19 +62,22 @@ export const Success = ({ ipdOperationPayments,ipds,opds }) => {
   today.setMinutes(0)
   today.setSeconds(0)
   const toIPD = ipds.filter((item) => {
-    const newDate = new Date(item.created_at)
-    // console.log(newDate,today)
+    const newDate = new Date(item.date_of_admission)
+    console.log(newDate,today)
     return newDate >= today
   })
+
   totalTodayIpd = toIPD.length
+  console.log(toIPD)
   const toOPD = opds.filter((item) => {
+    console.log(item)
     const newDate = new Date(item.created_at)
-    // console.log(newDate,today)
+    console.log(newDate,today)
     return newDate >= today
   })
   totalTodayOpd = toOPD.length
   const monthIPD = ipds.filter((item) => {
-    const newDate = new Date(item.created_at)
+    const newDate = new Date(item.date_of_admission)
     // console.log(newDate,today)
     return newDate >= month
   })
@@ -82,6 +88,18 @@ export const Success = ({ ipdOperationPayments,ipds,opds }) => {
     return newDate >= month
   })
   totalMonthOpd = monthOPD.length
+  const todayOperation = ipdOperationPayments.filter((item) => {
+    const newDate = new Date(item.extra.date)
+    // console.log(newDate,today)
+    return newDate >= today
+  })
+  totalTodayOperation = todayOperation.length
+  const monthOperation = ipdOperationPayments.filter((item) => {
+    const newDate = new Date(item.extra.date)
+    // console.log(newDate,today)
+    return newDate >= month
+  })
+  totalMonthOperation = monthOperation.length
 
 
 
@@ -139,6 +157,16 @@ export const Success = ({ ipdOperationPayments,ipds,opds }) => {
         <div className="flex flex-col bg-[#AED2FF] shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>This Month Opd Patient</h1>
           <p>  {totalMonthOpd} </p>
+
+        </div>
+        <div className="flex flex-col bg-[#F6635C] shadow-lg rounded-2xl p-6 items-center m-4">
+          <h1>Today Operation</h1>
+          <p>  {totalTodayOperation} </p>
+
+        </div>
+        <div className="flex flex-col bg-[#79155B] shadow-lg rounded-2xl p-6 items-center m-4">
+          <h1>This Month Operation</h1>
+          <p>  {totalMonthOperation} </p>
 
         </div>
 
