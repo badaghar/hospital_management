@@ -295,7 +295,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                 </div>
 
                 <div className={`flex flex-col ${!downloadDischargeSummary.summary.surgery && 'hidden'}`}>
-                  <span>Treatement / Surgery / Delivery Notes : </span>
+                  <span>Treatment / Surgery / Delivery Notes : </span>
                   <span className="font-normal">
                     {addNewLine(downloadDischargeSummary.summary.surgery)?.map((ele, ind, arr) => {
                       return (
@@ -312,7 +312,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                 </div>
 
                 <div className={`flex flex-col ${!downloadDischargeSummary.summary.treatement && 'hidden'}`}>
-                  <span>Treatement Advised at the time of Discharge : </span>
+                  <span>Treatment Advised at the time of Discharge : </span>
                   <span className="font-normal">
                     {addNewLine(downloadDischargeSummary.summary.treatement)?.map((ele, ind, arr) => {
                       return (

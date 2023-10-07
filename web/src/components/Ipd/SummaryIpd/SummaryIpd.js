@@ -307,11 +307,11 @@ const SummaryIpd = ({ ipd,floors }) => {
             <textarea name="" id="" rows="2" className="border border-black  px-2 flex-1 font-normal" onChange={(e) => change('investigations', e.target.value)} value={obj.investigations} ></textarea>
           </div>
           <div className="flex flex-col">
-            <span>Treatement / Surgery / Delivery Notes : </span>
+            <span>Treatment / Surgery / Delivery Notes : </span>
             <textarea name="" id="" rows="3" className="border border-black  px-2 flex-1 font-normal" onChange={(e) => change('surgery', e.target.value)} value={obj.surgery}></textarea>
           </div>
           <div className="flex flex-col">
-            <span>Treatement Advised at the time of Discharge : </span>
+            <span>Treatment Advised at the time of Discharge : </span>
             <textarea name="" id="" rows="6" className="border border-black  px-2 flex-1 font-normal" onChange={(e) => change('treatement', e.target.value)} value={obj.treatement}></textarea>
           </div>
 
