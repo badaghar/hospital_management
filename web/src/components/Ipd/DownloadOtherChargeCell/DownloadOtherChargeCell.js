@@ -73,6 +73,7 @@ export const Success = ({ downloadOtherCharge }) => {
   const [count, setCount] = useState()
   const [chunks, setChunks] = useState([])
   const [sum, setSum] = useState(0)
+  const [obj,setObj] = useState({})
   // let count = 0
   const [formatedDate, setFormatedDate] = useState("")
   useEffect(() => {
@@ -82,7 +83,7 @@ export const Success = ({ downloadOtherCharge }) => {
     // total
     const myArray  = [...downloadOtherCharge.IpdCharges]
     const myArray2 = downloadOtherCharge.IpdOperationPayment.map((val,ind)=>{
-      return { 'charge_type':val.operation_name,'charge':val.amount,'quantity':1,'total':val.amount }
+      return { 'charge_type':`OPERATION (${val.operation_name})`,'charge':val.amount,'quantity':1,'total':val.amount }
     })
     const myArray3 = downloadOtherCharge.IpdConsultation.map((val,ind)=>{
       return { 'charge_type':val.consultation_type,'charge':val.amount,'quantity':1,'total':val.amount }
@@ -111,6 +112,27 @@ export const Success = ({ downloadOtherCharge }) => {
       chunks.push(chunk);
       i += chunkSize;
     }
+
+    let dis=0,gst=0;
+    downloadOtherCharge.IpdPayment.map((item) => {
+      if (item.payment_mode == 'disc') {
+        dis += item.amount
+
+      }
+      if(item.payment_mode == 'gst')
+      {
+        gst+=item.amount
+
+      }
+    })
+
+    setObj({
+      gst,
+      dis
+    })
+
+
+
 
 
   }, [downloadOtherCharge])
@@ -229,6 +251,12 @@ export const Success = ({ downloadOtherCharge }) => {
 
                   <div className="absolute top-16 left-5">
                     <span>Signature</span>
+                  </div>
+                  <div className="absolute right-5 flex text-xs justify-start flex-col">
+                    <span>Discount :- {obj.dis*-1}</span>
+                    <span>GST Amount :- {obj.gst}</span>
+                    <span>Paid Amount :- {downloadOtherCharge.paid_amount - obj.gst } </span>
+                    <span>balanace :- {sum + obj.dis+ obj.gst - (downloadOtherCharge.paid_amount - obj.gst)}</span>
                   </div>
                 </section>
 

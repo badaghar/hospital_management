@@ -35,6 +35,7 @@ export const QUERY = gql`
 
       }
       IpdPayment{
+        id
       amount
       payment_mode
       created_at

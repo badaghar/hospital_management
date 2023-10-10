@@ -30,6 +30,6 @@ export const schema = gql`
     createIpdPayment(input: CreateIpdPaymentInput!): IpdPayment! @requireAuth
     updateIpdPayment(id: Int!, input: UpdateIpdPaymentInput!): IpdPayment!
       @requireAuth
-    deleteIpdPayment(id: Int!): IpdPayment! @requireAuth
+    deleteIpdPayment(id: Int!,amount: Int!,ipdId: Int!): IpdPayment! @requireAuth
   }
 `

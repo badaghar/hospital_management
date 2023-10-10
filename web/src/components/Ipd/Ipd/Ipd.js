@@ -41,9 +41,9 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors }) 
     ipd.IpdCharges.map((it)=>{
       tamt += it.total
     })
-    ipd.IpdLabCharges.map((it)=>{
-      tamt += it.amount
-    })
+    // ipd.IpdLabCharges.map((it)=>{
+    //   tamt += it.amount
+    // })
     ipd.IpdOperationPayment.map((it)=>{
       tamt += it.amount
     })
@@ -125,7 +125,7 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors }) 
 
 
           {
-            dropDownOpen=='overview' && <IpdOverview ipd={ipd} />
+            dropDownOpen=='overview' && <IpdOverview ipd={ipd} totalAmount={totalAmount}/>
           }
           {
             dropDownOpen=='sumamry' && <SummaryIpd ipd={ipd} floors={floors} />

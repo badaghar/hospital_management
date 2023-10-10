@@ -2,7 +2,7 @@ import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 import axios from 'axios'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { timeTag } from 'src/lib/formatters'
 import { ReactDialogBox } from 'react-js-dialog-box'
 import 'react-js-dialog-box/dist/index.css'
@@ -65,11 +65,12 @@ function convertObjectValuesToUpper(obj) {
   return obj;
 }
 
-const IpdOverview = ({ ipd }) => {
+const IpdOverview = ({ ipd, totalAmount}) => {
 
   const [isOpen, setIsOpen] = useState(false)
   const [changeDateOpen, setIsChangeDateOpen] = useState(false)
   const [gender, setGender] = useState(ipd.patient.gender);
+  const [disAmt, setDisAmt] = useState(0)
   const handleGenderChange = (event) => {
     setGender(event.target.value.toUpperCase());
   };
@@ -87,6 +88,19 @@ const IpdOverview = ({ ipd }) => {
       },
     }
   )
+
+  useEffect(() => {
+    let dis =0
+    ipd.IpdPayment.map((item) => {
+      if (item.payment_mode == 'disc') {
+        dis += item.amount
+
+      }
+    })
+    setDisAmt(dis)
+
+
+  })
 
   const [updateIpd, { loading1, error1 }] = useMutation(UPDATE_IPD_MUTATION, {
     onCompleted: () => {
@@ -452,7 +466,11 @@ const IpdOverview = ({ ipd }) => {
 
           <div className="flex items-center space-x-3">
             <span>Total Charges Till Now</span>
-            <span>5000</span>
+            <span>{totalAmount}</span>
+          </div>
+          <div className="flex items-center space-x-3">
+            <span>Total Charges After Discount</span>
+            <span>{totalAmount+disAmt}</span>
           </div>
 
           <div className="flex items-center space-x-3">

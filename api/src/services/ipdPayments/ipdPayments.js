@@ -37,10 +37,23 @@ export const updateIpdPayment = ({ id, input }) => {
   })
 }
 
-export const deleteIpdPayment = ({ id }) => {
-  return db.ipdPayment.delete({
+export const deleteIpdPayment = async ({ id,amount,ipdId }) => {
+  const data = await db.ipdPayment.delete({
     where: { id },
   })
+console.log('/n/n/n/n\n\n\n\n\n\n\n\n\n\nn\\n\n\n\n\n',amount)
+  await db.ipd.update({
+    where:{
+      id:ipdId
+    },
+    data:{
+   paid_amount: {
+        decrement: amount
+      }
+    }
+  })
+
+  return data
 }
 
 export const IpdPayment = {
