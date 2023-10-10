@@ -46,5 +46,6 @@ export const schema = gql`
     updateMedicine(id: Int!, input: UpdateMedicineInput!): Medicine!
       @requireAuth
     deleteMedicine(id: Int!): Medicine! @requireAuth
+    deleteEmptyMedicine: Int @requireAuth
   }
 `

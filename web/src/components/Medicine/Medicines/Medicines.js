@@ -17,14 +17,25 @@ const DELETE_MEDICINE_MUTATION = gql`
     }
   }
 `
+const DELETE_EMPTY_MEDICINE_MUTATION = gql`
+  mutation DeleteEmptyMedicineMutation {
+    deleteEmptyMedicine
+  }
+`
 
-const MedicinesList = ({ medicines,bill }) => {
+const MedicinesList = ({ medicines, bill }) => {
   const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
   const [download, setDownload] = useState(false)
   const [search_data, setSearch_data] = useState(medicines)
   const [rows_count, setRows_count] = useState(medicines.length <= 5 ? 5 : 10)
   const [show, setShow] = useState(false)
   const [s, setS] = useState(false)
+  useEffect(()=>{
+    setSearch_data(medicines)
+  },[medicines])
+
+
+
   const [deleteMedicine] = useMutation(DELETE_MEDICINE_MUTATION, {
     onCompleted: () => {
       toast.success('Medicine deleted')
@@ -38,10 +49,29 @@ const MedicinesList = ({ medicines,bill }) => {
     refetchQueries: [{ query: QUERY }],
     awaitRefetchQueries: true,
   })
+  const [deleteMedicineEmpty] = useMutation(DELETE_EMPTY_MEDICINE_MUTATION, {
+    onCompleted: () => {
+      toast.success('Medicine deleted')
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+    // This refetches the query on the list page. Read more about other ways to
+    // update the cache over here:
+    // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
+    refetchQueries: [{ query: QUERY }],
+    awaitRefetchQueries: true,
+  })
+
 
   const onDeleteClick = (id) => {
     if (confirm('Are you sure you want to delete medicine ' + id + '?')) {
       deleteMedicine({ variables: { id } })
+    }
+  }
+  const deleteEmptyMedicine = () => {
+    if (confirm('Are you sure you want to delete Empty medicine ' + '?')) {
+      deleteMedicineEmpty()
     }
   }
 
@@ -165,15 +195,15 @@ const MedicinesList = ({ medicines,bill }) => {
 
 
 
-{ hasRole('admin') &&
-          <Link
-                    to={routes.editMedicine({ id: original.id })}
-                    title={'Edit medicine ' + original.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
-                  </Link>}
-                  {/* <button
+          {hasRole('admin') &&
+            <Link
+              to={routes.editMedicine({ id: original.id })}
+              title={'Edit medicine ' + original.id}
+              className="rw-button rw-button-small rw-button-blue"
+            >
+              Edit
+            </Link>}
+          {/* <button
                     type="button"
                     title={'Delete medicine ' + original.id}
                     className="rw-button rw-button-small rw-button-red"
@@ -190,22 +220,37 @@ const MedicinesList = ({ medicines,bill }) => {
   return (
     <>
 
-{!download && <span className='flex justify-center cursor-pointer underline' onClick={()=>setDownload(true)}>
-  <span>
+      {!download && <span className='flex justify-center cursor-pointer underline' onClick={() => setDownload(true)}>
+        <span>
 
-            Export Excel
-  </span>
-          </span>
-
-
-          }
-          {
-            download && <div className='hidden'>
-                  <ExportMedicneStoreReport setDownload={setDownload} medicines={search_data} />
-            </div>
-          }
+          Export Excel
+        </span>
+      </span>
 
 
+
+
+
+
+      }
+
+      {
+        download && <div className='hidden'>
+          <ExportMedicneStoreReport setDownload={setDownload} medicines={search_data} />
+        </div>
+      }
+
+      <div className='flex justify-end'>
+
+        <button
+          type="button"
+          title={'Delete medicine '}
+          className="rw-button rw-button-small rw-button-red"
+          onClick={() => deleteEmptyMedicine()}
+        >
+          Delete Empty Medicine
+        </button>
+      </div>
 
       <SearchTable
         change={change}

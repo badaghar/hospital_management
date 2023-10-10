@@ -29,10 +29,17 @@ export const updateMedicine = ({ id, input }) => {
   })
 }
 
+
 export const deleteMedicine = ({ id }) => {
   return db.medicine.delete({
     where: { id },
   })
+}
+export const deleteEmptyMedicine = async () => {
+  await db.medicine.deleteMany({
+    where: { quantity:0 },
+  })
+  return -1
 }
 
 export const Medicine = {
