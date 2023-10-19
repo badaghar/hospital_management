@@ -21,6 +21,7 @@ import Select from 'react-select'
 import { useMutation } from '@redwoodjs/web'
 import { QUERY } from 'src/components/Ipd/IpdCell'
 import { MdDeleteForever } from 'react-icons/md'
+import axios from 'axios'
 
 
 
@@ -192,6 +193,42 @@ const PaymentIpd = ({ totalAmount, ipd }) => {
 
 
   },[ipd])
+
+  function getPDF(id) {
+    return axios.get(
+      `/.redwood/functions/downloadOtherCharges?id=` +
+      id,
+      {
+        responseType: 'arraybuffer',
+        headers: {
+          Accept: 'application/pdf',
+        },
+      }
+    )
+  }
+  const printPDF = (id) => {
+    return getPDF(id) // API call
+      .then((response) => {
+        const blob = new Blob([response.data], { type: 'application/pdf' })
+        var blobURL = URL.createObjectURL(blob)
+        var iframe = document.createElement('iframe')
+        document.body.appendChild(iframe)
+        iframe.style.display = 'none'
+
+        iframe.src = blobURL
+        iframe.onload = function () {
+          setTimeout(function () {
+            iframe.focus()
+            iframe.contentWindow.print()
+          }, 1)
+        }
+        toast.success('Download Complete')
+      })
+      .catch((err) => {
+        toast.error('something wrong happened try again')
+        console.log(err)
+      })
+  }
 
 
   return (
@@ -399,6 +436,12 @@ const PaymentIpd = ({ totalAmount, ipd }) => {
 
           </div>
         </Form>
+
+        <div className="rw-button-group">
+              <div className="rw-button rw-button-green" onClick={()=>printPDF(ipd.id)}>
+                Print Bill
+              </div>
+            </div>
 
       </div>
     </div>

@@ -8,7 +8,7 @@ export const schema = gql`
   }
 
   type Query {
-    chargeses: [Charges!]! @requireAuth
+    chargeses: [Charges!]! @skipAuth
     charges(id: Int!): Charges @requireAuth
   }
 

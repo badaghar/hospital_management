@@ -57,6 +57,10 @@ export const QUERY = gql`
 
 
     }
+    chargeses{
+      id
+      name
+    }
   }
 `
 
@@ -68,7 +72,7 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ downloadOtherCharge }) => {
+export const Success = ({ downloadOtherCharge,chargeses }) => {
   const [pages, setPages] = useState([])
   const [count, setCount] = useState()
   const [chunks, setChunks] = useState([])
@@ -81,7 +85,17 @@ export const Success = ({ downloadOtherCharge }) => {
     // charge
     // quantity
     // total
+    const myArray0 = chargeses.map((val,ind)=>{
+      return { 'charge_type':val.name,'charge':0,'quantity':0,'total':0 }
+    })
+    console.log(myArray0)
     const myArray  = [...downloadOtherCharge.IpdCharges]
+    const mergedArray = myArray0.map((obj0) => {
+      const matchingObject = myArray.find((obj) => obj.charge_type === obj0.charge_type);
+      // console.log(matchingObject)
+      return matchingObject ? matchingObject : obj0;
+    });
+
     const myArray2 = downloadOtherCharge.IpdOperationPayment.map((val,ind)=>{
       return { 'charge_type':`OPERATION (${val.operation_name})`,'charge':val.amount,'quantity':1,'total':val.amount }
     })
@@ -89,7 +103,7 @@ export const Success = ({ downloadOtherCharge }) => {
       return { 'charge_type':val.consultation_type,'charge':val.amount,'quantity':1,'total':val.amount }
     })
 
-    const actualArray = [...myArray,...myArray2,...myArray3]
+    const actualArray = [...mergedArray,...myArray2,...myArray3]
     const noOfPage = Math.ceil(actualArray.length / 15)
     // setPages(noOfPage)
     let page = []
@@ -130,6 +144,12 @@ export const Success = ({ downloadOtherCharge }) => {
       gst,
       dis
     })
+
+    const ch = chargeses.map(()=>{
+
+    })
+
+
 
 
 
@@ -242,21 +262,21 @@ export const Success = ({ downloadOtherCharge }) => {
                   style={{ width: '19.6cm' }}
                 >
 
-                  <div className="grid grid-cols-8  font-bold border-b   border-black">
+                  {/* <div className="grid grid-cols-8 border-b   border-black">
                     <span className="col-span-1"></span>
                     <span className="col-span-5">Total</span>
 
                     <span className="col-span-2">(₹) {sum}</span>
-                  </div>
+                  </div> */}
 
                   <div className="absolute top-16 left-5">
                     <span>Signature</span>
                   </div>
-                  <div className="absolute right-5 flex text-xs justify-start flex-col">
-                    <span>Discount :- {obj.dis*-1}</span>
+                  <div className="absolute right-5 flex text-xs justify-start flex-col ">
+                    <span>Sub Total :- {sum}</span>
                     <span>GST Amount :- {obj.gst}</span>
-                    <span>Paid Amount :- {downloadOtherCharge.paid_amount - obj.gst } </span>
-                    <span>balanace :- {sum + obj.dis+ obj.gst - (downloadOtherCharge.paid_amount - obj.gst)}</span>
+                    <span>Discount Amount :- {obj.dis*-1 } </span>
+                    <span className='text-base font-bold'>Grand Total :- {sum + obj.dis+ obj.gst}</span>
                   </div>
                 </section>
 
