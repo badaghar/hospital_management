@@ -147,24 +147,41 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
 
   // }
   useEffect(()=>{
-    console.log('hello         \n\n\n\n\n\n\n',ipd.IpdCharges)
-    if(ipd.IpdCharges.length != 0)
-    {
-      console.log('here')
-      const arr = ipd.IpdCharges.map((item)=>{
-        return { charge_type: item.charge_type, quantity: item.quantity, charge: item.charge, total: 0, ipdId: ipd.id }
-      })
-      setOtherChargesArray(arr)
+    // console.log('hello         \n\n\n\n\n\n\n',ipd.IpdCharges)
+    // if(ipd.IpdCharges.length != 0)
+    // {
+      // console.log('here')
 
-    }
-    else{
-      console.log('here2')
-
-      const arr = chargeses.map((item)=>{
-        return { charge_type: item.name, quantity: item.quantity || 0, charge: item.amount, total: 0, ipdId: ipd.id }
+      const arr2 = ipd.IpdCharges.map((item)=>{
+        return { charge_type: item.charge_type, quantity: item.quantity, charge: item.charge, total: item.total, ipdId: ipd.id }
       })
-      setOtherChargesArray(arr)
-    }
+    //   console.log(arr)
+    //   setOtherChargesArray(arr)
+
+    // }
+    // else{
+      // console.log('here2')
+
+    //   const arr = chargeses.map((item)=>{
+    //     return { charge_type: item.name, quantity: item.quantity || 0, charge: item.amount, total: 0, ipdId: ipd.id }
+    //   })
+    //   setOtherChargesArray(arr)
+    // }
+    let arr = chargeses.map((item)=>{
+      // console.log('here3')
+          for(let i=0;i<arr2.length;i++)
+          {
+            // console.log('helllo')
+            if(arr2[i].charge_type==item.name)
+            {
+              // return
+              // console.log('called')
+              return { charge_type: arr2[i].charge_type, quantity: arr2[i].quantity, charge: arr2[i].charge, total: 0, ipdId: ipd.id }
+            }
+          }
+          return { charge_type: item.name, quantity: item.quantity || 0, charge: item.amount, total: 0, ipdId: ipd.id }
+        })
+    setOtherChargesArray(arr)
 
   },[ipd])
 
@@ -205,7 +222,7 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
             {
               otherChargesArray.map((item, index) => {
                 return (
-                  <>
+                  // <React.Fragment key={index}>
                     <OtherChargeBody key={index} chargeses={chargeses} item={item}
                       otherChargesArray={otherChargesArray}
                       setOtherChargesArray={setOtherChargesArray}
@@ -216,7 +233,7 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
                       amt={otherChargesArray[index].charge}
                       // amt = {}
                     />
-                  </>
+                  // </>
                 )
               })
 
@@ -303,7 +320,7 @@ const OtherChargeBody = ({ chargeses, item, otherChargesArray, del, setOtherChar
     // })
     // setObj(obj)
     // setAmount(item.charge)
-    console.log(item)
+    // console.log(item)
 
 
 

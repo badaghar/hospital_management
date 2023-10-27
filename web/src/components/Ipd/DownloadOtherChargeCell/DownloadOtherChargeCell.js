@@ -80,21 +80,14 @@ export const Success = ({ downloadOtherCharge,chargeses }) => {
   const [obj,setObj] = useState({})
   // let count = 0
   const [formatedDate, setFormatedDate] = useState("")
+  console.log("page called")
   useEffect(() => {
-    // charge_type
-    // charge
-    // quantity
-    // total
-    // const myArray0 = chargeses.map((val,ind)=>{
-    //   return { 'charge_type':val.name,'charge':0,'quantity':0,'total':0 }
-    // })
-    // console.log(myArray0)
-    const myArray  = [...downloadOtherCharge.IpdCharges]
-    // const mergedArray = myArray0.map((obj0) => {
-    //   const matchingObject = myArray.find((obj) => obj.charge_type === obj0.charge_type);
-    //   // console.log(matchingObject)
-    //   return matchingObject ? matchingObject : obj0;
-    // });
+    console.log("page called")
+
+    const myArray = downloadOtherCharge.IpdCharges.map((val)=>{
+      return { 'charge_type':val.charge_type,'charge':val.charge,'quantity':val.quantity,'total':val.charge*val.quantity }
+    })
+    console.log(downloadOtherCharge.IpdCharges)
 
     const myArray2 = downloadOtherCharge.IpdOperationPayment.map((val,ind)=>{
       return { 'charge_type':`OPERATION (${val.operation_name})`,'charge':val.amount,'quantity':1,'total':val.amount }
@@ -145,9 +138,9 @@ export const Success = ({ downloadOtherCharge,chargeses }) => {
       dis
     })
 
-    const ch = chargeses.map(()=>{
+    // const ch = chargeses.map(()=>{
 
-    })
+    // })
 
 
 
