@@ -85,16 +85,16 @@ export const Success = ({ downloadOtherCharge,chargeses }) => {
     // charge
     // quantity
     // total
-    const myArray0 = chargeses.map((val,ind)=>{
-      return { 'charge_type':val.name,'charge':0,'quantity':0,'total':0 }
-    })
-    console.log(myArray0)
+    // const myArray0 = chargeses.map((val,ind)=>{
+    //   return { 'charge_type':val.name,'charge':0,'quantity':0,'total':0 }
+    // })
+    // console.log(myArray0)
     const myArray  = [...downloadOtherCharge.IpdCharges]
-    const mergedArray = myArray0.map((obj0) => {
-      const matchingObject = myArray.find((obj) => obj.charge_type === obj0.charge_type);
-      // console.log(matchingObject)
-      return matchingObject ? matchingObject : obj0;
-    });
+    // const mergedArray = myArray0.map((obj0) => {
+    //   const matchingObject = myArray.find((obj) => obj.charge_type === obj0.charge_type);
+    //   // console.log(matchingObject)
+    //   return matchingObject ? matchingObject : obj0;
+    // });
 
     const myArray2 = downloadOtherCharge.IpdOperationPayment.map((val,ind)=>{
       return { 'charge_type':`OPERATION (${val.operation_name})`,'charge':val.amount,'quantity':1,'total':val.amount }
@@ -103,7 +103,7 @@ export const Success = ({ downloadOtherCharge,chargeses }) => {
       return { 'charge_type':val.consultation_type,'charge':val.amount,'quantity':1,'total':val.amount }
     })
 
-    const actualArray = [...mergedArray,...myArray2,...myArray3]
+    const actualArray = [...myArray,...myArray2,...myArray3]
     const noOfPage = Math.ceil(actualArray.length / 15)
     // setPages(noOfPage)
     let page = []

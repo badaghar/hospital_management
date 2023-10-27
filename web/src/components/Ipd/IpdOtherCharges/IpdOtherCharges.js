@@ -114,33 +114,59 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
   )
   const onSave = () => {
     // console.log(doctorChargesArray)
-    const hasEmptyValue = otherChargesArray.some((obj) => {
-      // Check if any value in the object is empty
-      return Object.values(obj).some((value) => value === null || value === '' || !value);
-    });
-    if (hasEmptyValue) {
-      toast.error('Enter All The Details')
-      return
-    }
+    // const hasEmptyValue = otherChargesArray.some((obj) => {
+    //   // Check if any value in the object is empty
+    //   return Object.values(obj).some((value) => value === null || value === '' || !value);
+    // });
+    // if (hasEmptyValue) {
+    //   toast.error('Enter All The Details')
+    //   return
+    // }
     createIpdCharges({ variables: { input: otherChargesArray } })
   }
   const onSaveAndPrint = () => {
     // console.log(doctorChargesArray)
-    const hasEmptyValue = otherChargesArray.some((obj) => {
-      // Check if any value in the object is empty
-      return Object.values(obj).some((value) => value === null || value === '' || !value);
-    });
-    if (hasEmptyValue) {
-      toast.error('Enter All The Details')
-      return
-    }
+    // const hasEmptyValue = otherChargesArray.some((obj) => {
+    //   // Check if any value in the object is empty
+    //   return Object.values(obj).some((value) => value === null || value === '' || !value);
+    // });
+    // if (hasEmptyValue) {
+    //   toast.error('Enter All The Details')
+    //   return
+    // }
     setIsPrint(true)
     createIpdCharges({ variables: { input: otherChargesArray } })
   }
 
-  const addOtherCharges = () => {
-    setOtherChargesArray((item) => [...item, { charge_type: '', quantity: 0, charge: 0, total: 0, ipdId: ipd.id }])
-  }
+  // const addOtherCharges = () => {
+  //   // setOtherChargesArray((item) => [...item, { charge_type: '', quantity: 0, charge: 0, total: 0, ipdId: ipd.id }])
+  //   const arr = chargeses.map((item)=>{
+  //     return { charge_type: item.name, quantity: 0, charge: item.amount, total: 0, ipdId: ipd.id }
+  //   })
+  //   setOtherChargesArray(arr)
+
+  // }
+  useEffect(()=>{
+    console.log('hello         \n\n\n\n\n\n\n',ipd.IpdCharges)
+    if(ipd.IpdCharges.length != 0)
+    {
+      console.log('here')
+      const arr = ipd.IpdCharges.map((item)=>{
+        return { charge_type: item.charge_type, quantity: item.quantity, charge: item.charge, total: 0, ipdId: ipd.id }
+      })
+      setOtherChargesArray(arr)
+
+    }
+    else{
+      console.log('here2')
+
+      const arr = chargeses.map((item)=>{
+        return { charge_type: item.name, quantity: item.quantity || 0, charge: item.amount, total: 0, ipdId: ipd.id }
+      })
+      setOtherChargesArray(arr)
+    }
+
+  },[ipd])
 
   const delectOtherCharges = (index) => {
     setOtherChargesArray((array) => {
@@ -156,38 +182,26 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
       <div className="shadow-md rounded-md">
 
         <div className="p-2 w-full shadow-sm bg-white ">
-          <div className=" grid grid-cols-5 grid-flow-row gap-x-2 gap-y-2">
+          <div className=" grid grid-cols-4 grid-flow-row gap-x-2 gap-y-2">
 
             <div className="flex col-span-1 justify-center">Charges Type</div>
             <div className="flex col-span-1 justify-center">Amount</div>
             <div className="flex col-span-1 justify-center">Quantity</div>
             <div className="flex col-span-1 justify-center">Net Amount</div>
-            <div className="flex col-span-1 justify-center">Action</div>
+            {/* <div className="flex col-span-1 justify-center">Action</div> */}
 
-            {
+            {/* {
               ipd.IpdCharges.map((item, index) => {
                 return (
                   <>
-                    {/* <OtherChargeBody key={index} chargeses={props.chargeses} item={item}
-                    otherChargesArray={otherChargesArray}
-                    setOtherChargesArray={setOtherChargesArray}
-                    del={delectOtherCharges}
-                    index={index}
-                  /> */}
                     <div className="flex col-span-1 justify-center">{item.charge_type}</div>
                     <div className="flex col-span-1 justify-center">{item.charge}</div>
                     <div className="flex col-span-1 justify-center">{item.quantity}</div>
                     <div className="flex col-span-1 justify-center">{item.total}</div>
-                    <div className="flex col-span-1 justify-center">        <span className='cursor-pointer text-xl text-red-600'
-                    onClick={()=>onDeleteClick(item.id)}
-                    >
-                      <MdDeleteForever />
-                    </span></div>
-
                   </>
                 )
               })
-            }
+            } */}
             {
               otherChargesArray.map((item, index) => {
                 return (
@@ -197,6 +211,10 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
                       setOtherChargesArray={setOtherChargesArray}
                       del={delectOtherCharges}
                       index={index}
+                      chargename={otherChargesArray[index].charge_type}
+                      quantity={otherChargesArray[index].quantity}
+                      amt={otherChargesArray[index].charge}
+                      // amt = {}
                     />
                   </>
                 )
@@ -205,9 +223,9 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
             }
           </div>
 
-          <div className='flex justify-center mt-2'>
+          {/* <div className='flex justify-center mt-2'>
             <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addOtherCharges}>Add Charge</div>
-          </div>
+          </div> */}
 
         </div>
         <div className='flex justify-center mt-2 pb-3'>
@@ -220,12 +238,12 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
   )
 }
 
-const OtherChargeBody = ({ chargeses, item, otherChargesArray, del, setOtherChargesArray, index }) => {
+const OtherChargeBody = ({ chargeses, item, otherChargesArray, del, setOtherChargesArray, index ,chargename,quantity,amt}) => {
 
-  const [chargeType, setChargeType] = useState()
-  const [obj, setObj] = useState([])
+  // const [chargeType, setChargeType] = useState()
+  // const [obj, setObj] = useState([])
   const [amount, setAmount] = useState(0)
-  const [quantity, setQuantity] = useState(0)
+  const [quantity1, setQuantity] = useState(quantity || 0)
   const [net_amount, set_net_amount] = useState(0)
 
 
@@ -250,20 +268,20 @@ const OtherChargeBody = ({ chargeses, item, otherChargesArray, del, setOtherChar
   }
 
   useEffect(() => {
-    set_net_amount(quantity * amount)
+    set_net_amount(quantity1 * amount)
     setOtherChargesArray((array) => {
       const newArray = [...array];
       newArray[index] = {
         ...newArray[index],
-        quantity: parseInt(quantity),
-        total: quantity * amount
+        quantity: parseInt(quantity1),
+        total: quantity1 * amount
       };
       return newArray;
     });
-    // setQuantity(quantity)
+    // setQuantity(quantity1)
 
 
-  }, [quantity])
+  }, [quantity1])
 
 
 
@@ -272,18 +290,19 @@ const OtherChargeBody = ({ chargeses, item, otherChargesArray, del, setOtherChar
 
   useEffect(() => {
 
-    if (item.charge_type) {
-      setChargeType({ value: item.charge_type, label: item.charge_type })
-    }
+    // if (item.charge_type) {
+    //   setChargeType({ value: item.charge_type, label: item.charge_type })
+    // }
     // setQuantity(item.qunatity)
-    setAmount(item.qunatity * item.charge)
+    setAmount(amt)
+    set_net_amount(amt*quantity)
 
-    const obj = chargeses.map((char) => {
-      const ob = { value: char.name, label: char.name, amount: char.amount }
-      return ob
-    })
-    setObj(obj)
-    setAmount(item.charge)
+    // const obj = chargeses.map((char) => {
+    //   const ob = { value: char.name, label: char.name, amount: char.amount }
+    //   return ob
+    // })
+    // setObj(obj)
+    // setAmount(item.charge)
     console.log(item)
 
 
@@ -294,21 +313,24 @@ const OtherChargeBody = ({ chargeses, item, otherChargesArray, del, setOtherChar
   return (
     <>
       <div className="flex col-span-1 justify-center">
-        <Select options={obj} isClearable={true} required onChange={chargeTypeChange} value={item.type !== '' ? chargeType : ''}
-        />
+        {/* <Select options={obj} isClearable={true} required onChange={chargeTypeChange} value={item.type !== '' ? chargeType : ''}
+        /> */}
+        <div>
+          {chargename}
+        </div>
       </div>
       <div className="flex col-span-1 justify-center">{amount}</div>
       <div className="flex col-span-1 justify-center ">
-        <input type="number" className="bg-slate-900 text-white p-2" name="" id="" value={quantity} onChange={(item) => setQuantity(item.target.value)} required />
+        <input type="number" className="bg-slate-900 text-white p-2" name="" id="" value={quantity1} onChange={(item) => setQuantity(item.target.value)} required />
 
       </div>
       <div className="flex col-span-1 justify-center">{net_amount}</div>
-      <div className="flex col-span-1 justify-center">
+      {/* <div className="flex col-span-1 justify-center">
 
         <span className='cursor-pointer text-xl text-red-600' onClick={del.bind(this, index)}>
           <MdDeleteForever />
         </span>
-      </div>
+      </div> */}
     </>
   )
 }

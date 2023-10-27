@@ -150,18 +150,20 @@ export const Success = ({ downloadOpdForm }) => {
             </div>
 
             <div className="flex flex-col items-end  mt-2 pr-3">
-              <div>
-                <span>Temp:-..............</span>
-              </div>
-              <div>
-                <span>SPO2:-..............</span>
+            <div>
+                <span>BP:-................</span>
               </div>
               <div>
                 <span>HR:-................</span>
               </div>
               <div>
-                <span>BP:-................</span>
+                <span>SPO2:-..............</span>
               </div>
+              <div>
+                <span>Temp:-..............</span>
+              </div>
+
+
 
 
             </div>
