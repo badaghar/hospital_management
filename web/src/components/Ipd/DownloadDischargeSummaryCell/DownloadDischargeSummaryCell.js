@@ -108,7 +108,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                   {/* <input type="text" className="border border-black  ml-3 px-2" onChange={(e)=>change('gender',e.target.value)} value={obj.gender}/> */}
 
                 </div>
-                <div className="flex my-3">
+                <div className="flex">
                   <span>
                     Address :
                   </span>
@@ -138,7 +138,7 @@ export const Success = ({ downloadDischargeSummary }) => {
 
                 </div>
 
-                <div className="flex my-3">
+                <div className="flex ">
                 <span >
                     Ward :
                   </span>
@@ -162,7 +162,7 @@ export const Success = ({ downloadDischargeSummary }) => {
 
 
 
-                <div className="flex my-3 justify-between">
+                <div className="flex justify-between">
                   <div>
 
                     <span>
@@ -193,7 +193,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                     </span>
                   </div>
                 </div>
-                <div className="flex my-3">
+                <div className="flex ">
                   <span>
                     Ref by Dr  :
                   </span>
@@ -203,7 +203,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                   {/* <input type="text" className="border border-black  ml-3 px-2 flex-1"  onChange={(e)=>change('refByDr',e.target.value)}  value={obj.refByDr} /> */}
                 </div>
 
-                <div className="flex my-3">
+                <div className="flex ">
                   <span>
                     Consultant (S)  :
                   </span>
@@ -228,7 +228,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                   </div> */}
                 </div>
 
-                <div className={`flex flex-col ${!downloadDischargeSummary.summary.diagnosis && 'hidden'}`}>
+                <div className={`flex flex-col my-3 ${!downloadDischargeSummary.summary.diagnosis && 'hidden'}`}>
                   <span>Diagnosis</span>
                   <span className="font-normal">
                     {/* {downloadDischargeSummary.summary.diagnosis} */}
@@ -244,7 +244,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                   </span>
                   {/* <textarea name="" id=""  rows="2" className="border border-black  px-2 flex-1" onChange={(e)=>change('diagnosis',e.target.value)}   value={obj.diagnosis} ></textarea> */}
                 </div>
-                <div className={`flex flex-col ${!downloadDischargeSummary.summary.chief && 'hidden'}`}>
+                <div className={`flex flex-col my-3 ${!downloadDischargeSummary.summary.chief && 'hidden'}`}>
                   <span>Chief Complaint & History : </span>
                   <span className="font-normal">
                     {/* {downloadDischargeSummary.summary.chief} */}
@@ -261,7 +261,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                   </span>
                   {/* <textarea name="" id=""  rows="7" className="border border-black  px-2 flex-1" onChange={(e)=>change('chief',e.target.value)}   value={obj.chief} ></textarea> */}
                 </div>
-                <div className={`flex flex-col ${!downloadDischargeSummary.summary.clinical && 'hidden'}`}>
+                <div className={`flex flex-col my-3 ${!downloadDischargeSummary.summary.clinical && 'hidden'}`}>
                   <span>Clinical Findings : </span>
                   <span className="font-normal">
                     {/* {downloadDischargeSummary.summary.clinical} */}
@@ -277,7 +277,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                   </span>
                   {/* <textarea name="" id=""  rows="7" className="border border-black  px-2 flex-1" onChange={(e)=>change('clinical',e.target.value)}   value={obj.clinical} ></textarea> */}
                 </div>
-                <div className={`flex flex-col ${!downloadDischargeSummary.summary.investigations && 'hidden'}`}>
+                <div className={`flex flex-col my-3 ${!downloadDischargeSummary.summary.investigations && 'hidden'}`}>
                   <span>Investigations : </span>
                   <span className="font-normal">
                     {/* {downloadDischargeSummary.summary.investigations} */}
@@ -294,7 +294,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                   {/* <textarea name="" id=""  rows="7" className="border border-black  px-2 flex-1" onChange={(e)=>change('investigations',e.target.value)}  value={obj.investigations} ></textarea> */}
                 </div>
 
-                <div className={`flex flex-col ${!downloadDischargeSummary.summary.surgery && 'hidden'}`}>
+                <div className={`flex flex-col my-3 ${!downloadDischargeSummary.summary.surgery && 'hidden'}`}>
                   <span>Treatment / Surgery / Delivery Notes : </span>
                   <span className="font-normal">
                     {addNewLine(downloadDischargeSummary.summary.surgery)?.map((ele, ind, arr) => {
@@ -311,7 +311,7 @@ export const Success = ({ downloadDischargeSummary }) => {
                   {/* <textarea name="" id=""  rows="7" className="border border-black  px-2 flex-1" onChange={(e)=>change('surgery',e.target.value)}  value={obj.surgery}></textarea> */}
                 </div>
 
-                <div className={`flex flex-col ${!downloadDischargeSummary.summary.treatement && 'hidden'}`}>
+                <div className={`flex flex-col my-3 ${!downloadDischargeSummary.summary.treatement && 'hidden'}`}>
                   <span>Treatment Advised at the time of Discharge : </span>
                   <span className="font-normal">
                     {addNewLine(downloadDischargeSummary.summary.treatement)?.map((ele, ind, arr) => {

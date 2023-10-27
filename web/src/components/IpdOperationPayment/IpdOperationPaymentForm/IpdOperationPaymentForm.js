@@ -53,6 +53,7 @@ const IpdOperationPaymentForm = (props) => {
     data['operation_name'] = operationName
     data['ipdId'] = ipdId
     data['extra'] = { date: new Date(date) }
+    data['amount'] = 0
     console.log(data)
     props.onSave(data, props?.ipdOperationPayment?.id)
   }
@@ -215,7 +216,7 @@ const IpdOperationPaymentForm = (props) => {
 
         <FieldError name="operation_name" className="rw-field-error" /> */}
 
-          <div className='flex space-x-4 justify-center'>
+          {/* <div className='flex space-x-4 justify-center'>
 
 
             <Label
@@ -235,7 +236,7 @@ const IpdOperationPaymentForm = (props) => {
             />
 
             <FieldError name="amount" className="rw-field-error" />
-          </div>
+          </div> */}
           <div className="flex  justify-center p-3 space-x-4 items-center">
 
             <div className='font-bold'>

@@ -220,7 +220,7 @@ const SummaryIpd = ({ ipd,floors }) => {
             {/* <input type="text" className="border border-black  ml-3 px-2" onChange={(e)=>change('gender',e.target.value)} value={obj.gender}/> */}
 
           </div>
-          <div className="flex my-3">
+          <div className="flex ">
             <span>
               Address :
             </span>
@@ -231,7 +231,7 @@ const SummaryIpd = ({ ipd,floors }) => {
 
 
 
-          <div className="flex my-3">
+          <div className="flex ">
             <span>
               Date of Admission :
             </span>
@@ -258,13 +258,13 @@ const SummaryIpd = ({ ipd,floors }) => {
               }
             </span>
           </div>
-          <div className="flex my-3">
+          <div className="flex ">
             <span>
               Ref by Dr  :
             </span>
             <input type="text" className="border border-black  ml-3 px-2 flex-1 font-normal" onChange={(e) => change('refByDr', e.target.value)} value={obj.refByDr} />
           </div>
-          <div className="flex my-3">
+          <div className="flex ">
             <span>
               Consultant (S)  :
             </span>
@@ -290,27 +290,27 @@ const SummaryIpd = ({ ipd,floors }) => {
 
 
 
-          <div className="flex flex-col">
+          <div className="flex flex-col my-3">
             <span>Diagnosis</span>
             <textarea name="" id="" rows="2" className="border border-black  px-2 flex-1 font-normal" onChange={(e) => change('diagnosis', e.target.value)} value={obj.diagnosis} ></textarea>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col my-3">
             <span>Chief Complaint & History : </span>
             <textarea name="" id="" rows="2" className="border border-black  px-2 flex-1 font-normal" onChange={(e) => change('chief', e.target.value)} value={obj.chief} ></textarea>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col my-3">
             <span>Clinical Findings : </span>
             <textarea name="" id="" rows="2" className="border border-black  px-2 flex-1 font-normal" onChange={(e) => change('clinical', e.target.value)} value={obj.clinical} ></textarea>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col my-3">
             <span>Investigations : </span>
             <textarea name="" id="" rows="2" className="border border-black  px-2 flex-1 font-normal" onChange={(e) => change('investigations', e.target.value)} value={obj.investigations} ></textarea>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col my-3">
             <span>Treatment / Surgery / Delivery Notes : </span>
             <textarea name="" id="" rows="3" className="border border-black  px-2 flex-1 font-normal" onChange={(e) => change('surgery', e.target.value)} value={obj.surgery}></textarea>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col my-3">
             <span>Treatment Advised at the time of Discharge : </span>
             <textarea name="" id="" rows="6" className="border border-black  px-2 flex-1 font-normal" onChange={(e) => change('treatement', e.target.value)} value={obj.treatement}></textarea>
           </div>

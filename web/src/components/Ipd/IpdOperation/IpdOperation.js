@@ -104,9 +104,9 @@ const IpdOperation = ({ ipd, users, operations }) => {
       <div className="shadow-md rounded-md">
 
         <div className="p-2 w-full shadow-sm bg-white ">
-          <div className=" grid grid-cols-4 grid-flow-row gap-x-2 gap-y-2">
+          <div className=" grid grid-cols-6 grid-flow-row gap-x-2 gap-y-2">
 
-            <div className="flex col-span-1 justify-center">Operation Type</div>
+            <div className="flex col-span-3 justify-center">Operation Type</div>
             <div className="flex col-span-1 justify-center">Amount</div>
             <div className="flex col-span-1 justify-center">Date & Time</div>
             <div className="flex col-span-1 justify-center">Action</div>
@@ -118,7 +118,7 @@ const IpdOperation = ({ ipd, users, operations }) => {
 
                 return (
                   <>
-                    <div className="flex col-span-1 justify-center">{item.operation_name}</div>
+                    <div className="flex col-span-3 justify-center">{item.operation_name}</div>
                     <div className="flex col-span-1 justify-center">{item.amount}</div>
                     <div className="flex col-span-1 justify-center">{date || ''}</div>
                     {/* <div className="flex col-span-1 justify-center">{item}</div> */}
@@ -226,7 +226,7 @@ const OperationChargeBody = ({ operations, item, operationChargesArray, del, set
 
   return (
     <>
-      <div className="flex col-span-1 justify-center">
+      <div className=" col-span-3  w-full">
         <Select options={obj} isClearable={true} required onChange={operationChargeTypeChange}
         />
       </div>
