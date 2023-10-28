@@ -1,4 +1,4 @@
-import {useState,useEffect} from 'react'
+import { useState, useEffect } from 'react'
 export const QUERY = gql`
   query FindDownloadOtherChargeQuery($id: Int!) {
     downloadOtherCharge: ipd(id: $id) {
@@ -72,31 +72,31 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ downloadOtherCharge,chargeses }) => {
+export const Success = ({ downloadOtherCharge, chargeses }) => {
   const [pages, setPages] = useState([])
   const [count, setCount] = useState()
   const [chunks, setChunks] = useState([])
   const [sum, setSum] = useState(0)
-  const [obj,setObj] = useState({})
+  const [obj, setObj] = useState({})
   // let count = 0
   const [formatedDate, setFormatedDate] = useState("")
   console.log("page called")
   useEffect(() => {
     console.log("page called")
 
-    const myArray = downloadOtherCharge.IpdCharges.map((val)=>{
-      return { 'charge_type':val.charge_type,'charge':val.charge,'quantity':val.quantity,'total':val.charge*val.quantity }
+    const myArray = downloadOtherCharge.IpdCharges.map((val) => {
+      return { 'charge_type': val.charge_type, 'charge': val.charge, 'quantity': val.quantity, 'total': val.charge * val.quantity }
     })
     console.log(downloadOtherCharge.IpdCharges)
 
-    const myArray2 = downloadOtherCharge.IpdOperationPayment.map((val,ind)=>{
-      return { 'charge_type':`OPERATION (${val.operation_name})`,'charge':val.amount,'quantity':1,'total':val.amount }
+    const myArray2 = downloadOtherCharge.IpdOperationPayment.map((val, ind) => {
+      return { 'charge_type': `OPERATION (${val.operation_name})`, 'charge': val.amount, 'quantity': 1, 'total': val.amount }
     })
-    const myArray3 = downloadOtherCharge.IpdConsultation.map((val,ind)=>{
-      return { 'charge_type':val.consultation_type,'charge':val.amount,'quantity':1,'total':val.amount }
+    const myArray3 = downloadOtherCharge.IpdConsultation.map((val, ind) => {
+      return { 'charge_type': val.consultation_type, 'charge': val.amount, 'quantity': 1, 'total': val.amount }
     })
 
-    const actualArray = [...myArray,...myArray2,...myArray3]
+    const actualArray = [...myArray, ...myArray2, ...myArray3]
     const noOfPage = Math.ceil(actualArray.length / 15)
     // setPages(noOfPage)
     let page = []
@@ -120,15 +120,14 @@ export const Success = ({ downloadOtherCharge,chargeses }) => {
       i += chunkSize;
     }
 
-    let dis=0,gst=0;
+    let dis = 0, gst = 0;
     downloadOtherCharge.IpdPayment.map((item) => {
       if (item.payment_mode == 'disc') {
         dis += item.amount
 
       }
-      if(item.payment_mode == 'gst')
-      {
-        gst+=item.amount
+      if (item.payment_mode == 'gst') {
+        gst += item.amount
 
       }
     })
@@ -268,8 +267,8 @@ export const Success = ({ downloadOtherCharge,chargeses }) => {
                   <div className="absolute right-5 flex text-xs justify-start flex-col ">
                     <span>Sub Total :- {sum}</span>
                     <span>GST Amount :- {obj.gst}</span>
-                    <span>Discount Amount :- {obj.dis*-1 } </span>
-                    <span className='text-base font-bold'>Grand Total :- {sum + obj.dis+ obj.gst}</span>
+                    <span>Discount Amount :- {obj.dis * -1} </span>
+                    <span className='text-base font-bold'>Grand Total :- {sum + obj.dis + obj.gst}</span>
                   </div>
                 </section>
 
@@ -284,6 +283,122 @@ export const Success = ({ downloadOtherCharge,chargeses }) => {
 
 
         })
+      }
+      {
+        pages.length == 0 && (
+          (
+            <section
+              className="border-black border text-black"
+              style={{ width: '21cm', height: '29.7cm', padding: '0.7cm 0.7cm' }}
+            >
+              <section
+                className="border-black border"
+                style={{ width: '19.6cm', height: '13.45cm' }}
+              >
+                <section
+                  id="firstLayer"
+                  className="border-b border-black"
+                  style={{ width: '19.6cm', height: '2.8cm' }}
+                >
+                  <div style={{ padding: '0cm 0.1cm' }}>
+                    <img src="/srihos.jpg" alt="" srcset="" />
+                  </div>
+                  {/* <div className="flex font-bold text-xs justify-between px-6">
+                    <div>
+                      Bill No :
+                    </div>
+                    <div>
+                      Date :
+                    </div>
+
+                  </div> */}
+                </section>
+                <section
+                  id="secondLayer"
+                  className="border-b border-black"
+                  style={{ width: '19.6cm', height: '0.65cm', padding: '0cm 0cm' }}
+
+                >
+
+                  <div className="flex f justify-between px-6">
+                    <div className="space-x-4">
+                      <span className="font-bold text-xs ">Name : </span> <span className="text-xs">
+                        {downloadOtherCharge.patient.name.split('(')[0]}
+                      </span>
+                    </div>
+                    <div className="space-x-4">
+                      <span className="font-bold text-xs">Mobile No : </span> <span className="text-xs">{downloadOtherCharge.patient.phone_no}</span>
+                    </div>
+                    <div className="space-x-4">
+                      <span className="font-bold text-xs">Date : </span> <span className="text-xs">{new Date().toLocaleDateString()}</span>
+                    </div>
+
+
+                  </div>
+                </section>
+                <section
+                  id="thirdLayer"
+                  className="border-b border-black"
+                  style={{ width: '19.6cm', height: '7.52cm', padding: '0.1cm 0cm' }}
+                >
+
+                  <div className="grid grid-cols-8  font-bold border-b  text-xs border-black">
+                    <span className="col-span-1">Sl. No</span>
+                    <span className="col-span-3">Item Name</span>
+                    <span className="col-span-1">Unit Cost</span>
+                    <span className="col-span-1">Qty</span>
+
+                    <span className="col-span-2">Amount (₹)</span>
+                  </div>
+                  <div className="text-xs grid grid-cols-8 ">
+                    {
+
+                    }
+
+                  </div>
+
+
+
+
+                </section>
+
+
+                <section
+                  id="fourtLayer"
+                  className="relative"
+                  style={{ width: '19.6cm' }}
+                >
+
+                  {/* <div className="grid grid-cols-8 border-b   border-black">
+                      <span className="col-span-1"></span>
+                      <span className="col-span-5">Total</span>
+
+                      <span className="col-span-2">(₹) {sum}</span>
+                    </div> */}
+
+                  <div className="absolute top-16 left-5">
+                    <span>Signature</span>
+                  </div>
+                  <div className="absolute right-5 flex text-xs justify-start flex-col ">
+                    <span>Sub Total :- {sum}</span>
+                    <span>GST Amount :- {obj.gst}</span>
+                    <span>Discount Amount :- {obj.dis * -1} </span>
+                    <span className='text-base font-bold'>Grand Total :- {sum + obj.dis + obj.gst}</span>
+                  </div>
+                </section>
+
+
+
+
+              </section>
+            </section>
+
+
+          )
+
+
+
+        )
       }
 
     </>

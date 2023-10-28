@@ -7,6 +7,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 // import { QUERY } from 'src/components/Ipd/IpdsCell'
 import { QUERY } from 'src/components/Ipd/IpdCell'
+import {FiEdit} from 'react-icons/fi'
 
 const CREATE_IPD_OPERATION_PAYMENT_MUTATION = gql`
   mutation CreateIpdOperationPaymentMutation(
@@ -25,10 +26,33 @@ const DELETE_IPD_OPERATION_PAYMENT_MUTATION = gql`
     }
   }
 `
+const UPDATE_IPD_OPERATION_PAYMENT_MUTATION = gql`
+  mutation UpdateIpdOperationPaymentMutation(
+    $id: Int!
+    $input: UpdateIpdOperationPaymentInput!
+  ) {
+    updateIpdOperationPayment(id: $id, input: $input) {
+      id
+      operation_name
+      amount
+      created_at
+      updated_at
+      ipdId
+    }
+  }
+`
 
 const IpdOperation = ({ ipd, users, operations }) => {
   console.log(operations)
   const [operationChargesArray, setoperationChargesArray] = useState([])
+
+  // useEffect
+  // useEffect(()=>{
+  //     const data = ipd.IpdOperationPayment.map((item, index) => {
+  //       return { operation_name: item.operation_name, amount: item.amount, ipdId: ipd.id,extra:{} }
+  //      })
+  //      setoperationChargesArray(data)
+  // },[ipd])
 
   const [deleteIpdOperationPayment] = useMutation(
     DELETE_IPD_OPERATION_PAYMENT_MUTATION,
@@ -72,6 +96,24 @@ const IpdOperation = ({ ipd, users, operations }) => {
       awaitRefetchQueries: true,
     }
   )
+
+  const [updateIpdOperationPayment, { loading2, error2 }] = useMutation(
+    UPDATE_IPD_OPERATION_PAYMENT_MUTATION,
+    {
+      onCompleted: () => {
+        toast.success('IpdOperationPayment updated')
+        setoperationChargesArray([])
+        navigate(routes.ipd({id:ipd.id}))
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+      refetchQueries: [{ query: QUERY,  variables: {
+        id: ipd.id,
+      }, }],
+      awaitRefetchQueries: true,
+    }
+  )
   const onSave = () => {
     console.log(operationChargesArray)
     const hasEmptyValue = operationChargesArray.some((obj) => {
@@ -84,6 +126,15 @@ const IpdOperation = ({ ipd, users, operations }) => {
       return
     }
     createIpdOperationPayment({ variables: { input: operationChargesArray } })
+  }
+
+
+  const [editId,setEditId] = useState(0)
+  const [editAmount,setEditAmount] = useState(0)
+  const onEditClick = (id,amt) => {
+    setEditId(id)
+    setEditAmount(amt)
+
   }
 
   const addOperationCharge = () => {
@@ -99,6 +150,8 @@ const IpdOperation = ({ ipd, users, operations }) => {
 
 
   }
+
+
   return (
     <div className="m-3 p-3">
       <div className="shadow-md rounded-md">
@@ -107,6 +160,8 @@ const IpdOperation = ({ ipd, users, operations }) => {
           <div className=" grid grid-cols-6 grid-flow-row gap-x-2 gap-y-2">
 
             <div className="flex col-span-3 justify-center">Operation Type</div>
+
+
             <div className="flex col-span-1 justify-center">Amount</div>
             <div className="flex col-span-1 justify-center">Date & Time</div>
             <div className="flex col-span-1 justify-center">Action</div>
@@ -119,16 +174,45 @@ const IpdOperation = ({ ipd, users, operations }) => {
                 return (
                   <>
                     <div className="flex col-span-3 justify-center">{item.operation_name}</div>
-                    <div className="flex col-span-1 justify-center">{item.amount}</div>
+                   {
+                   item.id != editId ?
+                   <div className="flex col-span-1 justify-center">{item.amount}</div>
+                  :
+                  <div className="flex col-span-1 justify-center text-black">
+                  <input type="number" onChange={(e)=>setEditAmount(e.target.value)} value={editAmount} />
+                </div>
+                  }
                     <div className="flex col-span-1 justify-center">{date || ''}</div>
-                    {/* <div className="flex col-span-1 justify-center">{item}</div> */}
-                    {/* <div className="flex col-span-1 justify-center">No Action</div> */}
-                    <div className="flex col-span-1 justify-center">    <span className='cursor-pointer text-xl text-red-600'
+
+                    <div className="flex col-span-1 justify-center items-center space-x-3">
+                    {
+                        item.id != editId ?
+                      <span className='cursor-pointer text-xl text-green-600'
+                      onClick={()=>onEditClick(item.id,item.amount)}
+                      >
+                      <FiEdit />
+                    </span>
+                    :                       <span className='cursor-pointer text-lg text-green-600'
+                    onClick={()=>
+                      {
+                      updateIpdOperationPayment({ variables: { id:item.id, input:{'amount':parseFloat(editAmount)} } })
+                      setEditAmount(0);
+                      setEditId(0);
+                    }
+
+                    }
+                    >
+                      Save
+                  </span>
+                    }
+                     <span className='cursor-pointer text-xl text-red-600'
                     onClick={()=>onDeleteClick(item.id)}
                     >
                       <MdDeleteForever />
-                    </span></div>
-                    {/* <div className="flex col-span-1 justify-center">No Action</div> */}
+                    </span>
+
+                    </div>
+
 
                   </>
                 )
@@ -151,12 +235,12 @@ const IpdOperation = ({ ipd, users, operations }) => {
             }
           </div>
 
-          <div className='flex justify-center mt-2'>
+          <div className={`flex justify-center mt-2 ${editId!=0 && 'hidden'}`}>
             <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addOperationCharge}>Add Operation Charge</div>
           </div>
 
         </div>
-        <div className='flex justify-center mt-2 pb-3'>
+        <div className={`flex justify-center mt-2 pb-3 ${editId!=0 && 'hidden'}`}>
           <div className='bg-green-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={onSave}>Save Changes</div>
         </div>
 
