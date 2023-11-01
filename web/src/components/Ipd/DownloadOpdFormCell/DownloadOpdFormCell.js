@@ -127,23 +127,31 @@ export const Success = ({ downloadOpdForm }) => {
 
           >
 
-            <div className="flex  justify-between px-6">
-              <div className="space-x-4">
-                <span className="font-bold text-xs ">Name : </span> <span className="text-xs">
+            <div className="flex relative  justify-between px-6">
+              <div className="space-x-4 absolute left-[3.8cm]">
+                {/* <span className="font-bold text-xs ">Name : </span> */}
+                 <span className="text-xs ">
                   {downloadOpdForm.patient.name.split('(')[0]}
                 </span>
               </div>
-              <div className="space-x-4">
-                <span className="font-bold text-xs">Age : </span> <span className="text-xs">{downloadOpdForm.patient.age}</span>
+              <div className="space-x-4 absolute left-[13cm]">
+                {/* <span className="font-bold text-xs">Age : </span> */}
+                <span className="text-xs">{downloadOpdForm.patient.age}</span>
               </div>
-              <div className="space-x-4">
-                <span className="font-bold text-xs">Sex : </span> <span className="text-xs">{downloadOpdForm.patient.gender}</span>
+              <div className="space-x-4 absolute left-[14.8cm]">
+                {/* <span className="font-bold text-xs">Sex : </span> */}
+                <span className="text-xs">{downloadOpdForm.patient.gender}</span>
               </div>
-              <div className="space-x-4">
-                <span className="font-bold text-xs">Phone No. : </span> <span className="text-xs">{downloadOpdForm.patient.phone_no}</span>
+              {/* <div className="space-x-4">
+
+                <span className="text-xs">{downloadOpdForm.patient.phone_no}</span>
+              </div> */}
+              <div className="space-x-4 absolute left-[16.5cm]">
+                {/* <span className="font-bold text-xs">Date : </span> */}
+                <span className="text-xs">{new Date().toLocaleDateString()}</span>
               </div>
-              <div className="space-x-4">
-                <span className="font-bold text-xs">Date : </span> <span className="text-xs">{new Date().toLocaleDateString()}</span>
+              <div>
+.
               </div>
 
 
