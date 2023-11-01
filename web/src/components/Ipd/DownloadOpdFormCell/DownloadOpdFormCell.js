@@ -115,7 +115,7 @@ export const Success = ({ downloadOpdForm }) => {
           <section
             id="firstLayer"
             className=""
-            style={{ width: '19.6cm', height: '6cm' }}
+            style={{ width: '19.6cm', height: '6.5cm' }}
           >
 
           </section>
@@ -128,10 +128,18 @@ export const Success = ({ downloadOpdForm }) => {
           >
 
             <div className="flex relative  justify-between px-6">
-              <div className="space-x-4 absolute left-[3.8cm]">
+              <div className="space-x-2 absolute left-[3.8cm]">
                 {/* <span className="font-bold text-xs ">Name : </span> */}
                  <span className="text-xs ">
                   {downloadOpdForm.patient.name.split('(')[0]}
+                </span>
+                <span className="text-xs ">
+
+                  (IPD id :-
+                </span>
+                <span className="text-xs ">
+
+                {downloadOpdForm.id})
                 </span>
               </div>
               <div className="space-x-4 absolute left-[13cm]">
