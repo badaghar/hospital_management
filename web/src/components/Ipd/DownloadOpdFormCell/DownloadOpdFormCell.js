@@ -11,6 +11,7 @@ export const QUERY = gql`
       discharge_date
       patientType
       patient{
+        id
         name
         age
         address
@@ -133,13 +134,13 @@ export const Success = ({ downloadOpdForm }) => {
                  <span className="text-xs ">
                   {downloadOpdForm.patient.name.split('(')[0]}
                 </span>
-                <span className="text-xs ">
+                {/* <span className="text-xs ">
 
                   (IPD id :-
-                </span>
+                </span> */}
                 <span className="text-xs ">
 
-                {downloadOpdForm.id})
+                ({downloadOpdForm.patient.id})
                 </span>
               </div>
               <div className="space-x-4 absolute left-[13cm]">
