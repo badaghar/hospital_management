@@ -63,6 +63,15 @@ export const QUERY = gql`
         ipdId
         summary
       }
+      # IpdPrescription{
+      #   id
+      #   medicine
+      #   dosage
+      #   timing
+      #   frequency
+      #   duration
+      #   note
+      # }
 
 
     }

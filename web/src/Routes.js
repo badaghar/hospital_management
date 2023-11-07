@@ -26,6 +26,54 @@ const Routes = () => {
 
 
 
+      <Set wrap={ScaffoldLayout} title="IpdPrescriptions" titleTo="ipdPrescriptions" buttonLabel="New IpdPrescription" buttonTo="newIpdPrescription">
+
+
+
+
+
+
+
+        <Route path="/ipd-prescriptions/new" page={IpdPrescriptionNewIpdPrescriptionPage} name="newIpdPrescription" />
+
+
+
+
+
+
+
+        <Route path="/ipd-prescriptions/{id:Int}/edit" page={IpdPrescriptionEditIpdPrescriptionPage} name="editIpdPrescription" />
+
+
+
+
+
+
+
+        <Route path="/ipd-prescriptions/{id:Int}" page={IpdPrescriptionIpdPrescriptionPage} name="ipdPrescription" />
+
+
+
+
+
+
+
+        <Route path="/ipd-prescriptions" page={IpdPrescriptionIpdPrescriptionsPage} name="ipdPrescriptions" />
+
+
+
+
+
+
+
+      </Set>
+
+
+
+
+
+
+
       {/* <Set wrap={ScaffoldLayout} title="ReturnExpiryMedicines" titleTo="returnExpiryMedicines" buttonLabel="New ReturnExpiryMedicine" buttonTo="newReturnExpiryMedicine">
         <Route path="/return-expiry-medicines/new" page={ReturnExpiryMedicineNewReturnExpiryMedicinePage} name="newReturnExpiryMedicine" />
         <Route path="/return-expiry-medicines/{id:Int}/edit" page={ReturnExpiryMedicineEditReturnExpiryMedicinePage} name="editReturnExpiryMedicine" />
