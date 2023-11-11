@@ -63,15 +63,15 @@ export const QUERY = gql`
         ipdId
         summary
       }
-      # IpdPrescription{
-      #   id
-      #   medicine
-      #   dosage
-      #   timing
-      #   frequency
-      #   duration
-      #   note
-      # }
+      IpdPrescription{
+        id
+        medicine
+        dosage
+        timing
+        frequency
+        duration
+        note
+      }
 
 
     }
@@ -110,6 +110,23 @@ export const QUERY = gql`
         bed_name
       }
     }
+    medicines {
+      id
+      quantity
+      productId
+      batch
+      exp
+      mrp
+      sgst
+      cgst
+      discount
+      created_at
+      updated_at
+      pid{
+        name
+      }
+
+    }
 
   }
 `
@@ -122,6 +139,6 @@ export const Failure = ({ error }) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ ipd, users, doctorFees, chargeses,labChargeses,operations,floors }) => {
-  return <Ipd ipd={ipd} users={users} doctorFees={doctorFees} chargeses={chargeses} labChargeses={labChargeses} operations={operations} floors={floors}/>
+export const Success = ({ ipd, users, doctorFees, chargeses,labChargeses,operations,floors,medicines }) => {
+  return <Ipd ipd={ipd} users={users} doctorFees={doctorFees} chargeses={chargeses} labChargeses={labChargeses} operations={operations} floors={floors} medicines={medicines}/>
 }

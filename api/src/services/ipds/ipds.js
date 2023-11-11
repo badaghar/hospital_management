@@ -201,4 +201,7 @@ export const Ipd = {
   IpdSummary: (_obj, { root }) => {
     return db.ipd.findUnique({ where: { id: root?.id } }).IpdSummary()
   },
+  IpdPrescription: (_obj, { root }) => {
+    return db.ipd.findUnique({ where: { id: root?.id } }).IpdPrescription()
+  },
 }

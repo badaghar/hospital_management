@@ -18,6 +18,7 @@ export const schema = gql`
     IpdOperationPayment: [IpdOperationPayment]!
     IpdChat: [IpdChat]!
     IpdSummary: [IpdSummary]!
+    IpdPrescription: [IpdPrescription]!
   }
 
   type Query {

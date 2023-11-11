@@ -10,8 +10,9 @@ export const ipdPrescription = ({ id }) => {
   })
 }
 
-export const createIpdPrescription = ({ input }) => {
-   db.ipdPrescription.createMany({
+export const createIpdPrescription = async ({ input }) => {
+  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n',input)
+  await db.ipdPrescription.createMany({
     data: input,
   })
 }
