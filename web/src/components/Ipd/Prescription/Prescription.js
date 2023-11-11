@@ -33,11 +33,19 @@ const Prescription = ({ ipd,medicines }) => {
     {
       onCompleted: () => {
         toast.success('IpdPrescription created')
-        navigate(routes.ipdPrescriptions())
+        // navigate(routes.ipdPrescriptions())
+        setPrescriptionArray([])
+        navigate(routes.ipd({ id: ipd.id }))
       },
       onError: (error) => {
         toast.error(error.message)
       },
+      refetchQueries: [{
+        query: QUERY, variables: {
+          id: ipd.id,
+        },
+      }],
+      awaitRefetchQueries: true,
     }
   )
 
@@ -61,11 +69,17 @@ const Prescription = ({ ipd,medicines }) => {
     {
       onCompleted: () => {
         toast.success('IpdPrescription deleted')
-        navigate(routes.ipdPrescriptions())
+        // navigate(routes.ipdPrescriptions())
       },
       onError: (error) => {
         toast.error(error.message)
       },
+      refetchQueries: [{
+        query: QUERY, variables: {
+          id: ipd.id,
+        },
+      }],
+      awaitRefetchQueries: true,
     }
   )
 
