@@ -8,8 +8,8 @@ import { toast } from '@redwoodjs/web/toast'
 import { QUERY } from 'src/components/Ipd/IpdCell'
 import axios from "axios"
 const CREATE_IPD_CHARGES_MUTATION = gql`
-  mutation CreateIpdChargesMutation($input: [CreateIpdChargesInput]!) {
-    createIpdCharges(input: $input) {
+  mutation CreateIpdChargesMutation($input: [CreateIpdChargesInput]!,$isOpd: Boolean) {
+    createIpdCharges(input: $input,isOpd: $isOpd) {
       id
     }
   }
@@ -27,7 +27,7 @@ const DELETE_IPD_CHARGES_MUTATION = gql`
 const IpdOtherCharges = ({ ipd, users, chargeses }) => {
   const [otherChargesArray, setOtherChargesArray] = useState([])
   const [isPrint, setIsPrint] = useState(false)
-
+  const isOpd = ipd.patientType=='OPD'
 
   const [deleteIpdCharges] = useMutation(DELETE_IPD_CHARGES_MUTATION, {
     onCompleted: () => {
@@ -122,7 +122,7 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
     //   toast.error('Enter All The Details')
     //   return
     // }
-    createIpdCharges({ variables: { input: otherChargesArray } })
+    createIpdCharges({ variables: { input: otherChargesArray,isOpd } })
   }
   const onSaveAndPrint = () => {
     // console.log(doctorChargesArray)
@@ -135,17 +135,17 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
     //   return
     // }
     setIsPrint(true)
-    createIpdCharges({ variables: { input: otherChargesArray } })
+    createIpdCharges({ variables: { input: otherChargesArray ,isOpd} })
   }
 
-  // const addOtherCharges = () => {
-  //   // setOtherChargesArray((item) => [...item, { charge_type: '', quantity: 0, charge: 0, total: 0, ipdId: ipd.id }])
-  //   const arr = chargeses.map((item)=>{
-  //     return { charge_type: item.name, quantity: 0, charge: item.amount, total: 0, ipdId: ipd.id }
-  //   })
-  //   setOtherChargesArray(arr)
+  const addOtherCharges = () => {
+    setOtherChargesArray((item) => [...item, { charge_type: '', quantity: 0, charge: 0, total: 0, ipdId: ipd.id}])
+    // const arr = chargeses.map((item)=>{
+    //   return { charge_type: item.name, quantity: 0, charge: item.amount, total: 0, ipdId: ipd.id }
+    // })
+    // setOtherChargesArray(arr)
 
-  // }
+  }
   useEffect(()=>{
     // console.log('hello         \n\n\n\n\n\n\n',ipd.IpdCharges)
     // if(ipd.IpdCharges.length != 0)
@@ -182,6 +182,15 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
           return { charge_type: item.name, quantity: item.quantity || 0, charge: item.amount, total: 0, ipdId: ipd.id }
         })
     setOtherChargesArray(arr)
+    if(ipd.patientType=='OPD')
+    {
+            const arr = chargeses.map((item)=>{
+        return { charge_type: item.name, quantity: item.quantity || 0, charge: item.amount, total: 0, ipdId: ipd.id }
+      })
+      setOtherChargesArray([])
+
+
+    }
 
   },[ipd])
 
@@ -199,15 +208,15 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
       <div className="shadow-md rounded-md">
 
         <div className="p-2 w-full shadow-sm bg-white ">
-          <div className=" grid grid-cols-4 grid-flow-row gap-x-2 gap-y-2">
+          <div className={` grid grid-cols-4 grid-flow-row gap-x-2 gap-y-2 ${ipd.patientType=='OPD' ?'grid-cols-5' :'grid-cols-4 '}`}>
 
             <div className="flex col-span-1 justify-center">Charges Type</div>
             <div className="flex col-span-1 justify-center">Amount</div>
             <div className="flex col-span-1 justify-center">Quantity</div>
             <div className="flex col-span-1 justify-center">Net Amount</div>
-            {/* <div className="flex col-span-1 justify-center">Action</div> */}
+           {ipd.patientType=='OPD' && <div className="flex col-span-1 justify-center">Action</div>}
 
-            {/* {
+            {ipd.patientType=='OPD' &&
               ipd.IpdCharges.map((item, index) => {
                 return (
                   <>
@@ -215,10 +224,15 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
                     <div className="flex col-span-1 justify-center">{item.charge}</div>
                     <div className="flex col-span-1 justify-center">{item.quantity}</div>
                     <div className="flex col-span-1 justify-center">{item.total}</div>
+                    <div className="flex col-span-1 justify-center">    <span className='cursor-pointer text-xl text-red-600'
+                    onClick={()=>onDeleteClick(item.id)}
+                    >
+                      <MdDeleteForever />
+                    </span></div>
                   </>
                 )
               })
-            } */}
+            }
             {
               otherChargesArray.map((item, index) => {
                 return (
@@ -231,6 +245,7 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
                       chargename={otherChargesArray[index].charge_type}
                       quantity={otherChargesArray[index].quantity}
                       amt={otherChargesArray[index].charge}
+                      ipd={ipd}
                       // amt = {}
                     />
                   // </>
@@ -240,9 +255,9 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
             }
           </div>
 
-          {/* <div className='flex justify-center mt-2'>
+{ ipd.patientType=='OPD'  &&        <div className='flex justify-center mt-2'>
             <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addOtherCharges}>Add Charge</div>
-          </div> */}
+          </div>}
 
         </div>
         <div className='flex justify-center mt-2 pb-3'>
@@ -255,10 +270,10 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
   )
 }
 
-const OtherChargeBody = ({ chargeses, item, otherChargesArray, del, setOtherChargesArray, index ,chargename,quantity,amt}) => {
+const OtherChargeBody = ({ chargeses, item, otherChargesArray, del, setOtherChargesArray, index ,chargename,quantity,amt,ipd}) => {
 
-  // const [chargeType, setChargeType] = useState()
-  // const [obj, setObj] = useState([])
+  const [chargeType, setChargeType] = useState()
+  const [obj, setObj] = useState([])
   const [amount, setAmount] = useState(0)
   const [quantity1, setQuantity] = useState(quantity || 0)
   const [net_amount, set_net_amount] = useState(0)
@@ -276,8 +291,8 @@ const OtherChargeBody = ({ chargeses, item, otherChargesArray, del, setOtherChar
       };
       return newArray;
     });
-    // setAmount(item?.amount || 0)
-    // setChargeType(item)
+    setAmount(item?.amount || 0)
+    setChargeType(item)
     // console.log(item)
 
 
@@ -306,6 +321,14 @@ const OtherChargeBody = ({ chargeses, item, otherChargesArray, del, setOtherChar
 
 
   useEffect(() => {
+    if(ipd.patientType=='OPD')
+    {
+          const obj = chargeses.map((char) => {
+      const ob = { value: char.name, label: char.name, amount: char.amount }
+      return ob
+    })
+    setObj(obj)
+    }
 
     // if (item.charge_type) {
     //   setChargeType({ value: item.charge_type, label: item.charge_type })
@@ -330,11 +353,11 @@ const OtherChargeBody = ({ chargeses, item, otherChargesArray, del, setOtherChar
   return (
     <>
       <div className="flex col-span-1 justify-center">
-        {/* <Select options={obj} isClearable={true} required onChange={chargeTypeChange} value={item.type !== '' ? chargeType : ''}
-        /> */}
+      { ipd.patientType=='OPD' ?  <Select options={obj} isClearable={true} required onChange={chargeTypeChange} value={item.type !== '' ? chargeType : ''}
+        /> :
         <div>
           {chargename}
-        </div>
+        </div>}
       </div>
       <div className="flex col-span-1 justify-center">{amount}</div>
       <div className="flex col-span-1 justify-center ">
@@ -342,12 +365,12 @@ const OtherChargeBody = ({ chargeses, item, otherChargesArray, del, setOtherChar
 
       </div>
       <div className="flex col-span-1 justify-center">{net_amount}</div>
-      {/* <div className="flex col-span-1 justify-center">
+ {ipd.patientType=='OPD' &&     <div className="flex col-span-1 justify-center">
 
         <span className='cursor-pointer text-xl text-red-600' onClick={del.bind(this, index)}>
           <MdDeleteForever />
         </span>
-      </div> */}
+      </div>}
     </>
   )
 }

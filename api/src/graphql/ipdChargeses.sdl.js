@@ -22,6 +22,7 @@ export const schema = gql`
     quantity: Int!
     total: Float!
     ipdId: Int!
+
   }
 
   input UpdateIpdChargesInput {
@@ -33,7 +34,7 @@ export const schema = gql`
   }
 
   type Mutation {
-    createIpdCharges(input: [CreateIpdChargesInput]!): IpdCharges @requireAuth
+    createIpdCharges(input: [CreateIpdChargesInput]!, isOpd: Boolean): IpdCharges @requireAuth
     updateIpdCharges(id: Int!, input: UpdateIpdChargesInput!): IpdCharges!
       @requireAuth
     deleteIpdCharges(id: Int!): IpdCharges! @requireAuth

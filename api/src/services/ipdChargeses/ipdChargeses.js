@@ -10,13 +10,19 @@ export const ipdCharges = ({ id }) => {
   })
 }
 
-export const createIpdCharges = async ({ input }) => {
+export const createIpdCharges = async ({ input,isOpd }) => {
   const ipdId = input[0].ipdId
-  const d1 = await db.ipdCharges.deleteMany({
-    where:{
-      ipdId
-    }
-  })
+
+  if(!isOpd)
+  {
+    const d1 = await db.ipdCharges.deleteMany({
+      where:{
+        ipdId
+      }
+    })
+
+  }
+
   const data= await db.ipdCharges.createMany({
     data: input,
   })
