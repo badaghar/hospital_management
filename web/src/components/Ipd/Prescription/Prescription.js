@@ -92,7 +92,7 @@ const Prescription = ({ ipd,medicines }) => {
   }
 
   const addPrescription = () => {
-    setPrescriptionArray((item) => [...item, { medicine: '', dosage: '', timing: '',frequency:'',duration:'', note:'',ipdId: ipd.id }])
+    setPrescriptionArray((item) => [...item, { medicine: '', dosage: '', timing: '',frequency:'',duration:'', note:'',quantity:0,ipdId: ipd.id }])
   }
 
   const deletePrescription  = (index) => {
@@ -128,7 +128,8 @@ const Prescription = ({ ipd,medicines }) => {
                     <div className="flex col-span-1 justify-center">{item.timing}</div>
                     <div className="flex col-span-1 justify-center">{item.frequency}</div>
                     <div className="flex col-span-1 justify-center">{item.duration}</div>
-                    <div className="flex col-span-5 justify-center" > Note :- {item.note}</div>
+                    <div className="flex col-span-4 justify-center" > Note :- {item.note}</div>
+                    <div className="flex col-span-1 justify-center" > Quantity :- {item.quantity}</div>
                     <div className="flex col-span-1 justify-center">    <span className='cursor-pointer text-xl text-red-600'
                     onClick={()=>onDeleteClick(item.id)}
                     >
@@ -181,6 +182,8 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
   const [frequency, setFrequency] = useState('')
   const [duration, setDuration] = useState('')
   const [note, setNote] = useState('')
+  const [quantity,setQuantity] = useState(0)
+  const [maxQty,setMaxQty] = useState(0)
   const [obj, setObj] = useState([])
   const [medicineName, setMedicineName] = useState()
   const [timingObj,setTimingObj] = useState([
@@ -193,6 +196,17 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
 
 
   const ipdPrescriptionChange = (name, value,func) => {
+    if(func==setQuantity)
+    {
+      value = parseInt(value)
+      // console.log('hello')
+      if(value>maxQty)
+      {
+        // console.log('hello2')
+        return
+      }
+    }
+    // console.log('hello3')
     func(value)
 
 
@@ -218,7 +232,7 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
     }
 
     const obj = medicines.map((char) => {
-      const ob = { value:`${char.pid.name} - ${char.batch} - ${char.quantity}`, label: `${char.pid.name} - ${char.batch} - ${char.quantity}` }
+      const ob = { value:`${char.pid.name} - ${char.batch} - ${char.quantity}`, label: `${char.pid.name} - ${char.batch} - ${char.quantity}`,qty:char.quantity }
       return ob
     })
     setObj(obj)
@@ -226,6 +240,7 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
   }, [item])
 
   const medicineNameChange = (item) => {
+
 
 
     setPrescriptionArray((array) => {
@@ -237,6 +252,7 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
       };
       return newArray;
     });
+    setMaxQty(item?.qty || 0)
   }
 
   const timingChange = (item) => {
@@ -295,8 +311,15 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
       <div className="flex col-span-1 justify-center text-black">
         <input type="text" name="duration" className="border border-black p-2" id="" value={duration} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setDuration)} />
       </div>
-      <div className="flex col-span-5 w-full justify-center text-black">
-        <input type="text" name="note" className="border border-black p-2 w-full" id="" value={note} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setNote)} placeholder="Note" />
+      <div className="flex col-span-4 w-full justify-center text-black">
+        <input type="text" name="note" className="border border-black p-2 w-full" id="" value={note} required
+        onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setNote)}
+        placeholder="Note" />
+      </div>
+      <div className="flex col-span-1 justify-center text-black">
+        <input type="number" name="quantity" className="border border-black p-2" placeholder="Quantity" id="" value={quantity} required
+        onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setQuantity)}
+         />
       </div>
       <div className="flex col-span-1 justify-center">
 

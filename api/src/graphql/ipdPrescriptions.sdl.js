@@ -9,6 +9,7 @@ export const schema = gql`
     frequency: String!
     duration: String!
     note: String!
+    quantity: Int!
     created_at: DateTime!
     updated_at: DateTime!
     extra: JSON
@@ -27,6 +28,7 @@ export const schema = gql`
     frequency: String!
     duration: String!
     note: String!
+    quantity: Int!
     extra: JSON
   }
 
@@ -37,6 +39,7 @@ export const schema = gql`
     timing: String
     frequency: String
     duration: String
+    quantity: Int
     note: String
     created_at: DateTime
     updated_at: DateTime

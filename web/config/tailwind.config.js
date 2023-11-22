@@ -6,6 +6,9 @@ module.exports = {
       gridTemplateColumns: {
         '18': 'repeat(18, minmax(0, 1fr))',
       },
+      gridTemplateColumns: {
+        '13': 'repeat(13, minmax(0, 1fr))',
+      },
       backgroundImage: {
         'logo': "url('../public/SVMH_log.jpg')",
       }

@@ -15,7 +15,10 @@ import { toast } from '@redwoodjs/web/toast'
 import React from 'react'
 import Select from 'react-select'
 
-import { useEffect, useState } from 'react'
+import { MdDeleteForever } from 'react-icons/md'
+import {
+  useEffect, useState, useLayoutEffect
+} from 'react'
 import Multiselect from 'multiselect-react-dropdown'
 import { Link, routes } from '@redwoodjs/router'
 import { ReactDialogBox } from 'react-js-dialog-box'
@@ -52,19 +55,13 @@ function convertObjectValuesToUpper(obj) {
   return obj;
 }
 
-const SaleMedicineForm = (props) => {
 
+
+const SaleMedicineNewForm = (props) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isSave, setIsSave] = useState(false)
-
-  const [no_of_medicine, setNoOfMedicine] = useState(0)
-  const [show_medicine_heading, setShowMedicineHeading] = useState(false)
-  const [productList, setProductList] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [total_amount_list, set_total_amount_list] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [total_sgst_amount_list, set_total_sgst_amount_list] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [total_cgst_amount_list, set_total_cgst_amount_list] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [medicineObj, setmedicineObj] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [permedicineObj, setPermedicineObj] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  const [defaultPatient, setDefaultPatient] = useState()
+  const [patientId, setPatientId] = useState(0)
 
   const [total_amount, set_total_amount] = useState(0)
   // const [total_dis_amount, set_total_dis_amount] = useState(0)
@@ -74,30 +71,22 @@ const SaleMedicineForm = (props) => {
   const [actual_grand_total, set_actual_grand_total] = useState(0)
   const [discount, setDiscount] = useState(0)
   const [discountamt, setDiscountAmt] = useState(0)
-  const [patientId, setPatientId] = useState(0)
   const formatDate = (date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
-
   const [defaultDate, setDefaultDate] = useState(formatDate(new Date()));
-  const [selectName, setSelectName] = useState()
-
-  const [medicine, setmedicine] = useState([])
-  const [product, setProduct] = useState([])
-  const [patient, setPatient] = useState([])
-  const [defaultPatient, setDefaultPatient] = useState()
   const [doctors, setDoctors] = useState([])
   const [doctorName, setDoctorName] = useState()
-
   const [compositionToProductLsit, setCompositionToProductLsit] = useState([])
   const [gender, setGender] = useState('Male');
+  const [medicine, setmedicine] = useState([])
+  const [patient, setPatient] = useState([])
 
-  const handleGenderChange = (event) => {
-    setGender(event.target.value);
-  };
+  const [medicineArray, setMedicineArray] = useState([])
+  const [perMedicineArray, setPerMedicineArray] = useState([])
 
   useEffect(() => {
     // const opt =props.distributers.map((item)=>{
@@ -129,157 +118,9 @@ const SaleMedicineForm = (props) => {
 
   }, [])
 
-
-  const onSubmit = (data) => {
-
-    const seen = {};
-
-    for (let i = 0; i < permedicineObj.length; i++) {
-      const { productId, batch } = permedicineObj[i];
-      if (!productId || !batch) {
-        continue
-      }
-
-      const key = `${productId}-${batch}`;
-      console.log(key)
-
-      if (seen[key]) {
-        console.log(`Duplicate found for productId: ${productId} and batch: ${batch}`);
-        toast.error(`Duplicate found for batch: ${batch}`)
-        return
-        // You can customize the message or perform any other action here
-      } else {
-        seen[key] = true;
-      }
-    }
-    // console.log(isSave)
-    // console.log(data)
-    const newmedicine = medicineObj.filter((val) => {
-      return val['medicine Name']
-    })
-    const newperMedicine = permedicineObj.filter((val) => {
-      return val['quantity']
-    })
-
-
-
-    let input = {}
-    input = {
-      // 'billNo': data['billNo'],
-      'date': data['date'],
-      'medicine': newmedicine,
-      'total': parseFloat(total_amount.toFixed(2)),
-      'discount': parseFloat(discountamt.toFixed(2)),
-      'sgst': parseFloat(total_sgst_amount.toFixed(2)),
-      'cgst': parseFloat(total_cgst_amount.toFixed(2)),
-      'grand_total': parseFloat(actual_grand_total),
-      'patientId': patientId,
-      'permedicine': newperMedicine,
-      'doctor_name': doctorName
-    }
-    // console.log(input)
-    props.onSave(input, isSave, props?.saleMedicine?.id)
-
-  }
-
-  const updateMedicineTable = (e) => {
-    console.log(e.target.value)
-    const val = e.target.value
-    if (val == '') {
-      setNoOfMedicine(0)
-      setShowMedicineHeading(false)
-    } else {
-      setNoOfMedicine(val)
-      setShowMedicineHeading(true)
-    }
-  }
-
-  useEffect(() => {
-    // console.log("manufacturer :-",manufacturersList,"product List :- ",productList)
-    let tamt = 0
-    let sgstamt = 0
-    let cgstamt = 0
-    // console.log(total_amount_list,total_sgst_amount_list,total_cgst_amount_list)
-    for (let i = 0; i < no_of_medicine; i++) {
-      tamt += total_amount_list[i]
-
-      sgstamt += total_sgst_amount_list[i]
-      cgstamt += total_cgst_amount_list[i]
-    }
-
-    set_grand_total(Math.round(tamt + sgstamt + cgstamt))
-    set_total_amount(tamt)
-    set_total_sgst_amount(sgstamt)
-    set_total_cgst_amount(cgstamt)
-    set_actual_grand_total(parseFloat(Math.round(tamt + sgstamt + cgstamt)).toFixed(2))
-  }, [total_amount_list, total_cgst_amount_list, total_sgst_amount_list])
-
-  useEffect(() => {
-    let dis = grand_total * parseFloat(discount) / 100.0
-    setDiscountAmt(dis)
-    // set_grand_total(grand_total-dis)
-    // console.log("here")
-    set_actual_grand_total(parseFloat(grand_total - dis).toFixed(2))
-  }, [discount])
-
-  // check dublicate permedicine obj
-
-  // useEffect(()=>{
-  // console.log("changed")
-  // const seen = {};
-
-  // for (let i = 0; i < permedicineObj.length; i++) {
-  //   const { productId, batch } = permedicineObj[i];
-  //   if(!productId || !batch)
-  //   {
-  //     continue
-  //   }
-
-  //   const key = `${productId}-${batch}`;
-  //   console.log(key)
-
-  //   if (seen[key]) {
-  //     console.log(`Duplicate found for productId: ${productId} and batch: ${batch}`);
-  //     toast.error(`Duplicate found for productId: ${productId} and batch: ${batch}`)
-  //     // You can customize the message or perform any other action here
-  //   } else {
-  //     seen[key] = true;
-  //   }
-  // }
-  // },[permedicineObj])
-
-
-  const ShowHeadMedicine = () => {
-    // if (show_medicine_heading) {
-      return <MedicineTableHeading />
-    // } else {
-    //   return <></>
-    // }
-  }
-
-  var medicineRows = []
-  for (var i = 0; i < no_of_medicine; i++) {
-    medicineRows.push(<NewSaleMedicineTable key={'sale_' + i} value={i}
-      patients={props.patients} productList={productList}
-      setProductList={setProductList}
-      set_total_amount_list={set_total_amount_list}
-      set_total_sgst_amount_list={set_total_sgst_amount_list}
-      set_total_cgst_amount_list={set_total_cgst_amount_list}
-      setmedicineObj={setmedicineObj}
-      setPermedicineObj={setPermedicineObj}
-      medicines={medicine}
-      permedicineObj={permedicineObj}
-
-    />)
-  }
-
-
-  const addMedicine = () => {
-    setPrescriptionArray((item) => [...item, { medicine: '', dosage: '', timing: '',frequency:'',duration:'', note:'',quantity:0,ipdId: ipd.id }])
-  }
-
-
-
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
 
 
   const changePatienId = (item) => {
@@ -311,7 +152,7 @@ const SaleMedicineForm = (props) => {
         setDefaultPatient(value)
         setPatientId(id)
 
-        setSelectName(value)
+        // setSelectName(value)
         setIsOpen(false)
 
       },
@@ -325,6 +166,72 @@ const SaleMedicineForm = (props) => {
     input['gender'] = gender
     input = convertObjectValuesToUpper(input)
     createPatient({ variables: { input } })
+  }
+
+  const onSubmit = (data) => {
+    const seen = {};
+
+    for (let i = 0; i < medicineArray.length; i++) {
+      const { productId, 'batch No':batch } = medicineArray[i];
+      if (!productId || !batch) {
+        continue
+      }
+
+      const key = `${productId}-${batch}`;
+      console.log(key)
+
+      if (seen[key]) {
+        console.log(`Duplicate found for productId: ${productId} and batch: ${batch}`);
+        toast.error(`Duplicate found for batch: ${batch}`)
+        return
+        // You can customize the message or perform any other action here
+      } else {
+        seen[key] = true;
+      }
+    }
+    // setMedicineArray((item) => [...item, { 'medicine Name': '', 'batch No': '', 'Expiry Date': '', 'mrp': '', 'quantity': '', 'cgst/sgst': '', 'amount': 0 ,'tax':0,'amountWtax':0,'productId':0,'maxQty':0}])
+
+    let newmedicine = medicineArray.map((item)=>{
+      let obj = {
+        'medicine Name':item['medicine Name'],
+        'batch No':item['batch No'],
+        'Expiry Date':item['Expiry Date'],
+        'mrp':  parseFloat(item['mrp'].toFixed(5)),
+        'quantity':item['quantity'],
+        'cgst/sgst':parseFloat(item['cgst/sgst'].toFixed(2)),
+        'amount': parseFloat((item['amount']).toFixed(5))
+      }
+      return obj
+    })
+    let newperMedicine = medicineArray.map((item)=>{
+      let q = item['maxQty'] - item['quantity']
+      let obj = {
+        'quantity':q==0 ? -1 : q,
+        'productId':item['productId'],
+        'batch':item['batch']
+      }
+      return obj
+    })
+
+
+
+    let input = {}
+    input = {
+      // 'billNo': data['billNo'],
+      'date': data['date'],
+      'medicine': newmedicine,
+      'total': parseFloat(total_amount.toFixed(2)),
+      'discount': parseFloat(discountamt.toFixed(2)),
+      'sgst': parseFloat(total_sgst_amount.toFixed(2)),
+      'cgst': parseFloat(total_cgst_amount.toFixed(2)),
+      'grand_total': parseFloat(actual_grand_total.toFixed(2)),
+      'patientId': patientId,
+      'permedicine': newperMedicine,
+      'doctor_name': doctorName
+    }
+    props.onSave(input, isSave, props?.saleMedicine?.id)
+
+
   }
 
   const modifiyCompositionToProduct = (items) => {
@@ -368,12 +275,50 @@ const SaleMedicineForm = (props) => {
 
   }
 
+
+  const addMedicine = () => {
+    setMedicineArray((item) => [...item, { 'medicine Name': '', 'batch No': '', 'Expiry Date': '', 'mrp': '', 'quantity': '', 'cgst/sgst': '', 'amount': 0 ,'tax':0,'amountWtax':0,'productId':0,'maxQty':0,'batch':''}])
+  }
+
+  const deleteMedicine = (index) => {
+    setMedicineArray((array) => {
+      const newArray = [...array];
+      newArray.splice(index, 1);
+      return newArray;
+    });
+
+
+  }
+
+  useEffect(()=>{
+    let tamt=0,gst=0,ta=0
+    for (let i = 0; i < medicineArray.length; i++) {
+      if(medicineArray[i]['amount']=='NaN' || medicineArray[i]['tax']=='NaN' || medicineArray[i]['amountWtax']=='NaN'){
+        continue
+      }
+      tamt += medicineArray[i]['amountWtax']
+      gst += medicineArray[i]['tax']
+      ta += medicineArray[i]['amount']
+
+    }
+    console.log(tamt,gst,ta)
+    set_total_amount(tamt=='NaN' ? 0 : tamt)
+    set_total_cgst_amount(gst=='NaN' ? 0 : gst/2)
+    set_total_sgst_amount(gst=='NaN' ? 0 : gst/2)
+    set_actual_grand_total(ta=='NaN' ? 0 : ta)
+    set_grand_total(ta=='NaN' ? 0 : ta)
+  },[medicineArray])
+
+  useEffect(() => {
+    let dis = grand_total * parseFloat(discount) / 100.0
+    setDiscountAmt(dis)
+    // set_grand_total(grand_total-dis)
+    // console.log("here")
+    set_actual_grand_total(parseFloat(grand_total - dis).toFixed(2))
+  }, [discount])
+
   return (
-
-
-
     <div className="rw-form-wrapper">
-
       {isOpen && (
         <>
           <ReactDialogBox
@@ -538,19 +483,7 @@ const SaleMedicineForm = (props) => {
           </Label>
 
           <div className=" flex-1">
-            {/* <Multiselect
-              className="rw-input mt-0 selectname"
-              name={"patientId"}
-              options={props.patients} // Options to display in the dropdown
-              onSelect={(event) => modifyPatient(event)} // Function will trigger on select event
-              onRemove={(event) => modifyPatient(event)} // Function will trigger on remove event
-              selectionLimit={1}
-              // value={selectName}
-              // selectedValues={selectName}
-              selectedValues={selectName ? [selectName] : []}
 
-              displayValue={'name'}// Property name to display in the dropdown options
-            /> */}
             <Select options={patient} onChange={changePatienId} isClearable={true}
               value={defaultPatient}
 
@@ -570,29 +503,7 @@ const SaleMedicineForm = (props) => {
 
         </div>
 
-
         <div className='flex items-center mt-3  gap-x-4'>
-          <Label
-            name="no_of_medicine"
-            className="rw-label mt-0"
-            errorClassName="rw-label rw-label-error"
-          >
-            No Of Medicine
-          </Label>
-
-
-          <div className=" flex">
-            <NumberField
-              name="no_of_medicine"
-              className="rw-input mt-0"
-              errorClassName="rw-input rw-input-error"
-              validation={{ required: true }}
-              onChange={updateMedicineTable}
-            />
-          </div>
-
-          <FieldError name="no_of_medicine" className="rw-field-error" />
-
           <Label
             name="doctor_name"
             className="rw-label mt-0"
@@ -612,6 +523,8 @@ const SaleMedicineForm = (props) => {
 
         </div>
 
+
+
         <div className='flex items-center mt-3  gap-x-4'>
 
 
@@ -622,7 +535,7 @@ const SaleMedicineForm = (props) => {
               onSelect={(event) => modifiyCompositionToProduct(event)} // Function will trigger on select event
               onRemove={(event) => modifiyCompositionToProduct(event)} // Function will trigger on remove event
               displayValue="name" // Property name to display in the dropdown options
-              placeholder='Select The Medicines'
+              placeholder='Select The compositions'
             />
           </div>
 
@@ -634,12 +547,46 @@ const SaleMedicineForm = (props) => {
 
 
         </div>
+
         <div className="p-2 w-full shadow-sm bg-white ">
-          <div className=" grid grid-cols-12 grid-flow-row gap-x-2 gap-y-2">
+          <div className=" grid grid-cols-13 grid-flow-row gap-x-2 gap-y-2">
 
-            {ShowHeadMedicine()}
+            <div className="flex col-span-4 justify-center">Medicine Name</div>
+            <div className="flex col-span-3 justify-center">Batch No</div>
+            <div className="flex col-span-1 justify-center">Expiry Date</div>
+            <div className="flex col-span-1 justify-center">M.R.P</div>
+            <div className="flex col-span-1 justify-center">Quantity</div>
+            <div className="flex col-span-1 justify-center">CGST/SGST</div>
+            <div className="flex col-span-1 justify-center">Amount</div>
+            <div className="flex col-span-1 justify-center">Action</div>
 
-            {medicineRows}
+            {
+              medicineArray.map((item, index) => {
+                return (
+                  <>
+                    <AddMedicineBody key={index} item={item}
+                      medicineArray={medicineArray}
+                      setMedicineArray={setMedicineArray}
+                      del={deleteMedicine}
+                      index={index}
+                      medicines={props.medicines}
+                    />
+                  </>
+                )
+              })
+
+            }
+
+
+
+
+
+
+
+          </div>
+
+          <div className='flex justify-center mt-2'>
+            <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addMedicine}>Add Medicine</div>
           </div>
         </div>
 
@@ -813,23 +760,229 @@ const SaleMedicineForm = (props) => {
 
         </div>
       </Form>
+
+
     </div>
   )
 }
 
-function MedicineTableHeading() {
+const AddMedicineBody = ({ item, medicineArray, del, setMedicineArray, index, medicines }) => {
+
+  // const [labchargeType, setlabChargeType] = useState()
+  // const [obj, setObj] = useState([])
+  const [medicine, setMedicine] = useState('')
+  const [batch, setBatch] = useState('')
+  const [expDate, setExpDate] = useState('')
+  const [mrp, setMrp] = useState('')
+  const [cgst, setCgst] = useState(0)
+  const [quantity, setQuantity] = useState(0)
+  const [total,setTotal] = useState(0)
+  const [maxQty, setMaxQty] = useState(0)
+  const [obj, setObj] = useState([])
+  const [medicineName, setMedicineName] = useState()
+  const [batchName, setBatchName] = useState()
+  const [medicineList, setMedicineList] = useState([])
+  const [batchList, setBatchList] = useState([])
+  const [dublicatList, setDublicateList] = useState([])
+  // const [timingObj,setTimingObj] = useState([
+  //   {value:'After Food',label:'After Food'},
+  //   {value:'Before Food',label:'Before Food'},
+  // ])
+  // const [timingObjName,setTimingObjectName] = useState()
+
+  useLayoutEffect(() => {
+    const newList = medicines
+    setDublicateList(newList)
+    const uniqueArray = newList.filter(
+      (obj, id, self) =>
+        id === self.findIndex((o) => o.pid.name === obj.pid.name)
+    );
+    // console.log(medicines,uniqueArray)
+    const obj = uniqueArray.map((it) => {
+      return {
+        label: it.pid.name, value: it.pid.name
+      }
+    })
+    setMedicineList(obj)
+
+
+  }, [medicines])
+
+
+
+
+  const medicineChange = (name, value, func) => {
+    if (func == setQuantity) {
+      value = parseInt(value)
+      // console.log('hello')
+      if (value > maxQty) {
+        // console.log('hello2')
+        return
+      }
+    }
+    // console.log('hello3')
+    func(value)
+
+
+    setMedicineArray((array) => {
+      const newArray = [...array];
+      newArray[index] = {
+        ...newArray[index],
+        [name]: parseFloat(value)
+
+      };
+      return newArray;
+    });
+  }
+
+  useEffect(()=>{
+    let total_amount = parseFloat(mrp)*parseInt(quantity)
+    const taxPercentage = parseFloat(cgst)
+    const taxAmount = (mrp * taxPercentage) / (100 + taxPercentage);
+    const ta= total_amount + taxAmount
+    setTotal(ta.toFixed(2))
+    setMedicineArray((array) => {
+      const newArray = [...array];
+      newArray[index] = {
+        ...newArray[index],
+        'amountWtax': parseFloat(total_amount.toFixed(2)),
+        'amount': parseFloat(ta.toFixed(2)),
+        'tax':parseFloat(taxAmount.toFixed(2))
+      };
+      return newArray;
+    });
+
+
+  },[quantity,cgst])
+
+  useEffect(() => {
+
+    if (item['medicine Name']) {
+      console.log(item['medicine Name'])
+      setMedicineName({ value: item['medicine Name'], label: item['medicine Name'] })
+    }
+    if(item['batch No']) {
+      setBatchName({ value: item['batch No'], label: item['batch No'] })
+      setMrp(item['mrp'])
+      const exp = item['Expiry Date']
+      setExpDate(exp)
+      setQuantity(item['quantity'])
+      setCgst(item['cgst/sgst'])
+
+
+
+    }
+    if(item['maxQty']){
+      setMaxQty(item['maxQty'])
+    }
+
+  }, [item])
+
+  const medicineNameChange = (item) => {
+
+
+
+    setMedicineArray((array) => {
+      const newArray = [...array];
+      newArray[index] = {
+        ...newArray[index],
+        'medicine Name': item?.value || ''
+
+      };
+      return newArray;
+    });
+    // setMaxQty(item?.qty || 0)
+    const date = new Date()
+    date.setMonth(date.getMonth())
+
+    let newBatchList = dublicatList.filter((it) => (
+      it.pid.name == item.value
+      && it.quantity > 0
+       && (new Date(it.exp) >= date)
+    ))
+    console.log(newBatchList)
+
+    newBatchList = newBatchList.map((it) => {
+      return { label: it.batch + " - " + it.quantity, value: it.batch  + " - " + it.quantity, batch: it.batch, id: it.id, data: it }
+    })
+    setBatchList(newBatchList)
+  }
+
+  const batchNameChange = (item) => {
+
+
+    const exp = item.data.exp.toString().split('-')[0]+'-'+item.data.exp.toString().split('-')[1]
+
+    // setMedicineArray((item) => [...item, { 'medicine Name': '', 'batch No': '', 'Expiry Date': '', 'mrp': '', 'quantity': '', 'cgst/sgst': '', 'amount': 0 }])
+    console.log(item)
+
+    setExpDate(exp)
+    setMrp(item.data.mrp)
+    setMaxQty(item.data.quantity)
+    setMedicineArray((array) => {
+      const newArray = [...array];
+      newArray[index] = {
+        ...newArray[index],
+        'batch No': item?.value || '',
+        'batch':item.data.batch,
+        'Expiry Date':exp,
+        'mrp':item.data.mrp,
+        'productId':item.data.productId,
+        'maxQty':item.data.quantity
+      };
+      return newArray;
+    });
+
+  }
   return (
     <>
 
-      <div className="flex col-span-4 justify-center">Medicine Name</div>
-      <div className="flex col-span-3 justify-center">Batch No</div>
-      <div className="flex col-span-1 justify-center">Expiry Date</div>
-      <div className="flex col-span-1 justify-center">M.R.P</div>
-      <div className="flex col-span-1 justify-center">Quantity</div>
-      <div className="flex col-span-1 justify-center">CGST/SGST</div>
-      <div className="flex col-span-1 justify-center">Amount</div>
+      <div className=" col-span-4 ">
+        <Select options={medicineList} isClearable={true} required onChange={medicineNameChange} value={item['medicine Name'] !== '' ? medicineName : ''}
+        />
+      </div>
+      <div className=" col-span-3 ">
+        <Select options={batchList} isClearable={true} required onChange={batchNameChange} value={item['batch No'] !== '' ? batchName : ''}
+        />
+      </div>
+
+
+      <div className="flex col-span-1 justify-center items-center text-black">
+          <span>
+            {
+              expDate
+            }
+          </span>
+      </div>
+      <div className="flex col-span-1 justify-center items-center text-black">
+          <span>
+            {
+              mrp
+            }
+          </span>
+      </div>
+
+      <div className="flex col-span-1 justify-center text-black">
+        <input type="number" name="quantity" className="border border-black p-2 w-20" placeholder="Quantity" id="" value={quantity} required
+
+        onChange={(e) => medicineChange(e.target.name, e.target.value,setQuantity)}
+         />
+      </div>
+      <div className="flex col-span-1 justify-center text-black">
+        <input type="number" name="cgst/sgst" className="border border-black p-2 w-20" id="" value={cgst} required onChange={(e) => medicineChange(e.target.name, e.target.value, setCgst)} />
+      </div>
+      <div className="flex col-span-1 justify-center items-center text-black">
+            {total}
+      </div>
+
+      <div className="flex col-span-1 justify-center">
+
+        <span className='cursor-pointer text-xl text-red-600 p-2' onClick={del.bind(this, index)}>
+          <MdDeleteForever className="" />
+        </span>
+      </div>
     </>
   )
 }
 
-export default SaleMedicineForm
+export default SaleMedicineNewForm

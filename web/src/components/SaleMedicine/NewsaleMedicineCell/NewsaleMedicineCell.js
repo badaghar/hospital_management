@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useState } from 'react'
 
 import SaleMedicineForm from 'src/components/SaleMedicine/SaleMedicineForm'
+import SaleMedicineNewForm from '../SaleMedicineNewForm/SaleMedicineNewForm'
 
 const CREATE_SALE_MEDICINE_MUTATION = gql`
   mutation CreateSaleMedicineMutation($input: CreateSaleMedicineInput!) {
@@ -165,7 +166,7 @@ export const Success = ({ medicines, patients, users, compositions }) => {
         <h2 className="rw-heading rw-heading-secondary">New SaleMedicine</h2>
       </header>
       <div className="rw-segment-main">
-        <SaleMedicineForm onSave={onSave} loading={loading} error={error}
+        <SaleMedicineNewForm onSave={onSave} loading={loading} error={error}
           patients={patients} medicines={medicines} users={users}
           compositions={compositions}
         />

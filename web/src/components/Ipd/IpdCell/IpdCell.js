@@ -71,6 +71,7 @@ export const QUERY = gql`
         frequency
         duration
         note
+        quantity
       }
 
 
