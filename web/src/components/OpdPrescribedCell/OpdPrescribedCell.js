@@ -35,7 +35,14 @@ export const QUERY = gql`
 
 export const Loading = () => <div>Loading...</div>
 
-export const Empty = () => <div>Empty</div>
+export const Empty = () => {
+  return(
+
+    <div className="flex h-[70vh] justify-center items-center">
+    <span className="text-3xl">Invalid OPD ID</span>
+  </div>
+    )
+}
 
 export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
