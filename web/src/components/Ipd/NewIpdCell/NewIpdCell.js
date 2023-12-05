@@ -86,7 +86,7 @@ export const Success = ({ patients,users,doctorFees,chargeses,beds,floors,type }
   return (
     <div className="rw-segment">
       <header className="rw-segment-header">
-        <h2 className="rw-heading rw-heading-secondary">New Ipd</h2>
+        <h2 className="rw-heading rw-heading-secondary">New {type}</h2>
       </header>
       <div className="rw-segment-main">
         <IpdForm onSave={onSave} loading={loading} error={error} patients={patients} users={users} doctorFees={doctorFees} chargeses={chargeses} type={type}

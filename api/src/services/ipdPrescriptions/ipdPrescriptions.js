@@ -11,7 +11,6 @@ export const ipdPrescription = ({ id }) => {
 }
 
 export const createIpdPrescription = async ({ input }) => {
-  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n',input)
   await db.ipdPrescription.createMany({
     data: input,
   })
@@ -33,5 +32,10 @@ export const deleteIpdPrescription = ({ id }) => {
 export const IpdPrescription = {
   ipd: (_obj, { root }) => {
     return db.ipdPrescription.findUnique({ where: { id: root?.id } }).ipd()
+  },
+  medicine_detail: (_obj, { root }) => {
+    return db.ipdPrescription
+      .findUnique({ where: { id: root?.id } })
+      .medicine_detail()
   },
 }

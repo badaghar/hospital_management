@@ -40,9 +40,9 @@ const SignupPage = () => {
     }
     else if (data.roles == 'doctor' || data.roles == 'reciptionist') {
       permissions = {
-        charges: ['DoctorFees', 'Chargeses', 'LabChargeses', 'operations'],
-        bed: ['floors', 'beds'],
-        patientType: ['IPD', 'OPD','Operations']
+        charges: ['DoctorFees', 'Chargeses'],
+        // bed: ['floors', 'beds'],
+        patientType: [ 'OPD']
       }
     }
     else if (data.roles == 'admin') {

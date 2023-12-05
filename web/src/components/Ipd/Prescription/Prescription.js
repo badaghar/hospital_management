@@ -7,6 +7,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import { QUERY } from 'src/components/Ipd/IpdCell'
 import { DatetimeLocalField } from "@redwoodjs/forms"
+import axios from "axios"
 const CREATE_IPD_PRESCRIPTION_MUTATION = gql`
   mutation CreateIpdPrescriptionMutation($input: [CreateIpdPrescriptionInput]!) {
     createIpdPrescription(input: $input) {
@@ -27,14 +28,20 @@ const DELETE_IPD_PRESCRIPTION_MUTATION = gql`
 const Prescription = ({ ipd,medicines }) => {
 
   const [prescriptionArray, setPrescriptionArray] = useState([])
-
+  const [isPrint,setIsPrint] = useState(false)
   const [createIpdPrescription, { loading, error }] = useMutation(
     CREATE_IPD_PRESCRIPTION_MUTATION,
     {
       onCompleted: () => {
-        toast.success('IpdPrescription created')
+        toast.success('Prescription created')
         // navigate(routes.ipdPrescriptions())
         setPrescriptionArray([])
+        if(isPrint)
+        {
+          printPDF(ipd.id)
+
+
+        }
         navigate(routes.ipd({ id: ipd.id }))
       },
       onError: (error) => {
@@ -48,13 +55,59 @@ const Prescription = ({ ipd,medicines }) => {
       awaitRefetchQueries: true,
     }
   )
+  function getPDF(id) {
+    return axios.get(
+      `/.redwood/functions/downloadPrescription?id=` +
+      id,
+      {
+        responseType: 'arraybuffer',
+        headers: {
+          Accept: 'application/pdf',
+        },
+      }
+    )
+  }
+  const printPDF = (id) => {
+    return getPDF(id) // API call
+      .then((response) => {
+        const blob = new Blob([response.data], { type: 'application/pdf' })
+        var blobURL = URL.createObjectURL(blob)
+        var iframe =  document.createElement('iframe')
+        document.body.appendChild(iframe)
+        iframe.style.display = 'none'
+
+        iframe.src = blobURL
+     iframe.onload = function() {
+      setTimeout(function() {
+        iframe.focus()
+        iframe.contentWindow.print()
+      }, 1)
+    }
+        toast.success('Download Complete')
+      })
+      .catch((err) => {
+        toast.error('something wrong happened try again')
+        console.log(err)
+      })
+  }
 
   const onSave = (input) => {
     // createIpdPrescription({ variables: { input } })
     console.log(prescriptionArray)
+    // const hasEmptyValue = prescriptionArray.some((obj) => {
+    //   // Check if any value in the object is empty
+    //   return Object.values(obj).some((value) => value === null || value === '' || !value);
+    // });
     const hasEmptyValue = prescriptionArray.some((obj) => {
       // Check if any value in the object is empty
-      return Object.values(obj).some((value) => value === null || value === '' || !value);
+      // return Object.values(obj).some((value) => value === null || value === '' || !value);
+      return Object.keys(obj).some((key) => {
+        if (key !== 'note') {
+          const value = obj[key];
+          return value === null || value === '' || !value;
+        }
+        return false; // Skip the check for the specified key
+      });
     });
     if(hasEmptyValue)
     {
@@ -64,11 +117,39 @@ const Prescription = ({ ipd,medicines }) => {
     createIpdPrescription({ variables: { input:prescriptionArray } })
   }
 
+  const onSaveAndPrint = (input) =>{
+        // createIpdPrescription({ variables: { input } })
+        console.log(prescriptionArray)
+        // const hasEmptyValue = prescriptionArray.some((obj) => {
+        //   // Check if any value in the object is empty
+        //   return Object.values(obj).some((value) => value === null || value === '' || !value);
+        // });
+        const hasEmptyValue = prescriptionArray.some((obj) => {
+          // Check if any value in the object is empty
+          // return Object.values(obj).some((value) => value === null || value === '' || !value);
+          return Object.keys(obj).some((key) => {
+            if (key !== 'note') {
+              const value = obj[key];
+              return value === null || value === '' || !value;
+            }
+            return false; // Skip the check for the specified key
+          });
+        });
+        if(hasEmptyValue)
+        {
+          toast.error('Enter All The Details')
+          return
+        }
+        setIsPrint(true)
+        createIpdPrescription({ variables: { input:prescriptionArray } })
+
+  }
+
   const [deleteIpdPrescription] = useMutation(
     DELETE_IPD_PRESCRIPTION_MUTATION,
     {
       onCompleted: () => {
-        toast.success('IpdPrescription deleted')
+        toast.success('Prescription deleted')
         // navigate(routes.ipdPrescriptions())
       },
       onError: (error) => {
@@ -85,14 +166,14 @@ const Prescription = ({ ipd,medicines }) => {
 
   const onDeleteClick = (id) => {
     if (
-      confirm('Are you sure you want to delete ipdPrescription ' + id + '?')
+      confirm('Are you sure you want to delete Prescription ' + id + '?')
     ) {
       deleteIpdPrescription({ variables: { id } })
     }
   }
 
   const addPrescription = () => {
-    setPrescriptionArray((item) => [...item, { medicine: '', dosage: '', timing: '',frequency:'',duration:'', note:'',quantity:0,ipdId: ipd.id }])
+    setPrescriptionArray((item) => [...item, { medicine: '', dosage: '', timing: '',frequency:'',duration:'', note:'',quantity:0,ipdId: ipd.id,medicineId:0 }])
   }
 
   const deletePrescription  = (index) => {
@@ -128,7 +209,7 @@ const Prescription = ({ ipd,medicines }) => {
                     <div className="flex col-span-1 justify-center">{item.timing}</div>
                     <div className="flex col-span-1 justify-center">{item.frequency}</div>
                     <div className="flex col-span-1 justify-center">{item.duration}</div>
-                    <div className="flex col-span-4 justify-center" > Note :- {item.note}</div>
+                    {  <div className="flex col-span-4 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
                     <div className="flex col-span-1 justify-center" > Quantity :- {item.quantity}</div>
                     <div className="flex col-span-1 justify-center">    <span className='cursor-pointer text-xl text-red-600'
                     onClick={()=>onDeleteClick(item.id)}
@@ -164,7 +245,8 @@ const Prescription = ({ ipd,medicines }) => {
 
         </div>
         <div className='flex justify-center mt-2 pb-3'>
-          <div className='bg-green-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={onSave}>Save Changes</div>
+        <button className='bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2' onClick={onSave}>Save Changes</button>
+          <button className="bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2" onClick={onSaveAndPrint}>Save & Print</button>
         </div>
 
       </div>
@@ -232,7 +314,7 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
     }
 
     const obj = medicines.map((char) => {
-      const ob = { value:`${char.pid.name} - ${char.batch} - ${char.quantity}`, label: `${char.pid.name} - ${char.batch} - ${char.quantity}`,qty:char.quantity }
+      const ob = { value:`${char.pid.name} - ${char.batch} - ${char.quantity}`, label: `${char.pid.name} - ${char.batch} - ${char.quantity}`,qty:char.quantity,id:char.id }
       return ob
     })
     setObj(obj)
@@ -247,7 +329,8 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
       const newArray = [...array];
       newArray[index] = {
         ...newArray[index],
-        medicine:item?.value || ''
+        medicine:item?.value || '',
+        medicineId:item?.id || 0
 
       };
       return newArray;

@@ -167,7 +167,7 @@ model IpdPrescription {
   timing          String
   frequency       String
   duration        String
-  note            String
+  note            String?
   quantity        Int
   medicine_detail Medicine @relation(fields: [medicineId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   created_at      DateTime @default(now())

@@ -66,10 +66,10 @@ export const Success = ({ downloadDischargeSummary }) => {
           style={{ width: '18cm', height: '27.1cm' }}
         >
           {/* <div className="absolute -z-50">
-            <img src="/SVMH_log.jpg" alt=""  />
+            <img src="/BHJ_log.jpg" alt=""  />
           </div> */}
           <div className="absolute -z-50 top-52 opacity-10">
-            <img src="/SVMH_log.jpg" alt=""  />
+            <img src="/BHJ_log.jpg" alt=""  />
           </div>
           <div style={{ padding: '' }}>
             <img src="/sd.jpg" alt=""  />

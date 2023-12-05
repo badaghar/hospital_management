@@ -61,6 +61,7 @@ const SaleMedicineNewForm = (props) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isSave, setIsSave] = useState(false)
   const [defaultPatient, setDefaultPatient] = useState()
+  const [defaultDoctor, setDefaultDoctor] = useState()
   const [patientId, setPatientId] = useState(0)
 
   const [total_amount, set_total_amount] = useState(0)
@@ -87,6 +88,31 @@ const SaleMedicineNewForm = (props) => {
 
   const [medicineArray, setMedicineArray] = useState([])
   const [perMedicineArray, setPerMedicineArray] = useState([])
+
+  useEffect(()=>{
+
+    if(props.details)
+    {
+      console.log(props.details)
+      let obj = { 'label': props.details.patient.name, 'value': props.details.patient.id }
+      let obj2 = { 'label': props.details.consultant_doctor.split('----')[0], 'value': props.details.consultant_doctor.split('----')[0] }
+      setDefaultPatient(obj)
+      setDefaultDoctor(obj2)
+      setDoctorName(props.details.consultant_doctor.split('----')[0])
+      setPatientId(props.details.patient.id)
+          // setMedicineArray((item) => [...item, { 'medicine Name': '', 'batch No': '', 'Expiry Date': '', 'mrp': '', 'quantity': '', 'cgst/sgst': '', 'amount': 0 ,'tax':0,'amountWtax':0,'productId':0,'maxQty':0}])
+      let obj3 = props.details.IpdPrescription.map((item)=>{
+        let med = item.medicine_detail
+        let total_amount = parseFloat(med.mrp)*parseInt(item.quantity)
+        let ob = { 'medicine Name': med.pid.name, 'batch No': med.batch + " - " + med.quantity, 'Expiry Date': med.exp.toString().split('-')[0]+'-'+med.exp.toString().split('-')[1], 'mrp': med.mrp, 'quantity': item.quantity, 'cgst/sgst': 0, 'amount': total_amount ,'tax':0,'amountWtax':total_amount,'productId':med.pid.id,'maxQty':med.quantity,'batch':med.batch}
+        return ob
+
+      })
+      console.log(obj3)
+      setMedicineArray(obj3)
+
+    }
+  },[props.details])
 
   useEffect(() => {
     // const opt =props.distributers.map((item)=>{
@@ -131,6 +157,7 @@ const SaleMedicineNewForm = (props) => {
 
   const changeDoctorName = (item) => {
     setDoctorName(item.value)
+    setDefaultDoctor(item)
   }
 
   const openModal = () => {
@@ -513,7 +540,7 @@ const SaleMedicineNewForm = (props) => {
           </Label>
 
           <div className=" flex-1">
-            <Select options={doctors} onChange={changeDoctorName} isClearable={true} required
+            <Select options={doctors} onChange={changeDoctorName} isClearable={true} required value={defaultDoctor}
             />
             <FieldError name="doctor_name" className="rw-field-error" />
 

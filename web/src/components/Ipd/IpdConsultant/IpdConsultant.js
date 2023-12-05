@@ -49,7 +49,7 @@ const IpdConsultant = ({ ipd, users, doctorFees }) => {
     DELETE_IPD_CONSULTATION_MUTATION,
     {
       onCompleted: () => {
-        toast.success('IpdConsultation deleted')
+        toast.success('Consultation Charges deleted')
       },
       onError: (error) => {
         toast.error(error.message)
@@ -63,7 +63,7 @@ const IpdConsultant = ({ ipd, users, doctorFees }) => {
 
   const onDeleteClick = (id) => {
     if (
-      confirm('Are you sure you want to delete ipdConsultation ' + id + '?')
+      confirm('Are you sure you want to delete Consultation ' + id + ' charge ?')
     ) {
       deleteIpdConsultation({ variables: { id } })
     }

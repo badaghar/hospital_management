@@ -26,46 +26,67 @@ const Routes = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <Route path="/download-prescription/{id:Int}" page={DownloadsDownloadPrescriptionPage} name="downloadPrescription" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <Set wrap={ScaffoldLayout} title="IpdPrescriptions" titleTo="ipdPrescriptions" buttonLabel="New IpdPrescription" buttonTo="newIpdPrescription">
-
-
-
-
-
-
-
         <Route path="/ipd-prescriptions/new" page={IpdPrescriptionNewIpdPrescriptionPage} name="newIpdPrescription" />
-
-
-
-
-
-
-
         <Route path="/ipd-prescriptions/{id:Int}/edit" page={IpdPrescriptionEditIpdPrescriptionPage} name="editIpdPrescription" />
-
-
-
-
-
-
-
         <Route path="/ipd-prescriptions/{id:Int}" page={IpdPrescriptionIpdPrescriptionPage} name="ipdPrescription" />
-
-
-
-
-
-
-
         <Route path="/ipd-prescriptions" page={IpdPrescriptionIpdPrescriptionsPage} name="ipdPrescriptions" />
-
-
-
-
-
-
-
       </Set>
 
 
@@ -101,6 +122,9 @@ const Routes = () => {
         <Set wrap={DashboardLayout}>
 
           <Route path="/view-bed" page={BedViewBedPage} name="viewBed" />
+
+          <Route path="/opd-prescription" page={OpdPrescriptionPage} name="opdPrescription" />
+          <Route path="/opd-prescripde-cell/{id:Int}" page={OpdPrescripdeCellPage} name="opdPrescripdeCell" />
 
 
 
@@ -267,7 +291,7 @@ const Routes = () => {
             <Route path="/operations/{id:Int}" page={OperationOperationPage} name="operation" />
             <Route path="/operations" page={OperationOperationsPage} name="operations" />
           </Set>
-          <Set wrap={ScaffoldLayout} title="Ipds" titleTo="ipds" buttonLabel="New Ipd" buttonTo="newIpd" hide='hide'>
+          <Set wrap={ScaffoldLayout} title="OPDS" titleTo="ipds" buttonLabel="New OPD" buttonTo="newIpd" hide='hide'>
             <Route path="/ipds/new/{type:String}" page={IpdNewIpdPage} name="newIpd" />
             <Route path="/ipds/{id:Int}/edit" page={IpdEditIpdPage} name="editIpd" />
             <Route path="/ipds/{id:Int}" page={IpdIpdPage} name="ipd" />

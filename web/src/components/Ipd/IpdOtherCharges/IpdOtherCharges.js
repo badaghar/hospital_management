@@ -31,7 +31,7 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
 
   const [deleteIpdCharges] = useMutation(DELETE_IPD_CHARGES_MUTATION, {
     onCompleted: () => {
-      toast.success('IpdCharges deleted')
+      toast.success('Charges deleted')
       // navigate(routes.ipd({ id: ipd.id }))
     },
     onError: (error) => {
@@ -46,7 +46,7 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
   })
 
   const onDeleteClick = (id) => {
-    if (confirm('Are you sure you want to delete ipdCharges ' + id + '?')) {
+    if (confirm('Are you sure you want to delete Charges ' + id + '?')) {
       deleteIpdCharges({ variables: { id } })
     }
   }
@@ -92,7 +92,7 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
     CREATE_IPD_CHARGES_MUTATION,
     {
       onCompleted: () => {
-        toast.success('IpdCharges added')
+        toast.success('Charges added')
         setOtherChargesArray([])
         if (isPrint) {
           printPDF(ipd.id)

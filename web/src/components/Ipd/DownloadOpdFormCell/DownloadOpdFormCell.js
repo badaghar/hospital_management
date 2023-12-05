@@ -79,7 +79,7 @@ export const Success = ({ downloadOpdForm }) => {
           "
           style={{ width: '19.6cm', height: '27.7cm' }}
         >
-          {/* <section
+          <section
                   id="firstLayer"
                   className="border-b border-black"
                   style={{ width: '19.6cm', height: '2.8cm' }}
@@ -111,9 +111,9 @@ export const Success = ({ downloadOpdForm }) => {
 
 
                   </div>
-                </section> */}
+                </section>
 
-          <section
+          {/* <section
             id="firstLayer"
             className=""
             style={{ width: '19.6cm', height: '6.8cm' }}
@@ -131,33 +131,27 @@ export const Success = ({ downloadOpdForm }) => {
 
             <div className="flex relative  justify-between px-6">
               <div className="space-x-2 text-sm  absolute left-[3.6cm]">
-                {/* <span className="font-bold text-xs ">Name : </span> */}
+
                  <span className="">
                   {downloadOpdForm.patient.name.split('(')[0]}
                 </span>
-                {/* <span className="text-xs ">
 
-                  (IPD id :-
-                </span> */}
                 <span className=" ">
 
                 ({downloadOpdForm.patient.id})
                 </span>
               </div>
               <div className="space-x-4 absolute left-[13.0cm]">
-                {/* <span className="font-bold text-xs">Age : </span> */}
+
                 <span className="text-xs">{downloadOpdForm.patient.age}</span>
               </div>
               <div className="space-x-4 absolute left-[14.45cm]">
-                {/* <span className="font-bold text-xs">Sex : </span> */}
+
                 <span className="text-xs">{downloadOpdForm.patient.gender}</span>
               </div>
-              {/* <div className="space-x-4">
 
-                <span className="text-xs">{downloadOpdForm.patient.phone_no}</span>
-              </div> */}
               <div className="space-x-4 absolute left-[16.8cm]">
-                {/* <span className="font-bold text-xs">Date : </span> */}
+
                 <span className="text-xs">{new Date().toLocaleDateString()}</span>
               </div>
               <div>
@@ -168,24 +162,13 @@ export const Success = ({ downloadOpdForm }) => {
             </div>
 
             <div className="flex flex-col items-end  mt-2 pr-3">
-            <div>
-                {/* <span>BP:-................</span> */}
-              </div>
-              <div>
-                {/* <span>HR:-................</span> */}
-              </div>
-              <div>
-                {/* <span>SPO2:-..............</span> */}
-              </div>
-              <div>
-                {/* <span>Temp:-..............</span> */}
-              </div>
+
 
 
 
 
             </div>
-          </section>
+          </section> */}
 
 
 

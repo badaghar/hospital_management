@@ -80,7 +80,7 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
       <div className="rw-segment">
         <header className="rw-segment-header">
           <h2 className="rw-heading rw-heading-secondary">
-            Ipd {ipd.id} Detail
+            {ipd.patientType} {ipd.id} Detail
           </h2>
         </header>
         <div>
@@ -101,7 +101,7 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
             >
               Charges
             </div>
-            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+            {/* <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'labcharges')}
             >
               Lab Charges
@@ -110,7 +110,7 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
             onClick={toggleDropDown.bind(this,'operations')}
             >
               Operations
-            </div>}
+            </div>} */}
        { ipd.patientType=='OPD' &&     <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'prescription')}
             >

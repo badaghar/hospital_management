@@ -139,27 +139,27 @@ export const Success = ({ ipdOperationPayments,ipds,opds }) => {
 
 <div className="flex m-4 flex-wrap relative text-white">
 
-        <div className="flex flex-col bg-purple-700 shadow-lg rounded-2xl p-6 items-center m-4">
+        {/* <div className="flex flex-col bg-purple-700 shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>Today Ipd Patients</h1>
           <p>  {totalTodayIpd} </p>
 
-        </div>
+        </div> */}
         <div className="flex flex-col bg-gray-800  shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>Today Opd Patient</h1>
           <p>  {totalTodayOpd} </p>
 
         </div>
-        <div className="flex flex-col bg-purple-950 shadow-lg rounded-2xl p-6 items-center m-4">
+        {/* <div className="flex flex-col bg-purple-950 shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>This Month Ipd Patients</h1>
           <p>  {totalMonthIpd} </p>
 
-        </div>
+        </div> */}
         <div className="flex flex-col bg-[#AED2FF] shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>This Month Opd Patient</h1>
           <p>  {totalMonthOpd} </p>
 
         </div>
-        <div className="flex flex-col bg-[#F6635C] shadow-lg rounded-2xl p-6 items-center m-4">
+        {/* <div className="flex flex-col bg-[#F6635C] shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>Today Operation</h1>
           <p>  {totalTodayOperation} </p>
 
@@ -168,10 +168,10 @@ export const Success = ({ ipdOperationPayments,ipds,opds }) => {
           <h1>This Month Operation</h1>
           <p>  {totalMonthOperation} </p>
 
-        </div>
+        </div> */}
 
       </div>
-      <div className=''>
+      {/* <div className=''>
 
         <FullCalendar
           height={'40rem'}
@@ -186,7 +186,7 @@ export const Success = ({ ipdOperationPayments,ipds,opds }) => {
         eventClick={handleEventClick}
 
         />
-      </div>
+      </div> */}
 
     </>
   )

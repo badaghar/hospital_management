@@ -10,9 +10,11 @@ export const schema = gql`
     duration: String!
     note: String!
     quantity: Int!
+    medicine_detail: Medicine!
     created_at: DateTime!
     updated_at: DateTime!
     extra: JSON
+    medicineId: Int!
   }
 
   type Query {
@@ -27,9 +29,10 @@ export const schema = gql`
     timing: String!
     frequency: String!
     duration: String!
-    note: String!
+    note: String
     quantity: Int!
     extra: JSON
+    medicineId: Int!
   }
 
   input UpdateIpdPrescriptionInput {
@@ -39,11 +42,10 @@ export const schema = gql`
     timing: String
     frequency: String
     duration: String
-    quantity: Int
     note: String
-    created_at: DateTime
-    updated_at: DateTime
+    quantity: Int
     extra: JSON
+    medicineId: Int
   }
 
   type Mutation {

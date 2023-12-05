@@ -37,7 +37,9 @@ describe('ipdPrescriptions', () => {
         frequency: 'String',
         duration: 'String',
         note: 'String',
-        updated_at: '2023-11-07T09:45:10.909Z',
+        quantity: 1998002,
+        updated_at: '2023-11-22T06:38:12.122Z',
+        medicineId: scenario.ipdPrescription.two.medicineId,
       },
     })
 
@@ -48,7 +50,9 @@ describe('ipdPrescriptions', () => {
     expect(result.frequency).toEqual('String')
     expect(result.duration).toEqual('String')
     expect(result.note).toEqual('String')
-    expect(result.updated_at).toEqual(new Date('2023-11-07T09:45:10.909Z'))
+    expect(result.quantity).toEqual(1998002)
+    expect(result.updated_at).toEqual(new Date('2023-11-22T06:38:12.122Z'))
+    expect(result.medicineId).toEqual(scenario.ipdPrescription.two.medicineId)
   })
 
   scenario('updates a ipdPrescription', async (scenario) => {

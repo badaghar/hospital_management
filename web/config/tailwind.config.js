@@ -10,7 +10,7 @@ module.exports = {
         '13': 'repeat(13, minmax(0, 1fr))',
       },
       backgroundImage: {
-        'logo': "url('../public/SVMH_log.jpg')",
+        'logo': "url('../public/BHJ_log.jpg')",
       }
     },
   },

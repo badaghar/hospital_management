@@ -12,11 +12,11 @@ const HomePage = () => {
       <MetaTags title="Home" description="Home page" />
 
    { (!hasRole('admin') || !hasRole('doctor')) &&  <div  className='relative'>
-        <img src="/SVMH_log.jpg" alt="" srcset="" className='absolute h-[90vh] z-0 rounded-full left-[20vw] opacity-20 ' />
+        <img src="/BHJ_log.jpg" alt="" srcset="" className='absolute h-[90vh] z-0 rounded-full left-[20vw] opacity-20 ' />
 
 
       </div>}
-  {  (hasRole('admin') || hasRole('doctor')) &&  <div  className='relative bg-white text-black'>
+  {  (hasRole('admin') || hasRole('doctor')) &&  <div  className='relative  text-black'>
 
 
 

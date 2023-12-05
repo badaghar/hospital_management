@@ -42,7 +42,7 @@ const PermissionHandling = ({ id, users }) => {
         charges: covertObjectOfArrayToArray(chargesArrayList), //finished
         patientType: covertObjectOfArrayToArray(patientTypeArray), //finished
         hospitalReport: covertObjectOfArrayToArray(hospitalReportArray),
-        bed: covertObjectOfArrayToArray(beds), //  finished
+        // bed: covertObjectOfArrayToArray(beds), //  finished
         // phsam\Report: covertObjectOfArrayToArray(pharmacyOptionArray),
 
       }
@@ -70,11 +70,11 @@ const PermissionHandling = ({ id, users }) => {
   const pharmacyReportArray = [{ name: 'Distributers Reports', value: 1 }, { name: 'Manufacturer Report', value: 1 }, { name: 'PurchaseMedicines Report', value: 1 }, { name: 'SaleMedicines Report', value: 1 }, { name: 'Return Medicines Report', value: 1 }, { name: 'Payment Report', value: 1 }, { name: 'Near To Expiry Medicine Report', value: 1 }]
 
 
-  const Charges = [{ name: 'DoctorFees' }, { name: 'Chargeses' }, { name: 'LabChargeses' }, { name: 'operations' }]
-  const Bed = [{ name: 'floors' }, { name: 'beds' }]
-  const patientType = [{ name: 'IPD' }, { name: 'OPD' }, { name: 'Operations' },{name:'Certificate'}]
+  const Charges = [{ name: 'DoctorFees' }, { name: 'Chargeses' }]
+  // const Bed = [{ name: 'floors' }, { name: 'beds' }]
+  const patientType = [ { name: 'OPD' }]
 
-  const HospitalReportAyyay = [{ name: 'IPD Reports', value: 1 }, { name: 'OPD Report', value: 1 },]
+  const HospitalReportAyyay = [ { name: 'OPD Report', value: 1 },]
 
 
 
@@ -83,7 +83,7 @@ const PermissionHandling = ({ id, users }) => {
   const [pharmacyArrayList, setPharmacyArrayList] = useState({})
   const [pharmacyOptionArray, setPharmacyOptionArray] = useState({})
   const [chargesArrayList, setChargesArrayList] = useState({})
-  const [beds, setBeds] = useState({})
+  // const [beds, setBeds] = useState({})
   const [patientTypeArray, setPatientTypeArray] = useState({})
   const [hospitalReportArray, setHospitalReportArray] = useState({})
   // const [pharmacyOptionList,setPharmacyArrayList]
@@ -173,9 +173,9 @@ const PermissionHandling = ({ id, users }) => {
     const objectArray2 = user.permissions
       ?.charges
       ?.map((str) => ({ name: str }));
-    const objectArray3 = user.permissions
-      ?.bed
-      ?.map((str) => ({ name: str }));
+    // const objectArray3 = user.permissions
+    //   ?.bed
+    //   ?.map((str) => ({ name: str }));
     const objectArray4 = user.permissions
       ?.patientType
       ?.map((str) => ({ name: str }));
@@ -193,7 +193,7 @@ const PermissionHandling = ({ id, users }) => {
 
     setPharmacyArrayList(objectArray)
     setChargesArrayList(objectArray2)
-    setBeds(objectArray3)
+    // setBeds(objectArray3)
     setPatientTypeArray(objectArray4)
     setPharmacyOptionArray(objectArray5)
     setHospitalReportArray(objectArray6)
@@ -325,7 +325,7 @@ const PermissionHandling = ({ id, users }) => {
         </div>
       </div>
 
-      <div className='m-4'>
+      {/* <div className='m-4'>
 
         <div className="flex items-center space-x-4 mx-3 text-black">
           <div className='text-white'>
@@ -344,7 +344,7 @@ const PermissionHandling = ({ id, users }) => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
 
 
 
