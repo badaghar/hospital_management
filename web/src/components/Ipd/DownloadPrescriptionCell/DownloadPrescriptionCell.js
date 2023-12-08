@@ -145,7 +145,7 @@ export const Success = ({ downloadPrescription }) => {
                   <div className="grid grid-cols-7  font-bold border-b  text-xs border-black">
                     <span className="col-span-1">Sl. No</span>
 
-                    <div className=" col-span-1 ">Composition </div>
+                    <div className=" col-span-1 ">Medicine </div>
                     <div className=" col-span-1 ">Dosage</div>
                     <div className=" col-span-1 ">Timing</div>
                     <div className=" col-span-1 ">Frequency</div>
@@ -159,7 +159,7 @@ export const Success = ({ downloadPrescription }) => {
                           <>
 
                             <span className="col-span-1">{ind + 1}</span>
-                            <div className=" col-span-1">{item.medicine}</div>
+                            <div className=" col-span-1">{item.medicine.split('-')[3]}</div>
                             <div className=" col-span-1">{item.dosage}</div>
                             <div className=" col-span-1">{item.timing}</div>
                             <div className=" col-span-1">{item.frequency}</div>

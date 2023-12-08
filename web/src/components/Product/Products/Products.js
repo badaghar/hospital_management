@@ -65,6 +65,11 @@ const ProductsList = ({ products }) => {
       Header:  'Name',
       accessor: 'name',
     },
+    {
+       headerClassName: 'text-left',
+      Header:  'Code Name',
+      accessor: 'code_name',
+    },
 
     {
        headerClassName: 'text-left',

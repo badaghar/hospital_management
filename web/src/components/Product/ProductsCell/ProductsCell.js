@@ -7,6 +7,7 @@ export const QUERY = gql`
     products {
       id
       name
+      code_name
       manufacturerId
       mid{
         name

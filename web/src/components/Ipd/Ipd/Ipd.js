@@ -84,7 +84,7 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
           </h2>
         </header>
         <div>
-          <div className='flex bg-gray-800 text-white  space-x-5 rounded-3xl justify-around'>
+          <div className='flex bg-gray-800 text-white  space-x-5 rounded-3xl justify-around flex-wrap'>
             <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2' onClick={toggleDropDown.bind(this,'overview')}>
               OverView
             </div>

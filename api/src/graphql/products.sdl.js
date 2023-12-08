@@ -2,6 +2,7 @@ export const schema = gql`
   type Product {
     id: Int!
     name: String!
+    code_name: String
     mid: Manufacturer!
     manufacturerId: Int!
     created_at: DateTime!
@@ -17,12 +18,14 @@ export const schema = gql`
 
   input CreateProductInput {
     name: String!
+    code_name: String
     manufacturerId: Int!
     compositionList: [Int]!
   }
 
   input UpdateProductInput {
     name: String
+    code_name: String
     manufacturerId: Int
     compositionList: [Int]
   }

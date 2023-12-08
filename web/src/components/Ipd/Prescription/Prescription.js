@@ -314,7 +314,10 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
     }
 
     const obj = medicines.map((char) => {
-      const ob = { value:`${char.pid.name} - ${char.batch} - ${char.quantity}`, label: `${char.pid.name} - ${char.batch} - ${char.quantity}`,qty:char.quantity,id:char.id }
+      const compositionNames = char.pid.ProductToComposition.map(
+        (composition) => composition.cid.name
+      );
+      const ob = { value:`${char.pid.name} - ${char.batch} - ${char.quantity} - ${char.pid.code_name || ''}  - ${compositionNames.join(', ')}`, label: `${char.pid.name} - ${char.batch} - ${char.quantity} - ${char.pid.code_name || ''}`,qty:char.quantity,id:char.id,val:`${char.pid.name} - ${char.batch} - ${char.quantity} - ${char.pid.code_name || ''}` }
       return ob
     })
     setObj(obj)
@@ -329,8 +332,9 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
       const newArray = [...array];
       newArray[index] = {
         ...newArray[index],
-        medicine:item?.value || '',
-        medicineId:item?.id || 0
+        medicine:item?.val || '',
+        medicineId:item?.id || 0,
+
 
       };
       return newArray;

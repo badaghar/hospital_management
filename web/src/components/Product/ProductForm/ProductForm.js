@@ -329,6 +329,23 @@ const ProductForm = (props) => {
         />
 
         <FieldError name="name" className="rw-field-error" />
+        <Label
+          name="code_name"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Code Name
+        </Label>
+
+        <TextField
+          name="code_name"
+          defaultValue={props.product?.code_name}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+
+        />
+
+        <FieldError name="name" className="rw-field-error" />
 
         <div className='flex items-center mt-3  gap-x-4'>
 

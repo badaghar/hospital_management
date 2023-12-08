@@ -114,6 +114,7 @@ export const QUERY = gql`
     medicines {
       id
       quantity
+
       productId
       batch
       exp
@@ -125,6 +126,12 @@ export const QUERY = gql`
       updated_at
       pid{
         name
+        code_name
+        ProductToComposition{
+          cid{
+            name
+          }
+        }
       }
 
     }

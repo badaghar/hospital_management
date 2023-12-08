@@ -12,6 +12,7 @@ export const QUERY = gql`
       id
       name
       manufacturerId
+      code_name
       mid{
         id
         name
