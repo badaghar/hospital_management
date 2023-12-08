@@ -4,6 +4,7 @@ export const schema = gql`
     billNo: String!
     date: DateTime!
     medicine: JSON!
+    homo_medicine: JSON
     total: Float!
     discount: Float!
     sgst: Float!
@@ -33,6 +34,7 @@ export const schema = gql`
     patientId: Int!
     permedicine: JSON!
     doctor_name: String!
+    homo_medicine: JSON!
   }
 
   input UpdateSaleMedicineInput {

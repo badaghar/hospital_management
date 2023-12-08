@@ -1,0 +1,43 @@
+import { Link, routes } from '@redwoodjs/router'
+
+import IpdHomoPrescriptions from 'src/components/IpdHomoPrescription/IpdHomoPrescriptions'
+
+export const QUERY = gql`
+  query FindIpdHomoPrescriptions {
+    ipdHomoPrescriptions {
+      id
+      ipdId
+      medicine
+      dosage
+      timing
+      frequency
+      duration
+      note
+      rate
+      created_at
+      updated_at
+      extra
+    }
+  }
+`
+
+export const Loading = () => <div>Loading...</div>
+
+export const Empty = () => {
+  return (
+    <div className="rw-text-center">
+      {'No ipdHomoPrescriptions yet. '}
+      <Link to={routes.newIpdHomoPrescription()} className="rw-link">
+        {'Create one?'}
+      </Link>
+    </div>
+  )
+}
+
+export const Failure = ({ error }) => (
+  <div className="rw-cell-error">{error?.message}</div>
+)
+
+export const Success = ({ ipdHomoPrescriptions }) => {
+  return <IpdHomoPrescriptions ipdHomoPrescriptions={ipdHomoPrescriptions} />
+}

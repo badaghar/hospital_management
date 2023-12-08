@@ -204,4 +204,7 @@ export const Ipd = {
   IpdPrescription: (_obj, { root }) => {
     return db.ipd.findUnique({ where: { id: root?.id } }).IpdPrescription()
   },
+  IpdHomoPrescription: (_obj, { root }) => {
+    return db.ipd.findUnique({ where: { id: root?.id } }).IpdHomoPrescription()
+  },
 }

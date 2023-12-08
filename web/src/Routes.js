@@ -20,81 +20,25 @@ const Routes = () => {
   return (
     <Router useAuth={useAuth}>
 
+      <Set wrap={ScaffoldLayout} title="IpdHomoPrescriptions" titleTo="ipdHomoPrescriptions" buttonLabel="New IpdHomoPrescription" buttonTo="newIpdHomoPrescription">
 
+        <Route path="/ipd-homo-prescriptions/new" page={IpdHomoPrescriptionNewIpdHomoPrescriptionPage} name="newIpdHomoPrescription" />
 
+        <Route path="/ipd-homo-prescriptions/{id:Int}/edit" page={IpdHomoPrescriptionEditIpdHomoPrescriptionPage} name="editIpdHomoPrescription" />
 
+        <Route path="/ipd-homo-prescriptions/{id:Int}" page={IpdHomoPrescriptionIpdHomoPrescriptionPage} name="ipdHomoPrescription" />
 
+        <Route path="/ipd-homo-prescriptions" page={IpdHomoPrescriptionIpdHomoPrescriptionsPage} name="ipdHomoPrescriptions" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      </Set>
 
       <Route path="/download-prescription/{id:Int}" page={DownloadsDownloadPrescriptionPage} name="downloadPrescription" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <Set wrap={ScaffoldLayout} title="IpdPrescriptions" titleTo="ipdPrescriptions" buttonLabel="New IpdPrescription" buttonTo="newIpdPrescription">
         <Route path="/ipd-prescriptions/new" page={IpdPrescriptionNewIpdPrescriptionPage} name="newIpdPrescription" />
         <Route path="/ipd-prescriptions/{id:Int}/edit" page={IpdPrescriptionEditIpdPrescriptionPage} name="editIpdPrescription" />
         <Route path="/ipd-prescriptions/{id:Int}" page={IpdPrescriptionIpdPrescriptionPage} name="ipdPrescription" />
         <Route path="/ipd-prescriptions" page={IpdPrescriptionIpdPrescriptionsPage} name="ipdPrescriptions" />
       </Set>
-
-
-
-
-
-
-
       {/* <Set wrap={ScaffoldLayout} title="ReturnExpiryMedicines" titleTo="returnExpiryMedicines" buttonLabel="New ReturnExpiryMedicine" buttonTo="newReturnExpiryMedicine">
         <Route path="/return-expiry-medicines/new" page={ReturnExpiryMedicineNewReturnExpiryMedicinePage} name="newReturnExpiryMedicine" />
         <Route path="/return-expiry-medicines/{id:Int}/edit" page={ReturnExpiryMedicineEditReturnExpiryMedicinePage} name="editReturnExpiryMedicine" />
@@ -190,6 +134,12 @@ const Routes = () => {
             <Route path="/medicines/{id:Int}/edit" page={MedicineEditMedicinePage} name="editMedicine" />
             <Route path="/medicines/{id:Int}" page={MedicineMedicinePage} name="medicine" />
             <Route path="/medicines" page={MedicineMedicinesPage} name="medicines" />
+          </Set>
+          <Set wrap={ScaffoldLayout} title="HomoMedicines" titleTo="homoMedicines" buttonLabel="New HomoMedicine" buttonTo="newHomoMedicine">
+            <Route path="/homo-medicines/new" page={HomoMedicineNewHomoMedicinePage} name="newHomoMedicine" />
+            <Route path="/homo-medicines/{id:Int}/edit" page={HomoMedicineEditHomoMedicinePage} name="editHomoMedicine" />
+            <Route path="/homo-medicines/{id:Int}" page={HomoMedicineHomoMedicinePage} name="homoMedicine" />
+            <Route path="/homo-medicines" page={HomoMedicineHomoMedicinesPage} name="homoMedicines" />
           </Set>
           <Set wrap={ScaffoldLayout} title="PurchaseMedicines" titleTo="purchaseMedicines" buttonLabel="New PurchaseMedicine" buttonTo="newPurchaseMedicine">
             <Route path="/purchase-medicines/new" page={PurchaseMedicineNewPurchaseMedicinePage} name="newPurchaseMedicine" />

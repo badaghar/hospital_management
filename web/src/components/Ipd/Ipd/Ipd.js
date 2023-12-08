@@ -25,7 +25,7 @@ const DELETE_IPD_MUTATION = gql`
 
 `
 
-const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,medicines }) => {
+const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,medicines,homoMedicines }) => {
 
   const [dropDownOpen,setDropDownOpen] = useState('overview')
   const [totalAmount,setTotalAmount] = useState(0)
@@ -149,7 +149,9 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
             dropDownOpen=='operations' && <IpdOperation ipd={ipd} users={users} operations={operations}  />
           }
           {
-            dropDownOpen=='prescription' && <Prescription medicines={medicines} ipd={ipd} users={users} operations={operations}  />
+            dropDownOpen=='prescription' && <Prescription medicines={medicines} ipd={ipd} users={users} operations={operations}
+            homoMedicines={homoMedicines}
+            />
           }
           {
             dropDownOpen=='chat' && <IpdChatComponent ipd={ipd} users={users}  />

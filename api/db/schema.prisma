@@ -62,6 +62,7 @@ model Ipd {
   IpdSummary          IpdSummary[]
   extra               Json?
   IpdPrescription     IpdPrescription[]
+  IpdHomoPrescription IpdHomoPrescription[]
 }
 
 model IpdChat {
@@ -174,6 +175,22 @@ model IpdPrescription {
   updated_at      DateTime @updatedAt
   extra           Json?
   medicineId      Int
+}
+
+model IpdHomoPrescription {
+  id         Int      @id @default(autoincrement())
+  ipd        Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ipdId      Int
+  medicine   String
+  dosage     String
+  timing     String
+  frequency  String
+  duration   String
+  note       String?
+  rate       Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  extra      Json?
 }
 
 model Floor {
@@ -305,6 +322,15 @@ model Product {
   extra                        Json?
 }
 
+model HomoMedicine {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  extra      Json?
+}
+
 model PurchaseMedicine {
   id                      Int                       @id @default(autoincrement())
   invoiceNo               String
@@ -404,21 +430,22 @@ model BirthCertificate {
 }
 
 model SaleMedicine {
-  id          Int      @id @default(autoincrement())
-  billNo      String
-  date        DateTime
-  medicine    Json
-  total       Float
-  discount    Float
-  sgst        Float
-  cgst        Float
-  grand_total Float
-  patient     Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  patientId   Int
-  doctor_name String
-  extra       Json?
+  id            Int      @id @default(autoincrement())
+  billNo        String
+  date          DateTime
+  medicine      Json
+  homo_medicine Json?
+  total         Float
+  discount      Float
+  sgst          Float
+  cgst          Float
+  grand_total   Float
+  patient       Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  patientId     Int
+  doctor_name   String
+  extra         Json?
 }
 
 model ReturnMedicine {

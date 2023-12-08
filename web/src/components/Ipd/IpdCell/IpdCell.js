@@ -73,8 +73,23 @@ export const QUERY = gql`
         note
         quantity
       }
+      IpdHomoPrescription{
+        id
+        medicine
+        dosage
+        timing
+        frequency
+        duration
+        note
+        rate
+      }
 
 
+    }
+
+    homoMedicines{
+      id
+      name
     }
 
     users: users{
@@ -147,6 +162,6 @@ export const Failure = ({ error }) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ ipd, users, doctorFees, chargeses,labChargeses,operations,floors,medicines }) => {
-  return <Ipd ipd={ipd} users={users} doctorFees={doctorFees} chargeses={chargeses} labChargeses={labChargeses} operations={operations} floors={floors} medicines={medicines}/>
+export const Success = ({ ipd, users, doctorFees, chargeses,labChargeses,operations,floors,medicines,homoMedicines }) => {
+  return <Ipd ipd={ipd} users={users} doctorFees={doctorFees} chargeses={chargeses} labChargeses={labChargeses} operations={operations} floors={floors} medicines={medicines} homoMedicines={homoMedicines}/>
 }

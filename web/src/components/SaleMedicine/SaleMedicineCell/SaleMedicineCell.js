@@ -7,6 +7,7 @@ export const QUERY = gql`
       billNo
       date
       medicine
+      homo_medicine
       total
       discount
       sgst

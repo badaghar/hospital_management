@@ -88,6 +88,26 @@ const SaleMedicine = ({ saleMedicine }) => {
           </table>
         </div>
 
+        <div className="col-span-2">
+          <h3 className=" font-bold mb-4">Homopathy Product Information</h3>
+          <table className="w-full border border-gray-200">
+            <thead>
+              <tr>
+                <th className="p-4">Product</th>
+                <th className="p-4">Amount</th>
+              </tr>
+            </thead>
+            <tbody className='text-center'>
+              { saleMedicine.homo_medicine && saleMedicine.homo_medicine.map((item, index) => (
+                <tr key={index}>
+                  <td className="p-4">{item['medicine Name']}</td>
+                  <td className="p-4">{item['amount']}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
 
         <div className="col-span-2">
           <table className="w-full border border-gray-200 text-center">

@@ -88,11 +88,11 @@ const SaleMedicineNewForm = (props) => {
 
   const [medicineArray, setMedicineArray] = useState([])
   const [perMedicineArray, setPerMedicineArray] = useState([])
+  const [homoMedicineArray, setHomoMedicineArray] = useState([])
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    if(props.details)
-    {
+    if (props.details) {
       console.log(props.details)
       let obj = { 'label': props.details.patient.name, 'value': props.details.patient.id }
       let obj2 = { 'label': props.details.consultant_doctor.split('----')[0], 'value': props.details.consultant_doctor.split('----')[0] }
@@ -100,11 +100,11 @@ const SaleMedicineNewForm = (props) => {
       setDefaultDoctor(obj2)
       setDoctorName(props.details.consultant_doctor.split('----')[0])
       setPatientId(props.details.patient.id)
-          // setMedicineArray((item) => [...item, { 'medicine Name': '', 'batch No': '', 'Expiry Date': '', 'mrp': '', 'quantity': '', 'cgst/sgst': '', 'amount': 0 ,'tax':0,'amountWtax':0,'productId':0,'maxQty':0}])
-      let obj3 = props.details.IpdPrescription.map((item)=>{
+      // setMedicineArray((item) => [...item, { 'medicine Name': '', 'batch No': '', 'Expiry Date': '', 'mrp': '', 'quantity': '', 'cgst/sgst': '', 'amount': 0 ,'tax':0,'amountWtax':0,'productId':0,'maxQty':0}])
+      let obj3 = props.details.IpdPrescription.map((item) => {
         let med = item.medicine_detail
-        let total_amount = parseFloat(med.mrp)*parseInt(item.quantity)
-        let ob = { 'medicine Name': med.pid.name, 'batch No': med.batch + " - " + med.quantity, 'Expiry Date': med.exp.toString().split('-')[0]+'-'+med.exp.toString().split('-')[1], 'mrp': med.mrp, 'quantity': item.quantity, 'cgst/sgst': 0, 'amount': total_amount ,'tax':0,'amountWtax':total_amount,'productId':med.pid.id,'maxQty':med.quantity,'batch':med.batch}
+        let total_amount = parseFloat(med.mrp) * parseInt(item.quantity)
+        let ob = { 'medicine Name': med.pid.name, 'batch No': med.batch + " - " + med.quantity, 'Expiry Date': med.exp.toString().split('-')[0] + '-' + med.exp.toString().split('-')[1], 'mrp': med.mrp, 'quantity': item.quantity, 'cgst/sgst': 0, 'amount': total_amount, 'tax': 0, 'amountWtax': total_amount, 'productId': med.pid.id, 'maxQty': med.quantity, 'batch': med.batch }
         return ob
 
       })
@@ -112,7 +112,7 @@ const SaleMedicineNewForm = (props) => {
       setMedicineArray(obj3)
 
     }
-  },[props.details])
+  }, [props.details])
 
   useEffect(() => {
     // const opt =props.distributers.map((item)=>{
@@ -199,7 +199,7 @@ const SaleMedicineNewForm = (props) => {
     const seen = {};
 
     for (let i = 0; i < medicineArray.length; i++) {
-      const { productId, 'batch No':batch } = medicineArray[i];
+      const { productId, 'batch No': batch } = medicineArray[i];
       if (!productId || !batch) {
         continue
       }
@@ -218,24 +218,24 @@ const SaleMedicineNewForm = (props) => {
     }
     // setMedicineArray((item) => [...item, { 'medicine Name': '', 'batch No': '', 'Expiry Date': '', 'mrp': '', 'quantity': '', 'cgst/sgst': '', 'amount': 0 ,'tax':0,'amountWtax':0,'productId':0,'maxQty':0}])
 
-    let newmedicine = medicineArray.map((item)=>{
+    let newmedicine = medicineArray.map((item) => {
       let obj = {
-        'medicine Name':item['medicine Name'],
-        'batch No':item['batch No'],
-        'Expiry Date':item['Expiry Date'],
-        'mrp':  parseFloat(item['mrp'].toFixed(5)),
-        'quantity':item['quantity'],
-        'cgst/sgst':parseFloat(item['cgst/sgst'].toFixed(2)),
+        'medicine Name': item['medicine Name'],
+        'batch No': item['batch No'],
+        'Expiry Date': item['Expiry Date'],
+        'mrp': parseFloat(item['mrp'].toFixed(5)),
+        'quantity': item['quantity'],
+        'cgst/sgst': parseFloat(item['cgst/sgst'].toFixed(2)),
         'amount': parseFloat((item['amount']).toFixed(5))
       }
       return obj
     })
-    let newperMedicine = medicineArray.map((item)=>{
+    let newperMedicine = medicineArray.map((item) => {
       let q = item['maxQty'] - item['quantity']
       let obj = {
-        'quantity':q==0 ? -1 : q,
-        'productId':item['productId'],
-        'batch':item['batch']
+        'quantity': q == 0 ? -1 : q,
+        'productId': item['productId'],
+        'batch': item['batch']
       }
       return obj
     })
@@ -254,6 +254,7 @@ const SaleMedicineNewForm = (props) => {
       'grand_total': parseFloat(actual_grand_total.toFixed(2)),
       'patientId': patientId,
       'permedicine': newperMedicine,
+      'homo_medicine':homoMedicineArray,
       'doctor_name': doctorName
     }
     props.onSave(input, isSave, props?.saleMedicine?.id)
@@ -304,7 +305,10 @@ const SaleMedicineNewForm = (props) => {
 
 
   const addMedicine = () => {
-    setMedicineArray((item) => [...item, { 'medicine Name': '', 'batch No': '', 'Expiry Date': '', 'mrp': '', 'quantity': '', 'cgst/sgst': '', 'amount': 0 ,'tax':0,'amountWtax':0,'productId':0,'maxQty':0,'batch':''}])
+    setMedicineArray((item) => [...item, { 'medicine Name': '', 'batch No': '', 'Expiry Date': '', 'mrp': '', 'quantity': '', 'cgst/sgst': '', 'amount': 0, 'tax': 0, 'amountWtax': 0, 'productId': 0, 'maxQty': 0, 'batch': '' }])
+  }
+  const addHomoMedicine = () => {
+    setHomoMedicineArray((item) => [...item, { 'medicine Name': '', 'amount': '' }])
   }
 
   const deleteMedicine = (index) => {
@@ -316,11 +320,20 @@ const SaleMedicineNewForm = (props) => {
 
 
   }
+  const deleteHomoMedicine = (index) => {
+    setHomoMedicineArray((array) => {
+      const newArray = [...array];
+      newArray.splice(index, 1);
+      return newArray;
+    });
 
-  useEffect(()=>{
-    let tamt=0,gst=0,ta=0
+
+  }
+
+  useEffect(() => {
+    let tamt = 0, gst = 0, ta = 0
     for (let i = 0; i < medicineArray.length; i++) {
-      if(medicineArray[i]['amount']=='NaN' || medicineArray[i]['tax']=='NaN' || medicineArray[i]['amountWtax']=='NaN'){
+      if (medicineArray[i]['amount'] == 'NaN' || medicineArray[i]['tax'] == 'NaN' || medicineArray[i]['amountWtax'] == 'NaN') {
         continue
       }
       tamt += medicineArray[i]['amountWtax']
@@ -328,20 +341,28 @@ const SaleMedicineNewForm = (props) => {
       ta += medicineArray[i]['amount']
 
     }
-    console.log(tamt,gst,ta)
-    set_total_amount(tamt=='NaN' ? 0 : tamt)
-    set_total_cgst_amount(gst=='NaN' ? 0 : gst/2)
-    set_total_sgst_amount(gst=='NaN' ? 0 : gst/2)
-    set_actual_grand_total(ta=='NaN' ? 0 : ta)
-    set_grand_total(ta=='NaN' ? 0 : ta)
-  },[medicineArray])
+    for (let i = 0; i < homoMedicineArray.length; i++) {
+      if (homoMedicineArray[i]['amount'] == 'NaN') {
+        continue
+      }
+      tamt += homoMedicineArray[i]['amount']
+      ta += homoMedicineArray[i]['amount']
+
+    }
+    console.log(tamt, gst, ta)
+    set_total_amount(tamt == 'NaN' ? 0 : parseFloat(tamt))
+    set_total_cgst_amount(gst == 'NaN' ? 0 : gst / 2)
+    set_total_sgst_amount(gst == 'NaN' ? 0 : gst / 2)
+    set_actual_grand_total(ta == 'NaN' ? 0 : ta)
+    set_grand_total(ta == 'NaN' ? 0 : ta)
+  }, [medicineArray,homoMedicineArray])
 
   useEffect(() => {
     let dis = grand_total * parseFloat(discount) / 100.0
     setDiscountAmt(dis)
     // set_grand_total(grand_total-dis)
     // console.log("here")
-    set_actual_grand_total(parseFloat(grand_total - dis).toFixed(2))
+    set_actual_grand_total(parseFloat(parseFloat(grand_total - dis).toFixed(2)))
   }, [discount])
 
   return (
@@ -619,6 +640,46 @@ const SaleMedicineNewForm = (props) => {
 
 
 
+
+        <div className="p-2 w-full shadow-sm bg-white ">
+          <div className=" grid grid-cols-6 grid-flow-row gap-x-2 gap-y-2">
+
+            <div className="flex col-span-4 justify-center">Medicine Name</div>
+            <div className="flex col-span-1 justify-center">Amount</div>
+            <div className="flex col-span-1 justify-center">Action</div>
+
+            {
+              homoMedicineArray.map((item, index) => {
+                return (
+                  <>
+                    <AddHomoMedicineBody key={index} item={item}
+                      medicineArray={homoMedicineArray}
+                      setMedicineArray={setHomoMedicineArray}
+                      del={deleteHomoMedicine}
+                      index={index}
+                      medicines={props.homoMedicines}
+                    />
+                  </>
+                )
+              })
+
+            }
+
+
+
+
+
+
+
+          </div>
+
+          <div className='flex justify-center mt-2'>
+            <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addHomoMedicine}>Add Homopathy Medicine</div>
+          </div>
+        </div>
+
+
+
         <div className='flex items-center mt-3 justify-end gap-x-4'>
           <Label
             name="total"
@@ -803,7 +864,7 @@ const AddMedicineBody = ({ item, medicineArray, del, setMedicineArray, index, me
   const [mrp, setMrp] = useState('')
   const [cgst, setCgst] = useState(0)
   const [quantity, setQuantity] = useState(0)
-  const [total,setTotal] = useState(0)
+  const [total, setTotal] = useState(0)
   const [maxQty, setMaxQty] = useState(0)
   const [obj, setObj] = useState([])
   const [medicineName, setMedicineName] = useState()
@@ -862,11 +923,11 @@ const AddMedicineBody = ({ item, medicineArray, del, setMedicineArray, index, me
     });
   }
 
-  useEffect(()=>{
-    let total_amount = parseFloat(mrp)*parseInt(quantity)
+  useEffect(() => {
+    let total_amount = parseFloat(mrp) * parseInt(quantity)
     const taxPercentage = parseFloat(cgst)
     const taxAmount = (mrp * taxPercentage) / (100 + taxPercentage);
-    const ta= total_amount + taxAmount
+    const ta = total_amount + taxAmount
     setTotal(ta.toFixed(2))
     setMedicineArray((array) => {
       const newArray = [...array];
@@ -874,13 +935,13 @@ const AddMedicineBody = ({ item, medicineArray, del, setMedicineArray, index, me
         ...newArray[index],
         'amountWtax': parseFloat(total_amount.toFixed(2)),
         'amount': parseFloat(ta.toFixed(2)),
-        'tax':parseFloat(taxAmount.toFixed(2))
+        'tax': parseFloat(taxAmount.toFixed(2))
       };
       return newArray;
     });
 
 
-  },[quantity,cgst])
+  }, [quantity, cgst])
 
   useEffect(() => {
 
@@ -888,7 +949,7 @@ const AddMedicineBody = ({ item, medicineArray, del, setMedicineArray, index, me
       console.log(item['medicine Name'])
       setMedicineName({ value: item['medicine Name'], label: item['medicine Name'] })
     }
-    if(item['batch No']) {
+    if (item['batch No']) {
       setBatchName({ value: item['batch No'], label: item['batch No'] })
       setMrp(item['mrp'])
       const exp = item['Expiry Date']
@@ -899,7 +960,7 @@ const AddMedicineBody = ({ item, medicineArray, del, setMedicineArray, index, me
 
 
     }
-    if(item['maxQty']){
+    if (item['maxQty']) {
       setMaxQty(item['maxQty'])
     }
 
@@ -925,12 +986,12 @@ const AddMedicineBody = ({ item, medicineArray, del, setMedicineArray, index, me
     let newBatchList = dublicatList.filter((it) => (
       it.pid.name == item.value
       && it.quantity > 0
-       && (new Date(it.exp) >= date)
+      && (new Date(it.exp) >= date)
     ))
     console.log(newBatchList)
 
     newBatchList = newBatchList.map((it) => {
-      return { label: it.batch + " - " + it.quantity, value: it.batch  + " - " + it.quantity, batch: it.batch, id: it.id, data: it }
+      return { label: it.batch + " - " + it.quantity, value: it.batch + " - " + it.quantity, batch: it.batch, id: it.id, data: it }
     })
     setBatchList(newBatchList)
   }
@@ -938,7 +999,7 @@ const AddMedicineBody = ({ item, medicineArray, del, setMedicineArray, index, me
   const batchNameChange = (item) => {
 
 
-    const exp = item.data.exp.toString().split('-')[0]+'-'+item.data.exp.toString().split('-')[1]
+    const exp = item.data.exp.toString().split('-')[0] + '-' + item.data.exp.toString().split('-')[1]
 
     // setMedicineArray((item) => [...item, { 'medicine Name': '', 'batch No': '', 'Expiry Date': '', 'mrp': '', 'quantity': '', 'cgst/sgst': '', 'amount': 0 }])
     console.log(item)
@@ -951,11 +1012,11 @@ const AddMedicineBody = ({ item, medicineArray, del, setMedicineArray, index, me
       newArray[index] = {
         ...newArray[index],
         'batch No': item?.value || '',
-        'batch':item.data.batch,
-        'Expiry Date':exp,
-        'mrp':item.data.mrp,
-        'productId':item.data.productId,
-        'maxQty':item.data.quantity
+        'batch': item.data.batch,
+        'Expiry Date': exp,
+        'mrp': item.data.mrp,
+        'productId': item.data.productId,
+        'maxQty': item.data.quantity
       };
       return newArray;
     });
@@ -975,31 +1036,31 @@ const AddMedicineBody = ({ item, medicineArray, del, setMedicineArray, index, me
 
 
       <div className="flex col-span-1 justify-center items-center text-black">
-          <span>
-            {
-              expDate
-            }
-          </span>
+        <span>
+          {
+            expDate
+          }
+        </span>
       </div>
       <div className="flex col-span-1 justify-center items-center text-black">
-          <span>
-            {
-              mrp
-            }
-          </span>
+        <span>
+          {
+            mrp
+          }
+        </span>
       </div>
 
       <div className="flex col-span-1 justify-center text-black">
         <input type="number" name="quantity" className="border border-black p-2 w-20" placeholder="Quantity" id="" value={quantity} required
 
-        onChange={(e) => medicineChange(e.target.name, e.target.value,setQuantity)}
-         />
+          onChange={(e) => medicineChange(e.target.name, e.target.value, setQuantity)}
+        />
       </div>
       <div className="flex col-span-1 justify-center text-black">
         <input type="number" name="cgst/sgst" className="border border-black p-2 w-20" id="" value={cgst} required onChange={(e) => medicineChange(e.target.name, e.target.value, setCgst)} />
       </div>
       <div className="flex col-span-1 justify-center items-center text-black">
-            {total}
+        {total}
       </div>
 
       <div className="flex col-span-1 justify-center">
@@ -1011,5 +1072,100 @@ const AddMedicineBody = ({ item, medicineArray, del, setMedicineArray, index, me
     </>
   )
 }
+
+const AddHomoMedicineBody = ({ item, medicineArray, del, setMedicineArray, index, medicines }) => {
+
+  const [medicine, setMedicine] = useState('')
+  const [amount, setAmount] = useState('')
+  const [medicineName, setMedicineName] = useState()
+  const [medicineList, setMedicineList] = useState([])
+  useLayoutEffect(() => {
+    // console.log(medicines,uniqueArray)
+    const obj = medicines.map((it) => {
+      return {
+        label: it.name, value: it.name
+      }
+    })
+    setMedicineList(obj)
+
+
+  }, [medicines])
+
+  const medicineNameChange = (item) => {
+    setMedicineArray((array) => {
+      const newArray = [...array];
+      newArray[index] = {
+        ...newArray[index],
+        'medicine Name': item?.value || ''
+
+      };
+      return newArray;
+    });
+  }
+
+
+  const medicineChange = (name, value, func) => {
+    if (func == setAmount) {
+      value = parseInt(value)
+
+    }
+    // console.log('hello3')
+    func(value)
+
+
+    setMedicineArray((array) => {
+      const newArray = [...array];
+      newArray[index] = {
+        ...newArray[index],
+        [name]: parseFloat(value)
+
+      };
+      return newArray;
+    });
+  }
+
+  useEffect(() => {
+
+    if (item['medicine Name']) {
+      console.log(item['medicine Name'])
+      setMedicineName({ value: item['medicine Name'], label: item['medicine Name'] })
+    }
+    if (item['amount']) {
+      setAmount(item['amount'])
+
+
+
+    }
+
+  }, [item])
+
+
+  return (
+    <>
+      <div className=" col-span-4 ">
+        <Select options={medicineList} isClearable={true} required onChange={medicineNameChange} value={item['medicine Name'] !== '' ? medicineName : ''}
+        />
+      </div>
+
+
+      <div className="flex col-span-1 justify-center text-black">
+        <input type="number" name="amount" className="border border-black p-2 w-24" placeholder="Amount" id="" value={amount} required
+
+          onChange={(e) => medicineChange(e.target.name, e.target.value, setAmount)}
+        />
+      </div>
+
+      <div className="flex col-span-1 justify-center">
+
+        <span className='cursor-pointer text-xl text-red-600 p-2' onClick={del.bind(this, index)}>
+          <MdDeleteForever className="" />
+        </span>
+      </div>
+
+    </>
+  )
+}
+
+
 
 export default SaleMedicineNewForm

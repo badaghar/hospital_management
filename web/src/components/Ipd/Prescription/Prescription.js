@@ -23,12 +23,30 @@ const DELETE_IPD_PRESCRIPTION_MUTATION = gql`
   }
 `
 
+const CREATE_IPD_HOMO_PRESCRIPTION_MUTATION = gql`
+  mutation CreateIpdHomoPrescriptionMutation(
+    $input: [CreateIpdHomoPrescriptionInput]!
+  ) {
+    createIpdHomoPrescription(input: $input) {
+      id
+    }
+  }
+`
+const DELETE_IPD_HOMO_PRESCRIPTION_MUTATION = gql`
+  mutation DeleteIpdHomoPrescriptionMutation($id: Int!) {
+    deleteIpdHomoPrescription(id: $id) {
+      id
+    }
+  }
+`
 
 
-const Prescription = ({ ipd,medicines }) => {
+
+const Prescription = ({ ipd, medicines,homoMedicines }) => {
 
   const [prescriptionArray, setPrescriptionArray] = useState([])
-  const [isPrint,setIsPrint] = useState(false)
+  const [homoPrescriptionArray, setHomoPrescriptionArray] = useState([])
+  const [isPrint, setIsPrint] = useState(false)
   const [createIpdPrescription, { loading, error }] = useMutation(
     CREATE_IPD_PRESCRIPTION_MUTATION,
     {
@@ -36,8 +54,7 @@ const Prescription = ({ ipd,medicines }) => {
         toast.success('Prescription created')
         // navigate(routes.ipdPrescriptions())
         setPrescriptionArray([])
-        if(isPrint)
-        {
+        if (isPrint) {
           printPDF(ipd.id)
 
 
@@ -53,6 +70,18 @@ const Prescription = ({ ipd,medicines }) => {
         },
       }],
       awaitRefetchQueries: true,
+    }
+  )
+  const [createIpdHomoPrescription, { loading1, error1 }] = useMutation(
+    CREATE_IPD_HOMO_PRESCRIPTION_MUTATION,
+    {
+      onCompleted: () => {
+        toast.success('IpdHomoPrescription created')
+        setHomoPrescriptionArray([])
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
     }
   )
   function getPDF(id) {
@@ -72,17 +101,17 @@ const Prescription = ({ ipd,medicines }) => {
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/pdf' })
         var blobURL = URL.createObjectURL(blob)
-        var iframe =  document.createElement('iframe')
+        var iframe = document.createElement('iframe')
         document.body.appendChild(iframe)
         iframe.style.display = 'none'
 
         iframe.src = blobURL
-     iframe.onload = function() {
-      setTimeout(function() {
-        iframe.focus()
-        iframe.contentWindow.print()
-      }, 1)
-    }
+        iframe.onload = function () {
+          setTimeout(function () {
+            iframe.focus()
+            iframe.contentWindow.print()
+          }, 1)
+        }
         toast.success('Download Complete')
       })
       .catch((err) => {
@@ -92,6 +121,45 @@ const Prescription = ({ ipd,medicines }) => {
   }
 
   const onSave = (input) => {
+    // createIpdPrescription({ variables: { input } })
+    console.log(prescriptionArray,homoPrescriptionArray)
+    // const hasEmptyValue = prescriptionArray.some((obj) => {
+    //   // Check if any value in the object is empty
+    //   return Object.values(obj).some((value) => value === null || value === '' || !value);
+    // });
+    const hasEmptyValue = prescriptionArray.some((obj) => {
+      // Check if any value in the object is empty
+      // return Object.values(obj).some((value) => value === null || value === '' || !value);
+      return Object.keys(obj).some((key) => {
+        if (key !== 'note') {
+          const value = obj[key];
+          return value === null || value === '' || !value;
+        }
+        return false; // Skip the check for the specified key
+      });
+    });
+    const hasEmptyValue1 = homoPrescriptionArray.some((obj) => {
+      // Check if any value in the object is empty
+      // return Object.values(obj).some((value) => value === null || value === '' || !value);
+      return Object.keys(obj).some((key) => {
+        if (key !== 'note') {
+          const value = obj[key];
+          return value === null || value === '' || !value;
+        }
+        return false; // Skip the check for the specified key
+      });
+    });
+    if (hasEmptyValue || hasEmptyValue1) {
+      toast.error('Enter All The Details')
+      return
+    }
+    createIpdHomoPrescription({
+      variables:{ input: homoPrescriptionArray}
+    })
+    createIpdPrescription({ variables: { input: prescriptionArray } })
+  }
+
+  const onSaveAndPrint = (input) => {
     // createIpdPrescription({ variables: { input } })
     console.log(prescriptionArray)
     // const hasEmptyValue = prescriptionArray.some((obj) => {
@@ -109,39 +177,15 @@ const Prescription = ({ ipd,medicines }) => {
         return false; // Skip the check for the specified key
       });
     });
-    if(hasEmptyValue)
-    {
+    if (hasEmptyValue) {
       toast.error('Enter All The Details')
       return
     }
-    createIpdPrescription({ variables: { input:prescriptionArray } })
-  }
-
-  const onSaveAndPrint = (input) =>{
-        // createIpdPrescription({ variables: { input } })
-        console.log(prescriptionArray)
-        // const hasEmptyValue = prescriptionArray.some((obj) => {
-        //   // Check if any value in the object is empty
-        //   return Object.values(obj).some((value) => value === null || value === '' || !value);
-        // });
-        const hasEmptyValue = prescriptionArray.some((obj) => {
-          // Check if any value in the object is empty
-          // return Object.values(obj).some((value) => value === null || value === '' || !value);
-          return Object.keys(obj).some((key) => {
-            if (key !== 'note') {
-              const value = obj[key];
-              return value === null || value === '' || !value;
-            }
-            return false; // Skip the check for the specified key
-          });
-        });
-        if(hasEmptyValue)
-        {
-          toast.error('Enter All The Details')
-          return
-        }
-        setIsPrint(true)
-        createIpdPrescription({ variables: { input:prescriptionArray } })
+    setIsPrint(true)
+    createIpdHomoPrescription({
+      variables:{ input: homoPrescriptionArray}
+    })
+    createIpdPrescription({ variables: { input: prescriptionArray } })
 
   }
 
@@ -173,11 +217,21 @@ const Prescription = ({ ipd,medicines }) => {
   }
 
   const addPrescription = () => {
-    setPrescriptionArray((item) => [...item, { medicine: '', dosage: '', timing: '',frequency:'',duration:'', note:'',quantity:0,ipdId: ipd.id,medicineId:0 }])
+    setPrescriptionArray((item) => [...item, { medicine: '', dosage: '', timing: '', frequency: '', duration: '', note: '', quantity: 0, ipdId: ipd.id, medicineId: 0 }])
+  }
+  const addHomoPrescription = () => {
+    setHomoPrescriptionArray((item) => [...item, { medicine: '', dosage: '', timing: '', frequency: '', duration: '', note: '', rate: 0, ipdId: ipd.id }])
   }
 
-  const deletePrescription  = (index) => {
+  const deletePrescription = (index) => {
     setPrescriptionArray((array) => {
+      const newArray = [...array];
+      newArray.splice(index, 1);
+      return newArray;
+    });
+  }
+  const deleteHomoPrescription = (index) => {
+    setHomoPrescriptionArray((array) => {
       const newArray = [...array];
       newArray.splice(index, 1);
       return newArray;
@@ -209,10 +263,10 @@ const Prescription = ({ ipd,medicines }) => {
                     <div className="flex col-span-1 justify-center">{item.timing}</div>
                     <div className="flex col-span-1 justify-center">{item.frequency}</div>
                     <div className="flex col-span-1 justify-center">{item.duration}</div>
-                    {  <div className="flex col-span-4 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
+                    {<div className="flex col-span-4 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
                     <div className="flex col-span-1 justify-center" > Quantity :- {item.quantity}</div>
                     <div className="flex col-span-1 justify-center">    <span className='cursor-pointer text-xl text-red-600'
-                    onClick={()=>onDeleteClick(item.id)}
+                      onClick={() => onDeleteClick(item.id)}
                     >
                       <MdDeleteForever />
                     </span></div>
@@ -225,7 +279,7 @@ const Prescription = ({ ipd,medicines }) => {
               prescriptionArray.map((item, index) => {
                 return (
                   <>
-                    <MedicationChargeBody key={index}  item={item}
+                    <MedicationChargeBody key={index} item={item}
                       prescriptionArray={prescriptionArray}
                       setPrescriptionArray={setPrescriptionArray}
                       del={deletePrescription}
@@ -244,8 +298,68 @@ const Prescription = ({ ipd,medicines }) => {
           </div>
 
         </div>
+
+
+
+        <div className="p-2 w-full shadow-sm bg-white ">
+          <div className=" grid grid-cols-6 grid-flow-row gap-x-2 gap-y-2">
+
+            <div className="flex col-span-1 justify-center">Medicine </div>
+            <div className="flex col-span-1 justify-center">Dosage</div>
+            <div className="flex col-span-1 justify-center">Timing</div>
+            <div className="flex col-span-1 justify-center">Frequency</div>
+            <div className="flex col-span-1 justify-center">Duration</div>
+            <div className="flex col-span-1 justify-center">Action</div>
+
+            {
+              ipd.IpdHomoPrescription.map((item, index) => {
+                return (
+                  <>
+                    <div className="flex col-span-1 justify-center">{item.medicine}</div>
+                    <div className="flex col-span-1 justify-center">{item.dosage}</div>
+                    <div className="flex col-span-1 justify-center">{item.timing}</div>
+                    <div className="flex col-span-1 justify-center">{item.frequency}</div>
+                    <div className="flex col-span-1 justify-center">{item.duration}</div>
+                    {<div className="flex col-span-4 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
+                    <div className="flex col-span-1 justify-center" > MRP :- {item.rate}</div>
+                    <div className="flex col-span-1 justify-center">    <span className='cursor-pointer text-xl text-red-600'
+                      onClick={() => onDeleteClick(item.id)}
+                    >
+                      <MdDeleteForever />
+                    </span></div>
+
+                  </>
+                )
+              })
+            }
+            {
+              homoPrescriptionArray.map((item, index) => {
+                return (
+                  <>
+                    <HomoMedicationChargeBody key={index} item={item}
+                      prescriptionArray={homoPrescriptionArray}
+                      setPrescriptionArray={setHomoPrescriptionArray}
+                      del={deleteHomoPrescription}
+                      index={index}
+                      medicines={homoMedicines}
+                    />
+                  </>
+                )
+              })
+
+            }
+          </div>
+
+          <div className='flex justify-center mt-2'>
+            <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addHomoPrescription}>Add Homopathy Prescription</div>
+          </div>
+
+        </div>
+
+
+
         <div className='flex justify-center mt-2 pb-3'>
-        <button className='bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2' onClick={onSave}>Save Changes</button>
+          <button className='bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2' onClick={onSave}>Save Changes</button>
           <button className="bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2" onClick={onSaveAndPrint}>Save & Print</button>
         </div>
 
@@ -254,7 +368,7 @@ const Prescription = ({ ipd,medicines }) => {
   )
 }
 
-const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArray, index,medicines }) => {
+const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArray, index, medicines }) => {
 
   // const [labchargeType, setlabChargeType] = useState()
   // const [obj, setObj] = useState([])
@@ -264,26 +378,24 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
   const [frequency, setFrequency] = useState('')
   const [duration, setDuration] = useState('')
   const [note, setNote] = useState('')
-  const [quantity,setQuantity] = useState(0)
-  const [maxQty,setMaxQty] = useState(0)
+  const [quantity, setQuantity] = useState(0)
+  const [maxQty, setMaxQty] = useState(0)
   const [obj, setObj] = useState([])
   const [medicineName, setMedicineName] = useState()
-  const [timingObj,setTimingObj] = useState([
-    {value:'After Food',label:'After Food'},
-    {value:'Before Food',label:'Before Food'},
+  const [timingObj, setTimingObj] = useState([
+    { value: 'After Food', label: 'After Food' },
+    { value: 'Before Food', label: 'Before Food' },
   ])
-  const [timingObjName,setTimingObjectName] = useState()
+  const [timingObjName, setTimingObjectName] = useState()
 
 
 
 
-  const ipdPrescriptionChange = (name, value,func) => {
-    if(func==setQuantity)
-    {
+  const ipdPrescriptionChange = (name, value, func) => {
+    if (func == setQuantity) {
       value = parseInt(value)
       // console.log('hello')
-      if(value>maxQty)
-      {
+      if (value > maxQty) {
         // console.log('hello2')
         return
       }
@@ -308,7 +420,7 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
     if (item.medicine) {
       setMedicineName({ value: item.medicine, label: item.medicine })
     }
-    if(item.timing) {
+    if (item.timing) {
       setTimingObjectName({ value: item.timing, label: item.timing })
 
     }
@@ -317,7 +429,7 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
       const compositionNames = char.pid.ProductToComposition.map(
         (composition) => composition.cid.name
       );
-      const ob = { value:`${char.pid.name} - ${char.batch} - ${char.quantity} - ${char.pid.code_name || ''}  - ${compositionNames.join(', ')}`, label: `${char.pid.name} - ${char.batch} - ${char.quantity} - ${char.pid.code_name || ''}`,qty:char.quantity,id:char.id,val:`${char.pid.name} - ${char.batch} - ${char.quantity} - ${char.pid.code_name || ''}` }
+      const ob = { value: `${char.pid.name} - ${char.batch} - ${char.quantity} - ${char.pid.code_name || ''}  - ${compositionNames.join(', ')}`, label: `${char.pid.name} - ${char.batch} - ${char.quantity} - ${char.pid.code_name || ''}`, qty: char.quantity, id: char.id, val: `${char.pid.name} - ${char.batch} - ${char.quantity} - ${char.pid.code_name || ''}` }
       return ob
     })
     setObj(obj)
@@ -332,8 +444,8 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
       const newArray = [...array];
       newArray[index] = {
         ...newArray[index],
-        medicine:item?.val || '',
-        medicineId:item?.id || 0,
+        medicine: item?.val || '',
+        medicineId: item?.id || 0,
 
 
       };
@@ -349,7 +461,7 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
       const newArray = [...array];
       newArray[index] = {
         ...newArray[index],
-        timing:item?.value || ''
+        timing: item?.value || ''
 
       };
       return newArray;
@@ -370,7 +482,7 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
   return (
     <>
 
-<div className="flex col-span-1 justify-center">
+      <div className="flex col-span-1 justify-center">
         <Select options={obj} isClearable={true} required onChange={medicineNameChange} value={item.name !== '' ? medicineName : ''}
         />
       </div>
@@ -379,7 +491,7 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
         <input className="border border-black p-2" type="text" name="medicine" id="" value={medicine} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setMedicine)} />
       </div> */}
       <div className="flex col-span-1 justify-center text-black">
-        <input type="text" name="dosage" className="border border-black p-2" id="" value={dosage} placeholder="Ex : 1-0-1" required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setDosage)} />
+        <input type="text" name="dosage" className="border border-black p-2" id="" value={dosage} placeholder="Ex : 1-0-1" required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setDosage)} />
       </div>
 
 
@@ -393,20 +505,175 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
         <input type="text" name="timing" className="border border-black p-2" id="" value={timing} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setTiming)} />
       </div> */}
       <div className="flex col-span-1 justify-center text-black">
-        <input type="text" name="frequency" className="border border-black p-2" id="" value={frequency} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setFrequency)} />
+        <input type="text" name="frequency" className="border border-black p-2" id="" value={frequency} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setFrequency)} />
       </div>
       <div className="flex col-span-1 justify-center text-black">
-        <input type="text" name="duration" className="border border-black p-2" id="" value={duration} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setDuration)} />
+        <input type="text" name="duration" className="border border-black p-2" id="" value={duration} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setDuration)} />
       </div>
       <div className="flex col-span-4 w-full justify-center text-black">
         <input type="text" name="note" className="border border-black p-2 w-full" id="" value={note} required
-        onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setNote)}
-        placeholder="Note" />
+          onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setNote)}
+          placeholder="Note" />
       </div>
       <div className="flex col-span-1 justify-center text-black">
         <input type="number" name="quantity" className="border border-black p-2" placeholder="Quantity" id="" value={quantity} required
-        onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setQuantity)}
-         />
+          onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setQuantity)}
+        />
+      </div>
+      <div className="flex col-span-1 justify-center">
+
+        <span className='cursor-pointer text-xl text-red-600 p-2' onClick={del.bind(this, index)}>
+          <MdDeleteForever className="" />
+        </span>
+      </div>
+    </>
+  )
+}
+const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArray, index, medicines }) => {
+
+  // const [labchargeType, setlabChargeType] = useState()
+  // const [obj, setObj] = useState([])
+  const [medicine, setMedicine] = useState('')
+  const [dosage, setDosage] = useState('')
+  const [timing, setTiming] = useState('')
+  const [frequency, setFrequency] = useState('')
+  const [duration, setDuration] = useState('')
+  const [note, setNote] = useState('')
+  const [quantity, setQuantity] = useState('')
+  const [obj, setObj] = useState([])
+  const [medicineName, setMedicineName] = useState()
+  const [timingObj, setTimingObj] = useState([
+    { value: 'After Food', label: 'After Food' },
+    { value: 'Before Food', label: 'Before Food' },
+  ])
+  const [timingObjName, setTimingObjectName] = useState()
+
+
+
+
+  const ipdPrescriptionChange = (name, value, func) => {
+
+    // console.log('hello3')
+    if (func == setQuantity) {
+      value = parseInt(value)
+      // console.log('hello')
+
+    }
+    func(value)
+
+
+    setPrescriptionArray((array) => {
+      const newArray = [...array];
+      newArray[index] = {
+        ...newArray[index],
+        [name]: value
+
+      };
+      return newArray;
+    });
+  }
+
+  useEffect(() => {
+
+    if (item.medicine) {
+      setMedicineName({ value: item.medicine, label: item.medicine })
+    }
+    if (item.timing) {
+      setTimingObjectName({ value: item.timing, label: item.timing })
+
+    }
+
+    const obj = medicines.map((char) => {
+
+      const ob = { value: `${char.name}`,label:`${char.name}` }
+      return ob
+    })
+    setObj(obj)
+    console.log(item)
+  }, [item])
+
+  const medicineNameChange = (item) => {
+
+
+
+    setPrescriptionArray((array) => {
+      const newArray = [...array];
+      newArray[index] = {
+        ...newArray[index],
+        medicine: item?.value || '',
+
+
+      };
+      return newArray;
+    });
+
+  }
+
+  const timingChange = (item) => {
+
+
+    setPrescriptionArray((array) => {
+      const newArray = [...array];
+      newArray[index] = {
+        ...newArray[index],
+        timing: item?.value || ''
+
+      };
+      return newArray;
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  return (
+    <>
+
+      <div className="flex col-span-1 justify-center">
+        <Select options={obj} isClearable={true} required onChange={medicineNameChange} value={item.name !== '' ? medicineName : ''}
+        />
+      </div>
+
+      {/* <div className="flex col-span-1 justify-center text-black">
+        <input className="border border-black p-2" type="text" name="medicine" id="" value={medicine} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setMedicine)} />
+      </div> */}
+      <div className="flex col-span-1 justify-center text-black">
+        <input type="text" name="dosage" className="border border-black p-2" id="" value={dosage} placeholder="Ex : 1-0-1" required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setDosage)} />
+      </div>
+
+
+      <div className="flex col-span-1 justify-center">
+        <Select options={timingObj} isClearable={true} required onChange={timingChange} value={item.name !== '' ? timingObjName : ''}
+        />
+      </div>
+
+
+      {/* <div className="flex col-span-1 justify-center text-black">
+        <input type="text" name="timing" className="border border-black p-2" id="" value={timing} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setTiming)} />
+      </div> */}
+      <div className="flex col-span-1 justify-center text-black">
+        <input type="text" name="frequency" className="border border-black p-2" id="" value={frequency} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setFrequency)} />
+      </div>
+      <div className="flex col-span-1 justify-center text-black">
+        <input type="text" name="duration" className="border border-black p-2" id="" value={duration} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setDuration)} />
+      </div>
+      <div className="flex col-span-4 w-full justify-center text-black">
+        <input type="text" name="note" className="border border-black p-2 w-full" id="" value={note} required
+          onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setNote)}
+          placeholder="Note" />
+      </div>
+      <div className="flex col-span-1 justify-center text-black">
+        <input type="number" name="rate" className="border border-black p-2" placeholder="rate" id="" value={quantity} required
+          onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setQuantity)}
+        />
       </div>
       <div className="flex col-span-1 justify-center">
 

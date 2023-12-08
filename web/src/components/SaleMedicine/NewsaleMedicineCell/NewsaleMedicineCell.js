@@ -34,6 +34,10 @@ export const QUERY = gql`
       }
 
     }
+    homoMedicines{
+      id
+      name
+    }
     patients {
       id
       name
@@ -75,7 +79,7 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ medicines, patients, users, compositions,details }) => {
+export const Success = ({ medicines, patients, users, compositions,details,homoMedicines }) => {
 
 
   function getPDF(id) {
@@ -168,7 +172,7 @@ export const Success = ({ medicines, patients, users, compositions,details }) =>
       <div className="rw-segment-main">
         <SaleMedicineNewForm onSave={onSave} loading={loading} error={error}
           patients={patients} medicines={medicines} users={users}
-          compositions={compositions} details={details}
+          compositions={compositions} details={details} homoMedicines={homoMedicines}
         />
       </div>
     </div>

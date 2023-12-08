@@ -140,6 +140,43 @@ CREATE TABLE `IpdPayment` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `IpdPrescription` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `ipdId` INTEGER NOT NULL,
+    `medicine` VARCHAR(191) NOT NULL,
+    `dosage` VARCHAR(191) NOT NULL,
+    `timing` VARCHAR(191) NOT NULL,
+    `frequency` VARCHAR(191) NOT NULL,
+    `duration` VARCHAR(191) NOT NULL,
+    `note` VARCHAR(191) NULL,
+    `quantity` INTEGER NOT NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
+    `medicineId` INTEGER NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `IpdHomoPrescription` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `ipdId` INTEGER NOT NULL,
+    `medicine` VARCHAR(191) NOT NULL,
+    `dosage` VARCHAR(191) NOT NULL,
+    `timing` VARCHAR(191) NOT NULL,
+    `frequency` VARCHAR(191) NOT NULL,
+    `duration` VARCHAR(191) NOT NULL,
+    `note` VARCHAR(191) NULL,
+    `rate` INTEGER NOT NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `Floor` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `floor_name` VARCHAR(191) NOT NULL,
@@ -270,7 +307,19 @@ CREATE TABLE `ProductToComposition` (
 CREATE TABLE `Product` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
+    `code_name` VARCHAR(191) NULL,
     `manufacturerId` INTEGER NOT NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_at` DATETIME(3) NOT NULL,
+    `extra` JSON NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `HomoMedicine` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
     `extra` JSON NULL,
@@ -391,6 +440,7 @@ CREATE TABLE `SaleMedicine` (
     `billNo` VARCHAR(191) NOT NULL,
     `date` DATETIME(3) NOT NULL,
     `medicine` JSON NOT NULL,
+    `homo_medicine` JSON NULL,
     `total` DOUBLE NOT NULL,
     `discount` DOUBLE NOT NULL,
     `sgst` DOUBLE NOT NULL,
@@ -468,6 +518,15 @@ ALTER TABLE `IpdLabCharges` ADD CONSTRAINT `IpdLabCharges_ipdId_fkey` FOREIGN KE
 
 -- AddForeignKey
 ALTER TABLE `IpdPayment` ADD CONSTRAINT `IpdPayment_ipdId_fkey` FOREIGN KEY (`ipdId`) REFERENCES `Ipd`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `IpdPrescription` ADD CONSTRAINT `IpdPrescription_ipdId_fkey` FOREIGN KEY (`ipdId`) REFERENCES `Ipd`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `IpdPrescription` ADD CONSTRAINT `IpdPrescription_medicineId_fkey` FOREIGN KEY (`medicineId`) REFERENCES `Medicine`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `IpdHomoPrescription` ADD CONSTRAINT `IpdHomoPrescription_ipdId_fkey` FOREIGN KEY (`ipdId`) REFERENCES `Ipd`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Bed` ADD CONSTRAINT `Bed_floorId_fkey` FOREIGN KEY (`floorId`) REFERENCES `Floor`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
