@@ -20,6 +20,8 @@ const Routes = () => {
   return (
     <Router useAuth={useAuth}>
 
+
+
       <Set wrap={ScaffoldLayout} title="IpdHomoPrescriptions" titleTo="ipdHomoPrescriptions" buttonLabel="New IpdHomoPrescription" buttonTo="newIpdHomoPrescription">
 
         <Route path="/ipd-homo-prescriptions/new" page={IpdHomoPrescriptionNewIpdHomoPrescriptionPage} name="newIpdHomoPrescription" />
@@ -288,6 +290,12 @@ const Routes = () => {
             <Route path="/ipd-chats/{id:Int}/edit" page={IpdChatEditIpdChatPage} name="editIpdChat" />
             <Route path="/ipd-chats/{id:Int}" page={IpdChatIpdChatPage} name="ipdChat" />
             <Route path="/ipd-chats" page={IpdChatIpdChatsPage} name="ipdChats" />
+          </Set>
+          <Set wrap={ScaffoldLayout} title="Files" titleTo="files" buttonLabel="New File" buttonTo="newFile">
+            <Route path="/files/new" page={FileNewFilePage} name="newFile" />
+            <Route path="/files/{id:Int}/edit" page={FileEditFilePage} name="editFile" />
+            <Route path="/files/{id:Int}" page={FileFilePage} name="file" />
+            <Route path="/files" page={FileFilesPage} name="files" />
           </Set>
           {/* </Private> */}
 

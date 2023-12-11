@@ -83,6 +83,11 @@ export const QUERY = gql`
         note
         rate
       }
+      File{
+        id
+        title
+        url
+      }
 
 
     }

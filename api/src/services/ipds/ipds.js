@@ -207,4 +207,7 @@ export const Ipd = {
   IpdHomoPrescription: (_obj, { root }) => {
     return db.ipd.findUnique({ where: { id: root?.id } }).IpdHomoPrescription()
   },
+  File: (_obj, { root }) => {
+    return db.ipd.findUnique({ where: { id: root?.id } }).File()
+  },
 }

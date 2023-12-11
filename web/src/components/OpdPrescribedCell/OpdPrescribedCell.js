@@ -29,6 +29,11 @@ export const QUERY = gql`
           }
         }
       }
+      IpdHomoPrescription{
+        id
+        medicine
+        rate
+      }
     }
   }
 `

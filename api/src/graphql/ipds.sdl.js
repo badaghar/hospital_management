@@ -20,6 +20,7 @@ export const schema = gql`
     IpdSummary: [IpdSummary]!
     IpdPrescription: [IpdPrescription]!
     IpdHomoPrescription: [IpdHomoPrescription]!
+    File: [File]!
   }
 
   type Query {

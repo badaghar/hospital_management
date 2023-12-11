@@ -14,6 +14,8 @@ import IpdOperation from '../IpdOperation/IpdOperation'
 import IpdChatComponent from '../IpdChatComponent/IpdChatComponent'
 import SummaryIpd from '../SummaryIpd/SummaryIpd'
 import Prescription from '../Prescription/Prescription'
+import FilesCell from 'src/components/File/FilesCell'
+import Doucuments from '../Doucuments/Doucuments'
 // import { useEffect } from 'react-js-dialog-box'
 
 const DELETE_IPD_MUTATION = gql`
@@ -122,6 +124,11 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
               Medication Chat
             </div>}
             <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+            onClick={toggleDropDown.bind(this,'documents')}
+            >
+              Documents
+            </div>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'payment')}
             >
               Payment
@@ -155,6 +162,9 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
           }
           {
             dropDownOpen=='chat' && <IpdChatComponent ipd={ipd} users={users}  />
+          }
+          {
+            dropDownOpen=='documents' && <Doucuments ipd={ipd}   />
           }
           {
             dropDownOpen=='payment' && <PaymentIpd ipd={ipd} users={users} chargeses={chargeses} totalAmount={totalAmount} />

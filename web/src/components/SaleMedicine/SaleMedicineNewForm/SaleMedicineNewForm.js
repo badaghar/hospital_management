@@ -109,7 +109,12 @@ const SaleMedicineNewForm = (props) => {
 
       })
       console.log(obj3)
+      let obj4 = props.details.IpdHomoPrescription.map((item) => {
+        let ob = { 'medicine Name': item.medicine, 'amount': item.rate }
+        return ob
+      })
       setMedicineArray(obj3)
+      setHomoMedicineArray(obj4)
 
     }
   }, [props.details])
@@ -596,7 +601,7 @@ const SaleMedicineNewForm = (props) => {
 
         </div>
 
-        <div className="p-2 w-full shadow-sm bg-white ">
+        <div className="p-2 w-full shadow-sm bg-white text-black ">
           <div className=" grid grid-cols-13 grid-flow-row gap-x-2 gap-y-2">
 
             <div className="flex col-span-4 justify-center">Medicine Name</div>
@@ -641,7 +646,7 @@ const SaleMedicineNewForm = (props) => {
 
 
 
-        <div className="p-2 w-full shadow-sm bg-white ">
+        <div className="p-2 w-full shadow-sm bg-white text-black">
           <div className=" grid grid-cols-6 grid-flow-row gap-x-2 gap-y-2">
 
             <div className="flex col-span-4 justify-center">Medicine Name</div>
@@ -1132,9 +1137,6 @@ const AddHomoMedicineBody = ({ item, medicineArray, del, setMedicineArray, index
     }
     if (item['amount']) {
       setAmount(item['amount'])
-
-
-
     }
 
   }, [item])
