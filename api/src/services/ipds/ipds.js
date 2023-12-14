@@ -126,6 +126,13 @@ export const createIpd = async ({ input }) => {
   await db.ipdConsultation.createMany({
     data: doctorChargesArray
   })
+  let obj = {
+    note:'',
+    ipdId:ipd.id
+  }
+  await db.Complaints.create({
+    data:obj
+  })
 
   return ipd
 
@@ -209,5 +216,8 @@ export const Ipd = {
   },
   File: (_obj, { root }) => {
     return db.ipd.findUnique({ where: { id: root?.id } }).File()
+  },
+  Complaints: (_obj, { root }) => {
+    return db.ipd.findUnique({ where: { id: root?.id } }).Complaints()
   },
 }

@@ -365,8 +365,6 @@ const SaleMedicineNewForm = (props) => {
   useEffect(() => {
     let dis = grand_total * parseFloat(discount) / 100.0
     setDiscountAmt(dis)
-    // set_grand_total(grand_total-dis)
-    // console.log("here")
     set_actual_grand_total(parseFloat(parseFloat(grand_total - dis).toFixed(2)))
   }, [discount])
 

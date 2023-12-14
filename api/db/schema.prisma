@@ -20,6 +20,16 @@ model File {
   ipdId Int
 }
 
+model Complaints {
+  id         Int      @id @default(autoincrement())
+  note       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  ipd        Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  ipdId Int
+}
+
 model Patient {
   id             Int              @id @default(autoincrement())
   name           String
@@ -73,7 +83,8 @@ model Ipd {
   IpdPrescription     IpdPrescription[]
   IpdHomoPrescription IpdHomoPrescription[]
 
-  File File[]
+  File       File[]
+  Complaints Complaints[]
 }
 
 model IpdChat {

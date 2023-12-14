@@ -9143,6 +9143,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"autobind-decorator@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "autobind-decorator@npm:2.4.0"
+  checksum: b31781d582e24b69aa88017046613e4f88e59f33f81c38c2885435c790fc8b4b1f52daf148c63cd609101795873daaae78aeb6c00b110a08dcbecefdcabc17f1
+  languageName: node
+  linkType: hard
+
 "autoprefixer@npm:^10.4.14":
   version: 10.4.14
   resolution: "autoprefixer@npm:10.4.14"
@@ -11267,6 +11274,13 @@ __metadata:
   version: 3.30.2
   resolution: "core-js@npm:3.30.2"
   checksum: 864d7dc908d4ece507d27e6c6d2830300dcb775d88cfefeec31e34ab95be5016bb23abb29c8b1c4a930bada01318af009276199d75dcab1a230c3cebdf8d3a70
+  languageName: node
+  linkType: hard
+
+"core-js@npm:^3.28.0":
+  version: 3.34.0
+  resolution: "core-js@npm:3.34.0"
+  checksum: 408a77898abe03bf3e5dec2a451c36f4745081cca9022f8bdf9b817d57bb6d3a534d555f47a4b95e1daa5e21dbc79122eac2402e25720d425f5925127e55dcd8
   languageName: node
   linkType: hard
 
@@ -17342,6 +17356,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jodit-react@npm:^1.3.39":
+  version: 1.3.39
+  resolution: "jodit-react@npm:1.3.39"
+  dependencies:
+    jodit: ^3.20.2
+  peerDependencies:
+    react: ~0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ~0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: b1e798a85d7ed2a9aae395b4bd3e58073311654f1dcfe1b3405685bbdb5a9418c6a5ec84e3ed3c7fac29c3c4aa53e13a592618e4c9f01cbda82e40131e064896
+  languageName: node
+  linkType: hard
+
+"jodit@npm:^3.20.2":
+  version: 3.24.9
+  resolution: "jodit@npm:3.24.9"
+  dependencies:
+    autobind-decorator: ^2.4.0
+    core-js: ^3.28.0
+  checksum: f0066ad391835c27fcf0003d719628c0a808aa265c083d8a26b34bcc7327bb2e8df54f534c120cfe35201a35873637bcef9661fac4b58c75cea24a86cac769f9
+  languageName: node
+  linkType: hard
+
 "jose@npm:^4.11.4":
   version: 4.14.4
   resolution: "jose@npm:4.14.4"
@@ -22636,6 +22672,7 @@ __metadata:
     "@redwoodjs/web": ^5.2.4
     axios: ^1.4.0
     graphql: ^16.6.0
+    jodit-react: ^1.3.39
     multiselect-react-dropdown: ^2.0.25
     number-to-words: ^1.2.4
     prettier-plugin-tailwindcss: ^0.3.0

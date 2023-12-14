@@ -88,6 +88,10 @@ export const QUERY = gql`
         title
         url
       }
+      Complaints{
+        id
+        note
+      }
 
 
     }

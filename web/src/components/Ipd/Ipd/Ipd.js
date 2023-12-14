@@ -16,6 +16,7 @@ import SummaryIpd from '../SummaryIpd/SummaryIpd'
 import Prescription from '../Prescription/Prescription'
 import FilesCell from 'src/components/File/FilesCell'
 import Doucuments from '../Doucuments/Doucuments'
+import Complaint from '../Complaint/Complaint'
 // import { useEffect } from 'react-js-dialog-box'
 
 const DELETE_IPD_MUTATION = gql`
@@ -94,6 +95,11 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
               Summary
             </div>}
             <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+            onClick={toggleDropDown.bind(this,'Complaints')}
+            >
+              Complaints
+            </div>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'consultant')}
             >
               consultant Registration
@@ -145,6 +151,9 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
           }
           {
             dropDownOpen=='consultant' && <IpdConsultant ipd={ipd} users={users} doctorFees={doctorFees} />
+          }
+          {
+            dropDownOpen=='Complaints' && <Complaint ipd={ipd}  />
           }
           {
             dropDownOpen=='charges' && <IpdOtherCharges ipd={ipd} users={users} chargeses={chargeses} />
