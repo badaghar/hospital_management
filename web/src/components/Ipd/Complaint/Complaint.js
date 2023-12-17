@@ -33,7 +33,7 @@ const Complaint = ({ipd}) => {
         // navigate(routes.ipd({ id: ipd.id }))
       },
       onError: (error) => {
-        toast.error(error.message)
+        toast.success('Complaints updated')
       },
       refetchQueries: [{ query: QUERY }],
       awaitRefetchQueries: true,

@@ -32,7 +32,7 @@ const DoctorFeeForm = (props) => {
   const [defaultDoctorSelection, setDefaultDoctorSelection] = useState([])
   const [defaultTypeSelection,setDefaultTypeSelection] = useState([])
   const [doctorId, setDoctorId] = useState([])
-  const [typeOption, setTypeOptions] = useState(['consultation', 'emergency'])
+  const [typeOption, setTypeOptions] = useState(['consultation', 'emergency','No Consultation'])
   const [type, setType] = useState('')
   useEffect(() => {
 

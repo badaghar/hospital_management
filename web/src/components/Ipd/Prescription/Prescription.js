@@ -76,7 +76,7 @@ const Prescription = ({ ipd, medicines,homoMedicines }) => {
     CREATE_IPD_HOMO_PRESCRIPTION_MUTATION,
     {
       onCompleted: () => {
-        toast.success('IpdHomoPrescription created')
+        toast.success('HomoPrescription created')
         setHomoPrescriptionArray([])
       },
       onError: (error) => {

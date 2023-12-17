@@ -31,6 +31,17 @@ export const QUERY = gql`
       id
       created_at
     }
+    ipdChargeses{
+      total
+      ipd{
+        patientType
+      }
+      created_at
+    }
+    ipdLabChargeses{
+      amount
+      created_at
+    }
   }
 `
 
@@ -51,9 +62,8 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ ipdOperationPayments,ipds,opds }) => {
-
-  let totalTodayIpd,totalTodayOpd,totalMonthIpd,totalMonthOpd,totalTodayOperation,totalMonthOperation
+export const Success = ({ ipdOperationPayments,ipds,opds,ipdChargeses,ipdLabChargeses }) => {
+  let totalTodayIpd, totalTodayOpd, totalMonthIpd, totalMonthOpd, totalTodayOperation, totalMonthOperation, totalTodayCharges, totalMonthCharges, totalTodayLabCharges, totalMonthLabCharges
 
   const today = new Date()
   const month = new Date()
@@ -100,6 +110,23 @@ export const Success = ({ ipdOperationPayments,ipds,opds }) => {
     return newDate >= month
   })
   totalMonthOperation = monthOperation.length
+
+  const lenttc = ipdChargeses.filter((item) => {
+    const newDate = new Date(item.created_at)
+    // console.log(newDate,today)
+    return (newDate >= today  && item.ipd.patientType=='OPD')
+  })
+  const todayCharges = lenttc.reduce((prev, item) => prev += item.total, 0)
+  totalTodayCharges = todayCharges
+
+
+  const lentmc = ipdChargeses.filter((item) => {
+    const newDate = new Date(item.created_at)
+    // console.log(newDate,today)
+    return (newDate >= month  && item.ipd.patientType=='OPD' )
+  })
+  const monthCharges = lentmc.reduce((prev, item) => prev += item.total, 0)
+  totalMonthCharges = monthCharges
 
 
 
@@ -157,6 +184,17 @@ export const Success = ({ ipdOperationPayments,ipds,opds }) => {
         <div className="flex flex-col bg-[#AED2FF] shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>This Month Opd Patient</h1>
           <p>  {totalMonthOpd} </p>
+
+        </div>
+
+             <div className="flex flex-col bg-[#F6635C] shadow-lg rounded-2xl p-6 items-center m-4">
+          <h1>Today's OPD Charges</h1>
+          <p> {lenttc.length} / {totalTodayCharges} </p>
+
+        </div>
+        <div className="flex flex-col bg-[#79155B] shadow-lg rounded-2xl p-6 items-center m-4">
+          <h1>This Month OPD Charges</h1>
+          <p>  {lentmc.length} /  {totalMonthCharges} </p>
 
         </div>
         {/* <div className="flex flex-col bg-[#F6635C] shadow-lg rounded-2xl p-6 items-center m-4">

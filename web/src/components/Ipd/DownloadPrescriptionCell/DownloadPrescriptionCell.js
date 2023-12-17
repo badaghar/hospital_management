@@ -30,6 +30,16 @@ export const QUERY = gql`
         note
         quantity
       }
+      IpdHomoPrescription{
+        id
+        medicine
+        dosage
+        timing
+        frequency
+        duration
+        note
+
+      }
     }
   }
 `
@@ -50,7 +60,7 @@ export const Success = ({ downloadPrescription }) => {
   // let count = 0
   const [formatedDate, setFormatedDate] = useState("")
   useEffect(() => {
-    const noOfPage = Math.ceil(downloadPrescription.IpdPrescription.length / 15)
+    const noOfPage = Math.ceil((downloadPrescription.IpdPrescription.length+downloadPrescription.IpdHomoPrescription.length) / 15)
     // setPages(noOfPage)
     let page = []
     for (let i = 0; i < noOfPage; i++) {
@@ -60,7 +70,7 @@ export const Success = ({ downloadPrescription }) => {
     setCount(noOfPage - 1)
     setPages(page)
 
-    const array = downloadPrescription.IpdPrescription;
+    const array = [...downloadPrescription.IpdPrescription,...downloadPrescription.IpdHomoPrescription];
 
     const chunkSize = 15;
     let i = 0;
@@ -159,12 +169,12 @@ export const Success = ({ downloadPrescription }) => {
                           <>
 
                             <span className="col-span-1">{ind + 1}</span>
-                            <div className=" col-span-1">{item.medicine.split('-')[3]}</div>
+                           {item.quantity ? <div className=" col-span-1">{item.medicine.split('-')[3]}</div> : <div className=" col-span-1">{item.medicine}</div>}
                             <div className=" col-span-1">{item.dosage}</div>
                             <div className=" col-span-1">{item.timing}</div>
                             <div className=" col-span-1">{item.frequency}</div>
                             <div className=" col-span-1">{item.duration}</div>
-                            <div className=" col-span-1">{item.quantity}</div>
+                           { item.quantity ? <div className=" col-span-1">{item.quantity}</div> : <div className=" col-span-1">-</div>}
 
                             {<div className="flex col-span-7 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
                           </>

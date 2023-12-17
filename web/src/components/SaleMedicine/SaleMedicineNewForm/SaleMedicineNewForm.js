@@ -59,10 +59,11 @@ function convertObjectValuesToUpper(obj) {
 
 const SaleMedicineNewForm = (props) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [isSave, setIsSave] = useState(false)
+  const [opdId, setOpdId] = useState(false)
   const [defaultPatient, setDefaultPatient] = useState()
   const [defaultDoctor, setDefaultDoctor] = useState()
   const [patientId, setPatientId] = useState(0)
+  const [isSave,setIsSave] = useState(true)
 
   const [total_amount, set_total_amount] = useState(0)
   // const [total_dis_amount, set_total_dis_amount] = useState(0)
@@ -90,10 +91,12 @@ const SaleMedicineNewForm = (props) => {
   const [perMedicineArray, setPerMedicineArray] = useState([])
   const [homoMedicineArray, setHomoMedicineArray] = useState([])
 
+
   useEffect(() => {
 
     if (props.details) {
       console.log(props.details)
+      setOpdId(props.details.id)
       let obj = { 'label': props.details.patient.name, 'value': props.details.patient.id }
       let obj2 = { 'label': props.details.consultant_doctor.split('----')[0], 'value': props.details.consultant_doctor.split('----')[0] }
       setDefaultPatient(obj)
@@ -201,6 +204,7 @@ const SaleMedicineNewForm = (props) => {
   }
 
   const onSubmit = (data) => {
+    // setIsPrint(isPrintArg)
     const seen = {};
 
     for (let i = 0; i < medicineArray.length; i++) {
@@ -262,7 +266,13 @@ const SaleMedicineNewForm = (props) => {
       'homo_medicine':homoMedicineArray,
       'doctor_name': doctorName
     }
-    props.onSave(input, isSave, props?.saleMedicine?.id)
+    if (isSave) {
+      props.onSave(input, false, props?.saleMedicine?.id)
+
+    } else {
+
+      props.onSave(input, opdId, props?.saleMedicine?.id)
+    }
 
 
   }
@@ -843,6 +853,10 @@ const SaleMedicineNewForm = (props) => {
             Save
 
           </button>
+        { opdId &&  <button className="rw-button rw-button-blue" onClick={() => setIsSave(false)}>
+            Save And Print
+
+          </button>}
 
           {/* <Submit disabled={props.loading} className="rw-button rw-button-blue" onClick={() => setIsSave(false)}>
             Save and Print

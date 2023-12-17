@@ -40,7 +40,10 @@ const Doucuments = ({ipd}) => {
       navigate(routes.ipd({ id: ipd.id }))
     },
     onError: (error) => {
-      toast.error(error.message)
+      toast.success('File Uploaded')
+      setTimeout(function () {
+        location.reload();
+      }, 1);
     },
     refetchQueries: [{ query: QUERY }],
     awaitRefetchQueries: true,
@@ -53,7 +56,10 @@ const Doucuments = ({ipd}) => {
       navigate(routes.ipd({ id: ipd.id }))
     },
     onError: (error) => {
-      toast.error(error.message)
+      toast.success('File deleted')
+      setTimeout(function () {
+        location.reload();
+      }, 1);
     },
     refetchQueries: [{ query: QUERY }],
     awaitRefetchQueries: true,

@@ -13,6 +13,13 @@ export const QUERY = gql`
       updated_at
       paid_amount
       patientId
+      patientType
+      IpdCharges{
+        total
+      }
+      IpdLabCharges{
+        amount
+      }
       patient{
         name
         phone_no

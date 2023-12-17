@@ -15,6 +15,13 @@ const DELETE_IPD_MUTATION = gql`
     }
   }
 `
+const timeFormate = (time) => {
+  const newdate = new Date(time)
+  const d = newdate.toLocaleString()
+  let ft = d.split(' ')
+  let date = ft[0].split('/')[1]+'-'+ft[0].split('/')[0]+'-'+ft[0].split('/')[2] + ' ' + ft[1]
+  return date
+}
 
 const IpdsList = ({ ipds }) => {
   const [search_data, setSearch_data] = useState(ipds)
@@ -124,7 +131,16 @@ const IpdsList = ({ ipds }) => {
     {
       headerClassName: 'text-left',
       Header: 'Name',
-      accessor: 'patient.name',
+      // accessor: 'patient.name',
+      Cell: ({original}) =>(
+        <Link
+        to={routes.ipd({ id: original.id })}
+        title={'Show opd ' + original.id + ' detail'}
+        className="rw-button rw-button-small"
+      >
+        {original.patient.name}
+      </Link>
+      )
     },
     {
       headerClassName: 'text-left',
@@ -138,25 +154,28 @@ const IpdsList = ({ ipds }) => {
     // },
     {
       headerClassName: 'text-left',
-      Header: 'Date of admission',
+      Header: ipds[0].patientType=='OPD' ? 'Date' : 'Date of admission',
       accessor: 'date_of_admission',
       Cell: ({ original }) => (
-        timeTag(original.date_of_admission)
+        timeFormate(original.date_of_admission)
       )
     },
     {
       headerClassName: 'text-left',
-      Header: 'Paid Amount',
+      Header: ipds[0].patientType=='OPD' ? 'Total Charges' : 'Paid Amount',
       accessor: 'paid_amount',
-    },
-    {
-      headerClassName: 'text-left',
-      Header: 'Date of Discharge',
-      accessor: 'discharge_date',
       Cell: ({ original }) => (
-        timeTag(original.discharge_date) || '-'
+        original.patientType=='OPD' ? original.IpdCharges.reduce((prev,item) => prev+=item.total,0) : original.paid_amount
       )
     },
+    // {
+    //   headerClassName: 'text-left',
+    //   Header:ipds[0].patientType=='OPD' ? 'Total Labs Charges' : 'Date of Discharge',
+    //   accessor: 'discharge_date',
+    //   Cell: ({ original }) => (
+    //     original.patientType=='OPD' ? original.IpdLabCharges.reduce((prev,item) => prev+=item.amount,0) : original.discharge_date ? timeFormate(original.discharge_date) : '-'
+    //   )
+    // },
     {
       headerClassName: 'text-left',
       Header: 'Action',
@@ -166,16 +185,16 @@ const IpdsList = ({ ipds }) => {
         <nav className="rw-table-actions">
           <Link
             to={routes.ipd({ id: original.id })}
-            title={'Show ipd ' + original.id + ' detail'}
+            title={'Show opd ' + original.id + ' detail'}
             className="rw-button rw-button-small"
           >
-            Show
+            show
           </Link>
           {
             isAdmin &&
             <button
               type="button"
-              title={'Delete ipd ' + original.id}
+              title={'Delete opd ' + original.id}
               className="rw-button rw-button-small rw-button-red"
               onClick={() => onDeleteClick(original.id)}
             >

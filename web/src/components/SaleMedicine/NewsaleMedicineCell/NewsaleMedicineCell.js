@@ -82,9 +82,21 @@ export const Failure = ({ error }) => (
 export const Success = ({ medicines, patients, users, compositions,details,homoMedicines }) => {
 
 
+  // function getPDF(id) {
+  //   return axios.get(
+  //     `/.redwood/functions/downloadSaleMedicineBill?id=` +
+  //     id,
+  //     {
+  //       responseType: 'arraybuffer',
+  //       headers: {
+  //         Accept: 'application/pdf',
+  //       },
+  //     }
+  //   )
+  // }
   function getPDF(id) {
     return axios.get(
-      `/.redwood/functions/downloadSaleMedicineBill?id=` +
+      `/.redwood/functions/downloadPrescription?id=` +
       id,
       {
         responseType: 'arraybuffer',
@@ -94,6 +106,7 @@ export const Success = ({ medicines, patients, users, compositions,details,homoM
       }
     )
   }
+
   const printPDF = (id) => {
     return getPDF(id) // API call
       .then((response) => {
@@ -109,15 +122,6 @@ export const Success = ({ medicines, patients, users, compositions,details,homoM
             iframe.focus()
             iframe.contentWindow.print()
           }, 1)
-
-          // Add an event listener for the 'afterprint' event
-          window.onafterprint = function () {
-            // This code will run after the user interacts with the print dialog
-            console.log('User closed the print dialog or printed the PDF');
-
-            // Reload the page after the user interacts with the print dialog
-            window.location.reload();
-          };
         }
         toast.success('Download Complete')
       })
@@ -126,6 +130,38 @@ export const Success = ({ medicines, patients, users, compositions,details,homoM
         console.log(err)
       })
   }
+  // const printPDF = (id) => {
+  //   return getPDF(id) // API call
+  //     .then((response) => {
+  //       const blob = new Blob([response.data], { type: 'application/pdf' })
+  //       var blobURL = URL.createObjectURL(blob)
+  //       var iframe = document.createElement('iframe')
+  //       document.body.appendChild(iframe)
+  //       iframe.style.display = 'none'
+
+  //       iframe.src = blobURL
+  //       iframe.onload = function () {
+  //         setTimeout(function () {
+  //           iframe.focus()
+  //           iframe.contentWindow.print()
+  //         }, 1)
+
+  //         // Add an event listener for the 'afterprint' event
+  //         window.onafterprint = function () {
+  //           // This code will run after the user interacts with the print dialog
+  //           console.log('User closed the print dialog or printed the PDF');
+
+  //           // Reload the page after the user interacts with the print dialog
+  //           window.location.reload();
+  //         };
+  //       }
+  //       toast.success('Download Complete')
+  //     })
+  //     .catch((err) => {
+  //       toast.error('something wrong happened try again')
+  //       console.log(err)
+  //     })
+  // }
 
 
 
@@ -137,7 +173,7 @@ export const Success = ({ medicines, patients, users, compositions,details,homoM
       onCompleted: async (data) => {
         toast.success('SaleMedicine created')
 
-        if (isSave) {
+        if (!isSave) {
           setTimeout(function () {
             location.reload();
           }, 1);
@@ -146,7 +182,7 @@ export const Success = ({ medicines, patients, users, compositions,details,homoM
 
         }
         else {
-          printPDF(data.createSaleMedicine.id)
+          printPDF(details.id)
 
           navigate(routes.saleMedicines())
 
