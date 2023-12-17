@@ -144,10 +144,10 @@ const Doucuments = ({ipd}) => {
         </div>
       </Form>
     </div>
-          <div className=" grid grid-cols-3 grid-flow-row gap-x-2 gap-y-2">
+          <div className=" grid grid-cols-2 grid-flow-row gap-x-2 gap-y-2">
 
             <div className="flex col-span-1 justify-center">Name </div>
-            <div className="flex col-span-1 justify-center">url</div>
+            {/* <div className="flex col-span-1 justify-center">url</div> */}
             <div className="flex col-span-1 justify-center">Action</div>
 
 
@@ -155,8 +155,11 @@ const Doucuments = ({ipd}) => {
               ipd.File.map((item, index) => {
                 return (
                   <>
-                    <div className="flex col-span-1 justify-center">{item.title}</div>
-                    <div className="flex col-span-1 justify-center">{item.url}</div>
+                    <div className="flex col-span-1 justify-center">
+                      <a href={item.url} target='_blank'>{item.title}</a>
+                      </div>
+                    {/* <div className="flex col-span-1 justify-center">
+                      {item.url}</div> */}
                     <div className="flex col-span-1 justify-center">    <span className='cursor-pointer text-xl text-red-600'
                       onClick={() => onDeleteClick(item.id)}
                     >

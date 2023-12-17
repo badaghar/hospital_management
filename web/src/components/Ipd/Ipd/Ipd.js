@@ -17,6 +17,7 @@ import Prescription from '../Prescription/Prescription'
 import FilesCell from 'src/components/File/FilesCell'
 import Doucuments from '../Doucuments/Doucuments'
 import Complaint from '../Complaint/Complaint'
+import IpdHistory from '../IpdHistory/IpdHistory'
 // import { useEffect } from 'react-js-dialog-box'
 
 const DELETE_IPD_MUTATION = gql`
@@ -135,6 +136,11 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
               Documents
             </div>
             <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+            onClick={toggleDropDown.bind(this,'history')}
+            >
+              History
+            </div>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'payment')}
             >
               Payment
@@ -174,6 +180,9 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
           }
           {
             dropDownOpen=='documents' && <Doucuments ipd={ipd}   />
+          }
+          {
+            dropDownOpen=='history' && <IpdHistory ipd={ipd}   />
           }
           {
             dropDownOpen=='payment' && <PaymentIpd ipd={ipd} users={users} chargeses={chargeses} totalAmount={totalAmount} />
