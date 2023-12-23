@@ -15,7 +15,7 @@ const IpdHistory = ({ipd}) => {
     <>
       <div className="mt-4">
         <div className='flex bg-gray-800 text-white  space-x-5 rounded-3xl justify-around flex-wrap'>
-          <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2' onClick={toggleDropDown.bind(this, 'complaints')}>
+          {/* <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2' onClick={toggleDropDown.bind(this, 'complaints')}>
             Complaints
           </div>
           <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2' onClick={toggleDropDown.bind(this, 'charges')}>
@@ -26,13 +26,13 @@ const IpdHistory = ({ipd}) => {
           </div>
           <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2' onClick={toggleDropDown.bind(this, 'documents')}>
             Documents
-          </div>
+          </div> */}
         </div>
 
         {
             dropDownOpen=='complaints' && <IpdHistoryComplaintCell ipd={ipd} id={ipd.patient.id}/>
           }
-        {
+        {/* {
             dropDownOpen=='charges' && <IpdHistoryChargeCell ipd={ipd} id={ipd.patient.id}/>
           }
         {
@@ -40,7 +40,7 @@ const IpdHistory = ({ipd}) => {
           }
         {
             dropDownOpen=='documents' && <IpdHistoryDocumentCell ipd={ipd} id={ipd.patient.id}/>
-          }
+          } */}
       </div>
     </>
   )

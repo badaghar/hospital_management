@@ -65,6 +65,14 @@ const Routes = () => {
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
 
+      <Set wrap={ScaffoldLayout} title="Patients" titleTo="patients" buttonLabel="New Patient" buttonTo="newPatient">
+            <Route path="/patients/new" page={PatientNewPatientPage} name="newPatient" />
+            <Route path="/patients/{id:Int}/edit" page={PatientEditPatientPage} name="editPatient" />
+            <Route path="/patients/{id:Int}" page={PatientPatientPage} name="patient" />
+            <Route path="/patients" page={PatientPatientsPage} name="patients" />
+          </Set>
+
+
 
 
       <Private unauthenticated='login' >
@@ -80,12 +88,6 @@ const Routes = () => {
 
 
           <Route path="/" page={HomePage} name="home" />
-          <Set wrap={ScaffoldLayout} title="Patients" titleTo="patients" buttonLabel="New Patient" buttonTo="newPatient">
-            <Route path="/patients/new" page={PatientNewPatientPage} name="newPatient" />
-            <Route path="/patients/{id:Int}/edit" page={PatientEditPatientPage} name="editPatient" />
-            <Route path="/patients/{id:Int}" page={PatientPatientPage} name="patient" />
-            <Route path="/patients" page={PatientPatientsPage} name="patients" />
-          </Set>
 
 
           <Private unauthenticated="home" roles={["admin"]}>

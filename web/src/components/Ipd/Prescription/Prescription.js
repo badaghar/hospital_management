@@ -455,13 +455,16 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
   }
 
   const timingChange = (item) => {
+    console.log(item.target.value)
+    console.log(item.target.name)
+
 
 
     setPrescriptionArray((array) => {
       const newArray = [...array];
       newArray[index] = {
         ...newArray[index],
-        timing: item?.value || ''
+        timing: item?.target.value || ''
 
       };
       return newArray;
@@ -495,9 +498,19 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
       </div>
 
 
-      <div className="flex col-span-1 justify-center">
+      {/* <div className="flex col-span-1 justify-center">
         <Select options={timingObj} isClearable={true} required onChange={timingChange} value={item.name !== '' ? timingObjName : ''}
         />
+      </div> */}
+            <div className="flex col-span-1 justify-center flex-col items-center">
+        <div>
+          <input type="radio" id={`after-${index}`} onChange={timingChange} value={'After Food'} name={`food-${index}`} />
+          <label htmlFor={`after-${index}`}>After Food</label>
+        </div>
+        <div>
+          <input type="radio" id={`before-${index}`} onChange={timingChange} value={'Before Food'} name={`food-${index}`} />
+          <label htmlFor={`before-${index}`}>Before Food</label>
+        </div>
       </div>
 
 
@@ -574,6 +587,7 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
   }
 
   useEffect(() => {
+    console.log(index)
 
     if (item.medicine) {
       setMedicineName({ value: item.medicine, label: item.medicine })
@@ -610,13 +624,16 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
   }
 
   const timingChange = (item) => {
+    console.log(item.target.value)
+    console.log(item.target.name)
+
 
 
     setPrescriptionArray((array) => {
       const newArray = [...array];
       newArray[index] = {
         ...newArray[index],
-        timing: item?.value || ''
+        timing: item?.target.value || ''
 
       };
       return newArray;
@@ -650,9 +667,17 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
       </div>
 
 
-      <div className="flex col-span-1 justify-center">
-        <Select options={timingObj} isClearable={true} required onChange={timingChange} value={item.name !== '' ? timingObjName : ''}
-        />
+        {/* <Select options={timingObj} isClearable={true} required onChange={timingChange} value={item.name !== '' ? timingObjName : ''}
+        /> */}
+      <div className="flex col-span-1 justify-center flex-col items-center">
+        <div>
+          <input type="radio" id={`after-${index}`} onChange={timingChange} value={'After Food'} name={`food-${index}`} />
+          <label htmlFor={`after-${index}`}>After Food</label>
+        </div>
+        <div>
+          <input type="radio" id={`before-${index}`} onChange={timingChange} value={'Before Food'} name={`food-${index}`} />
+          <label htmlFor={`before-${index}`}>Before Food</label>
+        </div>
       </div>
 
 
