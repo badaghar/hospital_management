@@ -7,6 +7,8 @@ export const QUERY = gql`
     homoMedicines {
       id
       name
+      no
+      potency
       created_at
       updated_at
       extra

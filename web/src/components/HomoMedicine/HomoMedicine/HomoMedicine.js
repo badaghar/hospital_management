@@ -48,6 +48,14 @@ const HomoMedicine = ({ homoMedicine }) => {
               <td>{homoMedicine.name}</td>
             </tr>
             <tr>
+              <th>No</th>
+              <td>{homoMedicine.no}</td>
+            </tr>
+            <tr>
+              <th>Potency</th>
+              <td>{homoMedicine.potency}</td>
+            </tr>
+            <tr>
               <th>Created at</th>
               <td>{timeTag(homoMedicine.created_at)}</td>
             </tr>

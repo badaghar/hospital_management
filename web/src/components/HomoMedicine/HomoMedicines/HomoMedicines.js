@@ -41,9 +41,11 @@ const HomoMedicinesList = ({ homoMedicines }) => {
           <tr>
             <th>Id</th>
             <th>Name</th>
+            <th>No</th>
+            <th>Potency</th>
             <th>Created at</th>
             <th>Updated at</th>
-            <th>Extra</th>
+            {/* <th>Extra</th> */}
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -52,9 +54,11 @@ const HomoMedicinesList = ({ homoMedicines }) => {
             <tr key={homoMedicine.id}>
               <td>{truncate(homoMedicine.id)}</td>
               <td>{truncate(homoMedicine.name)}</td>
+              <td>{truncate(homoMedicine.no)}</td>
+              <td>{truncate(homoMedicine.potency)}</td>
               <td>{timeTag(homoMedicine.created_at)}</td>
               <td>{timeTag(homoMedicine.updated_at)}</td>
-              <td>{jsonTruncate(homoMedicine.extra)}</td>
+              {/* <td>{jsonTruncate(homoMedicine.extra)}</td> */}
               <td>
                 <nav className="rw-table-actions">
                   <Link

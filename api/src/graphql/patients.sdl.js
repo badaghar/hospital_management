@@ -35,8 +35,8 @@ export const schema = gql`
   }
 
   type Mutation {
-    createPatient(input: CreatePatientInput!): Patient! @skipAuth
-    updatePatient(id: Int!, input: UpdatePatientInput!): Patient! @skipAuth
-    deletePatient(id: Int!): Patient! @skipAuth
+    createPatient(input: CreatePatientInput!): Patient! @requireAuth
+    updatePatient(id: Int!, input: UpdatePatientInput!): Patient! @requireAuth
+    deletePatient(id: Int!): Patient! @requireAuth
   }
 `

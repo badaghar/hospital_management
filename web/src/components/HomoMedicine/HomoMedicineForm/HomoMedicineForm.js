@@ -8,24 +8,8 @@ import {
   Submit,
 } from '@redwoodjs/forms'
 
-function convertObjectValuesToUpper(obj) {
-  if (typeof obj !== 'object' || obj === null) {
-    // throw new Error('Input must be an object.');
-    return {}
-  }
-
-  for (let key in obj) {
-    if (typeof obj[key] === 'string') {
-      obj[key] = obj[key].trim().toUpperCase();
-    }
-  }
-
-  return obj;
-}
-
 const HomoMedicineForm = (props) => {
   const onSubmit = (data) => {
-    data = convertObjectValuesToUpper(data)
     props.onSave(data, props?.homoMedicine?.id)
   }
 
@@ -56,6 +40,42 @@ const HomoMedicineForm = (props) => {
         />
 
         <FieldError name="name" className="rw-field-error" />
+
+        <Label
+          name="no"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          No
+        </Label>
+
+        <TextField
+          name="no"
+          defaultValue={props.homoMedicine?.no}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+          validation={{ required: true }}
+        />
+
+        <FieldError name="no" className="rw-field-error" />
+
+        <Label
+          name="potency"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Potency
+        </Label>
+
+        <TextField
+          name="potency"
+          defaultValue={props.homoMedicine?.potency}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+          validation={{ required: true }}
+        />
+
+        <FieldError name="potency" className="rw-field-error" />
 
 
         <div className="rw-button-group">

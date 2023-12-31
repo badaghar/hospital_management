@@ -27,11 +27,18 @@ describe('homoMedicines', () => {
 
   scenario('creates a homoMedicine', async () => {
     const result = await createHomoMedicine({
-      input: { name: 'String', updated_at: '2023-12-08T09:24:51.401Z' },
+      input: {
+        name: 'String',
+        no: 'String',
+        potency: 'String',
+        updated_at: '2023-12-31T15:37:35.734Z',
+      },
     })
 
     expect(result.name).toEqual('String')
-    expect(result.updated_at).toEqual(new Date('2023-12-08T09:24:51.401Z'))
+    expect(result.no).toEqual('String')
+    expect(result.potency).toEqual('String')
+    expect(result.updated_at).toEqual(new Date('2023-12-31T15:37:35.734Z'))
   })
 
   scenario('updates a homoMedicine', async (scenario) => {

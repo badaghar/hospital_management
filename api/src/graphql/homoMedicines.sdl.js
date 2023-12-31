@@ -2,6 +2,8 @@ export const schema = gql`
   type HomoMedicine {
     id: Int!
     name: String!
+    no: String!
+    potency: String!
     created_at: DateTime!
     updated_at: DateTime!
     extra: JSON
@@ -14,10 +16,16 @@ export const schema = gql`
 
   input CreateHomoMedicineInput {
     name: String!
+    no: String!
+    potency: String!
+    extra: JSON
   }
 
   input UpdateHomoMedicineInput {
     name: String
+    no: String
+    potency: String
+    extra: JSON
   }
 
   type Mutation {

@@ -346,8 +346,10 @@ model Product {
 }
 
 model HomoMedicine {
-  id   Int    @id @default(autoincrement())
-  name String
+  id      Int    @id @default(autoincrement())
+  name    String
+  no      String
+  potency String
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

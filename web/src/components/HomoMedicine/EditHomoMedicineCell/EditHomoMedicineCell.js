@@ -10,6 +10,8 @@ export const QUERY = gql`
     homoMedicine: homoMedicine(id: $id) {
       id
       name
+      no
+      potency
       created_at
       updated_at
       extra
@@ -24,6 +26,8 @@ const UPDATE_HOMO_MEDICINE_MUTATION = gql`
     updateHomoMedicine(id: $id, input: $input) {
       id
       name
+      no
+      potency
       created_at
       updated_at
       extra
