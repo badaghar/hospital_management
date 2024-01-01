@@ -10,6 +10,7 @@ export const schema = gql`
     paid_amount: Float!
     discharge_date: DateTime
     patientType: String!
+    extra: JSON
     IpdCharges: [IpdCharges]!
     IpdConsultation: [IpdConsultation]!
     IpdPayment: [IpdPayment]!
@@ -37,6 +38,7 @@ export const schema = gql`
     paid_amount: Float!
     discharge_date: DateTime
     patientType: String!
+    extra: JSON!
     extra_data: JSON!
   }
 
@@ -47,6 +49,7 @@ export const schema = gql`
     paid_amount: Float
     discharge_date: DateTime
     patientType: String
+    extra: JSON
   }
 
 

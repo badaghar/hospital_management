@@ -74,6 +74,24 @@ const IpdForm = (props) => {
   console.log(isOPD)
   const [gender, setGender] = useState('Male');
 
+
+  // logic by vinay
+  // const
+  const [extraInfo, setExtraInfo] = useState({})
+  const thermo = ['DP', 'Pulse', 'Saturation', 'Grbs', 'Weight']
+  const handleExtraInfo = (name, value) => {
+      setExtraInfo((det)=>{
+        return {
+          ...det,
+          [name]:value
+        }
+      })
+
+  }
+
+
+  // end
+
   const handleGenderChange = (event) => {
     setGender(event.target.value);
   };
@@ -81,7 +99,7 @@ const IpdForm = (props) => {
 
   const onSubmit = (data) => {
     data['patientId'] = patientId
-    data['consultant_doctor'] =  isOPD ? doctorName.value + '----' :doctorName.value + '----' + bedName.value
+    data['consultant_doctor'] = isOPD ? doctorName.value + '----' : doctorName.value + '----' + bedName.value
     data['patientType'] = props.type
 
 
@@ -104,6 +122,9 @@ const IpdForm = (props) => {
         'payment_mode': payment
       },
       'bed': isOPD == false ? bedName.id : -1
+    }
+    data['extra'] = {
+      'thermo':extraInfo
     }
     delete data['amount']
     delete data['amount1']
@@ -547,6 +568,49 @@ const IpdForm = (props) => {
             </div>
 
           </div>
+
+
+
+          {/* code by vinay */}
+
+          <div className=" grid grid-cols-5 mt-3">
+            {
+              thermo.map((item) => {
+                return (
+                  <>
+                    <div className="flex col-span-1 justify-center">
+
+
+                      {item}
+
+
+                    </div>
+
+                  </>
+                )
+              })
+            }
+            {
+              thermo.map((it) => {
+                return (
+                  <>
+                    <div className="flex col-span-1 justify-center ">
+                      <input type="text" className="bg-slate-900 text-white p-2"
+                        onChange={(item) => handleExtraInfo(it,item.target.value)}  />
+                    </div>
+
+                  </>
+                )
+              })
+            }
+
+            {/* <div className="flex col-span-1 justify-center ">
+        <input type="number" className="bg-slate-900 text-white p-2" name="" id="" value={quantity} onChange={(item) => setQuantity(item.target.value)} required />
+
+      </div> */}
+
+          </div>
+          {/* end */}
 
           <div className='flex justify-center mt-3  gap-x-4'>
             <div className='font-bold text-2xl underline'>

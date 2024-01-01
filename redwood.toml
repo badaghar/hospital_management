@@ -10,8 +10,8 @@
   port = 8910
   #host="192.168.29.163"
   #apiUrl = "/.redwood/functions"
-  #apiUrl = "/api"
   apiUrl = "/api"
+  #apiUrl = "/api"
   includeEnvironmentVariables = [] # any ENV vars that should be available to the web side, see https://redwoodjs.com/docs/environment-variables#web
 [api]
   port = 8911

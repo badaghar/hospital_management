@@ -12,6 +12,7 @@ export const QUERY = gql`
       patientId
       discharge_date
       patientType
+      extra
       patient{
         id
         name

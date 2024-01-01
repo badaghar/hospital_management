@@ -26,7 +26,7 @@ export const handler = async (event, _context) => {
     const browser = await puppeteer.launch({ headless: true })
     const page = await browser.newPage()
     await page.goto(
-      `http://${process.env.IP_ADDRESS}:8910/download-lab-charges/${id}`,
+      `https://${process.env.IP_ADDRESS}/download-lab-charges/${id}`,
       {
         waitUntil: 'networkidle0',
       }
