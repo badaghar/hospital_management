@@ -1,5 +1,16 @@
 import { logger } from 'src/lib/logger'
-const puppeteer = require('puppeteer')
+// const puppeteer = require('puppeteer')
+let chrome = {}
+let puppeteer;
+
+if (process.env.VERCEL_PUP) {
+  // running on the Vercel platform.
+  chrome = require('chrome-aws-lambda');
+  puppeteer = require('puppeteer-core');
+} else {
+  // running locally.
+  puppeteer = require('puppeteer');
+}
 /**
  * The handler function is your code that processes http request events.
  * You can use return and throw to send a response or error, respectively.
@@ -23,7 +34,9 @@ export const handler = async (event, _context) => {
   const { id } = event.queryStringParameters
 
   async function printPDF() {
-    const browser = await puppeteer.launch({ headless: true })
+    const browser = await puppeteer.launch({ headless: true,
+      executablePath: await chrome.executablePath,
+    })
     const page = await browser.newPage()
     await page.goto(
       `http://${process.env.IP_ADDRESS}:8910/download-other-charges/${id}`,
