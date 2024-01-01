@@ -71,6 +71,628 @@ const DashboardLayout = ({ children }) => {
               <ul className="flex flex-col py-4 space-y-1">
 
 
+
+                         {/* {(currentUser.permissions?.charges?.length > 0 || isAdmin) && */}
+                         <>
+                  <li className="px-5 hidden md:block">
+                    <div className="flex flex-row items-center h-8">
+                      <div className="text-sm font-light tracking-wide text-gray-400 uppercase">Clinic</div>
+                    </div>
+                  </li>
+
+
+                  {/* <li className="relative">
+                    <button
+                      className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                      onClick={toggleDropDown.bind(this, 'Certificate')}
+                    >
+                      <span className="inline-flex justify-center items-center ml-4">
+                        <MdPayments />
+
+                      </span>
+                      <span className="ml-2 text-sm tracking-wide truncate">Certificate</span>
+                      <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
+                        {
+                          dropDownOpen == 'Certificate' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
+
+                        }
+                      </span>
+
+                    </button>
+                    {dropDownOpen == 'Certificate' && (
+                      <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+
+
+
+
+                        <li>
+                          <Link
+                            to={routes.newBirthCertificate()}
+                            className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                          >
+                            <span className="inline-flex justify-center items-center ml-4">
+                              <svg
+                                className="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                />
+                              </svg>
+                            </span>
+                            <span className="ml-2 text-sm tracking-wide truncate">Add Birth/Death Certificate</span>
+
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to={routes.birthCertificates({type:'Birth'})}
+                            className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                          >
+                            <span className="inline-flex justify-center items-center ml-4">
+                              <svg
+                                className="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                />
+                              </svg>
+                            </span>
+                            <span className="ml-2 text-sm tracking-wide truncate">View Birth Certificate</span>
+
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to={routes.birthCertificates({type:'Dead'})}
+                            className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                          >
+                            <span className="inline-flex justify-center items-center ml-4">
+                              <svg
+                                className="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                />
+                              </svg>
+                            </span>
+                            <span className="ml-2 text-sm tracking-wide truncate">View Dead Certificate</span>
+
+                          </Link>
+                        </li>
+
+
+
+
+
+
+
+
+
+                      </ul>
+                    )}
+                  </li> */}
+
+                  {(currentUser.permissions?.charges?.length > 0 || isAdmin) &&
+                    <li className="relative">
+                      <button
+                        className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                        onClick={toggleDropDown.bind(this, 'charges')}
+                      >
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <MdPayments />
+
+                        </span>
+                        <span className="ml-2 text-sm tracking-wide truncate">Charges</span>
+                        <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
+                          {
+                            dropDownOpen == 'charges' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
+
+                          }
+                        </span>
+
+                      </button>
+                      {dropDownOpen == 'charges' && (
+                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+
+
+                          {
+                            (currentUser.permissions?.charges?.includes('DoctorFees') || isAdmin) &&
+
+                            <li>
+                              <Link
+                                to={routes.doctorFees()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Add Doctor Fee</span>
+
+                              </Link>
+                            </li>
+                          }
+
+
+                          {
+                            (currentUser.permissions?.charges?.includes('Chargeses') || isAdmin) &&
+
+
+                            <li>
+                              <Link
+                                to={routes.chargeses()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Add Other Charges</span>
+
+                              </Link>
+                            </li>
+                          }
+
+                          {/* {
+                            (currentUser.permissions?.charges?.includes('LabChargeses') || isAdmin) &&
+
+                            <li>
+                              <Link
+                                to={routes.labChargeses()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Add Lab Charges</span>
+
+                              </Link>
+                            </li>
+                          } */}
+
+                          {/* {
+                            (currentUser.permissions?.charges?.includes('operations') || isAdmin) &&
+
+                            <li>
+                              <Link
+                                to={routes.operations()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Add Operations Name</span>
+
+                              </Link>
+                            </li>
+                          } */}
+                        </ul>
+                      )}
+                    </li>}
+
+
+                  {/* {
+                    (currentUser.permissions?.patientType?.includes('IPD') || isAdmin) &&
+
+                    <>
+
+
+
+                      <li onClick={toggleDropDown.bind(this, 'ipd')}>
+                        <Link to={routes.ipds({ type: 'IPD' })} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
+                          <span className="inline-flex justify-center items-center ml-4">
+                            <FaBed />
+                          </span>
+                          <span className="ml-2 text-sm tracking-wide truncate">IPD - Patient</span>
+
+                        </Link>
+                      </li>
+                    </>
+
+                  } */}
+
+
+
+
+                  {
+                    (currentUser.permissions?.patientType?.includes('OPD') || isAdmin) &&
+
+                    <>
+
+                      {/* <li className="relative">
+                        <button
+                          className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                          onClick={toggleDropDown.bind(this, 'opd')}
+                        >
+                          <span className="inline-flex justify-center items-center ml-4">
+                            <BsPersonFillAdd />
+
+                          </span>
+                          <span className="ml-2 text-sm tracking-wide truncate">OPD - Patients</span>
+
+                        </button>
+                        {dropDownOpen == 'opd' && (
+                          <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                            <li>
+                              <Link
+                                to={routes.ipds({ type: 'OPD' })}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Patients</span>
+
+                              </Link>
+                            </li>
+                          </ul>
+                        )}
+                      </li> */}
+
+                      <li onClick={toggleDropDown.bind(this, 'opd')}>
+                        <Link to={routes.ipds({ type: 'OPD' })} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
+                          <span className="inline-flex justify-center items-center ml-4">
+                            <BsPersonFillAdd />
+                          </span>
+                          <span className="ml-2 text-sm tracking-wide truncate">OPD - Patient</span>
+
+                        </Link>
+                      </li>
+                    </>
+                  }
+
+                  {/* {(currentUser.permissions?.patientType?.includes('Operations') || isAdmin) &&
+                    <li>
+                      <Link to={routes.ipdOperationPayments()} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
+                        </span>
+                        <span className="ml-2 text-sm tracking-wide truncate">Operation</span>
+
+                      </Link>
+                    </li>
+                  } */}
+
+
+
+                  {/* {(currentUser.permissions?.bed?.length > 0 || isAdmin) &&
+                    <li className="relative">
+                      <button
+                        className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                        onClick={toggleDropDown.bind(this, 'bed')}
+                      >
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <FaBed />
+
+                        </span>
+                        <span className="ml-2 text-sm tracking-wide truncate">BED</span>
+                        <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
+                          {
+                            dropDownOpen == 'bed' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
+
+                          }
+                        </span>
+
+                      </button>
+                      {dropDownOpen == 'bed' && (
+                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+
+
+                          {
+                            (currentUser.permissions?.bed?.includes('floors') || isAdmin) &&
+                            <li>
+                              <Link
+                                to={routes.floors()}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">Add Floors</span>
+
+                              </Link>
+                            </li>
+                          }
+
+
+                          {
+                            (currentUser.permissions?.bed?.includes('beds') || isAdmin) &&
+
+                            <>
+                              <li>
+                                <Link
+                                  to={routes.beds()}
+                                  className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                                >
+                                  <span className="inline-flex justify-center items-center ml-4">
+                                    <svg
+                                      className="w-5 h-5"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                      />
+                                    </svg>
+                                  </span>
+                                  <span className="ml-2 text-sm tracking-wide truncate">Add Beds</span>
+
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  to={routes.viewBed()}
+                                  className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                                >
+                                  <span className="inline-flex justify-center items-center ml-4">
+                                    <svg
+                                      className="w-5 h-5"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                      />
+                                    </svg>
+                                  </span>
+                                  <span className="ml-2 text-sm tracking-wide truncate">View Beds</span>
+
+                                </Link>
+                              </li>
+                            </>
+                          }
+                        </ul>
+                      )}
+                    </li>
+                  } */}
+                  {/* <li className="relative">
+                      <button
+                        className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                        onClick={toggleDropDown.bind(this, 'user')}
+                      >
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <MdPayments />
+
+                        </span>
+                        <span className="ml-2 text-sm tracking-wide truncate">Users</span>
+
+                      </button>
+                      {dropDownOpen == 'user' && (
+                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                          <li>
+                            <Link
+                              to={routes.signup()}
+                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                            >
+                              <span className="inline-flex justify-center items-center ml-4">
+                                <svg
+                                  className="w-5 h-5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                  />
+                                </svg>
+                              </span>
+                              <span className="ml-2 text-sm tracking-wide truncate">Add Users</span>
+
+                            </Link>
+                          </li>
+                        </ul>
+                      )}
+                    </li> */}
+
+
+
+                </>
+
+
+                {(currentUser.permissions?.hospitalReport?.length > 0 || isAdmin) &&
+
+
+                  <>
+                    <li className="relative">
+                      <button
+                        className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                        onClick={toggleDropDown.bind(this, 'hospitalReport')}
+                      >
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <TbReportMedical />
+
+                        </span>
+                        <span className="ml-2 text-sm tracking-wide truncate">Clinic Report</span>
+                        <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
+                          {
+                            dropDownOpen == 'hospitalReport' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
+
+                          }
+                        </span>
+
+                      </button>
+                      {dropDownOpen == 'hospitalReport' && (
+                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
+                          {/* {
+                            (currentUser.permissions?.hospitalReport?.includes('IPD Reports') || isAdmin) &&
+
+                            <li>
+                              <Link
+                                to={routes.pharmacyReport({ id: 5 })}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">IPD Report</span>
+
+                              </Link>
+                            </li>
+                          } */}
+                          {
+                            (currentUser.permissions?.hospitalReport?.includes('OPD Report') || isAdmin) &&
+                            <li>
+                              <Link
+                                to={routes.pharmacyReport({ id: 6 })}
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
+                              >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">OPD Report</span>
+
+                              </Link>
+                            </li>
+                          }
+
+
+
+
+                        </ul>
+                      )}
+                    </li>
+
+                  </>
+                }
+
+
                 {(currentUser.permissions?.pharmacy?.length > 0 || isAdmin) &&
                   <>
                     <li className="px-5 hidden md:block">
@@ -771,625 +1393,7 @@ const DashboardLayout = ({ children }) => {
 
 
 
-                {/* {(currentUser.permissions?.charges?.length > 0 || isAdmin) && */}
-                <>
-                  <li className="px-5 hidden md:block">
-                    <div className="flex flex-row items-center h-8">
-                      <div className="text-sm font-light tracking-wide text-gray-400 uppercase">Hospital</div>
-                    </div>
-                  </li>
 
-
-                  {/* <li className="relative">
-                    <button
-                      className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                      onClick={toggleDropDown.bind(this, 'Certificate')}
-                    >
-                      <span className="inline-flex justify-center items-center ml-4">
-                        <MdPayments />
-
-                      </span>
-                      <span className="ml-2 text-sm tracking-wide truncate">Certificate</span>
-                      <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
-                        {
-                          dropDownOpen == 'Certificate' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
-
-                        }
-                      </span>
-
-                    </button>
-                    {dropDownOpen == 'Certificate' && (
-                      <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
-
-
-
-
-                        <li>
-                          <Link
-                            to={routes.newBirthCertificate()}
-                            className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                          >
-                            <span className="inline-flex justify-center items-center ml-4">
-                              <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                />
-                              </svg>
-                            </span>
-                            <span className="ml-2 text-sm tracking-wide truncate">Add Birth/Death Certificate</span>
-
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to={routes.birthCertificates({type:'Birth'})}
-                            className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                          >
-                            <span className="inline-flex justify-center items-center ml-4">
-                              <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                />
-                              </svg>
-                            </span>
-                            <span className="ml-2 text-sm tracking-wide truncate">View Birth Certificate</span>
-
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to={routes.birthCertificates({type:'Dead'})}
-                            className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                          >
-                            <span className="inline-flex justify-center items-center ml-4">
-                              <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                />
-                              </svg>
-                            </span>
-                            <span className="ml-2 text-sm tracking-wide truncate">View Dead Certificate</span>
-
-                          </Link>
-                        </li>
-
-
-
-
-
-
-
-
-
-                      </ul>
-                    )}
-                  </li> */}
-
-                  {(currentUser.permissions?.charges?.length > 0 || isAdmin) &&
-                    <li className="relative">
-                      <button
-                        className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                        onClick={toggleDropDown.bind(this, 'charges')}
-                      >
-                        <span className="inline-flex justify-center items-center ml-4">
-                          <MdPayments />
-
-                        </span>
-                        <span className="ml-2 text-sm tracking-wide truncate">Charges</span>
-                        <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
-                          {
-                            dropDownOpen == 'charges' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
-
-                          }
-                        </span>
-
-                      </button>
-                      {dropDownOpen == 'charges' && (
-                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
-
-
-                          {
-                            (currentUser.permissions?.charges?.includes('DoctorFees') || isAdmin) &&
-
-                            <li>
-                              <Link
-                                to={routes.doctorFees()}
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                              >
-                                <span className="inline-flex justify-center items-center ml-4">
-                                  <svg
-                                    className="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                    />
-                                  </svg>
-                                </span>
-                                <span className="ml-2 text-sm tracking-wide truncate">Add Doctor Fee</span>
-
-                              </Link>
-                            </li>
-                          }
-
-
-                          {
-                            (currentUser.permissions?.charges?.includes('Chargeses') || isAdmin) &&
-
-
-                            <li>
-                              <Link
-                                to={routes.chargeses()}
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                              >
-                                <span className="inline-flex justify-center items-center ml-4">
-                                  <svg
-                                    className="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                    />
-                                  </svg>
-                                </span>
-                                <span className="ml-2 text-sm tracking-wide truncate">Add Other Charges</span>
-
-                              </Link>
-                            </li>
-                          }
-
-                          {/* {
-                            (currentUser.permissions?.charges?.includes('LabChargeses') || isAdmin) &&
-
-                            <li>
-                              <Link
-                                to={routes.labChargeses()}
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                              >
-                                <span className="inline-flex justify-center items-center ml-4">
-                                  <svg
-                                    className="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                    />
-                                  </svg>
-                                </span>
-                                <span className="ml-2 text-sm tracking-wide truncate">Add Lab Charges</span>
-
-                              </Link>
-                            </li>
-                          } */}
-
-                          {/* {
-                            (currentUser.permissions?.charges?.includes('operations') || isAdmin) &&
-
-                            <li>
-                              <Link
-                                to={routes.operations()}
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                              >
-                                <span className="inline-flex justify-center items-center ml-4">
-                                  <svg
-                                    className="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                    />
-                                  </svg>
-                                </span>
-                                <span className="ml-2 text-sm tracking-wide truncate">Add Operations Name</span>
-
-                              </Link>
-                            </li>
-                          } */}
-                        </ul>
-                      )}
-                    </li>}
-
-
-                  {/* {
-                    (currentUser.permissions?.patientType?.includes('IPD') || isAdmin) &&
-
-                    <>
-
-
-
-                      <li onClick={toggleDropDown.bind(this, 'ipd')}>
-                        <Link to={routes.ipds({ type: 'IPD' })} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
-                          <span className="inline-flex justify-center items-center ml-4">
-                            <FaBed />
-                          </span>
-                          <span className="ml-2 text-sm tracking-wide truncate">IPD - Patient</span>
-
-                        </Link>
-                      </li>
-                    </>
-
-                  } */}
-
-
-
-
-                  {
-                    (currentUser.permissions?.patientType?.includes('OPD') || isAdmin) &&
-
-                    <>
-
-                      {/* <li className="relative">
-                        <button
-                          className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                          onClick={toggleDropDown.bind(this, 'opd')}
-                        >
-                          <span className="inline-flex justify-center items-center ml-4">
-                            <BsPersonFillAdd />
-
-                          </span>
-                          <span className="ml-2 text-sm tracking-wide truncate">OPD - Patients</span>
-
-                        </button>
-                        {dropDownOpen == 'opd' && (
-                          <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
-                            <li>
-                              <Link
-                                to={routes.ipds({ type: 'OPD' })}
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                              >
-                                <span className="inline-flex justify-center items-center ml-4">
-                                  <svg
-                                    className="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                    />
-                                  </svg>
-                                </span>
-                                <span className="ml-2 text-sm tracking-wide truncate">Patients</span>
-
-                              </Link>
-                            </li>
-                          </ul>
-                        )}
-                      </li> */}
-
-                      <li onClick={toggleDropDown.bind(this, 'opd')}>
-                        <Link to={routes.ipds({ type: 'OPD' })} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
-                          <span className="inline-flex justify-center items-center ml-4">
-                            <BsPersonFillAdd />
-                          </span>
-                          <span className="ml-2 text-sm tracking-wide truncate">OPD - Patient</span>
-
-                        </Link>
-                      </li>
-                    </>
-                  }
-
-                  {/* {(currentUser.permissions?.patientType?.includes('Operations') || isAdmin) &&
-                    <li>
-                      <Link to={routes.ipdOperationPayments()} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
-                        <span className="inline-flex justify-center items-center ml-4">
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
-                        </span>
-                        <span className="ml-2 text-sm tracking-wide truncate">Operation</span>
-
-                      </Link>
-                    </li>
-                  } */}
-
-
-
-                  {/* {(currentUser.permissions?.bed?.length > 0 || isAdmin) &&
-                    <li className="relative">
-                      <button
-                        className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                        onClick={toggleDropDown.bind(this, 'bed')}
-                      >
-                        <span className="inline-flex justify-center items-center ml-4">
-                          <FaBed />
-
-                        </span>
-                        <span className="ml-2 text-sm tracking-wide truncate">BED</span>
-                        <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
-                          {
-                            dropDownOpen == 'bed' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
-
-                          }
-                        </span>
-
-                      </button>
-                      {dropDownOpen == 'bed' && (
-                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
-
-
-                          {
-                            (currentUser.permissions?.bed?.includes('floors') || isAdmin) &&
-                            <li>
-                              <Link
-                                to={routes.floors()}
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                              >
-                                <span className="inline-flex justify-center items-center ml-4">
-                                  <svg
-                                    className="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                    />
-                                  </svg>
-                                </span>
-                                <span className="ml-2 text-sm tracking-wide truncate">Add Floors</span>
-
-                              </Link>
-                            </li>
-                          }
-
-
-                          {
-                            (currentUser.permissions?.bed?.includes('beds') || isAdmin) &&
-
-                            <>
-                              <li>
-                                <Link
-                                  to={routes.beds()}
-                                  className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                                >
-                                  <span className="inline-flex justify-center items-center ml-4">
-                                    <svg
-                                      className="w-5 h-5"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                      />
-                                    </svg>
-                                  </span>
-                                  <span className="ml-2 text-sm tracking-wide truncate">Add Beds</span>
-
-                                </Link>
-                              </li>
-                              <li>
-                                <Link
-                                  to={routes.viewBed()}
-                                  className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                                >
-                                  <span className="inline-flex justify-center items-center ml-4">
-                                    <svg
-                                      className="w-5 h-5"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                      />
-                                    </svg>
-                                  </span>
-                                  <span className="ml-2 text-sm tracking-wide truncate">View Beds</span>
-
-                                </Link>
-                              </li>
-                            </>
-                          }
-                        </ul>
-                      )}
-                    </li>
-                  } */}
-                  {/* <li className="relative">
-                      <button
-                        className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                        onClick={toggleDropDown.bind(this, 'user')}
-                      >
-                        <span className="inline-flex justify-center items-center ml-4">
-                          <MdPayments />
-
-                        </span>
-                        <span className="ml-2 text-sm tracking-wide truncate">Users</span>
-
-                      </button>
-                      {dropDownOpen == 'user' && (
-                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
-                          <li>
-                            <Link
-                              to={routes.signup()}
-                              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                            >
-                              <span className="inline-flex justify-center items-center ml-4">
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                  />
-                                </svg>
-                              </span>
-                              <span className="ml-2 text-sm tracking-wide truncate">Add Users</span>
-
-                            </Link>
-                          </li>
-                        </ul>
-                      )}
-                    </li> */}
-
-
-
-                </>
-
-
-                {(currentUser.permissions?.hospitalReport?.length > 0 || isAdmin) &&
-
-
-                  <>
-                    <li className="relative">
-                      <button
-                        className="flex flex-row w-full items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                        onClick={toggleDropDown.bind(this, 'hospitalReport')}
-                      >
-                        <span className="inline-flex justify-center items-center ml-4">
-                          <TbReportMedical />
-
-                        </span>
-                        <span className="ml-2 text-sm tracking-wide truncate">Hospital Report</span>
-                        <span className="hidden md:block px-2 py-0.5 ml-auto  font-medium tracking-wide text-xl rounded-full">
-                          {
-                            dropDownOpen == 'hospitalReport' ? <BsFillArrowUpCircleFill /> : <BsFillArrowDownCircleFill />
-
-                          }
-                        </span>
-
-                      </button>
-                      {dropDownOpen == 'hospitalReport' && (
-                        <ul className="relative left-0 z-10 py-2 mt-2 bg-gray-800 rounded-md shadow-lg">
-                          {/* {
-                            (currentUser.permissions?.hospitalReport?.includes('IPD Reports') || isAdmin) &&
-
-                            <li>
-                              <Link
-                                to={routes.pharmacyReport({ id: 5 })}
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                              >
-                                <span className="inline-flex justify-center items-center ml-4">
-                                  <svg
-                                    className="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                    />
-                                  </svg>
-                                </span>
-                                <span className="ml-2 text-sm tracking-wide truncate">IPD Report</span>
-
-                              </Link>
-                            </li>
-                          } */}
-                          {
-                            (currentUser.permissions?.hospitalReport?.includes('OPD Report') || isAdmin) &&
-                            <li>
-                              <Link
-                                to={routes.pharmacyReport({ id: 6 })}
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6"
-                              >
-                                <span className="inline-flex justify-center items-center ml-4">
-                                  <svg
-                                    className="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                    />
-                                  </svg>
-                                </span>
-                                <span className="ml-2 text-sm tracking-wide truncate">OPD Report</span>
-
-                              </Link>
-                            </li>
-                          }
-
-
-
-
-                        </ul>
-                      )}
-                    </li>
-
-                  </>
-                }
 
 
 

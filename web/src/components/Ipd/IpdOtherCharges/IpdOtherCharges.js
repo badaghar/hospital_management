@@ -53,7 +53,8 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
 
   function getPDF(id) {
     return axios.get(
-      `${process.env.API_URL}downloadOtherCharges?id=` +
+      // `${process.env.API_URL}downloadOtherCharges?id=` +
+      `${'/api/'}downloadOtherCharges?id=` +
       id,
       {
         responseType: 'arraybuffer',
