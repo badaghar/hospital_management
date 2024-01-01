@@ -196,7 +196,7 @@ const PaymentIpd = ({ totalAmount, ipd }) => {
 
   function getPDF(id) {
     return axios.get(
-      `/.redwood/functions/downloadOtherCharges?id=` +
+      `${process.env.API_URL}downloadOtherCharges?id=` +
       id,
       {
         responseType: 'arraybuffer',

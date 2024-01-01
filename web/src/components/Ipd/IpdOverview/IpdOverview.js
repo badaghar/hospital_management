@@ -118,7 +118,7 @@ const IpdOverview = ({ ipd, totalAmount}) => {
 
   function getPDF(id) {
     return axios.get(
-      `/.redwood/functions/downloadOpdForm?id=` +
+      `${process.env.API_URL}downloadOpdForm?id=` +
       id,
       {
         responseType: 'arraybuffer',

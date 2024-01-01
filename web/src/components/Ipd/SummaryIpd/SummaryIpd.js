@@ -31,7 +31,7 @@ const SummaryIpd = ({ ipd,floors }) => {
   const isAdmin = currentUser?.roles == 'admin'
   function getPDF(id) {
     return axios.get(
-      `/.redwood/functions/downloadDischargeSummary?id=` +
+      `${process.env.API_URL}downloadDischargeSummary?id=` +
       id,
       {
         responseType: 'arraybuffer',

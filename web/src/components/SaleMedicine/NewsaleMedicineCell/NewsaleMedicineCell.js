@@ -84,7 +84,7 @@ export const Success = ({ medicines, patients, users, compositions,details,homoM
 
   // function getPDF(id) {
   //   return axios.get(
-  //     `/.redwood/functions/downloadSaleMedicineBill?id=` +
+  //     `${process.env.API_URL}downloadSaleMedicineBill?id=` +
   //     id,
   //     {
   //       responseType: 'arraybuffer',
@@ -96,7 +96,7 @@ export const Success = ({ medicines, patients, users, compositions,details,homoM
   // }
   function getPDF(id) {
     return axios.get(
-      `/.redwood/functions/downloadPrescription?id=` +
+      `${process.env.API_URL}downloadPrescription?id=` +
       id,
       {
         responseType: 'arraybuffer',

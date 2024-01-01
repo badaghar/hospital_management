@@ -51,7 +51,7 @@ const LabChargesIpd = ({ ipd, users, labChargeses }) => {
 
   function getPDF(id) {
     return axios.get(
-      `/.redwood/functions/downloadLabCharges?id=` +
+      `${process.env.API_URL}downloadLabCharges?id=` +
       id,
       {
         responseType: 'arraybuffer',

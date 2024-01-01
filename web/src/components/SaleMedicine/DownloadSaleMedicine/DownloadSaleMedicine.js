@@ -16,7 +16,7 @@ const DownloadSaleMedicine = ({ saleMedicine,download }) => {
   const [downloadstart, setDownloadstart] = useState(false)
   function getPDF() {
     return axios.get(
-      `/.redwood/functions/downloadSaleMedicineBill?id=` +
+      `${process.env.API_URL}downloadSaleMedicineBill?id=` +
       saleMedicine.id,
       {
         responseType: 'arraybuffer',

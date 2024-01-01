@@ -86,7 +86,7 @@ const Prescription = ({ ipd, medicines,homoMedicines }) => {
   )
   function getPDF(id) {
     return axios.get(
-      `/.redwood/functions/downloadPrescription?id=` +
+      `${process.env.API_URL}downloadPrescription?id=` +
       id,
       {
         responseType: 'arraybuffer',
