@@ -1,6 +1,6 @@
 import { logger } from 'src/lib/logger'
 import puppeteerExtra from 'puppeteer-extra'
-import stealthPlugin from 'puppeteer-extra-plugin-stealth'
+// import stealthPlugin from 'puppeteer-extra-plugin-stealth'
 import chromium from '@sparticuz/chromium'
 // const puppeteer = require('puppeteer')
 // let chrome = {}
@@ -37,7 +37,7 @@ export const handler = async (event, _context) => {
   const { id } = event.queryStringParameters
 
   async function printPDF() {
-    puppeteerExtra.use(stealthPlugin());
+    // puppeteerExtra.use(stealthPlugin());
 
     const browser = await puppeteerExtra.launch({
       args: chromium.args,
