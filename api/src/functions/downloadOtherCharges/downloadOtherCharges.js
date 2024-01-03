@@ -54,8 +54,8 @@ export const handler = async (event, _context) => {
       }
     )
     const pdf = await page.pdf({ format: 'A4' })
-    const pages = await browser.pages()
-    await Promise.all(pages.map(async (page)=> page.close()));
+    // const pages = await browser.pages()
+    // await Promise.all(pages.map(async (page)=> page.close()));
 
     await browser.close()
     return pdf
