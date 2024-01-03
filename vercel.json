@@ -1,0 +1,8 @@
+{
+  "build": {
+    "commands": [
+      "yarn install",
+      "yarn rw dev"
+    ]
+  }
+}
