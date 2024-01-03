@@ -54,7 +54,7 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
   // kehnfwei
   function getPDF(id) {
     return axios.get(
-      `http://13.233.126.41/:1000/downloadOtherCharges?id=` +
+      `http://13.233.126.41:1000/downloadOtherCharges?id=` +
       // `${'/api/'}downloadOtherCharges?id=` +
       id,
       {

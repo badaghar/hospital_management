@@ -31,7 +31,7 @@ const SummaryIpd = ({ ipd,floors }) => {
   const isAdmin = currentUser?.roles == 'admin'
   function getPDF(id) {
     return axios.get(
-      `http://13.233.126.41/:1000/downloadDischargeSummary?id=` +
+      `http://13.233.126.41:1000/downloadDischargeSummary?id=` +
       id,
       {
         responseType: 'arraybuffer',

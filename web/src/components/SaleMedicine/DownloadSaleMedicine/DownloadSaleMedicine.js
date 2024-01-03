@@ -16,7 +16,7 @@ const DownloadSaleMedicine = ({ saleMedicine,download }) => {
   const [downloadstart, setDownloadstart] = useState(false)
   function getPDF() {
     return axios.get(
-      `http://13.233.126.41/:1000/downloadSaleMedicineBill?id=` +
+      `http://13.233.126.41:1000/downloadSaleMedicineBill?id=` +
       saleMedicine.id,
       {
         responseType: 'arraybuffer',
