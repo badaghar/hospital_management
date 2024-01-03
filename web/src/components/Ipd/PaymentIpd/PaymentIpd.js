@@ -196,7 +196,7 @@ const PaymentIpd = ({ totalAmount, ipd }) => {
 
   function getPDF(id) {
     return axios.get(
-      `${process.env.API_URL}downloadOtherCharges?id=` +
+      `http://localhost:1000/downloadOtherCharges?id=` +
       id,
       {
         responseType: 'arraybuffer',

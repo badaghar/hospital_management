@@ -31,7 +31,7 @@ const SummaryIpd = ({ ipd,floors }) => {
   const isAdmin = currentUser?.roles == 'admin'
   function getPDF(id) {
     return axios.get(
-      `${process.env.API_URL}downloadDischargeSummary?id=` +
+      `http://localhost:1000/downloadDischargeSummary?id=` +
       id,
       {
         responseType: 'arraybuffer',

@@ -52,7 +52,7 @@ const BirthCertificatesList = ({ birthCertificates }) => {
 
   function getPDF(id) {
     return axios.get(
-      `${process.env.API_URL}downloadCertificate?id=` +
+      `http://localhost:1000/downloadCertificate?id=` +
       id,
       {
         responseType: 'arraybuffer',

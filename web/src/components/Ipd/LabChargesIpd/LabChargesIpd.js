@@ -51,7 +51,7 @@ const LabChargesIpd = ({ ipd, users, labChargeses }) => {
 
   function getPDF(id) {
     return axios.get(
-      `${process.env.API_URL}downloadLabCharges?id=` +
+      `http://localhost:1000/downloadLabCharges?id=` +
       id,
       {
         responseType: 'arraybuffer',

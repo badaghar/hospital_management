@@ -86,7 +86,7 @@ const Prescription = ({ ipd, medicines,homoMedicines }) => {
   )
   function getPDF(id) {
     return axios.get(
-      `${process.env.API_URL}downloadPrescription?id=` +
+      `http://localhost:1000/downloadPrescription?id=` +
       id,
       {
         responseType: 'arraybuffer',

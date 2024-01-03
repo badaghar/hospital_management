@@ -118,7 +118,7 @@ const IpdOverview = ({ ipd, totalAmount}) => {
 
   function getPDF(id) {
     return axios.get(
-      `${process.env.API_URL}downloadOpdForm?id=` +
+      `http://localhost:1000/downloadOpdForm?id=` +
       id,
       {
         responseType: 'arraybuffer',

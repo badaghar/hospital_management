@@ -16,7 +16,7 @@ const DownloadSaleMedicine = ({ saleMedicine,download }) => {
   const [downloadstart, setDownloadstart] = useState(false)
   function getPDF() {
     return axios.get(
-      `${process.env.API_URL}downloadSaleMedicineBill?id=` +
+      `http://localhost:1000/downloadSaleMedicineBill?id=` +
       saleMedicine.id,
       {
         responseType: 'arraybuffer',
