@@ -196,7 +196,7 @@ const PaymentIpd = ({ totalAmount, ipd }) => {
 
   function getPDF(id) {
     return axios.get(
-      `http://localhost:1000/downloadOtherCharges?id=` +
+      `http://13.233.126.41/:1000/downloadOtherCharges?id=` +
       id,
       {
         responseType: 'arraybuffer',
