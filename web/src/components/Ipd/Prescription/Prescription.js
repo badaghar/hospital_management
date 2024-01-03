@@ -86,7 +86,7 @@ const Prescription = ({ ipd, medicines,homoMedicines }) => {
   )
   function getPDF(id) {
     return axios.get(
-      `http://13.233.126.41:1000/downloadPrescription?id=` +
+      `https://13.233.126.41:1000/downloadPrescription?id=` +
       id,
       {
         responseType: 'arraybuffer',
