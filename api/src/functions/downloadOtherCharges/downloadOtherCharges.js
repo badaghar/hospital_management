@@ -32,7 +32,7 @@ import chromium from '@sparticuz/chromium'
  */
 export const handler = async (event, _context) => {
   logger.info(
-    `${event.httpMethod} ${event.path}: downloadLabChargesBill function`
+    `${event.httpMethod} ${event.path}: downloadLabChargesBill function hfjmb`
   )
   const { id } = event.queryStringParameters
 
