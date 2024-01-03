@@ -1,12 +1,15 @@
 import { logger } from 'src/lib/logger'
+import puppeteerExtra from 'puppeteer-extra'
+import stealthPlugin from 'puppeteer-extra-plugin-stealth'
+import chromium from '@sparticuz/chromium'
 // const puppeteer = require('puppeteer')
-let chrome = {}
-let puppeteer;
+// let chrome = {}
+// let puppeteer;
 
-// if (process.env.VERCEL_PUP) {
-  // running on the Vercel platform.
-  chrome = require('chrome-aws-lambda');
-  puppeteer = require('puppeteer-core');
+// // if (process.env.VERCEL_PUP) {
+//   // running on the Vercel platform.
+//   chrome = require('chrome-aws-lambda');
+//   puppeteer = require('puppeteer-core');
 // } else {
 //   // running locally.
 //   puppeteer = require('puppeteer');
@@ -34,12 +37,14 @@ export const handler = async (event, _context) => {
   const { id } = event.queryStringParameters
 
   async function printPDF() {
-    const browser = await puppeteer.launch({
-      args: [...chrome.args, '--hide-scrollbars', '--disable-web-security'],
-      defaultViewport: chrome.defaultViewport,
-      executablePath: await chrome.executablePath,
-      headless: true,
-      ignoreHTTPSErrors: true,
+    puppeteerExtra.use(stealthPlugin());
+
+    const browser = await puppeteerExtra.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+      ignoreHTTPSErrors: true
     })
     const page = await browser.newPage()
     await page.goto(
@@ -49,6 +54,8 @@ export const handler = async (event, _context) => {
       }
     )
     const pdf = await page.pdf({ format: 'A4' })
+    const pages = await browser.pages()
+    await Promise.all(pages.map(async (page)=> page.close()));
 
     await browser.close()
     return pdf
