@@ -1,6 +1,7 @@
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useState } from 'react'
 
 import { jsonDisplay, timeTag } from 'src/lib/formatters'
 
@@ -13,6 +14,7 @@ const DELETE_HOMO_MEDICINE_MUTATION = gql`
 `
 
 const HomoMedicine = ({ homoMedicine }) => {
+  const [potency, setPotency] = useState(['Q', '1x', '3x', '6x', '12x', '30c', '200', '1M', '10M', '50M', "CM"]);
   const [deleteHomoMedicine] = useMutation(DELETE_HOMO_MEDICINE_MUTATION, {
     onCompleted: () => {
       toast.success('HomoMedicine deleted')
@@ -53,7 +55,23 @@ const HomoMedicine = ({ homoMedicine }) => {
             </tr>
             <tr>
               <th>Potency</th>
-              <td>{homoMedicine.potency}</td>
+              <td>
+                <div className='flex space-x-2'>
+                  {
+                    homoMedicine.extra.selectedItems.map((item, index) => {
+                      if(!item){
+                        return
+                      }
+
+                      return (
+                        <div>
+                          [ {potency[index]} - {item} ]
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+              </td>
             </tr>
             <tr>
               <th>Created at</th>
@@ -63,10 +81,7 @@ const HomoMedicine = ({ homoMedicine }) => {
               <th>Updated at</th>
               <td>{timeTag(homoMedicine.updated_at)}</td>
             </tr>
-            <tr>
-              <th>Extra</th>
-              <td>{jsonDisplay(homoMedicine.extra)}</td>
-            </tr>
+
           </tbody>
         </table>
       </div>

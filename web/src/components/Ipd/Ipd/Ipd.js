@@ -104,13 +104,13 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
             onClick={toggleDropDown.bind(this,'consultant')}
             >
               consultant Registration
-            </div>
+            </div> */}
             <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'charges')}
             >
               Charges
 
-            </div> */}
+            </div>
             {/* <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'labcharges')}
             >
