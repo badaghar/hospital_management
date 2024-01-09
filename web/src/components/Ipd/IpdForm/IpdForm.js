@@ -63,7 +63,7 @@ const IpdForm = (props) => {
   const [doctorChargesArray, setDoctorChargesArray] = useState([])
   const [otherChargesArray, setOtherChargesArray] = useState([])
   const [paymentOption, setPaymentOption] = useState([
-    { value: 'cheque', label: 'cheque' }, { value: 'cash', label: 'cash' }
+    { value: 'phonepe', label: 'phonepe' }, { value: 'cash', label: 'cash' }
   ])
   const [bedOptions, setBedOptions] = useState([])
   const [payment, setPayment] = useState('')
@@ -78,7 +78,7 @@ const IpdForm = (props) => {
   // logic by vinay
   // const
   const [extraInfo, setExtraInfo] = useState({})
-  const thermo = ['DP', 'Pulse', 'Saturation', 'Grbs', 'Weight']
+  const thermo = ['BP', 'Pulse', 'Saturation', 'Grbs', 'Weight']
   const handleExtraInfo = (name, value) => {
       setExtraInfo((det)=>{
         return {

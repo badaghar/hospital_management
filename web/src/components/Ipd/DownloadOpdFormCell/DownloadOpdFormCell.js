@@ -10,6 +10,7 @@ export const QUERY = gql`
       patientId
       discharge_date
       patientType
+      consultant_doctor
       patient{
         id
         name
@@ -107,6 +108,9 @@ export const Success = ({ downloadOpdForm }) => {
                     </div>
                     <div className="space-x-4">
                       <span className="font-bold text-xs">Date : </span> <span className="text-xs">{new Date().toLocaleDateString()}</span>
+                    </div>
+                    <div className="space-x-4">
+                      <span className="font-bold text-xs">Dr : </span> <span className="text-xs">{downloadOpdForm.consultant_doctor}</span>
                     </div>
 
 
