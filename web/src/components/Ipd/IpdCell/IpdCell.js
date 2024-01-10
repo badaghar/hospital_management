@@ -100,6 +100,8 @@ export const QUERY = gql`
     homoMedicines{
       id
       name
+      no
+      extra
     }
 
     users: users{

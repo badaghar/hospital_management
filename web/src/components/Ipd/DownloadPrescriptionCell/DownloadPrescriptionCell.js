@@ -165,11 +165,14 @@ export const Success = ({ downloadPrescription }) => {
                   <div className="text-xs grid grid-cols-7 ">
                     {
                       chunks[item].map((item, ind) => {
+                        let medName = item.medicine.split('-')
+                        medName=medName[medName.length-1]
                         return (
                           <>
 
                             <span className="col-span-1">{ind + 1}</span>
-                           {item.quantity ? <div className=" col-span-1">{item.medicine.split('-')[3]}</div> : <div className=" col-span-1">{item.medicine}</div>}
+                           {<div className=" col-span-1">{medName}</div>}
+                           {/* {item.quantity ? <div className=" col-span-1">{[item.medicine.split('-').length-1]}</div> : <div className=" col-span-1">{item.medicine}</div>} */}
                             <div className=" col-span-1">{item.dosage}</div>
                             <div className=" col-span-1">{item.timing}</div>
                             <div className=" col-span-1">{item.frequency}</div>

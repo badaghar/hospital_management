@@ -207,12 +207,37 @@ const Prescription = ({ ipd, medicines,homoMedicines }) => {
       awaitRefetchQueries: true,
     }
   )
+  const [deleteIpdHomoPrescription] = useMutation(
+    DELETE_IPD_HOMO_PRESCRIPTION_MUTATION,
+    {
+      onCompleted: () => {
+        toast.success('Prescription deleted')
+        // navigate(routes.ipdPrescriptions())
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+      refetchQueries: [{
+        query: QUERY, variables: {
+          id: ipd.id,
+        },
+      }],
+      awaitRefetchQueries: true,
+    }
+  )
 
   const onDeleteClick = (id) => {
     if (
       confirm('Are you sure you want to delete Prescription ' + id + '?')
     ) {
       deleteIpdPrescription({ variables: { id } })
+    }
+  }
+  const onDeleteHomoClick = (id) => {
+    if (
+      confirm('Are you sure you want to delete Prescription ' + id + '?')
+    ) {
+      deleteIpdHomoPrescription({ variables: { id } })
     }
   }
 
@@ -305,7 +330,8 @@ const Prescription = ({ ipd, medicines,homoMedicines }) => {
           <div className=" grid grid-cols-6 grid-flow-row gap-x-2 gap-y-2">
 
             <div className="flex col-span-1 justify-center">Medicine </div>
-            <div className="flex col-span-1 justify-center">Dosage</div>
+            {/* <div className="flex col-span-1 justify-center">Dosage</div> */}
+            <div className="flex col-span-1 justify-center">Potency</div>
             <div className="flex col-span-1 justify-center">Timing</div>
             <div className="flex col-span-1 justify-center">Frequency</div>
             <div className="flex col-span-1 justify-center">Duration</div>
@@ -323,7 +349,7 @@ const Prescription = ({ ipd, medicines,homoMedicines }) => {
                     {<div className="flex col-span-4 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
                     <div className="flex col-span-1 justify-center" > MRP :- {item.rate}</div>
                     <div className="flex col-span-1 justify-center">    <span className='cursor-pointer text-xl text-red-600'
-                      onClick={() => onDeleteClick(item.id)}
+                      onClick={() => onDeleteHomoClick(item.id)}
                     >
                       <MdDeleteForever />
                     </span></div>
@@ -554,12 +580,15 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
   const [note, setNote] = useState('')
   const [quantity, setQuantity] = useState('')
   const [obj, setObj] = useState([])
+  const [obj2, setObj2] = useState([])
   const [medicineName, setMedicineName] = useState()
   const [timingObj, setTimingObj] = useState([
     { value: 'After Food', label: 'After Food' },
     { value: 'Before Food', label: 'Before Food' },
   ])
   const [timingObjName, setTimingObjectName] = useState()
+
+  const potency = ['Q', '1x', '3x', '6x', '12x', '30c', '200', '1M', '10M', '50M', "CM"];
 
 
 
@@ -573,6 +602,7 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
 
     }
     func(value)
+    console.log(name,value,func)
 
 
     setPrescriptionArray((array) => {
@@ -584,10 +614,11 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
       };
       return newArray;
     });
+
   }
 
   useEffect(() => {
-    console.log(index)
+    // console.log(index)
 
     if (item.medicine) {
       setMedicineName({ value: item.medicine, label: item.medicine })
@@ -598,25 +629,45 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
     }
 
     const obj = medicines.map((char) => {
+      // console.log(char)
 
-      const ob = { value: `${char.name}`,label:`${char.name}` }
+      const ob = { value: `${char.name} - ${char.no}`,label:`${char.name} - ${char.no}`,data:char }
       return ob
     })
     setObj(obj)
-    console.log(item)
+    // console.log(item)
   }, [item])
 
   const medicineNameChange = (item) => {
-
-
-
+    if(!item){
+      return
+    }
     setPrescriptionArray((array) => {
       const newArray = [...array];
       newArray[index] = {
         ...newArray[index],
         medicine: item?.value || '',
-
-
+      };
+      return newArray;
+    });
+    console.log(item)
+    let ob2 = []
+    const selectedPotencies = item.data.extra.selectedItems.reduce((result, it, index) => {
+      if (it !== '') {
+        result.push(potency[index] + '-' + it);
+        ob2.push({value:`${potency[index]} - ${it}`,label:`${potency[index]} - ${it}`})
+      }
+      return result;
+    }, []);
+    console.log(selectedPotencies)
+    setObj2(ob2)
+  }
+  const potencyChange = (item)=>{
+    setPrescriptionArray((array) => {
+      const newArray = [...array];
+      newArray[index] = {
+        ...newArray[index],
+        dosage: item?.value || '',
       };
       return newArray;
     });
@@ -658,13 +709,17 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
         <Select options={obj} isClearable={true} required onChange={medicineNameChange} value={item.name !== '' ? medicineName : ''}
         />
       </div>
+      <div className="flex col-span-1 justify-center">
+        <Select options={obj2} isClearable={true} required onChange={potencyChange}
+        />
+      </div>
 
       {/* <div className="flex col-span-1 justify-center text-black">
         <input className="border border-black p-2" type="text" name="medicine" id="" value={medicine} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setMedicine)} />
       </div> */}
-      <div className="flex col-span-1 justify-center text-black">
+      {/* <div className="flex col-span-1 justify-center text-black">
         <input type="text" name="dosage" className="border border-black p-2" id="" value={dosage} placeholder="Ex : 1-0-1" required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setDosage)} />
-      </div>
+      </div> */}
 
 
         {/* <Select options={timingObj} isClearable={true} required onChange={timingChange} value={item.name !== '' ? timingObjName : ''}
