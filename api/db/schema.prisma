@@ -21,6 +21,30 @@ model File {
   ipdId Int
 }
 
+model Dossage {
+  id         Int      @id @default(autoincrement())
+  dose       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  extra      Json?
+}
+
+model Frequency {
+  id         Int      @id @default(autoincrement())
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  extra      Json?
+}
+
+model Duration {
+  id         Int      @id @default(autoincrement())
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  extra      Json?
+}
+
 model Complaints {
   id         Int      @id @default(autoincrement())
   note       String

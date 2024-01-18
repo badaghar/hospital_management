@@ -26,6 +26,8 @@ const Routes = () => {
 
 
 
+
+
       <Set wrap={ScaffoldLayout} title="IpdHomoPrescriptions" titleTo="ipdHomoPrescriptions" buttonLabel="New IpdHomoPrescription" buttonTo="newIpdHomoPrescription">
 
         <Route path="/ipd-homo-prescriptions/new" page={IpdHomoPrescriptionNewIpdHomoPrescriptionPage} name="newIpdHomoPrescription" />
@@ -117,12 +119,6 @@ const Routes = () => {
             <Route path="/payment-purchase-medicines/{id:Int}" page={PaymentPurchaseMedicinePaymentPurchaseMedicinePage} name="paymentPurchaseMedicine" />
             <Route path="/payment-purchase-medicines" page={PaymentPurchaseMedicinePaymentPurchaseMedicinesPage} name="paymentPurchaseMedicines" />
           </Set>
-
-
-
-
-
-
           <Set wrap={ScaffoldLayout} title="Return Medicines" titleTo="returnMedicines" buttonLabel="New ReturnMedicine" buttonTo="newReturnMedicine">
             <Route path="/return-medicines/new" page={ReturnMedicineNewReturnMedicinePage} name="newReturnMedicine" />
             <Route path="/return-medicines/{id:Int}/edit" page={ReturnMedicineEditReturnMedicinePage} name="editReturnMedicine" />
@@ -307,6 +303,28 @@ const Routes = () => {
             <Route path="/complaintses/{id:Int}" page={ComplaintsComplaintsPage} name="complaints" />
             <Route path="/complaintses" page={ComplaintsComplaintsesPage} name="complaintses" />
           </Set>
+
+
+          <Set wrap={ScaffoldLayout} title="Durations" titleTo="durations" buttonLabel="New Duration" buttonTo="newDuration">
+        <Route path="/durations/new" page={DurationNewDurationPage} name="newDuration" />
+        <Route path="/durations/{id:Int}/edit" page={DurationEditDurationPage} name="editDuration" />
+        <Route path="/durations/{id:Int}" page={DurationDurationPage} name="duration" />
+        <Route path="/durations" page={DurationDurationsPage} name="durations" />
+      </Set>
+
+      <Set wrap={ScaffoldLayout} title="Frequencies" titleTo="frequencies" buttonLabel="New Frequency" buttonTo="newFrequency">
+        <Route path="/frequencies/new" page={FrequencyNewFrequencyPage} name="newFrequency" />
+        <Route path="/frequencies/{id:Int}/edit" page={FrequencyEditFrequencyPage} name="editFrequency" />
+        <Route path="/frequencies/{id:Int}" page={FrequencyFrequencyPage} name="frequency" />
+        <Route path="/frequencies" page={FrequencyFrequenciesPage} name="frequencies" />
+      </Set>
+
+      <Set wrap={ScaffoldLayout} title="Dossages" titleTo="dossages" buttonLabel="New Dossage" buttonTo="newDossage">
+        <Route path="/dossages/new" page={DossageNewDossagePage} name="newDossage" />
+        <Route path="/dossages/{id:Int}/edit" page={DossageEditDossagePage} name="editDossage" />
+        <Route path="/dossages/{id:Int}" page={DossageDossagePage} name="dossage" />
+        <Route path="/dossages" page={DossageDossagesPage} name="dossages" />
+      </Set>
           {/* </Private> */}
 
 
