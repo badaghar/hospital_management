@@ -7,7 +7,8 @@ import {
   NumberField,
   Submit,
 } from '@redwoodjs/forms'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Select from 'react-select'
 function convertObjectValuesToUpper(obj) {
   if (typeof obj !== 'object' || obj === null) {
     // throw new Error('Input must be an object.');
@@ -25,6 +26,8 @@ function convertObjectValuesToUpper(obj) {
 const PatientForm = (props) => {
 
   const [gender, setGender] = useState('Male');
+  const [doctors, setDoctors] = useState([])
+  const [doctorName, setDoctorName] = useState(props?.patient?.extra?.drName)
 
   const handleGenderChange = (event) => {
     setGender(event.target.value);
@@ -32,8 +35,25 @@ const PatientForm = (props) => {
   const onSubmit = (data) => {
     data['gender'] = gender
     data['name'] = data['name'].split('(')[0]
+    data['extra'] = {
+      drName:doctorName
+    }
     data = convertObjectValuesToUpper(data)
     props.onSave(data, props?.patient?.id)
+  }
+
+  useEffect(() => {
+    let obj = props.users.filter((item) => item.roles == 'doctor')
+    obj = obj.map((item) => {
+      const obj = { 'label': item.name, 'value': item.name, 'id': item.id }
+      return obj
+    })
+    setDoctors(obj)
+  }, [])
+
+  const changeDoctor = (item) => {
+    setDoctorName(item)
+
   }
 
   return (
@@ -99,22 +119,7 @@ const PatientForm = (props) => {
 
         <FieldError name="phone_no" className="rw-field-error" />
 
-        {/* <Label
-          name="gender"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Gender
-        </Label>
 
-        <TextField
-          name="gender"
-          defaultValue={props.patient?.gender}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-        />
-
-        <FieldError name="gender" className="rw-field-error" /> */}
         <div className="flex  items-center  space-x-3 ">
           <h1 className="text-xl font-bold ">Gender Selection</h1>
           <div className="text-lg ">
@@ -157,6 +162,19 @@ const PatientForm = (props) => {
         />
 
         <FieldError name="address" className="rw-field-error" />
+
+        <div className='flex items-center mt-3  gap-x-4'>
+          <Label
+            className="rw-label mt-0"
+          >
+            Consultant Doctor Name
+          </Label>
+          <div className={`flex-1`}>
+            <Select options={doctors} onChange={changeDoctor} isClearable={true} value={doctorName}
+            required
+            />
+          </div>
+        </div>
 
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">

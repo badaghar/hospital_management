@@ -25,7 +25,7 @@ const timeFormate = (time) => {
 
 const IpdsList = ({ ipds }) => {
   const [search_data, setSearch_data] = useState(ipds)
-  const [rows_count, setRows_count] = useState(ipds.length <= 5 ? 5 : 10)
+  const [rows_count, setRows_count] = useState(ipds.length <= 5 ? 5 : 100)
   const [refresh, setRefresh] = useState(false)
     useEffect(()=>{
     setSearch_data(ipds)
@@ -78,7 +78,7 @@ const IpdsList = ({ ipds }) => {
       )
     })
 
-    setRows_count(filterData.length <= 5 ? 5 : 10)
+    setRows_count(filterData.length <= 5 ? 5 : 100)
     setSearch_data(filterData)
   }
 

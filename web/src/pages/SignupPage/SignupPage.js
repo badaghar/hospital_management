@@ -38,10 +38,15 @@ const SignupPage = () => {
       permissions = { pharmacy: ["Return Medicines", "SaleMedicines", "Medicines", "PurchaseMedicines", "Products", "Compositions", "Manufacturers", "Distributers", "PaymentPurchaseMedicinest"] }
 
     }
-    else if (data.roles == 'doctor' || data.roles == 'reciptionist') {
+    else if (data.roles == 'doctor') {
       permissions = {
         charges: ['DoctorFees', 'Chargeses'],
         // bed: ['floors', 'beds'],
+        patientType: [ 'OPD']
+      }
+    }
+    else if(data.roles == 'reciptionist'){
+      permissions = {
         patientType: [ 'OPD']
       }
     }

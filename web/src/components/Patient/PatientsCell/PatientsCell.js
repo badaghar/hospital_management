@@ -11,6 +11,7 @@ export const QUERY = gql`
       phone_no
       gender
       address
+      extra
       created_at
       updated_at
     }

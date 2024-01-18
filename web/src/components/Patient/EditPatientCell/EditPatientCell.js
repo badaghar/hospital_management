@@ -14,8 +14,14 @@ export const QUERY = gql`
       phone_no
       gender
       address
+      extra
       created_at
       updated_at
+    }
+    users{
+      id
+      name
+      roles
     }
   }
 `
@@ -40,7 +46,7 @@ export const Failure = ({ error }) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ patient }) => {
+export const Success = ({ patient,users }) => {
   const [updatePatient, { loading, error }] = useMutation(
     UPDATE_PATIENT_MUTATION,
     {
@@ -71,6 +77,7 @@ export const Success = ({ patient }) => {
           onSave={onSave}
           error={error}
           loading={loading}
+          users={users}
         />
       </div>
     </div>

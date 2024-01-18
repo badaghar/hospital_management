@@ -11,6 +11,7 @@ export const schema = gql`
     Opd: [Opd]!
     Ipd: [Ipd]!
     SaleMedicine: [SaleMedicine]!
+    extra: JSON
   }
 
   type Query {
@@ -24,6 +25,7 @@ export const schema = gql`
     phone_no: String
     gender: String
     address: String
+    extra: JSON
   }
 
   input UpdatePatientInput {
@@ -32,6 +34,7 @@ export const schema = gql`
     phone_no: String
     gender: String
     address: String
+    extra: JSON
   }
 
   type Mutation {

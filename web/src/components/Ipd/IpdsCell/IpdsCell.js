@@ -34,7 +34,7 @@ export const Empty = ({type}) => {
   return (
     <div className="rw-text-center">
       {'No ipds yet. '}
-      <Link to={routes.newIpd({type})} className="rw-link">
+      <Link to={routes.newIpd({type,id:0})} className="rw-link">
         {'Create one?'}
       </Link>
     </div>

@@ -1,9 +1,9 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-
+import { useAuth } from "src/auth"
 import { QUERY } from 'src/components/Patient/PatientsCell'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { timeTag, truncate } from 'src/lib/formatters'
 import SearchTable from 'src/components/SearchTable/SearchTable'
 const DELETE_PATIENT_MUTATION = gql`
@@ -15,8 +15,12 @@ const DELETE_PATIENT_MUTATION = gql`
 `
 
 const PatientsList = ({ patients }) => {
+  const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
   const [search_data, setSearch_data] = useState(patients)
-  const [rows_count, setRows_count] = useState(patients.length <= 5 ? 5 : 10)
+  const [rows_count, setRows_count] = useState(100)
+  useEffect(() => {
+    setSearch_data(patients)
+  }, [patients])
   const [deletePatient] = useMutation(DELETE_PATIENT_MUTATION, {
     onCompleted: () => {
       toast.success('Patient deleted')
@@ -37,7 +41,7 @@ const PatientsList = ({ patients }) => {
     }
   }
 
-  const change = (search)=>{
+  const change = (search) => {
     const search_val = search.target.value
 
     let filterData = patients.filter((val) => {
@@ -52,83 +56,99 @@ const PatientsList = ({ patients }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 10)
+    setRows_count(filterData.length <= 5 ? 5 : 100)
     setSearch_data(filterData)
   }
 
   const columns = [
     {
-       headerClassName: 'text-left',
-      Header:  'SL. No',
-            Cell: ({index}) => (
-            index+1
-        )
+      headerClassName: 'text-left',
+      Header: 'SL. No',
+      Cell: ({ index }) => (
+        index + 1
+      )
     },
     {
-       headerClassName: 'text-left',
-      Header:  'Name',
+      headerClassName: 'text-left',
+      Header: 'Name',
       accessor: 'name',
     },
     {
-       headerClassName: 'text-left',
-      Header:  'Age',
+      headerClassName: 'text-left',
+      Header: 'Age',
       accessor: 'age',
     },
     {
-       headerClassName: 'text-left',
-      Header:  'Phone no',
+      headerClassName: 'text-left',
+      Header: 'Phone no',
       accessor: 'phone_no',
     },
     {
-       headerClassName: 'text-left',
-      Header:  'Gender',
+      headerClassName: 'text-left',
+      Header: 'Gender',
       accessor: 'gender',
+    },
+    {
+      headerClassName: 'text-left',
+      Header: 'Doctor',
+      accessor: 'extra.drName.value',
     },
 
 
     {
-       headerClassName: 'text-left',
-      Header:  'Action',
+      headerClassName: 'text-left',
+      Header: 'Action',
       accessor: 'actionColumn',
       disableSortBy: true,
       Cell: ({ original }) => (
         <nav className="rw-table-actions">
-        <Link
-          to={routes.patient({ id: original.id })}
-          title={'Show patient ' + original.id + ' detail'}
-          className="rw-button rw-button-small"
-        >
-          Show
-        </Link>
-        <Link
-          to={routes.editPatient({ id: original.id })}
-          title={'Edit patient ' + original.id}
-          className="rw-button rw-button-small rw-button-blue"
-        >
-          Edit
-        </Link>
-        <button
-          type="button"
-          title={'Delete patient ' + original.id}
-          className="rw-button rw-button-small rw-button-red"
-          onClick={() => onDeleteClick(original.id)}
-        >
-          Delete
-        </button>
-      </nav>
+          <Link
+            to={routes.patient({ id: original.id })}
+            title={'Show patient ' + original.id + ' detail'}
+            className="rw-button rw-button-small"
+          >
+            Show
+          </Link>
+          {(currentUser.roles == 'reciptionist' || currentUser.roles == 'doctor' || currentUser.roles == 'admin') && <Link
+            to={routes.newIpd({ type: 'OPD', id: original.id })}
+            title={'Show patient ' + original.id + ' detail'}
+            className="rw-button rw-button-small"
+          >
+            Add Opd
+          </Link>}
+          {(currentUser.roles == 'admin') &&
+            <>
+              <Link
+                to={routes.editPatient({ id: original.id })}
+                title={'Edit patient ' + original.id}
+                className="rw-button rw-button-small rw-button-blue"
+              >
+                Edit
+              </Link>
+              <button
+                type="button"
+                title={'Delete patient ' + original.id}
+                className="rw-button rw-button-small rw-button-red"
+                onClick={() => onDeleteClick(original.id)}
+              >
+                Delete
+              </button>
+            </>
+          }
+        </nav>
       ),
     },
   ]
 
   return (
     <>
-            <SearchTable
-    change={change}
-    placeholder={"Search By Typing Patient Name and Phone No."}
-    columns={columns}
-    rows_count={rows_count}
-    search_data={search_data}
-    />
+      <SearchTable
+        change={change}
+        placeholder={"Search By Typing Patient Name and Phone No."}
+        columns={columns}
+        rows_count={rows_count}
+        search_data={search_data}
+      />
     </>
     // <div className="rw-segment rw-table-wrapper-responsive">
     //   <table className="rw-table">

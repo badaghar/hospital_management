@@ -73,7 +73,7 @@ const ScaffoldLayout = ({
         <h1 className="rw-heading rw-heading-primary">
           {
             (type != '') &&
-            <Link to={routes[titleTo]({ type })} className="rw-link">
+            <Link to={routes[titleTo]({ type,id:0 })} className="rw-link">
               {type}
             </Link>
           }
@@ -83,7 +83,7 @@ const ScaffoldLayout = ({
         </h1>
         {
           (type != '') &&
-          <Link to={routes[buttonTo]({ type })} className="rw-button rw-button-green">
+          <Link to={routes[buttonTo]({ type,id:0 })} className="rw-button rw-button-green">
             <div className="rw-button-icon">+</div> {'Add '+type }
           </Link>
         }

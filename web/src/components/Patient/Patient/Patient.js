@@ -60,6 +60,10 @@ const Patient = ({ patient }) => {
               <td>{patient.gender}</td>
             </tr>
             <tr>
+              <th>Doctor</th>
+              <td>{patient.extra?.drName?.value}</td>
+            </tr>
+            <tr>
               <th>Address</th>
               <td>{patient.address}</td>
             </tr>

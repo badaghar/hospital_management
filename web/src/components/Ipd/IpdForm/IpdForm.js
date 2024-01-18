@@ -62,9 +62,9 @@ const IpdForm = (props) => {
   const [doctorName, setDoctorName] = useState()
   const [doctorChargesArray, setDoctorChargesArray] = useState([])
   const [otherChargesArray, setOtherChargesArray] = useState([])
-  const [paymentOption, setPaymentOption] = useState([
-    { value: 'phonepe', label: 'phonepe' }, { value: 'cash', label: 'cash' }
-  ])
+  // const [paymentOption, setPaymentOption] = useState([
+  //   { value: 'phonepe', label: 'phonepe' }, { value: 'cash', label: 'cash' }
+  // ])
   const [bedOptions, setBedOptions] = useState([])
   const [payment, setPayment] = useState('')
   const [totalAmount, setTotalAmount] = useState(0)
@@ -73,6 +73,24 @@ const IpdForm = (props) => {
   const [isOPD, setIsOpd] = useState(props.type == 'OPD')
   console.log(isOPD)
   const [gender, setGender] = useState('Male');
+  const [isChecked, setIsChecked] = useState(false);
+
+  // Handler function for the checkbox onChange event
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+  const [isChecked2, setIsChecked2] = useState(false);
+
+  // Handler function for the checkbox onChange event
+  const handleCheckboxChange2 = () => {
+    setIsChecked2(!isChecked2);
+  };
+
+  const [paymentOption, setPaymentOption] = useState('balance');
+
+  const changePayment = (e) => {
+    setPaymentOption(e.target.value);
+  };
 
 
   // logic by vinay
@@ -80,12 +98,12 @@ const IpdForm = (props) => {
   const [extraInfo, setExtraInfo] = useState({})
   const thermo = ['BP', 'Pulse', 'Saturation', 'Grbs', 'Weight']
   const handleExtraInfo = (name, value) => {
-      setExtraInfo((det)=>{
-        return {
-          ...det,
-          [name]:value
-        }
-      })
+    setExtraInfo((det) => {
+      return {
+        ...det,
+        [name]: value
+      }
+    })
 
   }
 
@@ -105,7 +123,7 @@ const IpdForm = (props) => {
 
     // data['paymentMode'] = payment
     // data['bed'] = bedName.id
-    data['paid_amount'] = parseFloat(advancePayment)
+    data['paid_amount'] = 0
 
     if (isOPD) {
       data['date_of_admission'] = new Date()
@@ -118,23 +136,24 @@ const IpdForm = (props) => {
       'DoctorCharges': doctorChargesArray,
       'OtherCharges': otherChargesArray,
       'IpdPayment': {
-        amount: parseFloat(advancePayment),
-        'payment_mode': payment
+        amount: 0,
+        'payment_mode': paymentOption
       },
       'bed': isOPD == false ? bedName.id : -1
     }
     data['extra'] = {
-      'thermo':extraInfo
+      'thermo': extraInfo,
+      'isWaiting': isChecked2
     }
     delete data['amount']
     delete data['amount1']
     console.log(data)
-    props.onSave(data, props?.opd?.id)
+    props.onSave(data, props?.opd?.id, isChecked)
   }
 
   useEffect(() => {
     const arrPat = props.patients.map((item) => {
-      const obj = { 'label': item.name, 'value': item.id }
+      const obj = { 'label': item.name, 'value': item.id, data: item }
       return obj
     })
     // // console.log(arrPat)
@@ -177,7 +196,20 @@ const IpdForm = (props) => {
     // // console.log(item)
     setDefaultPatient(item)
     setPatientId(item.value)
+    setDoctorName(item.data.extra?.drName)
   }
+
+  useEffect(() => {
+    if (props.id) {
+      const arrPat = props.patients.filter((it) => it.id == props.id).map((item) => {
+        const obj = { 'label': item.name, 'value': item.id, data: item }
+        return obj
+      })
+      changePatienId(arrPat[0])
+    }
+
+
+  }, [props.id])
 
   const changeDoctor = (item) => {
     setDoctorName(item)
@@ -225,14 +257,14 @@ const IpdForm = (props) => {
 
   }
 
-  const changePayment = (item) => {
-    if (!item) {
-      setPayment('')
-      return
-    }
-    // console.log(item.value)
-    setPayment(item.value)
-  }
+  // const changePayment = (item) => {
+  //   if (!item) {
+  //     setPayment('')
+  //     return
+  //   }
+  //   // console.log(item.value)
+  //   setPayment(item.value)
+  // }
 
   const [createPatient, { loading, error }] = useMutation(
     CREATE_PATIENT_MUTATION,
@@ -280,7 +312,7 @@ const IpdForm = (props) => {
             closeButtonColor="white"
             bodyBackgroundColor="white"
             bodyTextColor="black"
-            bodyHeight="250px"
+            bodyHeight="350px"
             headerText={<span className="flex items-end h-14 text-xl">Add Patient Details</span>}
           >
             <Form
@@ -381,7 +413,38 @@ const IpdForm = (props) => {
                 </div>
 
 
+
               </div>
+              <Label
+                name="address"
+                className="rw-label"
+                errorClassName="rw-label rw-label-error"
+              >
+                Address
+              </Label>
+
+              <TextField
+                name="address"
+                defaultValue={props.patient?.address}
+                className="rw-input"
+                errorClassName="rw-input rw-input-error"
+              />
+
+              <FieldError name="address" className="rw-field-error" />
+
+              <div className='flex items-center mt-3  gap-x-4'>
+                <Label
+                  className="rw-label mt-0"
+                >
+                  Consultant Doctor Name
+                </Label>
+                <div className={`flex-1`}>
+                  <Select options={doctors} onChange={changeDoctor} isClearable={true} value={doctorName}
+                    required
+                  />
+                </div>
+              </div>
+
 
 
               <div className="rw-button-group">
@@ -596,7 +659,7 @@ const IpdForm = (props) => {
                   <>
                     <div className="flex col-span-1 justify-center ">
                       <input type="text" className="bg-slate-900 text-white p-2"
-                        onChange={(item) => handleExtraInfo(it,item.target.value)}  />
+                        onChange={(item) => handleExtraInfo(it, item.target.value)} />
                     </div>
 
                   </>
@@ -614,11 +677,11 @@ const IpdForm = (props) => {
 
           <div className='flex justify-center mt-3  gap-x-4'>
             <div className='font-bold text-2xl underline'>
-              Doctor Charges
+              Other Charges
             </div>
           </div>
 
-          <div className="p-2 w-full shadow-sm bg-white ">
+          {/* <div className="p-2 w-full shadow-sm bg-white ">
             <div className=" grid grid-cols-4 grid-flow-row gap-x-2 gap-y-2">
 
               <DoctorChargeHeader />
@@ -645,7 +708,7 @@ const IpdForm = (props) => {
             <div className='flex justify-center mt-2'>
               <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addDoctorCharges}>Add Doctor Charge</div>
             </div>
-          </div>
+          </div> */}
 
           <div className="p-2 w-full shadow-sm bg-white ">
             <div className=" grid grid-cols-5 grid-flow-row gap-x-2 gap-y-2">
@@ -718,24 +781,6 @@ const IpdForm = (props) => {
 
         <FieldError name="charges" className="rw-field-error" /> */}
 
-
-          <div className='flex items-center mt-3 justify-end gap-x-4'>
-            <Label
-              name="paymentMode"
-              className="rw-label mt-0"
-              errorClassName="rw-label mt-0 rw-label-error"
-            >
-              Payment mode
-            </Label>
-            <div className="flex">
-
-            </div>
-            <Select options={paymentOption} onChange={changePayment} isClearable={true} required />
-
-            <FieldError name="paymentMode" className="rw-field-error mt-0" />
-          </div>
-
-
           <div className='flex items-center mt-3 justify-end gap-x-4'>
 
             <Label
@@ -759,7 +804,49 @@ const IpdForm = (props) => {
             </div>
             <FieldError name="amount" className="rw-field-error mt-0" />
           </div>
+
+
           <div className='flex items-center mt-3 justify-end gap-x-4'>
+            <Label
+              name="paymentMode"
+              className="rw-label mt-0"
+              errorClassName="rw-label mt-0 rw-label-error"
+            >
+              Payment mode
+            </Label>
+            <div className="flex">
+
+            </div>
+            {/* <Select options={paymentOption} onChange={changePayment} isClearable={true} required /> */}
+            {/* <div> */}
+            <label>
+              <input
+                type="radio"
+                value="paid"
+                checked={paymentOption === "paid"}
+                onChange={changePayment}
+                required
+              />
+              Paid
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="balance"
+                checked={paymentOption === "balance"}
+                onChange={changePayment}
+                required
+              />
+              Balance
+            </label>
+            {/* </div> */}
+
+            <FieldError name="paymentMode" className="rw-field-error mt-0" />
+          </div>
+
+
+
+          {/* <div className='flex items-center mt-3 justify-end gap-x-4'>
 
             <Label
               name="amount1"
@@ -780,8 +867,8 @@ const IpdForm = (props) => {
                 validation={{ valueAsNumber: true, required: true }}
               />
             </div>
-            <FieldError name="amount1" className="rw-field-error mt-0" />
-          </div>
+            <FieldError name="amount1" className="rw-field-error mt-0" /> */}
+          {/* </div> */}
 
           {/* <Label
           name="patientId"
@@ -800,6 +887,34 @@ const IpdForm = (props) => {
         />
 
         <FieldError name="patientId" className="rw-field-error" /> */}
+          <div className="p-3">
+            <label className='flex items-center'>
+              <input
+                type="checkbox"
+
+                className='mr-2'
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+              />
+              <span className='text-lg text-gray-700'>
+                Print The Form
+              </span>
+            </label>
+          </div>
+          <div className="p-3">
+            <label className='flex items-center'>
+              <input
+                type="checkbox"
+
+                className='mr-2'
+                checked={isChecked2}
+                onChange={handleCheckboxChange2}
+              />
+              <span className='text-lg text-gray-700'>
+                Add The Patient To Waiting List
+              </span>
+            </label>
+          </div>
 
           <div className="rw-button-group">
             <Submit disabled={props.loading} className="rw-button rw-button-blue">
