@@ -290,6 +290,10 @@ const IpdForm = (props) => {
 
   const addPatient = (input) => {
     input['gender'] = gender
+    input['extra'] = {
+      drName:doctorName
+    }
+
 
     input = convertObjectValuesToUpper(input)
     createPatient({ variables: { input } })
