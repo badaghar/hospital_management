@@ -162,6 +162,15 @@ export const QUERY = gql`
       }
 
     }
+    dossages{
+      dose
+    }
+    frequencies{
+      name
+    }
+    durations{
+      name
+    }
 
   }
 `
@@ -174,6 +183,6 @@ export const Failure = ({ error }) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ ipd, users, doctorFees, chargeses,labChargeses,operations,floors,medicines,homoMedicines }) => {
-  return <Ipd ipd={ipd} users={users} doctorFees={doctorFees} chargeses={chargeses} labChargeses={labChargeses} operations={operations} floors={floors} medicines={medicines} homoMedicines={homoMedicines}/>
+export const Success = ({ ipd, users, doctorFees, chargeses,labChargeses,operations,floors,medicines,homoMedicines,frequencies,durations,dossages }) => {
+  return <Ipd ipd={ipd} users={users} doctorFees={doctorFees} chargeses={chargeses} labChargeses={labChargeses} operations={operations} floors={floors} medicines={medicines} homoMedicines={homoMedicines} dossages={dossages} frequencies={frequencies}  durations={durations} />
 }
