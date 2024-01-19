@@ -2,7 +2,7 @@ import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 import axios from 'axios'
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { timeTag } from 'src/lib/formatters'
 import { ReactDialogBox } from 'react-js-dialog-box'
 import 'react-js-dialog-box/dist/index.css'
@@ -65,7 +65,7 @@ function convertObjectValuesToUpper(obj) {
   return obj;
 }
 
-const IpdOverview = ({ ipd, totalAmount}) => {
+const IpdOverview = ({ ipd, totalAmount }) => {
 
   const [isOpen, setIsOpen] = useState(false)
   const [changeDateOpen, setIsChangeDateOpen] = useState(false)
@@ -73,6 +73,24 @@ const IpdOverview = ({ ipd, totalAmount}) => {
   const [disAmt, setDisAmt] = useState(0)
   const handleGenderChange = (event) => {
     setGender(event.target.value.toUpperCase());
+  };
+
+  const [extraInfo, setExtraInfo] = useState(ipd?.extra?.thermo  ||  {})
+  const thermo = ['BP', 'Pulse', 'Saturation', 'Grbs', 'Weight']
+  const handleExtraInfo = (name, value) => {
+    setExtraInfo((det) => {
+      return {
+        ...det,
+        [name]: value
+      }
+    })
+
+  }
+  const [isChecked2, setIsChecked2] = useState(!ipd?.extra?.isWaiting  || false);
+
+  // Handler function for the checkbox onChange event
+  const handleCheckboxChange2 = () => {
+    setIsChecked2(!isChecked2);
   };
 
   const [updatePatient, { loading2, error2 }] = useMutation(
@@ -90,7 +108,7 @@ const IpdOverview = ({ ipd, totalAmount}) => {
   )
 
   useEffect(() => {
-    let dis =0
+    let dis = 0
     ipd.IpdPayment.map((item) => {
       if (item.payment_mode == 'disc') {
         dis += item.amount
@@ -104,8 +122,9 @@ const IpdOverview = ({ ipd, totalAmount}) => {
 
   const [updateIpd, { loading1, error1 }] = useMutation(UPDATE_IPD_MUTATION, {
     onCompleted: () => {
-      toast.success('Discharge Date Updated')
-      setTimeout(() => { document.location.reload(); }, 10);
+      toast.success('Vitals Saved')
+      // toast.success('Discharge Date Updated')
+      // setTimeout(() => { document.location.reload(); }, 10);
     },
     onError: (error) => {
       toast.error(error.message)
@@ -184,10 +203,23 @@ const IpdOverview = ({ ipd, totalAmount}) => {
     updatePatient({ variables: { id: ipd.patient.id, input: data } })
 
   }
-  const changedischargePatientDate = (data) =>{
+  const changedischargePatientDate = (data) => {
 
     console.log(data)
-    updateIpd({ variables: { id:ipd.id, input:data } })
+    updateIpd({ variables: { id: ipd.id, input: data } })
+
+  }
+
+
+  const changeVitals = () => {
+
+    console.log(extraInfo)
+    let data = {}
+    data['extra'] = {
+      'thermo': extraInfo,
+      'isWaiting': !isChecked2
+    }
+    updateIpd({ variables: { id: ipd.id, input: data } })
 
   }
 
@@ -415,13 +447,13 @@ const IpdOverview = ({ ipd, totalAmount}) => {
                 </span> :
                 <>
                   <span className="bg-green-800 p-1 px-3 text-white rounded-3xl hover:bg-white hover:text-green-800 cursor-pointer ">
-                    Patient is Discharged At {            ipd.discharge_date.split('T')[0].split('-')[2]+'-'+
-            ipd.discharge_date.split('T')[0].split('-')[1]+'-'+
-            ipd.discharge_date.split('T')[0].split('-')[0]}
+                    Patient is Discharged At {ipd.discharge_date.split('T')[0].split('-')[2] + '-' +
+                      ipd.discharge_date.split('T')[0].split('-')[1] + '-' +
+                      ipd.discharge_date.split('T')[0].split('-')[0]}
                   </span>
-                  <span className="bg-green-800 p-1 px-3 text-white rounded-3xl hover:bg-white hover:text-green-800 cursor-pointer " onClick={()=>setIsChangeDateOpen(true)}>
-                  Change Discharge Patient Date
-                </span>
+                  <span className="bg-green-800 p-1 px-3 text-white rounded-3xl hover:bg-white hover:text-green-800 cursor-pointer " onClick={() => setIsChangeDateOpen(true)}>
+                    Change Discharge Patient Date
+                  </span>
 
 
 
@@ -464,7 +496,7 @@ const IpdOverview = ({ ipd, totalAmount}) => {
             <span>{ipd.patient.address || 'Not Entered'}</span>
           </div>
 
-          <div className="flex items-center space-x-3">
+          {/* <div className="flex items-center space-x-3">
             <span>Total Charges Till Now</span>
             <span>{totalAmount}</span>
           </div>
@@ -476,15 +508,49 @@ const IpdOverview = ({ ipd, totalAmount}) => {
           <div className="flex items-center space-x-3">
             <span>Total Charges Paid Till Now</span>
             <span>{ipd.paid_amount}</span>
+          </div> */}
+
+          <div className=" grid grid-cols-5 mt-3">
+            {
+              thermo.map((item) => {
+                return (
+                  <>
+                    <div className="flex col-span-1 justify-center">
+
+
+                      {item}
+
+
+                    </div>
+
+                  </>
+                )
+              })
+            }
+            {
+              thermo.map((it) => {
+                return (
+                  <>
+                    <div className="flex col-span-1 justify-center ">
+                      <input type="text" className="bg-slate-900 text-white p-2"
+                        value={extraInfo[it]}
+                        onChange={(item) => handleExtraInfo(it, item.target.value)} />
+                    </div>
+
+                  </>
+                )
+              })
+            }
           </div>
+
 
           {ipd.patientType == 'IPD' && <div className="flex items-center space-x-3">
             <span>Date Of Admitted :- </span>
             <span>{
 
-            ipd.date_of_admission.split('T')[0].split('-')[2]+'-'+
-            ipd.date_of_admission.split('T')[0].split('-')[1]+'-'+
-            ipd.date_of_admission.split('T')[0].split('-')[0]
+              ipd.date_of_admission.split('T')[0].split('-')[2] + '-' +
+              ipd.date_of_admission.split('T')[0].split('-')[1] + '-' +
+              ipd.date_of_admission.split('T')[0].split('-')[0]
 
 
 
@@ -492,6 +558,25 @@ const IpdOverview = ({ ipd, totalAmount}) => {
 
           </div>}
 
+          <div className="p-3">
+            <label className='flex items-center'>
+              <input
+                type="checkbox"
+
+                className='mr-2'
+                checked={isChecked2}
+                onChange={handleCheckboxChange2}
+              />
+              <span className='text-lg text-gray-700'>
+                Remove Patient From Waiting List
+              </span>
+            </label>
+          </div>
+
+          <div className='flex justify-center mt-2 '>
+            <button className='bg-gray-600 p-2 text-white rounded-lg hover:bg-gray-400 m-2' onClick={changeVitals}>Save</button>
+
+          </div>
           <div className='flex justify-center mt-2 pb-3'>
             <button className='bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2' onClick={printForm}>Print Form</button>
 

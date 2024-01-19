@@ -319,7 +319,7 @@ const Prescription = ({ ipd, medicines,homoMedicines }) => {
           </div>
 
           <div className='flex justify-center mt-2'>
-            <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addPrescription}>Add Prescription</div>
+            <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addPrescription}>Add Medicine</div>
           </div>
 
         </div>
@@ -377,7 +377,7 @@ const Prescription = ({ ipd, medicines,homoMedicines }) => {
           </div>
 
           <div className='flex justify-center mt-2'>
-            <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addHomoPrescription}>Add Homopathy Prescription</div>
+            <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addHomoPrescription}>Add Homopathy Medicine</div>
           </div>
 
         </div>

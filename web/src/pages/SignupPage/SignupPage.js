@@ -40,14 +40,13 @@ const SignupPage = () => {
     }
     else if (data.roles == 'doctor') {
       permissions = {
-        charges: ['DoctorFees', 'Chargeses'],
         // bed: ['floors', 'beds'],
-        patientType: [ 'OPD']
+        patientType: ['OPD']
       }
     }
     else if(data.roles == 'reciptionist'){
       permissions = {
-        patientType: [ 'OPD']
+        patientType: ['OPD']
       }
     }
     else if (data.roles == 'admin') {

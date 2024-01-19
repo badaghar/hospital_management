@@ -1,7 +1,7 @@
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import { timeTag } from 'src/lib/formatters'
 import IpdOverview from '../IpdOverview/IpdOverview'
@@ -29,27 +29,27 @@ const DELETE_IPD_MUTATION = gql`
 
 `
 
-const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,medicines,homoMedicines }) => {
+const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floors, medicines, homoMedicines }) => {
 
-  const [dropDownOpen,setDropDownOpen] = useState('overview')
-  const [totalAmount,setTotalAmount] = useState(0)
+  const [dropDownOpen, setDropDownOpen] = useState('overview')
+  const [totalAmount, setTotalAmount] = useState(0)
   const toggleDropDown = (text) => {
     setDropDownOpen(text)
   }
 
 
-  useEffect(()=>{
+  useEffect(() => {
     let tamt = 0;
-    ipd.IpdConsultation.map((it)=>{
+    ipd.IpdConsultation.map((it) => {
       tamt += it.amount
     })
-    ipd.IpdCharges.map((it)=>{
+    ipd.IpdCharges.map((it) => {
       tamt += it.total
     })
     // ipd.IpdLabCharges.map((it)=>{
     //   tamt += it.amount
     // })
-    ipd.IpdOperationPayment.map((it)=>{
+    ipd.IpdOperationPayment.map((it) => {
       tamt += it.amount
     })
 
@@ -59,7 +59,7 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
     console.log(ipd)
 
 
-  },[ipd])
+  }, [ipd])
 
 
 
@@ -88,7 +88,7 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
           </h2>
         </header>
         <div>
-          <div className='flex bg-gray-800 text-white  space-x-5 rounded-3xl justify-around flex-wrap'>
+          {/* <div className='flex bg-gray-800 text-white  space-x-5 rounded-3xl justify-around flex-wrap'>
             <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2' onClick={toggleDropDown.bind(this,'overview')}>
               OverView
             </div>
@@ -100,27 +100,7 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
             >
               Complaints
             </div>
-            {/* <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
-            onClick={toggleDropDown.bind(this,'consultant')}
-            >
-              consultant Registration
-            </div> */}
-            {/* <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
-            onClick={toggleDropDown.bind(this,'charges')}
-            >
-              Charges
 
-            </div> */}
-            {/* <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
-            onClick={toggleDropDown.bind(this,'labcharges')}
-            >
-              Lab Charges
-            </div>
-       { ipd.patientType=='IPD' &&     <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
-            onClick={toggleDropDown.bind(this,'operations')}
-            >
-              Operations
-            </div>} */}
        { ipd.patientType=='OPD' &&     <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
             onClick={toggleDropDown.bind(this,'prescription')}
             >
@@ -147,46 +127,83 @@ const Ipd = ({ ipd,users,doctorFees,chargeses,labChargeses,operations,floors,med
               Payment
             </div>
 
+          </div> */}
+
+
+          <div className='flex justify-center text-white text-xl'>
+            <h1 className='bg-black p-2'>
+              Patient Details
+            </h1>
           </div>
-
-
           {
-            dropDownOpen=='overview' && <IpdOverview ipd={ipd} totalAmount={totalAmount}/>
+            // dropDownOpen=='overview' &&
+            <IpdOverview ipd={ipd} totalAmount={totalAmount} />
           }
           {
-            dropDownOpen=='sumamry' && <SummaryIpd ipd={ipd} floors={floors} />
+            // dropDownOpen=='sumamry' &&
+            // <SummaryIpd ipd={ipd} floors={floors} />
           }
           {
-            dropDownOpen=='consultant' && <IpdConsultant ipd={ipd} users={users} doctorFees={doctorFees} />
+            // dropDownOpen=='consultant' &&
+            // <IpdConsultant ipd={ipd} users={users} doctorFees={doctorFees} />
+          }
+          <div className='flex justify-center text-white text-xl'>
+            <h1 className='bg-black p-2'>
+              Complaints
+            </h1>
+          </div>
+          {
+            // dropDownOpen=='Complaints' &&
+            <Complaint ipd={ipd} />
           }
           {
-            dropDownOpen=='Complaints' && <Complaint ipd={ipd}  />
+            // dropDownOpen=='charges' &&
+            // <IpdOtherCharges ipd={ipd} users={users} chargeses={chargeses} />
           }
           {
-            dropDownOpen=='charges' && <IpdOtherCharges ipd={ipd} users={users} chargeses={chargeses} />
+            // dropDownOpen=='labcharges' &&
+            // <LabChargesIpd ipd={ipd} users={users} labChargeses={labChargeses}  />
           }
           {
-            dropDownOpen=='labcharges' && <LabChargesIpd ipd={ipd} users={users} labChargeses={labChargeses}  />
+            // dropDownOpen=='operations' &&
+            // <IpdOperation ipd={ipd} users={users} operations={operations}  />
           }
+          <div className='flex justify-center text-white text-xl'>
+            <h1 className='bg-black p-2'>
+              Prescription
+            </h1>
+          </div>
           {
-            dropDownOpen=='operations' && <IpdOperation ipd={ipd} users={users} operations={operations}  />
-          }
-          {
-            dropDownOpen=='prescription' && <Prescription medicines={medicines} ipd={ipd} users={users} operations={operations}
-            homoMedicines={homoMedicines}
+            // dropDownOpen=='prescription' &&
+            <Prescription medicines={medicines} ipd={ipd} users={users} operations={operations}
+              homoMedicines={homoMedicines}
             />
           }
           {
-            dropDownOpen=='chat' && <IpdChatComponent ipd={ipd} users={users}  />
+            // dropDownOpen=='chat' &&
+            // <IpdChatComponent ipd={ipd} users={users}  />
+          }
+          <div className='flex justify-center text-white text-xl'>
+            <h1 className='bg-black p-2'>
+              Documents
+            </h1>
+          </div>
+          {
+            // dropDownOpen=='documents' &&
+            <Doucuments ipd={ipd} />
+          }
+          <div className='flex justify-center text-white text-xl'>
+            <h1 className='bg-black p-2'>
+              History
+            </h1>
+          </div>
+          {
+            // dropDownOpen=='history' &&
+            <IpdHistory ipd={ipd} />
           }
           {
-            dropDownOpen=='documents' && <Doucuments ipd={ipd}   />
-          }
-          {
-            dropDownOpen=='history' && <IpdHistory ipd={ipd}   />
-          }
-          {
-            dropDownOpen=='payment' && <PaymentIpd ipd={ipd} users={users} chargeses={chargeses} totalAmount={totalAmount} />
+            // dropDownOpen=='payment' &&
+            // <PaymentIpd ipd={ipd} users={users} chargeses={chargeses} totalAmount={totalAmount} />
           }
         </div>
       </div>
