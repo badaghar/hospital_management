@@ -36,6 +36,7 @@ const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floo
   const toggleDropDown = (text) => {
     setDropDownOpen(text)
   }
+  // console.log(ipd)
 
 
   useEffect(() => {

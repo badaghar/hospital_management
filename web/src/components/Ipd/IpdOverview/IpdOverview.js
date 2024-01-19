@@ -215,6 +215,7 @@ const IpdOverview = ({ ipd, totalAmount }) => {
 
     console.log(extraInfo)
     let data = {}
+    data['isWaiting'] = !isChecked2
     data['extra'] = {
       'thermo': extraInfo,
       'isWaiting': !isChecked2

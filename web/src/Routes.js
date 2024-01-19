@@ -28,6 +28,16 @@ const Routes = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
       <Set wrap={ScaffoldLayout} title="IpdHomoPrescriptions" titleTo="ipdHomoPrescriptions" buttonLabel="New IpdHomoPrescription" buttonTo="newIpdHomoPrescription">
 
         <Route path="/ipd-homo-prescriptions/new" page={IpdHomoPrescriptionNewIpdHomoPrescriptionPage} name="newIpdHomoPrescription" />
@@ -325,6 +335,9 @@ const Routes = () => {
         <Route path="/dossages/{id:Int}" page={DossageDossagePage} name="dossage" />
         <Route path="/dossages" page={DossageDossagesPage} name="dossages" />
       </Set>
+
+
+      <Route path="/dr-waiting/{id:Int}" page={DrWaitingPage} name="drWaiting" />
           {/* </Private> */}
 
 

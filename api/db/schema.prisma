@@ -96,6 +96,7 @@ model Ipd {
   paid_amount         Float
   discharge_date      DateTime?
   patientType         String
+  isWaiting           Boolean
   IpdCharges          IpdCharges[]
   IpdConsultation     IpdConsultation[]
   IpdPayment          IpdPayment[]

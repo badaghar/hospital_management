@@ -119,7 +119,7 @@ const IpdForm = (props) => {
     data['patientId'] = patientId
     data['consultant_doctor'] = isOPD ? doctorName.value + '----' : doctorName.value + '----' + bedName.value
     data['patientType'] = props.type
-
+    data['isWaiting'] = isChecked2
 
     // data['paymentMode'] = payment
     // data['bed'] = bedName.id

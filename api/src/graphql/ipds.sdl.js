@@ -10,7 +10,8 @@ export const schema = gql`
     paid_amount: Float!
     discharge_date: DateTime
     patientType: String!
-    extra: JSON
+    extra: JSON,
+    isWaiting: Boolean!
     IpdCharges: [IpdCharges]!
     IpdConsultation: [IpdConsultation]!
     IpdPayment: [IpdPayment]!
@@ -28,6 +29,7 @@ export const schema = gql`
   type Query {
     ipds(type: String!): [Ipd!]! @requireAuth
     ipd(id: Int!): Ipd @skipAuth
+    drWaiting(id: Int!): [Ipd!]! @requireAuth
   }
 
   input CreateIpdInput {
@@ -40,6 +42,7 @@ export const schema = gql`
     patientType: String!
     extra: JSON!
     extra_data: JSON!
+    isWaiting: Boolean!
   }
 
   input UpdateIpdInput {
@@ -50,6 +53,7 @@ export const schema = gql`
     discharge_date: DateTime
     patientType: String
     extra: JSON
+    isWaiting: Boolean!
   }
 
 

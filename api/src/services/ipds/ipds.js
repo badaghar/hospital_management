@@ -1,11 +1,11 @@
 import { db } from 'src/lib/db'
 
 
-export const ipds = ({type}) => {
-  console.log('\n\n\n\n\n\n\n\n\n ',type)
+export const ipds = ({ type }) => {
+  console.log('\n\n\n\n\n\n\n\n\n ', type)
   return db.ipd.findMany({
-    where:{
-      patientType:type
+    where: {
+      patientType: type
     },
     orderBy: [
       {
@@ -23,46 +23,61 @@ export const ipd = ({ id }) => {
     where: { id },
   })
 }
+export const drWaiting = async ({ id }) => {
+  const data = await db.user.findUnique({
+    where: {id}
+  })
+  const name = data.name+'----'
+  console.log('\n\n\n\n\n\n\n\n\n\n',name)
+  return db.ipd.findMany({
+    where: {
+      consultant_doctor:name,
+      isWaiting:true
 
-export const dischargePatient = async ({id}) => {
+
+    }
+  })
+}
+
+export const dischargePatient = async ({ id }) => {
   const date = new Date()
   await db.ipd.update(
     {
       data: {
         discharge_date: date
       },
-      where:{
-        id:id
+      where: {
+        id: id
       }
     }
   )
 
   const data = await db.bed.findFirst({
     where: {
-       ipdId: id,
+      ipdId: id,
     },
-});
+  });
   await db.bed.update({
-    where:{
-      id:data.id
+    where: {
+      id: data.id
     },
-    data:{
-      occupied:false,
-      ipdId:null
+    data: {
+      occupied: false,
+      ipdId: null
     }
   })
 }
-export const undischargePatient = async ({id,bed}) => {
+export const undischargePatient = async ({ id, bed }) => {
 
-  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',id,bed)
+  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', id, bed)
 
   await db.ipd.update(
     {
       data: {
         discharge_date: null
       },
-      where:{
-        id:id
+      where: {
+        id: id
       }
     }
   )
@@ -71,9 +86,9 @@ export const undischargePatient = async ({id,bed}) => {
       where: {
         id: bed
       },
-      data :{
+      data: {
         occupied: true,
-        ipdId:id
+        ipdId: id
       }
     })
 
@@ -86,10 +101,10 @@ export const undischargePatient = async ({id,bed}) => {
 
 export const createIpd = async ({ input }) => {
 
-  let {extra_data,...data} = input
-  let {DoctorCharges,OtherCharges,IpdPayment,bed} = extra_data
+  let { extra_data, ...data } = input
+  let { DoctorCharges, OtherCharges, IpdPayment, bed } = extra_data
 
-  let ipd =  await db.ipd.create({
+  let ipd = await db.ipd.create({
     data: data,
   })
 
@@ -98,9 +113,9 @@ export const createIpd = async ({ input }) => {
       where: {
         id: bed
       },
-      data :{
+      data: {
         occupied: true,
-        ipdId:ipd.id
+        ipdId: ipd.id
       }
     })
 
@@ -111,14 +126,14 @@ export const createIpd = async ({ input }) => {
 
   IpdPayment['ipdId'] = ipd.id
   await db.ipdPayment.create({
-    data : IpdPayment
+    data: IpdPayment
   })
 
-  let otherChargesArray = OtherCharges.map((item)=>{
-    return {...item,ipdId:ipd.id}
+  let otherChargesArray = OtherCharges.map((item) => {
+    return { ...item, ipdId: ipd.id }
   })
-  let doctorChargesArray = DoctorCharges.map((item)=>{
-    return {...item,ipdId:ipd.id}
+  let doctorChargesArray = DoctorCharges.map((item) => {
+    return { ...item, ipdId: ipd.id }
   })
   await db.ipdCharges.createMany({
     data: otherChargesArray
@@ -127,11 +142,11 @@ export const createIpd = async ({ input }) => {
     data: doctorChargesArray
   })
   let obj = {
-    note:'',
-    ipdId:ipd.id
+    note: '',
+    ipdId: ipd.id
   }
   await db.Complaints.create({
-    data:obj
+    data: obj
   })
 
   return ipd
@@ -149,31 +164,31 @@ export const updateIpd = ({ id, input }) => {
 }
 
 export const deleteIpd = async ({ id }) => {
-  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',id)
+  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', id)
 
   const data = await db.ipd.delete({
     where: { id },
   })
-    try {
-  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',id)
+  try {
+    console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', id)
 
 
     await db.bed.updateMany({
-      where:{
-        ipdId:null
+      where: {
+        ipdId: null
       },
 
-      data :{
+      data: {
         occupied: false,
 
       }
     })
 
-  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',id)
+    console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', id)
 
 
   } catch (error) {
-  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',error)
+    console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', error)
 
     console.log(error)
   }
