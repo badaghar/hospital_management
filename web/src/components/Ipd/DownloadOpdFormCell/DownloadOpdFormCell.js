@@ -11,6 +11,7 @@ export const QUERY = gql`
       discharge_date
       patientType
       consultant_doctor
+      extra
       patient{
         id
         name
@@ -69,6 +70,7 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ downloadOpdForm }) => {
+  console.log(downloadOpdForm)
   return (
     <>
       <section
@@ -81,98 +83,73 @@ export const Success = ({ downloadOpdForm }) => {
           style={{ width: '19.6cm', height: '27.7cm' }}
         >
           <section
-                  id="firstLayer"
-                  className="border-b border-black"
-                  style={{ width: '19.6cm', height: '2.8cm' }}
-                >
-                  <div style={{ padding: '0cm 0.1cm' }}>
-                    <img src="/srihos.jpg" alt="" srcset="" />
-                  </div>
-
-                </section>
-                <section
-                  id="secondLayer"
-                  className="border-b border-black"
-                  style={{ width: '19.6cm', height: '0.65cm', padding: '0cm 0cm' }}
-
-                >
-
-                  <div className="flex  justify-between px-6">
-                    <div className="space-x-4">
-                      <span className="font-bold text-xs ">Name : </span> <span className="text-xs">
-                        {downloadOpdForm.patient.name.split('(')[0]}
-                      </span>
-                    </div>
-                    <div className="space-x-4">
-                      <span className="font-bold text-xs">Mobile No : </span> <span className="text-xs">{downloadOpdForm.patient.phone_no}</span>
-                    </div>
-                    <div className="space-x-4">
-                      <span className="font-bold text-xs">Date : </span> <span className="text-xs">{new Date().toLocaleDateString()}</span>
-                    </div>
-                    <div className="space-x-4">
-                      <span className="font-bold text-xs">Dr : </span> <span className="text-xs">{downloadOpdForm.consultant_doctor}</span>
-                    </div>
-
-
-                  </div>
-                </section>
-
-          {/* <section
             id="firstLayer"
             className=""
-            style={{ width: '19.6cm', height: '6.8cm' }}
+            // style={{ width: '19.6cm', height: '2.8cm' }}
+            style={{ width: '19.6cm', height: '6cm' }}
           >
+            {/* <div style={{ padding: '0cm 0.1cm' }}>
+                    <img src="/srihos.jpg" alt="" srcset="" />
+                  </div> */}
 
           </section>
-
-
           <section
             id="secondLayer"
-            className=" relative"
+            className=""
             style={{ width: '19.6cm', height: '0.65cm', padding: '0cm 0cm' }}
 
           >
 
-            <div className="flex relative  justify-between px-6">
-              <div className="space-x-2 text-sm  absolute left-[3.6cm]">
-
-                 <span className="">
+            <div className="flex  justify-between px-6">
+              <div className="space-x-4">
+                <span className="font-bold text-xs ">Pt's Name : </span>
+                <span className="text-xs">
                   {downloadOpdForm.patient.name.split('(')[0]}
                 </span>
-
-                <span className=" ">
-
-                ({downloadOpdForm.patient.id})
-                </span>
               </div>
-              <div className="space-x-4 absolute left-[13.0cm]">
-
+              <div className="space-x-4">
+                <span className="font-bold text-xs">Age : </span>
                 <span className="text-xs">{downloadOpdForm.patient.age}</span>
               </div>
-              <div className="space-x-4 absolute left-[14.45cm]">
-
-                <span className="text-xs">{downloadOpdForm.patient.gender}</span>
+              <div className="space-x-4">
+                <span className="font-bold text-xs">B.P : </span>
+                <span className="text-xs">{downloadOpdForm.extra.thermo.BP} mmhg</span>
               </div>
-
-              <div className="space-x-4 absolute left-[16.8cm]">
-
-                <span className="text-xs">{new Date().toLocaleDateString()}</span>
-              </div>
-              <div>
-.
+              <div className="space-x-4">
+                <span className="font-bold text-xs">GRBS : </span>
+                <span className="text-xs">{downloadOpdForm.extra.thermo.Grbs} mg/dl</span>
               </div>
 
 
             </div>
-
-            <div className="flex flex-col items-end  mt-2 pr-3">
-
-
-
+            <div className="flex  justify-between px-6">
+              <div className="space-x-4">
+                <span className="font-bold text-xs ">Gender : </span>
+                <span className="text-xs">
+                  {downloadOpdForm.patient.gender}
+                </span>
+              </div>
+              <div className="space-x-4">
+                <span className="font-bold text-xs">Weight : </span>
+                <span className="text-xs">{downloadOpdForm.extra.thermo.Weight}</span>
+              </div>
+              {/* <div className="space-x-4">
+                <span className="font-bold text-xs">Temp : </span>
+                <span className="text-xs">{downloadOpdForm.extra.thermo.Grbs} </span>
+              </div> */}
+              <div className="space-x-4">
+                <span className="font-bold text-xs">Puls : </span>
+                <span className="text-xs">{downloadOpdForm.extra.thermo.Pulse} /min</span>
+              </div>
+              <div className="space-x-4">
+                <span className="font-bold text-xs">SPO2 : </span>
+                <span className="text-xs">{downloadOpdForm.extra.thermo.Saturation} %</span>
+              </div>
 
 
             </div>
-          </section> */}
+          </section>
+
 
 
 
