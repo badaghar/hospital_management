@@ -19,25 +19,6 @@ import MedicinePaymentLayout from './layouts/MedicinePaymentLayout/MedicinePayme
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <Set wrap={ScaffoldLayout} title="IpdHomoPrescriptions" titleTo="ipdHomoPrescriptions" buttonLabel="New IpdHomoPrescription" buttonTo="newIpdHomoPrescription">
 
         <Route path="/ipd-homo-prescriptions/new" page={IpdHomoPrescriptionNewIpdHomoPrescriptionPage} name="newIpdHomoPrescription" />
@@ -338,6 +319,7 @@ const Routes = () => {
 
 
       <Route path="/dr-waiting/{id:Int}" page={DrWaitingPage} name="drWaiting" />
+      <Route path="/pharmacy-waiting" page={PharmacyWaitingPage} name="pharmacyWaiting" />
           {/* </Private> */}
 
 

@@ -23,7 +23,7 @@ const timeFormate = (time) => {
   return date
 }
 
-const IpdsList = ({ ipds }) => {
+const IpdsList = ({ ipds,pharmaWaiting }) => {
   const [search_data, setSearch_data] = useState(ipds)
   const [rows_count, setRows_count] = useState(ipds.length <= 5 ? 5 : 100)
   const [refresh, setRefresh] = useState(false)
@@ -183,13 +183,31 @@ const IpdsList = ({ ipds }) => {
       disableSortBy: true,
       Cell: ({ original }) => (
         <nav className="rw-table-actions">
-          <Link
+          {
+            pharmaWaiting ?
+            <>
+                      <Link
+            to={routes.opdPrescripdeCell({id:original.id})}
+            // title={'Show opd ' + original.id + ' detail'}
+            className="rw-button rw-button-small"
+          >
+            Sale Medicines
+          </Link>
+            </>
+            :
+
+            <>
+                      <Link
             to={routes.ipd({ id: original.id })}
             title={'Show opd ' + original.id + ' detail'}
             className="rw-button rw-button-small"
           >
             show
           </Link>
+
+            </>
+          }
+
           {
             isAdmin &&
             <button

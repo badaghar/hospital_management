@@ -97,6 +97,7 @@ model Ipd {
   discharge_date      DateTime?
   patientType         String
   isWaiting           Boolean
+  pharmacyWaiting     Boolean               @default(false)
   IpdCharges          IpdCharges[]
   IpdConsultation     IpdConsultation[]
   IpdPayment          IpdPayment[]

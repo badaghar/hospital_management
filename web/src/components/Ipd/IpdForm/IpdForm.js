@@ -60,7 +60,15 @@ const IpdForm = (props) => {
   const [isOpen, setIsOpen] = useState(false)
   const [doctors, setDoctors] = useState()
   const [doctorName, setDoctorName] = useState()
-  const [doctorChargesArray, setDoctorChargesArray] = useState([])
+  const [doctorChargesArray, setDoctorChargesArray] = useState([
+    { consultation_doctor: '', consultation_type: '', amount: 0 }
+  ])
+// new code
+  // useEffect(()=>{
+
+  // },[])
+
+
   const [otherChargesArray, setOtherChargesArray] = useState([])
   // const [paymentOption, setPaymentOption] = useState([
   //   { value: 'phonepe', label: 'phonepe' }, { value: 'cash', label: 'cash' }
@@ -79,7 +87,7 @@ const IpdForm = (props) => {
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
-  const [isChecked2, setIsChecked2] = useState(false);
+  const [isChecked2, setIsChecked2] = useState(true);
 
   // Handler function for the checkbox onChange event
   const handleCheckboxChange2 = () => {
@@ -188,15 +196,33 @@ const IpdForm = (props) => {
 
   }, [otherChargesArray, doctorChargesArray])
 
-  useEffect(() => {
-    // console.log(otherChargesArray)
-  })
+  useEffect(()=>{
+    // console.log('hello',defaultPatient)
+
+    const obj = doctors?.filter((it)=>{
+      console.log(it)
+        return it.value==defaultPatient?.data?.extra?.drName.value
+    })
+    // console.log('2')
+    try {
+      // console.log('3')
+      setDoctorChargesArray([
+        { consultation_doctor: obj[0], consultation_type: '', amount: 0 }
+      ])
+
+    } catch (error) {
+
+    }
+  },[doctors,defaultPatient])
+
 
   const changePatienId = (item) => {
-    // // console.log(item)
     setDefaultPatient(item)
     setPatientId(item.value)
     setDoctorName(item.data.extra?.drName)
+    console.log(item.data.extra?.drName.value)
+
+
   }
 
   useEffect(() => {
@@ -213,6 +239,11 @@ const IpdForm = (props) => {
 
   const changeDoctor = (item) => {
     setDoctorName(item)
+    console.log(item)
+    // const obj = doctors.fi
+    setDoctorChargesArray([
+      { consultation_doctor: item, consultation_type: '', amount: 0 }
+    ])
 
   }
   const changeBed = (item) => {
@@ -488,77 +519,6 @@ const IpdForm = (props) => {
 
 
 
-        {/* <Form onSubmit={onSubmit} error={props.error}>
-          <FormError
-            error={props.error}
-            wrapperClassName="rw-form-error-wrapper"
-            titleClassName="rw-form-error-title"
-            listClassName="rw-form-error-list"
-          />
-
-          <Label
-            name="consultant_doctor"
-            className="rw-label"
-            errorClassName="rw-label rw-label-error"
-          >
-            Consultant doctor
-          </Label>
-
-          <TextField
-            name="consultant_doctor"
-            defaultValue={props.ipd?.consultant_doctor}
-            className="rw-input"
-            errorClassName="rw-input rw-input-error"
-            validation={{ required: true }}
-          />
-
-          <FieldError name="consultant_doctor" className="rw-field-error" />
-
-
-
-          <Label
-            name="paid_amount"
-            className="rw-label"
-            errorClassName="rw-label rw-label-error"
-          >
-            Paid amount
-          </Label>
-
-          <TextField
-            name="paid_amount"
-            defaultValue={props.ipd?.paid_amount}
-            className="rw-input"
-            errorClassName="rw-input rw-input-error"
-            validation={{ valueAsNumber: true, required: true }}
-          />
-
-          <FieldError name="paid_amount" className="rw-field-error" />
-
-          <Label
-            name="patientId"
-            className="rw-label"
-            errorClassName="rw-label rw-label-error"
-          >
-            Patient id
-          </Label>
-
-          <NumberField
-            name="patientId"
-            defaultValue={props.ipd?.patientId}
-            className="rw-input"
-            errorClassName="rw-input rw-input-error"
-            validation={{ required: true }}
-          />
-
-          <FieldError name="patientId" className="rw-field-error" />
-
-          <div className="rw-button-group">
-            <Submit disabled={props.loading} className="rw-button rw-button-blue">
-              Save
-            </Submit>
-          </div>
-        </Form> */}
-
         <Form onSubmit={onSubmit} error={props.error}>
           <FormError
             error={props.error}
@@ -638,55 +598,16 @@ const IpdForm = (props) => {
 
 
 
-          {/* code by vinay */}
 
-          <div className=" grid grid-cols-5 mt-3">
-            {
-              thermo.map((item) => {
-                return (
-                  <>
-                    <div className="flex col-span-1 justify-center">
-
-
-                      {item}
-
-
-                    </div>
-
-                  </>
-                )
-              })
-            }
-            {
-              thermo.map((it) => {
-                return (
-                  <>
-                    <div className="flex col-span-1 justify-center ">
-                      <input type="text" className="bg-slate-900 text-white p-2"
-                        onChange={(item) => handleExtraInfo(it, item.target.value)} />
-                    </div>
-
-                  </>
-                )
-              })
-            }
-
-            {/* <div className="flex col-span-1 justify-center ">
-        <input type="number" className="bg-slate-900 text-white p-2" name="" id="" value={quantity} onChange={(item) => setQuantity(item.target.value)} required />
-
-      </div> */}
-
-          </div>
-          {/* end */}
 
           <div className='flex justify-center mt-3  gap-x-4'>
             <div className='font-bold text-2xl underline'>
-              Other Charges
+              Doctor Charges
             </div>
           </div>
 
-          {/* <div className="p-2 w-full shadow-sm bg-white ">
-            <div className=" grid grid-cols-4 grid-flow-row gap-x-2 gap-y-2">
+          <div className="p-2 w-full shadow-sm bg-white ">
+            <div className=" grid grid-cols-2 grid-flow-row gap-x-2 gap-y-2">
 
               <DoctorChargeHeader />
 
@@ -709,12 +630,47 @@ const IpdForm = (props) => {
               }
             </div>
 
-            <div className='flex justify-center mt-2'>
+            {/* <div className='flex justify-center mt-2'>
               <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addDoctorCharges}>Add Doctor Charge</div>
-            </div>
-          </div> */}
+            </div> */}
+          </div>
 
-          <div className="p-2 w-full shadow-sm bg-white ">
+                {/* code by vinay */}
+
+                <div className=" grid grid-cols-5 mt-3">
+            {
+              thermo.map((item) => {
+                return (
+                  <>
+                    <div className="flex col-span-1 justify-center">
+
+
+                      {item}
+
+
+                    </div>
+
+                  </>
+                )
+              })
+            }
+            {
+              thermo.map((it) => {
+                return (
+                  <>
+                    <div className="flex col-span-1 justify-center ">
+                      <input type="text" className="bg-white text-black border border-black p-2"
+                        onChange={(item) => handleExtraInfo(it, item.target.value)} />
+                    </div>
+
+                  </>
+                )
+              })
+            }
+          </div>
+          {/* end */}
+
+          {/* <div className="p-2 w-full shadow-sm bg-white ">
             <div className=" grid grid-cols-5 grid-flow-row gap-x-2 gap-y-2">
 
               <OtherChargeHeader />
@@ -740,7 +696,7 @@ const IpdForm = (props) => {
             <div className='flex justify-center mt-2'>
               <div className='bg-gray-900 p-2 text-white rounded-3xl hover:text-gray-950 hover:bg-slate-300 cursor-pointer' onClick={addOtherCharges}>Add Other Charge</div>
             </div>
-          </div>
+          </div> */}
 
 
 
@@ -905,7 +861,7 @@ const IpdForm = (props) => {
               </span>
             </label>
           </div>
-          <div className="p-3">
+          {/* <div className="p-3">
             <label className='flex items-center'>
               <input
                 type="checkbox"
@@ -918,7 +874,7 @@ const IpdForm = (props) => {
                 Add The Patient To Waiting List
               </span>
             </label>
-          </div>
+          </div> */}
 
           <div className="rw-button-group">
             <Submit disabled={props.loading} className="rw-button rw-button-blue">
@@ -934,10 +890,10 @@ const IpdForm = (props) => {
 const DoctorChargeHeader = () => {
   return (
     <>
-      <div className="flex col-span-1 justify-center">Doctor Name</div>
+      {/* <div className="flex col-span-1 justify-center">Doctor Name</div> */}
       <div className="flex col-span-1 justify-center">Charges Type</div>
       <div className="flex col-span-1 justify-center">Amount</div>
-      <div className="flex col-span-1 justify-center">Action</div>
+      {/* <div className="flex col-span-1 justify-center">Action</div> */}
     </>
   )
 }
@@ -1052,6 +1008,7 @@ const DoctorChargeBody = ({ doctors, item, doctorChargesArray, setDoctorChargesA
   const [chargeTypeArray, setchargeTypeArray] = useState([])
   const [amount, setAmount] = useState(0)
   // const [amount,setAmount]
+  console.log(doctors)
   const doctorChange = (item) => {
     setDoctorChargesArray((array) => {
       const newArray = [...array];
@@ -1089,6 +1046,8 @@ const DoctorChargeBody = ({ doctors, item, doctorChargesArray, setDoctorChargesA
   }
 
   const chargeChange = (item) => {
+
+    console.log('here1')
     setChargeType(item)
 
     const ml = doctorFees.filter((it) => it.id == item?.id)
@@ -1111,23 +1070,45 @@ const DoctorChargeBody = ({ doctors, item, doctorChargesArray, setDoctorChargesA
   }
 
   useEffect(() => {
+    // console.log(doctors)
     if (item.consultation_doctor) {
-      setDoctorName({ value: item.consultation_doctor, label: item.consultation_doctor })
+      // console.log(item.consultation_doctor)
+      setDoctorName({ value: item.consultation_doctor.value, label: item.consultation_doctor.label })
+      doctorChange(item.consultant_doctor)
+
+      let ct = doctorFees.filter((it) => it.userId == item?.consultation_doctor?.id || 0)
+      ct = ct.map((it) => {
+        const ob = { label: it.type, value: it.type, id: it.id }
+        return ob
+      })
+      setchargeTypeArray(ct)
+      try {
+        const obj = ct.filter((it)=>it.value=='CONSULTATION')
+        chargeChange(obj[0])
+      } catch (error) {
+
+      }
+
+
     }
     if (item.consultation_type) {
       setChargeType({ value: item.consultation_type, label: item.consultation_type })
     }
-    setAmount(item.amount)
+    // setAmount(item.amount)
     // console.log(item.amount)
 
   }, [item])
+  console.log(doctorName)
 
   return (
     <>
-      <div className="flex col-span-1 justify-center">
-        <Select options={doctors} isClearable={true} required onChange={doctorChange} value={item.name !== '' ? doctorName : ''}
-        />
-      </div>
+        {/* <Select options={doctors} isClearable={true} required onChange={doctorChange} value={item.name !== '' ? doctorName : ''}
+        /> */}
+      {/* <div className="flex col-span-1 justify-center">
+        <span>
+          {doctorName?.value}
+        </span>
+      </div> */}
       <div className="flex col-span-1 justify-center">
         <Select options={chargeTypeArray} isClearable={true} required onChange={chargeChange} value={chargeType}
         />
@@ -1135,12 +1116,12 @@ const DoctorChargeBody = ({ doctors, item, doctorChargesArray, setDoctorChargesA
 
       </div>
       <div className="flex col-span-1 justify-center">{amount}</div>
-      <div className="flex col-span-1 justify-center">
+      {/* <div className="flex col-span-1 justify-center">
 
         <span className='cursor-pointer text-xl text-red-600' onClick={del.bind(this, index)}>
           <MdDeleteForever />
         </span>
-      </div>
+      </div> */}
     </>
   )
 

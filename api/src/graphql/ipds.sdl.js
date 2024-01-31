@@ -12,6 +12,7 @@ export const schema = gql`
     patientType: String!
     extra: JSON,
     isWaiting: Boolean!
+    pharmacyWaiting: Boolean!
     IpdCharges: [IpdCharges]!
     IpdConsultation: [IpdConsultation]!
     IpdPayment: [IpdPayment]!
@@ -30,6 +31,7 @@ export const schema = gql`
     ipds(type: String!): [Ipd!]! @requireAuth
     ipd(id: Int!): Ipd @skipAuth
     drWaiting(id: Int!): [Ipd!]! @requireAuth
+    pharmacyWaiting: [Ipd!]! @requireAuth
   }
 
   input CreateIpdInput {

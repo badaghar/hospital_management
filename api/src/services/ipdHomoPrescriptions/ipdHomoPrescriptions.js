@@ -11,6 +11,20 @@ export const ipdHomoPrescription = ({ id }) => {
 }
 
 export const createIpdHomoPrescription = async ({ input }) => {
+  try {
+    const id = input[0].ipdId
+    await db.ipd.update({
+      data:{
+        isWaiting:false,
+        pharmacyWaiting:true
+      },
+      where:{id}
+    })
+    // console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nid',id)
+  } catch (error) {
+    // console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nerror')
+
+  }
   await db.ipdHomoPrescription.createMany({
     data: input,
   })

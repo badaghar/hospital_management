@@ -33,8 +33,13 @@ export const drWaiting = async ({ id }) => {
     where: {
       consultant_doctor:name,
       isWaiting:true
-
-
+    }
+  })
+}
+export const pharmacyWaiting = async () => {
+  return db.ipd.findMany({
+    where: {
+      pharmacyWaiting:true
     }
   })
 }

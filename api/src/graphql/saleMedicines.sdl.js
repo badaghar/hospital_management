@@ -35,6 +35,7 @@ export const schema = gql`
     permedicine: JSON!
     doctor_name: String!
     homo_medicine: JSON!
+    extra: JSON
   }
 
   input UpdateSaleMedicineInput {
@@ -47,6 +48,7 @@ export const schema = gql`
     cgst: Float
     grand_total: Float
     patientId: Int
+    extra: JSON
   }
 
   type Mutation {

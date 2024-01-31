@@ -264,7 +264,8 @@ const SaleMedicineNewForm = (props) => {
       'patientId': patientId,
       'permedicine': newperMedicine,
       'homo_medicine':homoMedicineArray,
-      'doctor_name': doctorName
+      'doctor_name': doctorName,
+      'extra':{id:props.details?.id}
     }
     if (isSave) {
       props.onSave(input, false, props?.saleMedicine?.id)

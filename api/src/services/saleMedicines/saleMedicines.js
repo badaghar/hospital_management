@@ -64,6 +64,19 @@ export const createSaleMedicine = async ({ input }) => {
       }
     })
   }
+
+  try {
+    const id = input.extra.id
+    await db.ipd.update({
+      data:{
+        pharmacyWaiting:false
+      },
+      where:{id}
+    })
+
+  } catch (error) {
+
+  }
   return med
 }
 

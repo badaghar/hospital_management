@@ -86,11 +86,14 @@ const IpdOverview = ({ ipd, totalAmount }) => {
     })
 
   }
-  const [isChecked2, setIsChecked2] = useState(!ipd?.extra?.isWaiting  || false);
+  const [isChecked2, setIsChecked2] = useState(!ipd?.isWaiting  || false);
+  console.log(isChecked2)
+
 
   // Handler function for the checkbox onChange event
   const handleCheckboxChange2 = () => {
     setIsChecked2(!isChecked2);
+    // console.log(isChecked2)
   };
 
   const [updatePatient, { loading2, error2 }] = useMutation(
