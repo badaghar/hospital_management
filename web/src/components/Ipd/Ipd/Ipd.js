@@ -89,7 +89,7 @@ const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floo
           </h2>
         </header>
         <div>
-          {/* <div className='flex bg-gray-800 text-white  space-x-5 rounded-3xl justify-around flex-wrap'>
+          {/* <div className='flex bg-gray-800 text-black  space-x-5 rounded-3xl justify-around flex-wrap'>
             <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2' onClick={toggleDropDown.bind(this,'overview')}>
               OverView
             </div>
@@ -131,8 +131,8 @@ const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floo
           </div> */}
 
 
-          <div className='flex justify-center text-white text-xl'>
-            <h1 className='bg-black p-2'>
+          <div className='flex justify-center text-black text-xl'>
+            <h1 className=' font-bold p-2'>
               Patient Details
             </h1>
           </div>
@@ -148,8 +148,8 @@ const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floo
             // dropDownOpen=='consultant' &&
             // <IpdConsultant ipd={ipd} users={users} doctorFees={doctorFees} />
           }
-          <div className='flex justify-center text-white text-xl'>
-            <h1 className='bg-black p-2'>
+          <div className='flex justify-center text-black text-xl'>
+            <h1 className='font-bold p-2'>
               Complaints
             </h1>
           </div>
@@ -169,8 +169,8 @@ const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floo
             // dropDownOpen=='operations' &&
             // <IpdOperation ipd={ipd} users={users} operations={operations}  />
           }
-          <div className='flex justify-center text-white text-xl'>
-            <h1 className='bg-black p-2'>
+          <div className='flex justify-center text-black text-xl'>
+            <h1 className='font-bold p-2'>
               Prescription
             </h1>
           </div>
@@ -184,8 +184,8 @@ const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floo
             // dropDownOpen=='chat' &&
             // <IpdChatComponent ipd={ipd} users={users}  />
           }
-          <div className='flex justify-center text-white text-xl'>
-            <h1 className='bg-black p-2'>
+          <div className='flex justify-center text-black text-xl'>
+            <h1 className='font-bold p-2'>
               Documents
             </h1>
           </div>
@@ -193,8 +193,8 @@ const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floo
             // dropDownOpen=='documents' &&
             <Doucuments ipd={ipd} />
           }
-          <div className='flex justify-center text-white text-xl'>
-            <h1 className='bg-black p-2'>
+          <div className='flex justify-center text-black text-xl'>
+            <h1 className='font-bold p-2'>
               History
             </h1>
           </div>

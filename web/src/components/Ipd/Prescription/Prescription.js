@@ -615,14 +615,15 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
         />
       </div> */}
             <div className="flex col-span-1 justify-center flex-col items-center">
+            <div>
+          <input type="radio" id={`before-${index}`} onChange={timingChange} value={'Before Food'} name={`food-${index}`} />
+          <label htmlFor={`before-${index}`}>Before Food</label>
+        </div>
         <div>
           <input type="radio" id={`after-${index}`} onChange={timingChange} value={'After Food'} name={`food-${index}`} />
           <label htmlFor={`after-${index}`}>After Food</label>
         </div>
-        <div>
-          <input type="radio" id={`before-${index}`} onChange={timingChange} value={'Before Food'} name={`food-${index}`} />
-          <label htmlFor={`before-${index}`}>Before Food</label>
-        </div>
+
       </div>
 
 
@@ -746,7 +747,8 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
     const selectedPotencies = item.data.extra.selectedItems.reduce((result, it, index) => {
       if (it !== '') {
         result.push(potency[index] + '-' + it);
-        ob2.push({value:`${potency[index]} - ${it}`,label:`${potency[index]} - ${it}`})
+        // ob2.push({value:`${potency[index]} - ${it}`,label:`${potency[index]} - ${it}`})
+        ob2.push({value:`${potency[index]} - ${it}`,label:`${potency[index]}`})
       }
       return result;
     }, []);
@@ -843,14 +845,15 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
         {/* <Select options={timingObj} isClearable={true} required onChange={timingChange} value={item.name !== '' ? timingObjName : ''}
         /> */}
       <div className="flex col-span-1 justify-center flex-col items-center">
+      <div>
+          <input type="radio" id={`before-${index}`} onChange={timingChange} value={'Before Food'} name={`food-${index}`} />
+          <label htmlFor={`before-${index}`}>Before Food</label>
+        </div>
         <div>
           <input type="radio" id={`after-${index}`} onChange={timingChange} value={'After Food'} name={`food-${index}`} />
           <label htmlFor={`after-${index}`}>After Food</label>
         </div>
-        <div>
-          <input type="radio" id={`before-${index}`} onChange={timingChange} value={'Before Food'} name={`food-${index}`} />
-          <label htmlFor={`before-${index}`}>Before Food</label>
-        </div>
+
       </div>
 
 

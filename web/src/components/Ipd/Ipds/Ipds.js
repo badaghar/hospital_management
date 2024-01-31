@@ -202,7 +202,7 @@ const IpdsList = ({ ipds,pharmaWaiting }) => {
             title={'Show opd ' + original.id + ' detail'}
             className="rw-button rw-button-small"
           >
-            show
+            Consult
           </Link>
 
             </>

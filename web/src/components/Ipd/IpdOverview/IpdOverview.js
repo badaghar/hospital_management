@@ -75,7 +75,7 @@ const IpdOverview = ({ ipd, totalAmount }) => {
     setGender(event.target.value.toUpperCase());
   };
 
-  const [extraInfo, setExtraInfo] = useState(ipd?.extra?.thermo  ||  {})
+  const [extraInfo, setExtraInfo] = useState(ipd?.extra?.thermo || {})
   const thermo = ['BP', 'Pulse', 'Saturation', 'Grbs', 'Weight']
   const handleExtraInfo = (name, value) => {
     setExtraInfo((det) => {
@@ -86,7 +86,7 @@ const IpdOverview = ({ ipd, totalAmount }) => {
     })
 
   }
-  const [isChecked2, setIsChecked2] = useState(!ipd?.isWaiting  || false);
+  const [isChecked2, setIsChecked2] = useState(!ipd?.isWaiting || false);
   console.log(isChecked2)
 
 
@@ -430,7 +430,7 @@ const IpdOverview = ({ ipd, totalAmount }) => {
 
       <div className="m-3 p-4">
 
-        <div className="shadow-lg p-3 rounded-md">
+        <div className=" p-3 rounded-md">
 
 
           <div className="flex items-center space-x-3">
@@ -536,7 +536,7 @@ const IpdOverview = ({ ipd, totalAmount }) => {
                 return (
                   <>
                     <div className="flex col-span-1 justify-center ">
-                      <input type="text" className="bg-slate-900 text-white p-2"
+                      <input type="text" className="bg-white text-black border border-black p-2"
                         value={extraInfo[it]}
                         onChange={(item) => handleExtraInfo(it, item.target.value)} />
                     </div>
@@ -562,8 +562,8 @@ const IpdOverview = ({ ipd, totalAmount }) => {
 
           </div>}
 
-          <div className="p-3">
-            <label className='flex items-center'>
+          <div className="p-3 flex justify-center space-x-4">
+            {/* <label className='flex items-center'>
               <input
                 type="checkbox"
 
@@ -574,17 +574,21 @@ const IpdOverview = ({ ipd, totalAmount }) => {
               <span className='text-lg text-gray-700'>
                 Remove Patient From Waiting List
               </span>
-            </label>
+            </label> */}
+            <div className='flex justify-center mt-2 '>
+              <button className='bg-gray-600 p-2 text-white rounded-lg hover:bg-gray-400 m-2' onClick={changeVitals}>Save</button>
+
+            </div>
           </div>
 
-          <div className='flex justify-center mt-2 '>
+          {/* <div className='flex justify-center mt-2 '>
             <button className='bg-gray-600 p-2 text-white rounded-lg hover:bg-gray-400 m-2' onClick={changeVitals}>Save</button>
 
-          </div>
-          <div className='flex justify-center mt-2 pb-3'>
+          </div> */}
+          {/* <div className='flex justify-center mt-2 pb-3'>
             <button className='bg-green-600 p-2 text-white rounded-lg hover:bg-green-400 m-2' onClick={printForm}>Print Form</button>
 
-          </div>
+          </div> */}
 
 
 

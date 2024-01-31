@@ -768,7 +768,7 @@ const SaleMedicineNewForm = (props) => {
         </div>
 
 
-        <div className='flex items-center mt-3 justify-end gap-x-4'>
+        {/* <div className='flex items-center mt-3 justify-end gap-x-4'>
 
 
           <Label
@@ -796,11 +796,11 @@ const SaleMedicineNewForm = (props) => {
 
           <FieldError name="sgst" className="rw-field-error" />
 
-        </div>
+        </div> */}
 
 
 
-        <div className='flex items-center mt-3 justify-end gap-x-4'>
+        {/* <div className='flex items-center mt-3 justify-end gap-x-4'>
           <Label
             name="cgst"
             className="rw-label mt-0"
@@ -821,7 +821,7 @@ const SaleMedicineNewForm = (props) => {
           </div>
 
           <FieldError name="cgst" className="rw-field-error" />
-        </div>
+        </div> */}
 
 
 
