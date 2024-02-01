@@ -213,7 +213,7 @@ const IpdForm = (props) => {
     } catch (error) {
 
     }
-  },[doctors,defaultPatient])
+  },[doctors])
 
 
   const changePatienId = (item) => {
@@ -1083,10 +1083,11 @@ const DoctorChargeBody = ({ doctors, item, doctorChargesArray, setDoctorChargesA
       })
       setchargeTypeArray(ct)
       try {
+        console.log('in try block')
         const obj = ct.filter((it)=>it.value=='CONSULTATION')
         chargeChange(obj[0])
       } catch (error) {
-
+        console.log('in error block')
       }
 
 
@@ -1098,7 +1099,7 @@ const DoctorChargeBody = ({ doctors, item, doctorChargesArray, setDoctorChargesA
     // console.log(item.amount)
 
   }, [item])
-  console.log(doctorName)
+  // console.log(doctorName)
 
   return (
     <>

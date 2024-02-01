@@ -29,7 +29,7 @@ const DELETE_IPD_MUTATION = gql`
 
 `
 
-const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floors, medicines, homoMedicines,frequencies,durations,dossages }) => {
+const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floors, medicines, homoMedicines, frequencies, durations, dossages }) => {
 
   const [dropDownOpen, setDropDownOpen] = useState('overview')
   const [totalAmount, setTotalAmount] = useState(0)
@@ -129,24 +129,63 @@ const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floo
             </div>
 
           </div> */}
+          <div className='flex bg-gray-800 text-white  space-x-5 rounded-3xl justify-around flex-wrap'>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2' onClick={toggleDropDown.bind(this, 'overview')}>
+              OverView
+            </div>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+              onClick={toggleDropDown.bind(this, 'Complaints')}
+            >
+              Complaints
+            </div>
+
+            {ipd.patientType == 'OPD' && <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+              onClick={toggleDropDown.bind(this, 'prescription')}
+            >
+              Prescription
+            </div>}
+
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+              onClick={toggleDropDown.bind(this, 'documents')}
+            >
+              Documents
+            </div>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+              onClick={toggleDropDown.bind(this, 'history')}
+            >
+              History
+            </div>
+
+          </div>
 
 
-          <div className='flex justify-center text-black text-xl'>
+          {
+            dropDownOpen=='overview' && <IpdOverview ipd={ipd} totalAmount={totalAmount}/>
+          }
+          {
+            dropDownOpen=='Complaints' && <Complaint ipd={ipd} />
+          }
+          {
+            dropDownOpen=='prescription' &&   <Prescription medicines={medicines} ipd={ipd} users={users} operations={operations}
+            homoMedicines={homoMedicines} dossages={dossages} frequencies={frequencies} durations={durations}
+          />
+          }
+          {
+            dropDownOpen=='documents' &&  <Doucuments ipd={ipd} />
+          }
+          {
+            dropDownOpen=='history' && <IpdHistory ipd={ipd} />
+          }
+
+
+
+          {/* <div className='flex justify-center text-black text-xl'>
             <h1 className=' font-bold p-2'>
               Patient Details
             </h1>
           </div>
           {
-            // dropDownOpen=='overview' &&
             <IpdOverview ipd={ipd} totalAmount={totalAmount} />
-          }
-          {
-            // dropDownOpen=='sumamry' &&
-            // <SummaryIpd ipd={ipd} floors={floors} />
-          }
-          {
-            // dropDownOpen=='consultant' &&
-            // <IpdConsultant ipd={ipd} users={users} doctorFees={doctorFees} />
           }
           <div className='flex justify-center text-black text-xl'>
             <h1 className='font-bold p-2'>
@@ -154,20 +193,7 @@ const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floo
             </h1>
           </div>
           {
-            // dropDownOpen=='Complaints' &&
             <Complaint ipd={ipd} />
-          }
-          {
-            // dropDownOpen=='charges' &&
-            // <IpdOtherCharges ipd={ipd} users={users} chargeses={chargeses} />
-          }
-          {
-            // dropDownOpen=='labcharges' &&
-            // <LabChargesIpd ipd={ipd} users={users} labChargeses={labChargeses}  />
-          }
-          {
-            // dropDownOpen=='operations' &&
-            // <IpdOperation ipd={ipd} users={users} operations={operations}  />
           }
           <div className='flex justify-center text-black text-xl'>
             <h1 className='font-bold p-2'>
@@ -175,14 +201,9 @@ const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floo
             </h1>
           </div>
           {
-            // dropDownOpen=='prescription' &&
             <Prescription medicines={medicines} ipd={ipd} users={users} operations={operations}
               homoMedicines={homoMedicines} dossages={dossages} frequencies={frequencies} durations={durations}
             />
-          }
-          {
-            // dropDownOpen=='chat' &&
-            // <IpdChatComponent ipd={ipd} users={users}  />
           }
           <div className='flex justify-center text-black text-xl'>
             <h1 className='font-bold p-2'>
@@ -190,7 +211,6 @@ const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floo
             </h1>
           </div>
           {
-            // dropDownOpen=='documents' &&
             <Doucuments ipd={ipd} />
           }
           <div className='flex justify-center text-black text-xl'>
@@ -199,13 +219,8 @@ const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floo
             </h1>
           </div>
           {
-            // dropDownOpen=='history' &&
             <IpdHistory ipd={ipd} />
-          }
-          {
-            // dropDownOpen=='payment' &&
-            // <PaymentIpd ipd={ipd} users={users} chargeses={chargeses} totalAmount={totalAmount} />
-          }
+          } */}
         </div>
       </div>
       <nav className="rw-button-group">
