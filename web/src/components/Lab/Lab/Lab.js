@@ -63,10 +63,10 @@ const Lab = ({ lab }) => {
               <th>Updated at</th>
               <td>{timeTag(lab.updated_at)}</td>
             </tr>
-            <tr>
+            {/* <tr>
               <th>Extra</th>
               <td>{jsonDisplay(lab.extra)}</td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>

@@ -7,9 +7,25 @@ import {
   TextAreaField,
   Submit,
 } from '@redwoodjs/forms'
+function convertObjectValuesToUpper(obj) {
+  if (typeof obj !== 'object' || obj === null) {
+    // throw new Error('Input must be an object.');
+    return {}
+  }
+
+  for (let key in obj) {
+    if (typeof obj[key] === 'string') {
+      obj[key] = obj[key].trim().toUpperCase();
+    }
+  }
+
+  return obj;
+}
+
 
 const LabForm = (props) => {
   const onSubmit = (data) => {
+    data = convertObjectValuesToUpper(data)
     props.onSave(data, props?.lab?.id)
   }
 
@@ -77,23 +93,7 @@ const LabForm = (props) => {
 
         <FieldError name="Address" className="rw-field-error" />
 
-        <Label
-          name="extra"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Extra
-        </Label>
 
-        <TextAreaField
-          name="extra"
-          defaultValue={JSON.stringify(props.lab?.extra)}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ valueAsJSON: true }}
-        />
-
-        <FieldError name="extra" className="rw-field-error" />
 
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">

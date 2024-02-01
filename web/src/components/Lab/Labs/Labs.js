@@ -45,7 +45,7 @@ const LabsList = ({ labs }) => {
             <th>Address</th>
             <th>Created at</th>
             <th>Updated at</th>
-            <th>Extra</th>
+            {/* <th>Extra</th> */}
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -58,7 +58,7 @@ const LabsList = ({ labs }) => {
               <td>{truncate(lab.Address)}</td>
               <td>{timeTag(lab.created_at)}</td>
               <td>{timeTag(lab.updated_at)}</td>
-              <td>{jsonTruncate(lab.extra)}</td>
+              {/* <td>{jsonTruncate(lab.extra)}</td> */}
               <td>
                 <nav className="rw-table-actions">
                   <Link
