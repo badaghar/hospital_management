@@ -40,11 +40,11 @@ const LabPriceListsList = ({ labPriceLists }) => {
         <thead>
           <tr>
             <th>Id</th>
-            <th>Test list</th>
+            {/* <th>Test list</th> */}
+            <th>Lab</th>
             <th>Created at</th>
             <th>Updated at</th>
-            <th>Extra</th>
-            <th>Lab id</th>
+            {/* <th>Extra</th> */}
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -52,11 +52,11 @@ const LabPriceListsList = ({ labPriceLists }) => {
           {labPriceLists.map((labPriceList) => (
             <tr key={labPriceList.id}>
               <td>{truncate(labPriceList.id)}</td>
-              <td>{jsonTruncate(labPriceList.test_list)}</td>
+              <td>{truncate(labPriceList.lab.name)}</td>
+              {/* <td>{jsonTruncate(labPriceList.test_list)}</td> */}
               <td>{timeTag(labPriceList.created_at)}</td>
               <td>{timeTag(labPriceList.updated_at)}</td>
-              <td>{jsonTruncate(labPriceList.extra)}</td>
-              <td>{truncate(labPriceList.labId)}</td>
+              {/* <td>{jsonTruncate(labPriceList.extra)}</td> */}
               <td>
                 <nav className="rw-table-actions">
                   <Link

@@ -15,6 +15,10 @@ export const QUERY = gql`
       extra
       labId
     }
+    labs{
+      id
+      name
+    }
   }
 `
 const UPDATE_LAB_PRICE_LIST_MUTATION = gql`
@@ -39,7 +43,7 @@ export const Failure = ({ error }) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ labPriceList }) => {
+export const Success = ({ labPriceList,labs }) => {
   const [updateLabPriceList, { loading, error }] = useMutation(
     UPDATE_LAB_PRICE_LIST_MUTATION,
     {
@@ -70,6 +74,7 @@ export const Success = ({ labPriceList }) => {
           onSave={onSave}
           error={error}
           loading={loading}
+          labs={labs}
         />
       </div>
     </div>

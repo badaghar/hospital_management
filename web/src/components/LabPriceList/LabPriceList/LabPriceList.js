@@ -43,10 +43,33 @@ const LabPriceList = ({ labPriceList }) => {
               <th>Id</th>
               <td>{labPriceList.id}</td>
             </tr>
-            <tr>
-              <th>Test list</th>
-              <td>{jsonDisplay(labPriceList.test_list)}</td>
-            </tr>
+
+              {/* <th>Test list</th> */}
+              {/* <td>{jsonDisplay(labPriceList.test_list)}</td> */}
+              <div className="p-2 w-full shadow-sm bg-white ">
+                <div className=" grid grid-cols-2 grid-flow-row gap-x-2 gap-y-2">
+
+                <div className="flex col-span-1 justify-center font-bold">Test Type</div>
+      <div className="flex col-span-1 justify-center font-bold">Amount</div>
+
+                  {
+                    labPriceList.test_list.map((item, index) => {
+                      return (
+                        <>
+                              <div className="flex col-span-1 justify-center">{item.type}</div>
+      <div className="flex col-span-1 justify-center">{item.amount}</div>
+
+
+
+                        </>
+                      )
+                    })
+                  }
+                </div>
+
+
+              </div>
+
             <tr>
               <th>Created at</th>
               <td>{timeTag(labPriceList.created_at)}</td>
