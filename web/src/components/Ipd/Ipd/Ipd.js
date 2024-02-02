@@ -18,6 +18,7 @@ import FilesCell from 'src/components/File/FilesCell'
 import Doucuments from '../Doucuments/Doucuments'
 import Complaint from '../Complaint/Complaint'
 import IpdHistory from '../IpdHistory/IpdHistory'
+import Investigation from '../Investigation/Investigation'
 // import { useEffect } from 'react-js-dialog-box'
 
 const DELETE_IPD_MUTATION = gql`
@@ -29,7 +30,7 @@ const DELETE_IPD_MUTATION = gql`
 
 `
 
-const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floors, medicines, homoMedicines, frequencies, durations, dossages }) => {
+const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floors, medicines, homoMedicines, frequencies, durations, dossages,labPriceLists }) => {
 
   const [dropDownOpen, setDropDownOpen] = useState('overview')
   const [totalAmount, setTotalAmount] = useState(0)
@@ -138,6 +139,11 @@ const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floo
             >
               Complaints
             </div>
+            <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
+              onClick={toggleDropDown.bind(this, 'Investigation')}
+            >
+              Investigation
+            </div>
 
             {ipd.patientType == 'OPD' && <div className='hover:bg-gray-950 hover:text-gray-500 rounded-3xl cursor-pointer p-2'
               onClick={toggleDropDown.bind(this, 'prescription')}
@@ -164,6 +170,9 @@ const Ipd = ({ ipd, users, doctorFees, chargeses, labChargeses, operations, floo
           }
           {
             dropDownOpen=='Complaints' && <Complaint ipd={ipd} />
+          }
+          {
+            dropDownOpen=='Investigation' && <Investigation labPriceLists={labPriceLists} ipd={ipd} />
           }
           {
             dropDownOpen=='prescription' &&   <Prescription medicines={medicines} ipd={ipd} users={users} operations={operations}

@@ -251,4 +251,7 @@ export const Ipd = {
   Complaints: (_obj, { root }) => {
     return db.ipd.findUnique({ where: { id: root?.id } }).Complaints()
   },
+  IpdInvestigation: (_obj, { root }) => {
+    return db.ipd.findUnique({ where: { id: root?.id } }).IpdInvestigation()
+  },
 }
