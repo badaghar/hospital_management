@@ -93,6 +93,11 @@ const PatientsList = ({ patients }) => {
       Header: 'Doctor',
       accessor: 'extra.drName.value',
     },
+    {
+      headerClassName: 'text-left',
+      Header: 'Address',
+      accessor: 'address',
+    },
 
 
     {

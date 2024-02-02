@@ -571,7 +571,7 @@ const DashboardLayout = ({ children }) => {
 
 
                   {
-                    ((currentUser.permissions?.patientType?.includes('OPD') && currentUser.roles != 'reciptionist' && currentUser.roles != 'doctor') || isAdmin) &&
+                    ((currentUser.permissions?.patientType?.includes('OPD') && currentUser.roles != 'reciptionist') || isAdmin) &&
 
                     <>
 
