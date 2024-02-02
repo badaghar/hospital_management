@@ -5,7 +5,18 @@ export const ipdInvestigations = ({lab}) => {
     where:{
       lab_name:{
         equals: lab,
-      }
+      },
+      isWaiting:false
+    }
+  })
+}
+export const labWaiting = ({lab}) => {
+  return db.ipdInvestigation.findMany({
+    where:{
+      lab_name:{
+        equals: lab,
+      },
+      isWaiting:true
     }
   })
 }

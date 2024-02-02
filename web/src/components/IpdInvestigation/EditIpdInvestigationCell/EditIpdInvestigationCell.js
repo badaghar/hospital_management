@@ -4,6 +4,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import IpdInvestigationForm from 'src/components/IpdInvestigation/IpdInvestigationForm'
+import { useAuth } from "src/auth"
 
 export const QUERY = gql`
   query EditIpdInvestigationById($id: Int!) {
@@ -46,12 +47,13 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ ipdInvestigation }) => {
+  const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
   const [updateIpdInvestigation, { loading, error }] = useMutation(
     UPDATE_IPD_INVESTIGATION_MUTATION,
     {
       onCompleted: () => {
         toast.success('IpdInvestigation updated')
-        navigate(routes.ipdInvestigations())
+        navigate(routes.ipdInvestigations({ lab:currentUser?.permissions?.labAssign }))
       },
       onError: (error) => {
         toast.error(error.message)

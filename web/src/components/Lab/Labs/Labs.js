@@ -68,13 +68,13 @@ const LabsList = ({ labs }) => {
                   >
                     Show
                   </Link>
-                  <Link
+                  {/* <Link
                     to={routes.editLab({ id: lab.id })}
                     title={'Edit lab ' + lab.id}
                     className="rw-button rw-button-small rw-button-blue"
                   >
                     Edit
-                  </Link>
+                  </Link> */}
                   <button
                     type="button"
                     title={'Delete lab ' + lab.id}

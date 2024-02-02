@@ -345,7 +345,7 @@ const Routes = () => {
 
           <Route path="/dr-waiting/{id:Int}" page={DrWaitingPage} name="drWaiting" />
           <Route path="/pharmacy-waiting" page={PharmacyWaitingPage} name="pharmacyWaiting" />
-          <Route path="/lab-waiting" page={LabWaitingPage} name="labWaiting" />
+          <Route path="/lab-waiting/{lab:String}" page={LabWaitingPage} name="labWaiting" />
           {/* </Private> */}
 
 

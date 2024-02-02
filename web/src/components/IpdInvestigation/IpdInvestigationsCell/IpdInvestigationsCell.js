@@ -14,6 +14,12 @@ export const QUERY = gql`
       updated_at
       extra
       ipdId
+      ipd{
+        patient{
+          name
+        }
+
+      }
     }
   }
 `

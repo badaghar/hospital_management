@@ -135,7 +135,7 @@ const Investigation = ({ ipd,labPriceLists }) => {
     }
     let data = {}
     data['lab_name'] = lab.value
-    data['isWaiting'] = false
+    data['isWaiting'] = true
     data['test_list'] = testList
     data['url'] = 'na'
     data['ipdId'] = ipd.id

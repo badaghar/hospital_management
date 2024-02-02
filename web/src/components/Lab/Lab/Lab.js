@@ -71,12 +71,12 @@ const Lab = ({ lab }) => {
         </table>
       </div>
       <nav className="rw-button-group">
-        <Link
+        {/* <Link
           to={routes.editLab({ id: lab.id })}
           className="rw-button rw-button-blue"
         >
           Edit
-        </Link>
+        </Link> */}
         <button
           type="button"
           className="rw-button rw-button-red"

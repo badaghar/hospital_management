@@ -9,7 +9,8 @@ import {
   timeTag,
   truncate,
 } from 'src/lib/formatters'
-
+import SearchTable from 'src/components/SearchTable/SearchTable'
+import { useState,useEffect } from 'react'
 const DELETE_IPD_INVESTIGATION_MUTATION = gql`
   mutation DeleteIpdInvestigationMutation($id: Int!) {
     deleteIpdInvestigation(id: $id) {
@@ -18,7 +19,14 @@ const DELETE_IPD_INVESTIGATION_MUTATION = gql`
   }
 `
 
-const IpdInvestigationsList = ({ ipdInvestigations }) => {
+const IpdInvestigationsList = ({ ipdInvestigations,upload }) => {
+  const [search_data, setSearch_data] = useState(ipdInvestigations)
+
+  useEffect(()=>{
+    setSearch_data(ipdInvestigations)
+
+  },[ipdInvestigations])
+  const [rows_count, setRows_count] = useState(ipdInvestigations.length <= 5 ? 5 : 10)
   const [deleteIpdInvestigation] = useMutation(
     DELETE_IPD_INVESTIGATION_MUTATION,
     {
@@ -43,71 +51,143 @@ const IpdInvestigationsList = ({ ipdInvestigations }) => {
       deleteIpdInvestigation({ variables: { id } })
     }
   }
+  const change = (search)=>{
+    const search_val = search.target.value
+
+    let filterData = ipdInvestigations.filter((val) => {
+      return (
+        val.ipd.patient.name
+          .toString()
+          .toLowerCase()
+          .includes(search_val.toLowerCase())
+      )
+    })
+    setRows_count(filterData.length <= 5 ? 5 : 10)
+    setSearch_data(filterData)
+  }
+
+  const columns = [
+    {
+      headerClassName: 'text-left',
+     Header:  'SL. No',
+     // accessor: 'id',
+           Cell: ({index}) => (
+           index+1
+       )
+   },
+    {
+       headerClassName: 'text-left',
+      Header:  'Name',
+      accessor: 'ipd.patient.name',
+    },
+    // {
+    //    headerClassName: 'text-left',
+    //   Header:  'Phone no',
+    //   accessor: 'phoneNo',
+    // },
+
+    {
+       headerClassName: 'text-left',
+      Header:  'Action',
+      accessor: 'actionColumn',
+      disableSortBy: true,
+      Cell: ({ original }) => (
+        <nav className="rw-table-actions">
+
+       {upload && <Link
+          to={routes.editIpdInvestigation({
+            id: original.id,
+          })}
+          title={'Edit ipdInvestigation ' + original.id}
+          className="rw-button rw-button-small rw-button-blue"
+        >
+          Upload Document
+        </Link>}
+        {
+          !upload && <a href={original.url} className='rw-button rw-button-small' > Download </a>
+        }
+
+
+      </nav>
+
+      ),
+    },
+  ]
 
   return (
-    <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Lab name</th>
-            <th>Is waiting</th>
-            <th>Test list</th>
-            <th>Url</th>
-            <th>Created at</th>
-            <th>Updated at</th>
-            <th>Extra</th>
-            <th>Ipd id</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ipdInvestigations.map((ipdInvestigation) => (
-            <tr key={ipdInvestigation.id}>
-              <td>{truncate(ipdInvestigation.id)}</td>
-              <td>{truncate(ipdInvestigation.lab_name)}</td>
-              <td>{checkboxInputTag(ipdInvestigation.isWaiting)}</td>
-              <td>{jsonTruncate(ipdInvestigation.test_list)}</td>
-              <td>{truncate(ipdInvestigation.url)}</td>
-              <td>{timeTag(ipdInvestigation.created_at)}</td>
-              <td>{timeTag(ipdInvestigation.updated_at)}</td>
-              <td>{jsonTruncate(ipdInvestigation.extra)}</td>
-              <td>{truncate(ipdInvestigation.ipdId)}</td>
-              <td>
-                <nav className="rw-table-actions">
-                  <Link
-                    to={routes.ipdInvestigation({ id: ipdInvestigation.id })}
-                    title={
-                      'Show ipdInvestigation ' + ipdInvestigation.id + ' detail'
-                    }
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link>
-                  <Link
-                    to={routes.editIpdInvestigation({
-                      id: ipdInvestigation.id,
-                    })}
-                    title={'Edit ipdInvestigation ' + ipdInvestigation.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Upload Document
-                  </Link>
-                  <button
-                    type="button"
-                    title={'Delete ipdInvestigation ' + ipdInvestigation.id}
-                    className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(ipdInvestigation.id)}
-                  >
-                    Delete
-                  </button>
-                </nav>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+                <SearchTable
+    change={change}
+    placeholder={"Search By Typing Distributer Name"}
+    columns={columns}
+    rows_count={rows_count}
+    search_data={search_data}
+    />
+
+    </>
+    // <div className="rw-segment rw-table-wrapper-responsive">
+    //   <table className="rw-table">
+    //     <thead>
+    //       <tr>
+    //         <th>Id</th>
+    //         <th>Lab name</th>
+    //         <th>Is waiting</th>
+    //         <th>Test list</th>
+    //         <th>Url</th>
+    //         <th>Created at</th>
+    //         <th>Updated at</th>
+    //         <th>Extra</th>
+    //         <th>Ipd id</th>
+    //         <th>&nbsp;</th>
+    //       </tr>
+    //     </thead>
+    //     <tbody>
+    //       {ipdInvestigations.map((ipdInvestigation) => (
+    //         <tr key={ipdInvestigation.id}>
+    //           <td>{truncate(ipdInvestigation.id)}</td>
+    //           <td>{truncate(ipdInvestigation.lab_name)}</td>
+    //           <td>{checkboxInputTag(ipdInvestigation.isWaiting)}</td>
+    //           <td>{jsonTruncate(ipdInvestigation.test_list)}</td>
+    //           <td>{truncate(ipdInvestigation.url)}</td>
+    //           <td>{timeTag(ipdInvestigation.created_at)}</td>
+    //           <td>{timeTag(ipdInvestigation.updated_at)}</td>
+    //           <td>{jsonTruncate(ipdInvestigation.extra)}</td>
+    //           <td>{truncate(ipdInvestigation.ipdId)}</td>
+    //           <td>
+    //             <nav className="rw-table-actions">
+    //               <Link
+    //                 to={routes.ipdInvestigation({ id: ipdInvestigation.id })}
+    //                 title={
+    //                   'Show ipdInvestigation ' + ipdInvestigation.id + ' detail'
+    //                 }
+    //                 className="rw-button rw-button-small"
+    //               >
+    //                 Show
+    //               </Link>
+    //               <Link
+    //                 to={routes.editIpdInvestigation({
+    //                   id: ipdInvestigation.id,
+    //                 })}
+    //                 title={'Edit ipdInvestigation ' + ipdInvestigation.id}
+    //                 className="rw-button rw-button-small rw-button-blue"
+    //               >
+    //                 Upload Document
+    //               </Link>
+    //               <button
+    //                 type="button"
+    //                 title={'Delete ipdInvestigation ' + ipdInvestigation.id}
+    //                 className="rw-button rw-button-small rw-button-red"
+    //                 onClick={() => onDeleteClick(ipdInvestigation.id)}
+    //               >
+    //                 Delete
+    //               </button>
+    //             </nav>
+    //           </td>
+    //         </tr>
+    //       ))}
+    //     </tbody>
+    //   </table>
+    // </div>
   )
 }
 
