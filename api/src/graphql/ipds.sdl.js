@@ -66,5 +66,6 @@ export const schema = gql`
     deleteIpd(id: Int!): Ipd @requireAuth
     dischargePatient(id: Int!) : Ipd @requireAuth
     undischargePatient(id: Int!,bed: Int!) : Ipd @requireAuth
+    removePatientFromDrWaitingList(id: Int!) : Int @requireAuth
   }
 `

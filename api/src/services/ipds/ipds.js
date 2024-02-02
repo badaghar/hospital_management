@@ -43,6 +43,17 @@ export const pharmacyWaiting = async () => {
     }
   })
 }
+export const removePatientFromDrWaitingList = async ({id}) => {
+  await db.ipd.update({
+    data: {
+      isWaiting:false
+    },
+    where: {
+      id
+    }
+  })
+  return 1
+}
 
 export const dischargePatient = async ({ id }) => {
   const date = new Date()

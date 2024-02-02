@@ -23,7 +23,7 @@ const timeFormate = (time) => {
   return date
 }
 
-const IpdsList = ({ ipds,pharmaWaiting }) => {
+const IpdsList = ({ ipds,pharmaWaiting,edit }) => {
   const [search_data, setSearch_data] = useState(ipds)
   const [rows_count, setRows_count] = useState(ipds.length <= 5 ? 5 : 100)
   const [refresh, setRefresh] = useState(false)
@@ -57,7 +57,7 @@ const IpdsList = ({ ipds,pharmaWaiting }) => {
   })
 
   const onDeleteClick = (id) => {
-    if (confirm('Are you sure you want to delete ipd ' + id + '?')) {
+    if (confirm('Are you sure you want to delete OPD ' + id + '?')) {
       deleteIpd({ variables: { id } })
     }
   }
@@ -82,38 +82,6 @@ const IpdsList = ({ ipds,pharmaWaiting }) => {
     setSearch_data(filterData)
   }
 
-  // useEffect(() => {
-
-  //   console.log('here')
-
-
-  //   let data = {
-  //     'target':{
-  //       'value':'a'
-  //     }
-  //   }
-
-  //   change(data)
-  //   console.log('here1')
-
-  //   setTimeout(() => {
-  //     let data = {
-  //       'target':{
-  //         'value':''
-  //       }
-  //     }
-
-  //     change(data)
-  //     console.log('here2')
-
-  //   }, 100);
-
-  //   console.log('here3')
-
-
-
-
-  // }, [])
 
 
 
@@ -183,6 +151,16 @@ const IpdsList = ({ ipds,pharmaWaiting }) => {
       disableSortBy: true,
       Cell: ({ original }) => (
         <nav className="rw-table-actions">
+               {
+            edit &&
+            <button
+              type="button"
+              title={'Remove opd ' + original.id}
+              className="rw-button rw-button-small rw-button-red"
+              onClick={() => edit(original.id)}
+            >
+              Remove
+            </button>}
           {
             pharmaWaiting ?
             <>
