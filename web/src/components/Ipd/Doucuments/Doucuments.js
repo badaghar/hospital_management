@@ -77,7 +77,6 @@ const Doucuments = ({ipd}) => {
   const [fileArray,setFileArray] = useState([])
 
   const [url, setUrl] = useState('')
-  // console.log(ipd.File)
 
 
   const onFileUpload = (response) => {

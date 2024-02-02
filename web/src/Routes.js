@@ -20,6 +20,8 @@ const Routes = () => {
   return (
     <Router useAuth={useAuth}>
 
+
+
       <Set wrap={ScaffoldLayout} title="IpdHomoPrescriptions" titleTo="ipdHomoPrescriptions" buttonLabel="New IpdHomoPrescription" buttonTo="newIpdHomoPrescription">
 
         <Route path="/ipd-homo-prescriptions/new" page={IpdHomoPrescriptionNewIpdHomoPrescriptionPage} name="newIpdHomoPrescription" />
@@ -68,12 +70,12 @@ const Routes = () => {
 
 
           {/* new code */}
-          <Set wrap={ScaffoldLayout} title="IpdInvestigations" titleTo="ipdInvestigations" buttonLabel="New IpdInvestigation" buttonTo="newIpdInvestigation">
+          {/* <Set wrap={ScaffoldLayout} title="IpdInvestigations" titleTo="ipdInvestigations" buttonLabel="New IpdInvestigation" buttonTo="newIpdInvestigation"> */}
             <Route path="/ipd-investigations/new" page={IpdInvestigationNewIpdInvestigationPage} name="newIpdInvestigation" />
             <Route path="/ipd-investigations/{id:Int}/edit" page={IpdInvestigationEditIpdInvestigationPage} name="editIpdInvestigation" />
             <Route path="/ipd-investigations/{id:Int}" page={IpdInvestigationIpdInvestigationPage} name="ipdInvestigation" />
-            <Route path="/ipd-investigations" page={IpdInvestigationIpdInvestigationsPage} name="ipdInvestigations" />
-          </Set>
+          {/* </Set> */}
+            <Route path="/ipd-investigations/{lab:String}" page={IpdInvestigationIpdInvestigationsPage} name="ipdInvestigations" />
           <Set wrap={ScaffoldLayout} title="LabPriceLists" titleTo="labPriceLists" buttonLabel="New LabPriceList" buttonTo="newLabPriceList">
             <Route path="/lab-price-lists/new" page={LabPriceListNewLabPriceListPage} name="newLabPriceList" />
             <Route path="/lab-price-lists/{id:Int}/edit" page={LabPriceListEditLabPriceListPage} name="editLabPriceList" />
@@ -343,6 +345,7 @@ const Routes = () => {
 
           <Route path="/dr-waiting/{id:Int}" page={DrWaitingPage} name="drWaiting" />
           <Route path="/pharmacy-waiting" page={PharmacyWaitingPage} name="pharmacyWaiting" />
+          <Route path="/lab-waiting" page={LabWaitingPage} name="labWaiting" />
           {/* </Private> */}
 
 

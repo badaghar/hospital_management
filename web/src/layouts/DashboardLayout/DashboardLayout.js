@@ -74,32 +74,72 @@ const DashboardLayout = ({ children }) => {
 
                 {/* {(currentUser.permissions?.charges?.length > 0 || isAdmin) && */}
 
+
+                {
+                  currentUser.roles == 'laboratory' &&
+                  <>
+                    <li className="px-5 hidden md:block">
+                      <div className="flex flex-row items-center mt-5 h-8">
+                        <div className="text-sm font-light tracking-wide text-gray-400 uppercase">Laboratory</div>
+                      </div>
+                    </li>
+                    <>
+                      <li onClick={toggleDropDown.bind(this, 'lab')}>
+                        <Link to={routes.labWaiting({ id: currentUser.id })} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
+                          <span className="inline-flex justify-center items-center ml-4">
+                            <BsPersonFillAdd />
+                          </span>
+                          <span className="ml-2 text-sm tracking-wide truncate">Waiting</span>
+
+                        </Link>
+                      </li>
+                    </>
+                    <>
+                      <li onClick={toggleDropDown.bind(this, 'lab')}>
+                        <Link to={routes.ipdInvestigations({ lab:currentUser?.permissions?.labAssign })} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
+                          <span className="inline-flex justify-center items-center ml-4">
+                            <BsPersonFillAdd />
+                          </span>
+                          <span className="ml-2 text-sm tracking-wide truncate">History</span>
+
+                        </Link>
+                      </li>
+                    </>
+
+
+                  </>
+
+                }
+
                 {
                   <>
 
-                    <li className="px-5 hidden md:block">
+                    {currentUser.roles !== 'laboratory' && <li className="px-5 hidden md:block">
                       <div className="flex flex-row items-center mt-5 h-8">
                         <div className="text-sm font-light tracking-wide text-gray-400 uppercase">Reception</div>
                       </div>
-                    </li>
+                    </li>}
 
-                    <li>
+                    {currentUser.roles !== 'laboratory' && <li>
                       <Link to={routes.newIpd({ type: 'OPD', id: 0 })} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
                         <span className="inline-flex justify-center items-center ml-4">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                         </span>
                         <span className="ml-2 text-sm tracking-wide truncate">Add Patient</span>
                       </Link>
-                    </li>
+                    </li>}
 
                   </>
                 }
+
+
+
                 <>
-                  <li className="px-5 hidden md:block">
+                  {currentUser.roles !== 'laboratory' && <li className="px-5 hidden md:block">
                     <div className="flex flex-row items-center h-8">
                       <div className="text-sm font-light tracking-wide text-gray-400 uppercase">Clinic</div>
                     </div>
-                  </li>
+                  </li>}
 
 
                   {/* <li className="relative">
@@ -1568,16 +1608,16 @@ const DashboardLayout = ({ children }) => {
 
 
 
+                {currentUser.roles !== 'laboratory' &&
+                  <li>
+                    <Link to={routes.patients()} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
+                      <span className="inline-flex justify-center items-center ml-4">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
+                      </span>
+                      <span className="ml-2 text-sm tracking-wide truncate">Patients</span>
 
-                <li>
-                  <Link to={routes.patients()} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-gray-800 pr-6">
-                    <span className="inline-flex justify-center items-center ml-4">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
-                    </span>
-                    <span className="ml-2 text-sm tracking-wide truncate">Patients</span>
-
-                  </Link>
-                </li>
+                    </Link>
+                  </li>}
 
 
 

@@ -12,6 +12,25 @@ const DELETE_IPD_INVESTIGATION_MUTATION = gql`
   }
 `
 
+const UPDATE_IPD_INVESTIGATION_MUTATION = gql`
+  mutation UpdateIpdInvestigationMutation(
+    $id: Int!
+    $input: UpdateIpdInvestigationInput!
+  ) {
+    updateIpdInvestigation(id: $id, input: $input) {
+      id
+      lab_name
+      isWaiting
+      test_list
+      url
+      created_at
+      updated_at
+      extra
+      ipdId
+    }
+  }
+`
+
 const IpdInvestigation = ({ ipdInvestigation }) => {
   const [deleteIpdInvestigation] = useMutation(
     DELETE_IPD_INVESTIGATION_MUTATION,
@@ -33,6 +52,24 @@ const IpdInvestigation = ({ ipdInvestigation }) => {
       deleteIpdInvestigation({ variables: { id } })
     }
   }
+
+  const [updateIpdInvestigation, { loading, error }] = useMutation(
+    UPDATE_IPD_INVESTIGATION_MUTATION,
+    {
+      onCompleted: () => {
+        toast.success('IpdInvestigation updated')
+        navigate(routes.ipdInvestigations())
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+    }
+  )
+
+  const onSave = (input, id) => {
+    updateIpdInvestigation({ variables: { id, input } })
+  }
+
 
   return (
     <>

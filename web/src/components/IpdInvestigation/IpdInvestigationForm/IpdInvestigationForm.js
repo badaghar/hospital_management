@@ -9,16 +9,27 @@ import {
   NumberField,
   Submit,
 } from '@redwoodjs/forms'
+import { PickerInline } from 'filestack-react'
+import { useState } from 'react'
 
 const IpdInvestigationForm = (props) => {
+  const [url, setUrl] = useState('')
+
+
+  const onFileUpload = (response) => {
+    console.log(response)
+    setUrl(response.filesUploaded[0].url)
+  }
   const onSubmit = (data) => {
+    data['url'] = url
+    data['isWaiting'] = false
     props.onSave(data, props?.ipdInvestigation?.id)
   }
 
   return (
-    <div className="rw-form-wrapper">
+    <div className="rw-form-wrapper text-black">
       <Form onSubmit={onSubmit} error={props.error}>
-        <FormError
+        {/* <FormError
           error={props.error}
           wrapperClassName="rw-form-error-wrapper"
           titleClassName="rw-form-error-title"
@@ -130,7 +141,28 @@ const IpdInvestigationForm = (props) => {
           validation={{ required: true }}
         />
 
-        <FieldError name="ipdId" className="rw-field-error" />
+        <FieldError name="ipdId" className="rw-field-error" /> */}
+
+        <div>
+          <span>Tests:-</span>
+          <div>
+            {
+              props.ipdInvestigation?.test_list.map((item) =>
+                <>
+                  <span>{item}</span>
+                </>
+              )
+            }
+          </div>
+
+        </div>
+
+        <div className='-z-20'>
+
+          <PickerInline apikey={process.env.REDWOOD_ENV_FILESTACK_API_KEY}
+            onSuccess={onFileUpload}
+          />
+        </div>
 
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">

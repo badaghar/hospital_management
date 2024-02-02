@@ -1,7 +1,13 @@
 import { db } from 'src/lib/db'
 
-export const ipdInvestigations = () => {
-  return db.ipdInvestigation.findMany()
+export const ipdInvestigations = ({lab}) => {
+  return db.ipdInvestigation.findMany({
+    where:{
+      lab_name:{
+        equals: lab,
+      }
+    }
+  })
 }
 
 export const ipdInvestigation = ({ id }) => {

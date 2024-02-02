@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useEffect } from 'react'
 
 import {
@@ -15,9 +15,11 @@ import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import AllotLabCell from 'src/components/LabInCharge/AllotLabCell'
 
 const SignupPage = () => {
   const { isAuthenticated, signUp } = useAuth()
+  const [role,setRole] = useState('')
 
   // useEffect(() => {
   //   if (isAuthenticated) {
@@ -51,6 +53,9 @@ const SignupPage = () => {
     }
     else if (data.roles == 'admin') {
       permissions = { admin: 'all' }
+    }
+    else if (data.roles == 'laboratory') {
+      permissions = { labAssign:data.lab }
     }
     const response = await signUp({
       username: data.email,
@@ -164,6 +169,7 @@ const SignupPage = () => {
 
                     <SelectField
                       name="roles"
+                      onChange={(e)=>setRole(e.target.value)}
                       validation={{
                         required: true,
                         validate: {
@@ -180,11 +186,14 @@ const SignupPage = () => {
                       <option value={'reciptionist'}>Reciptionist</option>
                       <option value={'pharmacy'}>Pharmacy</option>
                       <option value={'doctor'}>Doctor</option>
+                      <option value={'laboratory'}>Laboratory</option>
 
                     </SelectField>
 
                     <FieldError name="roles" className="rw-field-error" />
                   </div>
+
+                 {role=='laboratory' && <AllotLabCell />}
 
                   <div className="rw-button-group">
                     <Submit className="rw-button rw-button-blue">

@@ -13,7 +13,7 @@ export const schema = gql`
   }
 
   type Query {
-    ipdInvestigations: [IpdInvestigation!]! @requireAuth
+    ipdInvestigations(lab:String!): [IpdInvestigation!]! @requireAuth
     ipdInvestigation(id: Int!): IpdInvestigation @requireAuth
   }
 

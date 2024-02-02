@@ -91,7 +91,7 @@ const IpdInvestigationsList = ({ ipdInvestigations }) => {
                     title={'Edit ipdInvestigation ' + ipdInvestigation.id}
                     className="rw-button rw-button-small rw-button-blue"
                   >
-                    Edit
+                    Upload Document
                   </Link>
                   <button
                     type="button"
