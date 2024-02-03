@@ -5,6 +5,7 @@ export const schema = gql`
     ipdId: Int!
     medicine: String!
     dosage: String!
+    potency: String!
     timing: String!
     frequency: String!
     duration: String!
@@ -23,6 +24,7 @@ export const schema = gql`
   input CreateIpdHomoPrescriptionInput {
     ipdId: Int!
     medicine: String!
+    potency: String!
     dosage: String!
     timing: String!
     frequency: String!
@@ -35,6 +37,7 @@ export const schema = gql`
   input UpdateIpdHomoPrescriptionInput {
     ipdId: Int
     medicine: String
+    potency: String
     dosage: String
     timing: String
     frequency: String

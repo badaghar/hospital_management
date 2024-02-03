@@ -91,14 +91,14 @@ const HomoMedicinesList = ({ homoMedicines }) => {
       Cell: ({ index,original }) => (
         <div className='flex space-x-2'>
         {
-          original.extra.selectedItems.map((item, index) => {
+          original.extra.checkedItems.map((item, index) => {
             if(!item){
               return
             }
 
             return (
               <div>
-                [ {potency[index]} - {item} ]
+               [ {item} ]
               </div>
             )
           })

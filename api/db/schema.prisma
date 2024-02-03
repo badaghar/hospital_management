@@ -266,6 +266,7 @@ model IpdHomoPrescription {
   ipd        Ipd      @relation(fields: [ipdId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ipdId      Int
   medicine   String
+  potency    String
   dosage     String
   timing     String
   frequency  String

@@ -79,6 +79,7 @@ export const QUERY = gql`
       IpdHomoPrescription{
         id
         medicine
+        potency
         dosage
         timing
         frequency

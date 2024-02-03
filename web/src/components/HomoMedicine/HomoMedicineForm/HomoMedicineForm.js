@@ -29,11 +29,21 @@ const HomoMedicineForm = (props) => {
 
   const [selectedItems, setSelectedItems] = useState(['', '', '', '', '', '', '', '', '', '', ""]);
   const [potency, setPotency] = useState(['Q', '1x', '3x', '6x', '12x', '30c', '200', '1M', '10M', '50M', "CM"]);
+  const [checkedItems, setCheckedItems] = useState([]);
+
+  const handleCheckboxChange = (quantity) => {
+    // If quantity is checked, add it to the checkedItems array; otherwise, remove it
+    setCheckedItems((prevCheckedItems) =>
+      prevCheckedItems.includes(quantity)
+        ? prevCheckedItems.filter((item) => item !== quantity)
+        : [...prevCheckedItems, quantity]
+    );
+  };
   const onSubmit = (data) => {
     data = convertObjectValuesToUpper(data)
     data['potency'] = 'value'
     data['extra'] = {
-      selectedItems
+      checkedItems
     }
     props.onSave(data, props?.homoMedicine?.id)
   }
@@ -122,6 +132,23 @@ return (
 
       <div>
         <div className='grid grid-cols-4 text-xl'>
+        {potency.map((pty) => (
+            <div key={pty} className='flex space-x-2 relative'>
+              <input
+                type="checkbox"
+                id={`potency-${pty}`}
+                checked={checkedItems.includes(pty)}
+                onChange={() => handleCheckboxChange(pty)}
+                className="mr-2"
+              />
+              <label htmlFor={`potency-${pty}`}>{pty}</label>
+            </div>
+          ))}
+        </div>
+      </div>
+{/*
+      <div>
+        <div className='grid grid-cols-4 text-xl'>
           {potency.map((item, rowIndex) => (
             <div key={rowIndex} className='flex space-x-2 relative'>
               <label htmlFor={rowIndex} >{item}</label>
@@ -139,15 +166,7 @@ return (
             </div>
           ))}
         </div>
-        {/* <div>
-            <p>Selected Items:</p>
-            <ul>
-              {selectedItems.map((item, index) => (
-                <li key={index}>{`${potency[index]} ${item || 'None'}`}</li>
-              ))}
-            </ul>
-          </div> */}
-      </div>
+      </div> */}
 
 
 

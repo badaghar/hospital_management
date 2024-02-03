@@ -58,14 +58,14 @@ const HomoMedicine = ({ homoMedicine }) => {
               <td>
                 <div className='flex space-x-2'>
                   {
-                    homoMedicine.extra.selectedItems.map((item, index) => {
+                    homoMedicine.extra.checkedItems.map((item, index) => {
                       if(!item){
                         return
                       }
 
                       return (
                         <div>
-                          [ {potency[index]} - {item} ]
+                          [ {item} ]
                         </div>
                       )
                     })
