@@ -23,7 +23,7 @@ const BirthCertificatesList = ({ birthCertificates }) => {
 
   }, [birthCertificates])
   // console.log(birthCertificates)
-  const [rows_count, setRows_count] = useState(birthCertificates.length <= 5 ? 5 : 100)
+  const [rows_count, setRows_count] = useState(birthCertificates.length <= 5 ? 5 : 1000)
   const [deleteBirthCertificate] = useMutation(
     DELETE_BIRTH_CERTIFICATE_MUTATION,
     {
@@ -97,7 +97,7 @@ const BirthCertificatesList = ({ birthCertificates }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 100)
+    setRows_count(filterData.length <= 5 ? 5 : 1000)
     setSearch_data(filterData)
   }
   const columns = [

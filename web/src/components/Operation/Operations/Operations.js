@@ -17,7 +17,7 @@ const DELETE_OPERATION_MUTATION = gql`
 
 const OperationsList = ({ operations }) => {
   const [search_data, setSearch_data] = useState(operations)
-  const [rows_count, setRows_count] = useState(operations.length <= 5 ? 5 : 100)
+  const [rows_count, setRows_count] = useState(operations.length <= 5 ? 5 : 1000)
   const [deleteOperation] = useMutation(DELETE_OPERATION_MUTATION, {
     onCompleted: () => {
       toast.success('Operation deleted')
@@ -48,7 +48,7 @@ const OperationsList = ({ operations }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 100)
+    setRows_count(filterData.length <= 5 ? 5 : 1000)
     setSearch_data(filterData)
   }
 

@@ -17,7 +17,7 @@ const DELETE_OPD_MUTATION = gql`
 
 const OpdsList = ({ opds }) => {
   const [search_data, setSearch_data] = useState(opds)
-  const [rows_count, setRows_count] = useState(opds.length <= 5 ? 5 : 100)
+  const [rows_count, setRows_count] = useState(opds.length <= 5 ? 5 : 1000)
   const [deleteOpd] = useMutation(DELETE_OPD_MUTATION, {
     onCompleted: () => {
       toast.success('Opd deleted')
@@ -49,7 +49,7 @@ const OpdsList = ({ opds }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 100)
+    setRows_count(filterData.length <= 5 ? 5 : 1000)
     setSearch_data(filterData)
   }
 

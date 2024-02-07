@@ -17,7 +17,7 @@ const DELETE_MANUFACTURER_MUTATION = gql`
 
 const ManufacturersList = ({ manufacturers }) => {
     const [search_data, setSearch_data] = useState(manufacturers)
-  const [rows_count, setRows_count] = useState(manufacturers.length <= 5 ? 5 : 100)
+  const [rows_count, setRows_count] = useState(manufacturers.length <= 5 ? 5 : 1000)
   useEffect(()=>{
     setSearch_data(manufacturers)
 
@@ -53,7 +53,7 @@ const ManufacturersList = ({ manufacturers }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 100)
+    setRows_count(filterData.length <= 5 ? 5 : 1000)
     setSearch_data(filterData)
   }
 

@@ -19,7 +19,7 @@ const ManufacturerPurchaseMedicinesList = ({
   manufacturerPurchaseMedicines,
 }) => {
   const [search_data, setSearch_data] = useState(manufacturerPurchaseMedicines)
-  const [rows_count, setRows_count] = useState(manufacturerPurchaseMedicines.length <= 5 ? 5 : 100)
+  const [rows_count, setRows_count] = useState(manufacturerPurchaseMedicines.length <= 5 ? 5 : 1000)
   const [deleteManufacturerPurchaseMedicine] = useMutation(
     DELETE_MANUFACTURER_PURCHASE_MEDICINE_MUTATION,
     {
@@ -60,7 +60,7 @@ const ManufacturerPurchaseMedicinesList = ({
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 100)
+    setRows_count(filterData.length <= 5 ? 5 : 1000)
     setSearch_data(filterData)
   }
 

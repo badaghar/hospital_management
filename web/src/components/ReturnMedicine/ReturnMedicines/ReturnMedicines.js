@@ -16,7 +16,7 @@ const DELETE_RETURN_MEDICINE_MUTATION = gql`
 
 const ReturnMedicinesList = ({ returnMedicines }) => {
   const [search_data, setSearch_data] = useState(returnMedicines)
-  const [rows_count, setRows_count] = useState(returnMedicines.length <= 5 ? 5 : 100)
+  const [rows_count, setRows_count] = useState(returnMedicines.length <= 5 ? 5 : 1000)
   const [deleteReturnMedicine] = useMutation(DELETE_RETURN_MEDICINE_MUTATION, {
     onCompleted: () => {
       toast.success('ReturnMedicine deleted')
@@ -54,7 +54,7 @@ const ReturnMedicinesList = ({ returnMedicines }) => {
             .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 100)
+    setRows_count(filterData.length <= 5 ? 5 : 1000)
     setSearch_data(filterData)
   }
 

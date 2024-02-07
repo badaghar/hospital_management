@@ -17,7 +17,7 @@ const DELETE_DOCTOR_FEE_MUTATION = gql`
 
 const DoctorFeesList = ({ doctorFees }) => {
   const [search_data, setSearch_data] = useState(doctorFees)
-  const [rows_count, setRows_count] = useState(doctorFees.length <= 5 ? 5 : 100)
+  const [rows_count, setRows_count] = useState(doctorFees.length <= 5 ? 5 : 1000)
   useEffect(()=>{
     setSearch_data(doctorFees)
 
@@ -57,7 +57,7 @@ const DoctorFeesList = ({ doctorFees }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 100)
+    setRows_count(filterData.length <= 5 ? 5 : 1000)
     setSearch_data(filterData)
   }
 

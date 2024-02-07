@@ -18,7 +18,7 @@ const DELETE_USER_MUTATION = gql`
 
 const UsersList = ({ users }) => {
   const [search_data, setSearch_data] = useState(users)
-  const [rows_count, setRows_count] = useState(users.length <= 5 ? 5 : 100)
+  const [rows_count, setRows_count] = useState(users.length <= 5 ? 5 : 1000)
   const [deleteUser] = useMutation(DELETE_USER_MUTATION, {
     onCompleted: () => {
       toast.success('User deleted')
@@ -48,7 +48,7 @@ const UsersList = ({ users }) => {
         val.roles.toString().toLowerCase().includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 100)
+    setRows_count(filterData.length <= 5 ? 5 : 1000)
     setSearch_data(filterData)
   }
 

@@ -18,7 +18,7 @@ const DELETE_LAB_CHARGES_MUTATION = gql`
 
 const LabChargesesList = ({ labChargeses }) => {
   const [search_data, setSearch_data] = useState(labChargeses)
-  const [rows_count, setRows_count] = useState(labChargeses.length <= 5 ? 5 : 100)
+  const [rows_count, setRows_count] = useState(labChargeses.length <= 5 ? 5 : 1000)
   const [deleteLabCharges] = useMutation(DELETE_LAB_CHARGES_MUTATION, {
     onCompleted: () => {
       toast.success('LabCharges deleted')
@@ -50,7 +50,7 @@ const LabChargesesList = ({ labChargeses }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 100)
+    setRows_count(filterData.length <= 5 ? 5 : 1000)
     setSearch_data(filterData)
   }
 

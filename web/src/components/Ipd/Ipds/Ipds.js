@@ -25,7 +25,7 @@ const timeFormate = (time) => {
 
 const IpdsList = ({ ipds,pharmaWaiting,edit }) => {
   const [search_data, setSearch_data] = useState(ipds)
-  const [rows_count, setRows_count] = useState(ipds.length <= 5 ? 5 : 100)
+  const [rows_count, setRows_count] = useState(ipds.length <= 5 ? 5 : 1000)
   const [refresh, setRefresh] = useState(false)
     useEffect(()=>{
     setSearch_data(ipds)
@@ -78,7 +78,7 @@ const IpdsList = ({ ipds,pharmaWaiting,edit }) => {
       )
     })
 
-    setRows_count(filterData.length <= 5 ? 5 : 100)
+    setRows_count(filterData.length <= 5 ? 5 : 1000)
     setSearch_data(filterData)
   }
 

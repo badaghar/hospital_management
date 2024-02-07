@@ -18,7 +18,7 @@ const DELETE_SALE_MEDICINE_MUTATION = gql`
 
 const SaleMedicinesList = ({ saleMedicines }) => {
   const [search_data, setSearch_data] = useState(saleMedicines)
-  const [rows_count, setRows_count] = useState(saleMedicines.length <= 5 ? 5 : 100)
+  const [rows_count, setRows_count] = useState(saleMedicines.length <= 5 ? 5 : 1000)
   const [deleteSaleMedicine] = useMutation(DELETE_SALE_MEDICINE_MUTATION, {
     onCompleted: () => {
       toast.success('SaleMedicine deleted')
@@ -54,7 +54,7 @@ const SaleMedicinesList = ({ saleMedicines }) => {
               .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 100)
+    setRows_count(filterData.length <= 5 ? 5 : 1000)
     setSearch_data(filterData)
   }
   const columns = [
