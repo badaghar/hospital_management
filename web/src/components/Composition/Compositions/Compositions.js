@@ -17,7 +17,7 @@ const DELETE_COMPOSITION_MUTATION = gql`
 
 const CompositionsList = ({ compositions }) => {
   const [search_data, setSearch_data] = useState(compositions)
-  const [rows_count, setRows_count] = useState(compositions.length <= 5 ? 5 : 10)
+  const [rows_count, setRows_count] = useState(compositions.length <= 5 ? 5 : 100)
   useEffect(()=>{
     setSearch_data(compositions)
 
@@ -53,7 +53,7 @@ const CompositionsList = ({ compositions }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 10)
+    setRows_count(filterData.length <= 5 ? 5 : 100)
     setSearch_data(filterData)
   }
 
