@@ -17,7 +17,7 @@ const DELETE_PRODUCT_MUTATION = gql`
 
 const ProductsList = ({ products }) => {
   const [search_data, setSearch_data] = useState(products)
-  const [rows_count, setRows_count] = useState(products.length <= 5 ? 5 : 1000)
+  const [rows_count, setRows_count] = useState(products.length )
   const [deleteProduct] = useMutation(DELETE_PRODUCT_MUTATION, {
     onCompleted: () => {
       toast.success('Product deleted')
@@ -48,7 +48,7 @@ const ProductsList = ({ products }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 1000)
+    setRows_count(filterData.length )
     setSearch_data(filterData)
   }
   const columns = [

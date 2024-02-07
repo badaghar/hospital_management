@@ -17,7 +17,7 @@ const DELETE_CHARGES_MUTATION = gql`
 
 const ChargesesList = ({ chargeses }) => {
   const [search_data, setSearch_data] = useState(chargeses)
-  const [rows_count, setRows_count] = useState(chargeses.length <= 5 ? 5 : 1000)
+  const [rows_count, setRows_count] = useState(chargeses.length )
   useEffect(()=>{
     setSearch_data(chargeses)
 
@@ -53,7 +53,7 @@ const ChargesesList = ({ chargeses }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 1000)
+    setRows_count(filterData.length )
     setSearch_data(filterData)
   }
 

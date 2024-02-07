@@ -17,7 +17,7 @@ const DELETE_PAYMENT_PURCHASE_MEDICINE_MUTATION = gql`
 
 const PaymentPurchaseMedicinesList = ({ paymentPurchaseMedicines }) => {
   const [search_data, setSearch_data] = useState(paymentPurchaseMedicines)
-  const [rows_count, setRows_count] = useState(paymentPurchaseMedicines.length <= 5 ? 5 : 1000)
+  const [rows_count, setRows_count] = useState(paymentPurchaseMedicines.length )
   const [deletePaymentPurchaseMedicine] = useMutation(
     DELETE_PAYMENT_PURCHASE_MEDICINE_MUTATION,
     {
@@ -56,7 +56,7 @@ const PaymentPurchaseMedicinesList = ({ paymentPurchaseMedicines }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 1000)
+    setRows_count(filterData.length )
     setSearch_data(filterData)
   }
 

@@ -24,7 +24,7 @@ const DistributersList = ({ distributers }) => {
   },[distributers])
 
   console.log(distributers)
-  const [rows_count, setRows_count] = useState(distributers.length <= 5 ? 5 : 1000)
+  const [rows_count, setRows_count] = useState(distributers.length )
   const [deleteDistributer] = useMutation(DELETE_DISTRIBUTER_MUTATION, {
     onCompleted: () => {
       toast.success('Distributer deleted')
@@ -55,7 +55,7 @@ const DistributersList = ({ distributers }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 1000)
+    setRows_count(filterData.length )
     setSearch_data(filterData)
   }
   const columns = [

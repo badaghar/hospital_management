@@ -26,7 +26,7 @@ const IpdInvestigationsList = ({ ipdInvestigations,upload }) => {
     setSearch_data(ipdInvestigations)
 
   },[ipdInvestigations])
-  const [rows_count, setRows_count] = useState(ipdInvestigations.length <= 5 ? 5 : 1000)
+  const [rows_count, setRows_count] = useState(ipdInvestigations.length )
   const [deleteIpdInvestigation] = useMutation(
     DELETE_IPD_INVESTIGATION_MUTATION,
     {
@@ -62,7 +62,7 @@ const IpdInvestigationsList = ({ ipdInvestigations,upload }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 1000)
+    setRows_count(filterData.length )
     setSearch_data(filterData)
   }
 

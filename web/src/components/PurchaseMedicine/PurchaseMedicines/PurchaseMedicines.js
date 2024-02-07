@@ -58,7 +58,7 @@ const PurchaseMedicinesList = ({ purchaseMedicines ,paymentPurchaseMedicines}) =
   const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
 
   const [search_data, setSearch_data] = useState(purchaseMedicines)
-  const [rows_count, setRows_count] = useState(purchaseMedicines.length <= 5 ? 5 : 1000)
+  const [rows_count, setRows_count] = useState(purchaseMedicines.length )
   const [paymentIsOPen, setPaymentIsOpen] = useState(false)
   const [paymentAmount,setPaymentAmount] = useState(0)
   const [paymentId,setPaymentId] = useState(0)
@@ -168,7 +168,7 @@ const PurchaseMedicinesList = ({ purchaseMedicines ,paymentPurchaseMedicines}) =
             .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 1000)
+    setRows_count(filterData.length )
     setSearch_data(filterData)
   }
 

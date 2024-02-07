@@ -27,7 +27,7 @@ const HomoMedicinesList = ({ homoMedicines }) => {
   }, [homoMedicines])
 
   console.log(homoMedicines)
-  const [rows_count, setRows_count] = useState(homoMedicines.length <= 5 ? 5 : 1000)
+  const [rows_count, setRows_count] = useState(homoMedicines.length )
 
 
 
@@ -62,7 +62,7 @@ const HomoMedicinesList = ({ homoMedicines }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 1000)
+    setRows_count(filterData.length )
     setSearch_data(filterData)
   }
 

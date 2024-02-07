@@ -18,7 +18,7 @@ const DELETE_IPD_OPERATION_PAYMENT_MUTATION = gql`
 
 const IpdOperationPaymentsList = ({ ipdOperationPayments }) => {
   const [search_data, setSearch_data] = useState(ipdOperationPayments)
-  const [rows_count, setRows_count] = useState(ipdOperationPayments.length <= 5 ? 5 : 1000)
+  const [rows_count, setRows_count] = useState(ipdOperationPayments.length )
   const [refresh, setRefresh] = useState(false)
   useEffect(() => {
     setSearch_data(ipdOperationPayments)
@@ -69,7 +69,7 @@ const IpdOperationPaymentsList = ({ ipdOperationPayments }) => {
       )
     })
 
-    setRows_count(filterData.length <= 5 ? 5 : 1000)
+    setRows_count(filterData.length )
     setSearch_data(filterData)
   }
 

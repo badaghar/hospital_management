@@ -27,7 +27,7 @@ const MedicinesList = ({ medicines, bill }) => {
   const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
   const [download, setDownload] = useState(false)
   const [search_data, setSearch_data] = useState(medicines)
-  const [rows_count, setRows_count] = useState(medicines.length <= 5 ? 5 : 1000)
+  const [rows_count, setRows_count] = useState(medicines.length )
   const [show, setShow] = useState(false)
   const [s, setS] = useState(false)
   useEffect(()=>{
@@ -86,7 +86,7 @@ const MedicinesList = ({ medicines, bill }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length <= 5 ? 5 : 1000)
+    setRows_count(filterData.length )
     setSearch_data(filterData)
   }
 
