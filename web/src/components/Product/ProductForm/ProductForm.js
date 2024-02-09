@@ -14,6 +14,7 @@ import 'react-js-dialog-box/dist/index.css'
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { QUERY } from 'src/components/Product/NewProductCell'
 
 import React from 'react'
 import Select from 'react-select'
@@ -150,6 +151,8 @@ const ProductForm = (props) => {
       onError: (error) => {
         toast.error(error.message)
       },
+      refetchQueries: [{ query: QUERY }],
+      awaitRefetchQueries: true,
     }
   )
 
@@ -167,6 +170,8 @@ const ProductForm = (props) => {
       onError: (error) => {
         toast.error(error.message)
       },
+      refetchQueries: [{ query: QUERY }],
+      awaitRefetchQueries: true,
     }
   )
 
