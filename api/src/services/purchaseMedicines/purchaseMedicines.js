@@ -75,24 +75,77 @@ export const createPurchaseMedicine = async ({ input }) => {
 
     }
   }
-
-  // await db.re
-  // const da = await db.returnExpiryMedicine.findMany({
-  //   where:{
-  //     distributerId:med.id
-  //   }
-  // })
-  // console.log('====================================');
-  // // console.log()
-  // console.log('====================================');
-  // // console.log();
-  // console.log('====================================');
-  // // console.log(med.id);
-  // console.log('====================================');
-  // console.log('====================================');
-  // console.log('====================================');
+  await db.returnExpiryMedicine.updateMany({
+    where:{
+      distributerId:input.distributerId
+    },
+    data: {
+      return_med:true
+    },
+  })
 
 
+  return med
+}
+export const addPurchaseMedicine = async ({ id,input }) => {
+  const { permedicine, newperMedicineManu, ...data } = input
+
+
+  const med = await db.purchaseMedicine.update({
+    data: data,
+    where:{
+      id
+    }
+  })
+
+  const billData = {
+    purchaseMedicineId: med.id,
+    total: med.grand_total,
+    balance: med.grand_total,
+    paid: 0,
+    method: "",
+    remark: ""
+  }
+
+  await db.paymentPurchaseMedicine.updateMany({
+    data: billData,
+    where:{
+      purchaseMedicineId:med.id
+    }
+  })
+  await db.manufacturerPurchaseMedicine.createMany({
+    data: newperMedicineManu
+  })
+
+  for (let i = 0; i < permedicine.length; i++) {
+    try {
+      await db.medicine.create({
+        data: permedicine[i]
+      })
+
+    } catch (error) {
+      const getdata = await db.medicine.findFirst({
+        where: {
+          'productId': permedicine[i].productId,
+          'batch': permedicine[i].batch
+        }
+
+      })
+
+      await db.medicine.update({
+        data: {
+          'quantity': getdata.quantity + permedicine[i].quantity
+        },
+        where: {
+          productId_batch: {
+            productId: permedicine[i].productId,
+            batch: permedicine[i].batch
+          }
+        }
+      })
+
+    }
+  }
   await db.returnExpiryMedicine.updateMany({
     where:{
       distributerId:input.distributerId

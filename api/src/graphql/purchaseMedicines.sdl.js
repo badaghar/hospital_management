@@ -92,6 +92,20 @@ export const schema = gql`
     permedicine: [CreateMedicineInput]!
     newperMedicineManu: [CreateManufacturerPurchaseMedicineInput]!
   }
+  input AddPurchaseMedicineInput {
+    invoiceNo: String
+    distributerId: Int
+    date: DateTime
+    medicine: JSON
+    return: JSON
+    total: Float
+    discount: Float
+    sgst: Float
+    cgst: Float
+    grand_total: Float
+    permedicine: [CreateMedicineInput]
+    newperMedicineManu: [CreateManufacturerPurchaseMedicineInput]
+  }
 
   input UpdatePurchaseMedicineInput {
     invoiceNo: String
@@ -114,6 +128,10 @@ export const schema = gql`
     updatePurchaseMedicine(
       id: Int!
       input: UpdatePurchaseMedicineInput!
+    ): PurchaseMedicine! @requireAuth
+    addPurchaseMedicine(
+      id: Int!
+      input: AddPurchaseMedicineInput!
     ): PurchaseMedicine! @requireAuth
     deletePurchaseMedicine(id: Int!): PurchaseMedicine! @requireAuth
 
