@@ -619,7 +619,7 @@ function MedicineTableHeading() {
       <div className="flex col-span-1 justify-center">Pack</div>
       <div className="flex col-span-1 justify-center">Exp</div>
       <div className="flex col-span-1 justify-center">M.R.P</div>
-      <div className="flex col-span-1 justify-center">Rate</div>
+      <div className="flex col-span-1 justify-center">PTR</div>
       <div className="flex col-span-1 justify-center">Dis</div>
       <div className="flex col-span-1 justify-center">SGST</div>
       <div className="flex col-span-1 justify-center">CGST</div>
