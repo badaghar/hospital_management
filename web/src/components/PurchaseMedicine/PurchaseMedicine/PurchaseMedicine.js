@@ -327,7 +327,7 @@ const PurchaseMedicine = (props) => {
                 <th className="p-4">Pack</th>
                 <th className="p-4">Expiry</th>
                 <th className="p-4">MRP</th>
-                <th className="p-4">Rate</th>
+                <th className="p-4">PTR</th>
                 <th className="p-4">Discount</th>
                 <th className="p-4">SGST</th>
                 <th className="p-4">CGST</th>
@@ -492,7 +492,7 @@ function MedicineTableHeading() {
       <div className="flex col-span-1 justify-center">Pack</div>
       <div className="flex col-span-1 justify-center">Exp</div>
       <div className="flex col-span-1 justify-center">M.R.P</div>
-      <div className="flex col-span-1 justify-center">Rate</div>
+      <div className="flex col-span-1 justify-center">PTR</div>
       <div className="flex col-span-1 justify-center">Dis</div>
       <div className="flex col-span-1 justify-center">SGST</div>
       <div className="flex col-span-1 justify-center">CGST</div>
