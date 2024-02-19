@@ -104,22 +104,22 @@ const SaleMedicinesList = ({ saleMedicines }) => {
         original.discount.toFixed(2)
       )
     },
-    {
-      headerClassName: 'text-left',
-      Header: 'SGST',
-      accessor: 'sgst',
-      Cell: ({ original }) => (
-        original.sgst.toFixed(2)
-      )
-    },
-    {
-      headerClassName: 'text-left',
-      Header: 'CGST',
-      accessor: 'cgst',
-      Cell: ({ original }) => (
-        original.cgst.toFixed(2)
-      )
-    },
+    // {
+    //   headerClassName: 'text-left',
+    //   Header: 'SGST',
+    //   accessor: 'sgst',
+    //   Cell: ({ original }) => (
+    //     original.sgst.toFixed(2)
+    //   )
+    // },
+    // {
+    //   headerClassName: 'text-left',
+    //   Header: 'CGST',
+    //   accessor: 'cgst',
+    //   Cell: ({ original }) => (
+    //     original.cgst.toFixed(2)
+    //   )
+    // },
     {
       headerClassName: 'text-left',
       Header: 'Grand Total',

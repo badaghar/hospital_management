@@ -321,7 +321,7 @@ const SaleMedicineNewForm = (props) => {
 
 
   const addMedicine = () => {
-    setMedicineArray((item) => [...item, { 'medicine Name': '', 'batch No': '', 'Expiry Date': '', 'mrp': '', 'quantity': '', 'cgst/sgst': '', 'amount': 0, 'tax': 0, 'amountWtax': 0, 'productId': 0, 'maxQty': 0, 'batch': '' }])
+    setMedicineArray((item) => [...item, { 'medicine Name': '', 'batch No': '', 'Expiry Date': '', 'mrp': '', 'quantity': '', 'cgst/sgst': 0, 'amount': 0, 'tax': 0, 'amountWtax': 0, 'productId': 0, 'maxQty': 0, 'batch': '' }])
   }
   const addHomoMedicine = () => {
     setHomoMedicineArray((item) => [...item, { 'medicine Name': '', 'amount': '' }])
@@ -611,14 +611,14 @@ const SaleMedicineNewForm = (props) => {
         </div>
 
         <div className="p-2 w-full shadow-sm bg-white text-black ">
-          <div className=" grid grid-cols-13 grid-flow-row gap-x-2 gap-y-2">
+          <div className=" grid grid-cols-12 grid-flow-row gap-x-2 gap-y-2">
 
             <div className="flex col-span-4 justify-center">Medicine Name</div>
             <div className="flex col-span-3 justify-center">Batch No</div>
             <div className="flex col-span-1 justify-center">Expiry Date</div>
             <div className="flex col-span-1 justify-center">M.R.P</div>
             <div className="flex col-span-1 justify-center">Quantity</div>
-            <div className="flex col-span-1 justify-center">CGST/SGST</div>
+            {/* <div className="flex col-span-1 justify-center">CGST/SGST</div> */}
             <div className="flex col-span-1 justify-center">Amount</div>
             <div className="flex col-span-1 justify-center">Action</div>
 
@@ -1074,9 +1074,9 @@ const AddMedicineBody = ({ item, medicineArray, del, setMedicineArray, index, me
           onChange={(e) => medicineChange(e.target.name, e.target.value, setQuantity)}
         />
       </div>
-      <div className="flex col-span-1 justify-center text-black">
+      {/* <div className="flex col-span-1 justify-center text-black">
         <input type="number" name="cgst/sgst" className="border border-black p-2 w-20" id="" value={cgst} required onChange={(e) => medicineChange(e.target.name, e.target.value, setCgst)} />
-      </div>
+      </div> */}
       <div className="flex col-span-1 justify-center items-center text-black">
         {total}
       </div>
