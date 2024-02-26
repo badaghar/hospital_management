@@ -60,7 +60,7 @@ export const Success = ({ downloadPrescription }) => {
   // let count = 0
   const [formatedDate, setFormatedDate] = useState("")
   useEffect(() => {
-    const noOfPage = Math.ceil((downloadPrescription.IpdPrescription.length+downloadPrescription.IpdHomoPrescription.length) / 15)
+    const noOfPage = Math.ceil((downloadPrescription.IpdPrescription.length + downloadPrescription.IpdHomoPrescription.length) / 15)
     // setPages(noOfPage)
     let page = []
     for (let i = 0; i < noOfPage; i++) {
@@ -70,7 +70,7 @@ export const Success = ({ downloadPrescription }) => {
     setCount(noOfPage - 1)
     setPages(page)
 
-    const array = [...downloadPrescription.IpdPrescription,...downloadPrescription.IpdHomoPrescription];
+    const array = [...downloadPrescription.IpdPrescription, ...downloadPrescription.IpdHomoPrescription];
 
     const chunkSize = 15;
     let i = 0;
@@ -106,6 +106,17 @@ export const Success = ({ downloadPrescription }) => {
                 style={{ width: '19.6cm', height: '27cm' }}
               >
                 <section
+                  id="zeroLayer"
+                  className=""
+                  // style={{ width: '19.6cm', height: '2.8cm' }}
+                  style={{ width: '19.6cm', height: '7cm' }}
+                >
+                  {/* <div style={{ padding: '0cm 0.1cm' }}>
+                    <img src="/srihos.jpg" alt="" srcset="" />
+                  </div> */}
+
+                </section>
+                {/* <section
                   id="firstLayer"
                   className="border-b border-black"
                   style={{ width: '19.6cm', height: '2.8cm' }}
@@ -113,17 +124,8 @@ export const Success = ({ downloadPrescription }) => {
                   <div style={{ padding: '0cm 0.1cm' }}>
                     <img src="/srihos.jpg" alt="" srcset="" />
                   </div>
-                  {/* <div className="flex font-bold text-xs justify-between px-6">
-                  <div>
-                    Bill No :
-                  </div>
-                  <div>
-                    Date :
-                  </div>
-
-                </div> */}
-                </section>
-                <section
+                </section> */}
+                {/* <section
                   id="secondLayer"
                   className="border-b border-black"
                   style={{ width: '19.6cm', height: '0.65cm', padding: '0cm 0cm' }}
@@ -145,14 +147,14 @@ export const Success = ({ downloadPrescription }) => {
 
 
                   </div>
-                </section>
+                </section> */}
                 <section
                   id="thirdLayer"
                   className=" border-black"
                   style={{ width: '19.6cm', padding: '0.1cm 0cm' }}
                 >
 
-                  <div className="grid grid-cols-7  font-bold border-b  text-xs border-black">
+                  {/* <div className="grid grid-cols-7  font-bold border-b  text-xs border-black">
                     <span className="col-span-1">Sl. No</span>
 
                     <div className=" col-span-1 ">Medicine </div>
@@ -161,23 +163,23 @@ export const Success = ({ downloadPrescription }) => {
                     <div className=" col-span-1 ">Frequency</div>
                     <div className=" col-span-1 ">Duration</div>
                     <div className=" col-span-1 ">Quantity</div>
-                  </div>
+                  </div> */}
                   <div className="text-xs grid grid-cols-7 ">
                     {
                       chunks[item].map((item, ind) => {
                         let medName = item.medicine.split('-')
-                        medName=medName[medName.length-1]
+                        medName = medName[medName.length - 1]
                         return (
                           <>
 
                             <span className="col-span-1">{ind + 1}</span>
-                           {<div className=" col-span-1">{medName}</div>}
-                           {/* {item.quantity ? <div className=" col-span-1">{[item.medicine.split('-').length-1]}</div> : <div className=" col-span-1">{item.medicine}</div>} */}
+                            {<div className=" col-span-1">{medName}</div>}
+                            {/* {item.quantity ? <div className=" col-span-1">{[item.medicine.split('-').length-1]}</div> : <div className=" col-span-1">{item.medicine}</div>} */}
                             <div className=" col-span-1">{item.dosage}</div>
                             <div className=" col-span-1">{item.timing}</div>
                             <div className=" col-span-1">{item.frequency}</div>
                             <div className=" col-span-1">{item.duration}</div>
-                           { item.quantity ? <div className=" col-span-1">{item.quantity}</div> : <div className=" col-span-1">-</div>}
+                            {item.quantity ? <div className=" col-span-1">{item.quantity}</div> : <div className=" col-span-1">-</div>}
 
                             {<div className="flex col-span-7 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
                           </>
