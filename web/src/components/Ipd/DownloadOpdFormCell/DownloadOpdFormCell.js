@@ -86,7 +86,7 @@ export const Success = ({ downloadOpdForm }) => {
             id="firstLayer"
             className=""
             // style={{ width: '19.6cm', height: '2.8cm' }}
-            style={{ width: '19.6cm', height: '6cm' }}
+            style={{ width: '19.6cm', height: '4cm' }}
           >
             {/* <div style={{ padding: '0cm 0.1cm' }}>
                     <img src="/srihos.jpg" alt="" srcset="" />

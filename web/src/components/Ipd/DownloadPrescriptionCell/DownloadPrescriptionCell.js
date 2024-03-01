@@ -12,6 +12,7 @@ export const QUERY = gql`
       patientId
       discharge_date
       patientType
+      extra
       patient{
         id
         name
@@ -109,13 +110,69 @@ export const Success = ({ downloadPrescription }) => {
                   id="zeroLayer"
                   className=""
                   // style={{ width: '19.6cm', height: '2.8cm' }}
-                  style={{ width: '19.6cm', height: '7cm' }}
+                  style={{ width: '19.6cm', height: '4cm' }}
                 >
                   {/* <div style={{ padding: '0cm 0.1cm' }}>
                     <img src="/srihos.jpg" alt="" srcset="" />
                   </div> */}
 
                 </section>
+                <section
+            id="secondLayer"
+            className=""
+            style={{ width: '19.6cm', height: '2cm', padding: '0cm 0cm' }}
+
+          >
+
+            <div className="flex  justify-between px-6">
+              <div className="space-x-4">
+                <span className="font-bold text-xs ">Pt's Name : </span>
+                <span className="text-xs">
+                  {downloadPrescription.patient.name.split('(')[0]}
+                </span>
+              </div>
+              <div className="space-x-4">
+                <span className="font-bold text-xs">Age : </span>
+                <span className="text-xs">{downloadPrescription.patient.age}</span>
+              </div>
+              <div className="space-x-4">
+                <span className="font-bold text-xs">B.P : </span>
+                <span className="text-xs">{downloadPrescription.extra.thermo.BP} mmhg</span>
+              </div>
+              <div className="space-x-4">
+                <span className="font-bold text-xs">GRBS : </span>
+                <span className="text-xs">{downloadPrescription.extra.thermo.Grbs} mg/dl</span>
+              </div>
+
+
+            </div>
+            <div className="flex  justify-between px-6">
+              <div className="space-x-4">
+                <span className="font-bold text-xs ">Gender : </span>
+                <span className="text-xs">
+                  {downloadPrescription.patient.gender}
+                </span>
+              </div>
+              <div className="space-x-4">
+                <span className="font-bold text-xs">Weight : </span>
+                <span className="text-xs">{downloadPrescription.extra.thermo.Weight}</span>
+              </div>
+              {/* <div className="space-x-4">
+                <span className="font-bold text-xs">Temp : </span>
+                <span className="text-xs">{downloadPrescription.extra.thermo.Grbs} </span>
+              </div> */}
+              <div className="space-x-4">
+                <span className="font-bold text-xs">Puls : </span>
+                <span className="text-xs">{downloadPrescription.extra.thermo.Pulse} /min</span>
+              </div>
+              <div className="space-x-4">
+                <span className="font-bold text-xs">SPO2 : </span>
+                <span className="text-xs">{downloadPrescription.extra.thermo.Saturation} %</span>
+              </div>
+
+
+            </div>
+          </section>
                 {/* <section
                   id="firstLayer"
                   className="border-b border-black"
@@ -151,7 +208,7 @@ export const Success = ({ downloadPrescription }) => {
                 <section
                   id="thirdLayer"
                   className=" border-black"
-                  style={{ width: '19.6cm', padding: '0.1cm 0cm' }}
+                  style={{ width: '19.6cm', padding: '0.1cm 0cm', }}
                 >
 
                   {/* <div className="grid grid-cols-7  font-bold border-b  text-xs border-black">
