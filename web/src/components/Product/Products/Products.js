@@ -2,6 +2,7 @@ import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import { useState } from 'react'
+import { useAuth } from 'src/auth'
 
 import { QUERY } from 'src/components/Product/ProductsCell'
 import SearchTable from 'src/components/SearchTable/SearchTable'
@@ -16,6 +17,7 @@ const DELETE_PRODUCT_MUTATION = gql`
 `
 
 const ProductsList = ({ products }) => {
+  const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
   const [search_data, setSearch_data] = useState(products)
   const [rows_count, setRows_count] = useState(products.length )
   const [deleteProduct] = useMutation(DELETE_PRODUCT_MUTATION, {
@@ -70,6 +72,20 @@ const ProductsList = ({ products }) => {
       Header:  'Code Name',
       accessor: 'code_name',
     },
+    {
+       headerClassName: 'text-left',
+      Header:  'Compositions',
+      // accessor: 'code_name',
+      Cell: ({ original }) => {
+        let str = ''
+        original.ProductToComposition.map((item)=>{
+          str += item.cid.name + " , "
+
+        })
+        str = str.substring(0,str.length-3)
+        return str
+      }
+    },
 
     {
        headerClassName: 'text-left',
@@ -99,14 +115,14 @@ const ProductsList = ({ products }) => {
         >
           Edit
         </Link>
-        {/* <button
+      {hasRole('admin') &&  <button
           type="button"
-          title={'Delete product ' + product.id}
+          title={'Delete product ' + original.id}
           className="rw-button rw-button-small rw-button-red"
-          onClick={() => onDeleteClick(product.id)}
+          onClick={() => onDeleteClick(original.id)}
         >
           Delete
-        </button> */}
+        </button>}
       </nav>
       ),
     },

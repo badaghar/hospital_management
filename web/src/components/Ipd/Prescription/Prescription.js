@@ -138,21 +138,21 @@ const Prescription = ({ ipd, medicines, homoMedicines, frequencies, durations, d
     //     return false; // Skip the check for the specified key
     //   });
     // });
-    const hasEmptyValue1 = homoPrescriptionArray.some((obj) => {
-      // Check if any value in the object is empty
-      // return Object.values(obj).some((value) => value === null || value === '' || !value);
-      return Object.keys(obj).some((key) => {
-        if (key !== 'note') {
-          const value = obj[key];
-          return value === null || value === '' || !value;
-        }
-        return false; // Skip the check for the specified key
-      });
-    });
-    if (hasEmptyValue1) {
-      toast.error('Enter All The Details')
-      return
-    }
+    // const hasEmptyValue1 = homoPrescriptionArray.some((obj) => {
+    //   // Check if any value in the object is empty
+    //   // return Object.values(obj).some((value) => value === null || value === '' || !value);
+    //   return Object.keys(obj).some((key) => {
+    //     if (key !== 'note') {
+    //       const value = obj[key];
+    //       return value === null || value === '' || !value;
+    //     }
+    //     return false; // Skip the check for the specified key
+    //   });
+    // });
+    // if (hasEmptyValue1) {
+    //   toast.error('Enter All The Details')
+    //   return
+    // }
     createIpdHomoPrescription({
       variables: { input: homoPrescriptionArray }
     })
@@ -181,22 +181,22 @@ const Prescription = ({ ipd, medicines, homoMedicines, frequencies, durations, d
     //   toast.error('Enter All The Details')
     //   return
     // }
-    const hasEmptyValue1 = homoPrescriptionArray.some((obj) => {
-      // Check if any value in the object is empty
-      // return Object.values(obj).some((value) => value === null || value === '' || !value);
-      return Object.keys(obj).some((key) => {
-        if (key !== 'note') {
-          const value = obj[key];
-          return value === null || value === '' || !value;
-        }
-        return false; // Skip the check for the specified key
-      });
-    });
-    console.log(homoPrescriptionArray)
-    if (hasEmptyValue1) {
-      toast.error('Enter All The Details')
-      return
-    }
+    // const hasEmptyValue1 = homoPrescriptionArray.some((obj) => {
+    //   // Check if any value in the object is empty
+    //   // return Object.values(obj).some((value) => value === null || value === '' || !value);
+    //   return Object.keys(obj).some((key) => {
+    //     if (key !== 'note') {
+    //       const value = obj[key];
+    //       return value === null || value === '' || !value;
+    //     }
+    //     return false; // Skip the check for the specified key
+    //   });
+    // });
+    // console.log(homoPrescriptionArray)
+    // if (hasEmptyValue1) {
+    //   toast.error('Enter All The Details')
+    //   return
+    // }
     setIsPrint(true)
     createIpdHomoPrescription({
       variables: { input: homoPrescriptionArray }

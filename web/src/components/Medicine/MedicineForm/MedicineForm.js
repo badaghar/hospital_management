@@ -30,6 +30,44 @@ const MedicineForm = (props) => {
           listClassName="rw-form-error-list"
         />
 
+
+<Label
+          name="exp"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Exp
+        </Label>
+
+        <DatetimeLocalField
+          name="exp"
+          defaultValue={formatDatetime(props.medicine?.exp)}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+          validation={{ required: true }}
+        />
+
+        <FieldError name="exp" className="rw-field-error" />
+
+        <Label
+          name="mrp"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Mrp
+        </Label>
+
+        <TextField
+          name="mrp"
+          defaultValue={props.medicine?.mrp}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+          validation={{ valueAsNumber: true, required: true }}
+        />
+
+        <FieldError name="mrp" className="rw-field-error" />
+
+
         <Label
           name="quantity"
           className="rw-label"

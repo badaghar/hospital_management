@@ -119,55 +119,55 @@ export const Success = ({ downloadPrescription }) => {
                 </section>
                 <section
             id="secondLayer"
-            className=""
+            className="text-sm"
             style={{ width: '19.6cm', height: '2cm', padding: '0cm 0cm' }}
 
           >
 
             <div className="flex  justify-between px-6">
               <div className="space-x-4">
-                <span className="font-bold text-xs ">Pt's Name : </span>
-                <span className="text-xs">
+                <span className="font-bold  ">Pt's Name : </span>
+                <span className="">
                   {downloadPrescription.patient.name.split('(')[0]}
                 </span>
               </div>
               <div className="space-x-4">
-                <span className="font-bold text-xs">Age : </span>
-                <span className="text-xs">{downloadPrescription.patient.age}</span>
+                <span className="font-bold ">Age : </span>
+                <span className="">{downloadPrescription.patient.age}</span>
               </div>
               <div className="space-x-4">
-                <span className="font-bold text-xs">B.P : </span>
-                <span className="text-xs">{downloadPrescription.extra.thermo.BP} mmhg</span>
+                <span className="font-bold ">B.P : </span>
+                <span className="">{downloadPrescription.extra.thermo.BP} mmhg</span>
               </div>
               <div className="space-x-4">
-                <span className="font-bold text-xs">GRBS : </span>
-                <span className="text-xs">{downloadPrescription.extra.thermo.Grbs} mg/dl</span>
+                <span className="font-bold ">GRBS : </span>
+                <span className="">{downloadPrescription.extra.thermo.Grbs} mg/dl</span>
               </div>
 
 
             </div>
             <div className="flex  justify-between px-6">
               <div className="space-x-4">
-                <span className="font-bold text-xs ">Gender : </span>
-                <span className="text-xs">
+                <span className="font-bold  ">Gender : </span>
+                <span className="">
                   {downloadPrescription.patient.gender}
                 </span>
               </div>
               <div className="space-x-4">
-                <span className="font-bold text-xs">Weight : </span>
-                <span className="text-xs">{downloadPrescription.extra.thermo.Weight}</span>
+                <span className="font-bold ">Weight : </span>
+                <span className="">{downloadPrescription.extra.thermo.Weight}</span>
               </div>
               {/* <div className="space-x-4">
-                <span className="font-bold text-xs">Temp : </span>
-                <span className="text-xs">{downloadPrescription.extra.thermo.Grbs} </span>
+                <span className="font-bold ">Temp : </span>
+                <span className="">{downloadPrescription.extra.thermo.Grbs} </span>
               </div> */}
               <div className="space-x-4">
-                <span className="font-bold text-xs">Puls : </span>
-                <span className="text-xs">{downloadPrescription.extra.thermo.Pulse} /min</span>
+                <span className="font-bold ">Puls : </span>
+                <span className="">{downloadPrescription.extra.thermo.Pulse} /min</span>
               </div>
               <div className="space-x-4">
-                <span className="font-bold text-xs">SPO2 : </span>
-                <span className="text-xs">{downloadPrescription.extra.thermo.Saturation} %</span>
+                <span className="font-bold ">SPO2 : </span>
+                <span className="">{downloadPrescription.extra.thermo.Saturation} %</span>
               </div>
 
 
@@ -208,7 +208,7 @@ export const Success = ({ downloadPrescription }) => {
                 <section
                   id="thirdLayer"
                   className=" border-black"
-                  style={{ width: '19.6cm', padding: '0.1cm 0cm', }}
+                  style={{ width: '15.6cm', padding: '0.1cm 0cm',paddingLeft:'' }}
                 >
 
                   {/* <div className="grid grid-cols-7  font-bold border-b  text-xs border-black">
@@ -221,7 +221,7 @@ export const Success = ({ downloadPrescription }) => {
                     <div className=" col-span-1 ">Duration</div>
                     <div className=" col-span-1 ">Quantity</div>
                   </div> */}
-                  <div className="text-xs grid grid-cols-7 ">
+                  <div className="text-sm grid grid-cols-7 ">
                     {
                       chunks[item].map((item, ind) => {
                         let medName = item.medicine.split('-')

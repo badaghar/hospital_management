@@ -12,6 +12,11 @@ export const QUERY = gql`
       mid{
         name
       }
+      ProductToComposition{
+        cid{
+          name
+        }
+      }
       created_at
       updated_at
     }

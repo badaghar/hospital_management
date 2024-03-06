@@ -27,12 +27,12 @@ const MedicinesList = ({ medicines, bill }) => {
   const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
   const [download, setDownload] = useState(false)
   const [search_data, setSearch_data] = useState(medicines)
-  const [rows_count, setRows_count] = useState(medicines.length )
+  const [rows_count, setRows_count] = useState(medicines.length)
   const [show, setShow] = useState(false)
   const [s, setS] = useState(false)
-  useEffect(()=>{
+  useEffect(() => {
     setSearch_data(medicines)
-  },[medicines])
+  }, [medicines])
 
 
 
@@ -86,7 +86,7 @@ const MedicinesList = ({ medicines, bill }) => {
           .includes(search_val.toLowerCase())
       )
     })
-    setRows_count(filterData.length )
+    setRows_count(filterData.length)
     setSearch_data(filterData)
   }
 
@@ -196,13 +196,25 @@ const MedicinesList = ({ medicines, bill }) => {
 
 
           {hasRole('admin') &&
-            <Link
-              to={routes.editMedicine({ id: original.id })}
-              title={'Edit medicine ' + original.id}
-              className="rw-button rw-button-small rw-button-blue"
-            >
-              Edit
-            </Link>}
+            <>
+              <Link
+                to={routes.editMedicine({ id: original.id })}
+                title={'Edit medicine ' + original.id}
+                className="rw-button rw-button-small rw-button-blue"
+              >
+                Edit
+              </Link>
+              <button
+                type="button"
+                title={'Delete medicine ' + original.id}
+                className="rw-button rw-button-small rw-button-red"
+                onClick={() => onDeleteClick(original.id)}
+              >
+                Delete
+              </button>
+            </>
+
+          }
           {/* <button
                     type="button"
                     title={'Delete medicine ' + original.id}
