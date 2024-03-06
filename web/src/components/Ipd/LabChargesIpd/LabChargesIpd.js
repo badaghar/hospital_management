@@ -51,7 +51,7 @@ const LabChargesIpd = ({ ipd, users, labChargeses }) => {
 
   function getPDF(id) {
     return axios.get(
-      `https://13.233.126.41:1000/downloadLabCharges?id=` +
+      `/.redwood/functions/downloadLabCharges?id=` +
       id,
       {
         responseType: 'arraybuffer',

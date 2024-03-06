@@ -140,7 +140,7 @@ const IpdOverview = ({ ipd, totalAmount }) => {
 
   function getPDF(id) {
     return axios.get(
-      `https://13.233.126.41:1000/downloadOpdForm?id=` +
+      `/.redwood/functions/downloadOpdForm?id=` +
       id,
       {
         responseType: 'arraybuffer',
