@@ -34,6 +34,7 @@ export const QUERY = gql`
       IpdHomoPrescription{
         id
         medicine
+        potency
         dosage
         timing
         frequency
@@ -72,6 +73,7 @@ export const Success = ({ downloadPrescription }) => {
     setPages(page)
 
     const array = [...downloadPrescription.IpdPrescription, ...downloadPrescription.IpdHomoPrescription];
+    console.log(array)
 
     const chunkSize = 15;
     let i = 0;
@@ -93,6 +95,7 @@ export const Success = ({ downloadPrescription }) => {
     return fD
 
   }
+
   return (
     <>
       {
@@ -172,6 +175,10 @@ export const Success = ({ downloadPrescription }) => {
 
 
             </div>
+            <div className='px-6'>
+              <span className='font-bold'>Date :- </span>
+              <span>{new Date().toLocaleDateString()}</span>
+            </div>
           </section>
                 {/* <section
                   id="firstLayer"
@@ -221,7 +228,7 @@ export const Success = ({ downloadPrescription }) => {
                     <div className=" col-span-1 ">Duration</div>
                     <div className=" col-span-1 ">Quantity</div>
                   </div> */}
-                  <div className="text-sm grid grid-cols-7 ">
+                  <div className="text-sm grid grid-cols-4 ">
                     {
                       chunks[item].map((item, ind) => {
                         let medName = item.medicine.split('-')
@@ -231,14 +238,15 @@ export const Success = ({ downloadPrescription }) => {
 
                             <span className="col-span-1">{ind + 1}</span>
                             {<div className=" col-span-1">{medName}</div>}
+                            {<div className=" col-span-1">{item.potency}</div>}
                             {/* {item.quantity ? <div className=" col-span-1">{[item.medicine.split('-').length-1]}</div> : <div className=" col-span-1">{item.medicine}</div>} */}
                             <div className=" col-span-1">{item.dosage}</div>
-                            <div className=" col-span-1">{item.timing}</div>
-                            <div className=" col-span-1">{item.frequency}</div>
-                            <div className=" col-span-1">{item.duration}</div>
+                            {/* <div className=" col-span-1">{item.timing}</div> */}
+                            {/* <div className=" col-span-1">{item.frequency}</div> */}
+                            {/* <div className=" col-span-1">{item.duration}</div> */}
                             {item.quantity ? <div className=" col-span-1">{item.quantity}</div> : <div className=" col-span-1">-</div>}
 
-                            {<div className="flex col-span-7 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
+                            {<div className="flex col-span-4 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
                           </>
                         )
 

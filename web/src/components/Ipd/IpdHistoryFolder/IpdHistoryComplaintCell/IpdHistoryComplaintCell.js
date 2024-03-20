@@ -91,24 +91,25 @@ export const Success = ({ ipdHistoryComplaint }) => {
                 <span className="font-bold">Prescription</span>
 
                 <div className="p-2 w-full shadow-sm bg-white ">
-                  <div className=" grid grid-cols-5 grid-flow-row gap-x-2 gap-y-2">
+                  <div className=" grid grid-cols-3 grid-flow-row gap-x-2 gap-y-2">
 
                     <div className="flex col-span-1 justify-center">Medicine </div>
                     <div className="flex col-span-1 justify-center">Dosage</div>
-                    <div className="flex col-span-1 justify-center">Timing</div>
-                    <div className="flex col-span-1 justify-center">Frequency</div>
-                    <div className="flex col-span-1 justify-center">Duration</div>
+                    <div className="flex col-span-1 justify-center">Quantity/Amount</div>
+                    {/* <div className="flex col-span-1 justify-center">Timing</div> */}
+                    {/* <div className="flex col-span-1 justify-center">Frequency</div> */}
+                    {/* <div className="flex col-span-1 justify-center">Duration</div> */}
                     {
                       ipd.IpdPrescription.map((item) => {
                         return (
                           <>
                             <div className="flex col-span-1 justify-center">{item.medicine}</div>
                             <div className="flex col-span-1 justify-center">{item.dosage}</div>
-                            <div className="flex col-span-1 justify-center">{item.timing}</div>
-                            <div className="flex col-span-1 justify-center">{item.frequency}</div>
-                            <div className="flex col-span-1 justify-center">{item.duration}</div>
-                            {<div className="flex col-span-4 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
+                            {/* <div className="flex col-span-1 justify-center">{item.timing}</div> */}
+                            {/* <div className="flex col-span-1 justify-center">{item.frequency}</div> */}
+                            {/* <div className="flex col-span-1 justify-center">{item.duration}</div> */}
                             <div className="flex col-span-1 justify-center" > Quantity :- {item.quantity}</div>
+                            {<div className="flex col-span-3 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
                           </>
                         )
                       })
@@ -119,11 +120,11 @@ export const Success = ({ ipdHistoryComplaint }) => {
                           <>
                             <div className="flex col-span-1 justify-center">{item.medicine}</div>
                             <div className="flex col-span-1 justify-center">{item.dosage}</div>
-                            <div className="flex col-span-1 justify-center">{item.timing}</div>
-                            <div className="flex col-span-1 justify-center">{item.frequency}</div>
-                            <div className="flex col-span-1 justify-center">{item.duration}</div>
-                            {<div className="flex col-span-4 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
+                            {/* <div className="flex col-span-1 justify-center">{item.timing}</div> */}
+                            {/* <div className="flex col-span-1 justify-center">{item.frequency}</div> */}
+                            {/* <div className="flex col-span-1 justify-center">{item.duration}</div> */}
                             <div className="flex col-span-1 justify-center" > MRP :- {item.rate}</div>
+                            {<div className="flex col-span-3 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
                           </>
                         )
                       })

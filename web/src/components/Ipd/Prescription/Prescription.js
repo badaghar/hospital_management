@@ -310,13 +310,13 @@ const Prescription = ({ ipd, medicines, homoMedicines, frequencies, durations, d
       <div className="shadow-md rounded-md">
 
         <div className="p-2 w-full shadow-sm bg-white ">
-          <div className=" grid grid-cols-6 grid-flow-row gap-x-2 gap-y-2">
+          <div className=" grid grid-cols-4 grid-flow-row gap-x-2 gap-y-2">
 
-            {/* <div className="flex col-span-1 justify-center">Medicine </div> */}
+            <div className="flex col-span-1 justify-center">Medicine </div>
             <div className="flex col-span-1 justify-center">Dosage</div>
-            <div className="flex col-span-1 justify-center">Timing</div>
-            <div className="flex col-span-1 justify-center">Frequency</div>
-            <div className="flex col-span-1 justify-center">Duration</div>
+            {/* <div className="flex col-span-1 justify-center">Timing</div> */}
+            {/* <div className="flex col-span-1 justify-center">Frequency</div> */}
+            {/* <div className="flex col-span-1 justify-center">Duration</div> */}
             <div className="flex col-span-1 justify-center">Quantity</div>
             <div className="flex col-span-1 justify-center">Action</div>
 
@@ -324,13 +324,13 @@ const Prescription = ({ ipd, medicines, homoMedicines, frequencies, durations, d
               ipd.IpdPrescription.map((item, index) => {
                 return (
                   <>
-                    <div className="flex col-span-6 justify-center">{item.medicine}</div>
-                    <div className="flex col-span-2 justify-center">{item.dosage}</div>
+                    <div className="flex col-span-1 justify-center">{item.medicine}</div>
+                    <div className="flex col-span-1 justify-center">{item.dosage}</div>
                     <div className="flex col-span-1 justify-center">{item.timing}</div>
-                    <div className="flex col-span-1 justify-center">{item.frequency}</div>
-                    <div className="flex col-span-1 justify-center">{item.duration}</div>
-                    {<div className="flex col-span-4 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
-                    <div className="flex col-span-1 justify-center" > Quantity :- {item.quantity}</div>
+                    {/* <div className="flex col-span-1 justify-center">{item.frequency}</div> */}
+                    {/* <div className="flex col-span-1 justify-center">{item.duration}</div> */}
+                    <div className="flex col-span-1 justify-center" > {item.quantity}</div>
+                    {<div className="flex col-span-3 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
                     <div className="flex col-span-1 justify-center">    <span className='cursor-pointer text-xl text-red-600'
                       onClick={() => onDeleteClick(item.id)}
                     >
@@ -371,15 +371,16 @@ const Prescription = ({ ipd, medicines, homoMedicines, frequencies, durations, d
 
 
         <div className="p-2 w-full shadow-sm bg-white ">
-          <div className=" grid grid-cols-6 grid-flow-row gap-x-2 gap-y-2">
+          <div className=" grid grid-cols-5 grid-flow-row gap-x-2 gap-y-2">
 
-            {/* <div className="flex col-span-1 justify-center">Medicine </div> */}
+            <div className="flex col-span-1 justify-center">Medicine </div>
             <div className="flex col-span-1 justify-center">Potency</div>
             <div className="flex col-span-1 justify-center">Dosage</div>
-            <div className="flex col-span-1 justify-center">Timing</div>
-            <div className="flex col-span-1 justify-center">Frequency</div>
-            <div className="flex col-span-1 justify-center">Duration</div>
+            {/* <div className="flex col-span-1 justify-center">Timing</div> */}
+            {/* <div className="flex col-span-1 justify-center">Frequency</div> */}
+            {/* <div className="flex col-span-1 justify-center">Duration</div> */}
             {/* <div className="flex col-span-1 justify-center">Quantity</div> */}
+            <div className="flex col-span-1 justify-center">Amount</div>
             <div className="flex col-span-1 justify-center">Action</div>
 
             {
@@ -387,16 +388,16 @@ const Prescription = ({ ipd, medicines, homoMedicines, frequencies, durations, d
                 console.log(item)
                 return (
                   <>
-                    <div className="flex col-span-6 justify-start ">
+                    <div className="flex col-span-1 justify-start ">
                       <span className="font-bold">{index + 1 + ')'}</span>
                       {item.medicine}</div>
                     <div className="flex col-span-1 justify-center">{item.potency}</div>
                     <div className="flex col-span-1 justify-center">{item.dosage}</div>
-                    <div className="flex col-span-1 justify-center">{item.timing}</div>
-                    <div className="flex col-span-1 justify-center">{item.frequency}</div>
-                    <div className="flex col-span-1 justify-center">{item.duration}</div>
+                    {/* <div className="flex col-span-1 justify-center">{item.timing}</div> */}
+                    {/* <div className="flex col-span-1 justify-center">{item.frequency}</div> */}
+                    {/* <div className="flex col-span-1 justify-center">{item.duration}</div> */}
+                    <div className="flex col-span-1 justify-center" >{item.rate}</div>
                     {<div className="flex col-span-4 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
-                    <div className="flex col-span-1 justify-center" > MRP :- {item.rate}</div>
                     <div className="flex col-span-1 justify-center">    <span className='cursor-pointer text-xl text-red-600'
                       onClick={() => onDeleteHomoClick(item.id)}
                     >
@@ -600,7 +601,7 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
   return (
     <>
 
-      <div className=" col-span-6 w-full">
+      <div className=" col-span-1 w-full">
         <Select options={obj} isClearable={true} required onChange={medicineNameChange} value={item.name !== '' ? medicineName : ''}
         />
       </div>
@@ -619,7 +620,7 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
         <Select options={timingObj} isClearable={true} required onChange={timingChange} value={item.name !== '' ? timingObjName : ''}
         />
       </div> */}
-      <div className="flex col-span-1 justify-center flex-col items-center">
+      {/* <div className="flex col-span-1 justify-center flex-col items-center">
         <div>
           <input type="radio" id={`before-${index}`} onChange={timingChange} value={'Before Food'} name={`food-${index}`} />
           <label htmlFor={`before-${index}`}>Before Food</label>
@@ -629,33 +630,33 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
           <label htmlFor={`after-${index}`}>After Food</label>
         </div>
 
-      </div>
+      </div> */}
 
 
       {/* <div className="flex col-span-1 justify-center text-black">
         <input type="text" name="timing" className="border border-black p-2" id="" value={timing} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setTiming)} />
       </div> */}
-      <div className="flex col-span-1 justify-center text-black">
-        {/* <input type="text" name="frequency" className="border border-black p-2" id="" value={frequency} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setFrequency)} /> */}
+      {/* <div className="flex col-span-1 justify-center text-black">
+
         <Select options={frequencyOptions} isClearable={true} required onChange={frequencyChange}
         />
 
-      </div>
-      <div className="flex col-span-1 justify-center text-black">
-        {/* <input type="text" name="duration" className="border border-black p-2" id="" value={duration} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setDuration)} /> */}
+      </div> */}
+      {/* <div className="flex col-span-1 justify-center text-black">
         <Select options={durationOptions} isClearable={true} required onChange={durationChange}
         />
-      </div>
-      <div className="flex col-span-4 w-full justify-center text-black">
-        <input type="text" name="note" className="border border-black p-2 w-full" id="" value={note} required
-          onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setNote)}
-          placeholder="Note" />
-      </div>
-      <div className="flex col-span-1 justify-center text-black">
+      </div> */}
+            <div className="flex col-span-1 justify-center text-black">
         <input type="number" name="quantity" className="border border-black p-2" placeholder="Quantity" id="" value={quantity} required
           onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setQuantity)}
         />
       </div>
+      <div className="flex col-span-3 w-full justify-center text-black">
+        <input type="text" name="note" className="border border-black p-2 w-full" id="" value={note}
+          onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setNote)}
+          placeholder="Note" />
+      </div>
+
       <div className="flex col-span-1 justify-center">
 
         <span className='cursor-pointer text-xl text-red-600 p-2' onClick={del.bind(this, index)}>
@@ -845,7 +846,7 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
   return (
     <>
 
-      <div className=" col-span-6 w-full">
+      <div className=" col-span-1 w-full">
         <Select options={obj} isClearable={true} required onChange={medicineNameChange} value={item.name !== '' ? medicineName : ''}
         />
       </div>
@@ -870,7 +871,7 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
 
       {/* <Select options={timingObj} isClearable={true} required onChange={timingChange} value={item.name !== '' ? timingObjName : ''}
         /> */}
-      <div className="flex col-span-1 justify-center flex-col items-center">
+      {/* <div className="flex col-span-1 justify-center flex-col items-center">
         <div>
           <input type="radio" id={`before-${index}`} onChange={timingChange} value={'Before Food'} name={`food-${index}`} />
           <label htmlFor={`before-${index}`}>Before Food</label>
@@ -880,32 +881,33 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
           <label htmlFor={`after-${index}`}>After Food</label>
         </div>
 
-      </div>
+      </div> */}
 
 
       {/* <div className="flex col-span-1 justify-center text-black">
         <input type="text" name="timing" className="border border-black p-2" id="" value={timing} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value,setTiming)} />
       </div> */}
-      <div className="flex col-span-1 justify-center text-black">
-        {/* <input type="text" name="frequency" className="border border-black p-2" id="" value={frequency} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setFrequency)} /> */}
+      {/* <div className="flex col-span-1 justify-center text-black">
+
         <Select options={frequencyOptions} isClearable={true} required onChange={frequencyChange}
         />
-      </div>
-      <div className="flex col-span-1 justify-center text-black">
-        {/* <input type="text" name="duration" className="border border-black p-2" id="" value={duration} required onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setDuration)} /> */}
+      </div> */}
+      {/* <div className="flex col-span-1 justify-center text-black">
+
         <Select options={durationOptions} isClearable={true} required onChange={durationChange}
         />
-      </div>
-      <div className="flex col-span-4 w-full justify-center text-black">
-        <input type="text" name="note" className="border border-black p-2 w-full" id="" value={note} required
-          onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setNote)}
-          placeholder="Note" />
-      </div>
-      <div className="flex col-span-1 justify-center text-black">
-        <input type="number" name="rate" className="border border-black p-2" placeholder="rate" id="" value={quantity} required
+      </div> */}
+          <div className="flex col-span-1 justify-center text-black">
+        <input type="number" name="rate" className="border border-black p-2" placeholder="rate" id="" value={quantity}
           onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setQuantity)}
         />
       </div>
+      <div className="flex col-span-4 w-full justify-center text-black">
+        <input type="text" name="note" className="border border-black p-2 w-full" id="" value={note}
+          onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setNote)}
+          placeholder="Note" />
+      </div>
+
       <div className="flex col-span-1 justify-center">
 
         <span className='cursor-pointer text-xl text-red-600 p-2' onClick={del.bind(this, index)}>
