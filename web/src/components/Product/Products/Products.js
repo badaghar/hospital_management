@@ -43,11 +43,24 @@ const ProductsList = ({ products }) => {
     const search_val = search.target.value
 
     let filterData = products.filter((val) => {
+      let str = ''
+      val.ProductToComposition.map((item)=>{
+        str += item.cid.name + " , "
+
+      })
+      str = str.substring(0,str.length-3)
+
       return (
         val.name
           .toString()
           .toLowerCase()
           .includes(search_val.toLowerCase())
+          ||
+        str
+        .toString()
+        .toLowerCase()
+        .includes(search_val.toLowerCase())
+
       )
     })
     setRows_count(filterData.length )

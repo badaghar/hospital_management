@@ -504,13 +504,16 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
 
     }
 
-    const obj = medicines.map((char) => {
+    const obj = medicines
+    .filter((char)=>char.quantity>0)
+    .map((char) => {
       const compositionNames = char.pid.ProductToComposition.map(
         (composition) => composition.cid.name
       );
       const ob = { value: `${char.pid.name} - ${char.batch} - ${char.quantity} - ${char.pid.code_name || ''}  - ${compositionNames.join(', ')}`, label: `${char.pid.name} - ${char.batch} - ${char.quantity} - ${char.pid.code_name || ''}`, qty: char.quantity, id: char.id, val: `${char.pid.name} - ${char.batch} - ${char.quantity} - ${char.pid.code_name || ''}` }
       return ob
     })
+    // .filter((char)=>char.quantity>3)
     setObj(obj)
     console.log(item)
   }, [item])
@@ -651,11 +654,11 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
           onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setQuantity)}
         />
       </div>
-      <div className="flex col-span-3 w-full justify-center text-black">
+  {index==prescriptionArray.length-1 &&    <div className="flex col-span-3 w-full justify-center text-black">
         <input type="text" name="note" className="border border-black p-2 w-full" id="" value={note}
           onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setNote)}
           placeholder="Note" />
-      </div>
+      </div>}
 
       <div className="flex col-span-1 justify-center">
 
@@ -902,12 +905,12 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
           onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setQuantity)}
         />
       </div>
-      <div className="flex col-span-4 w-full justify-center text-black">
+   { index==prescriptionArray.length-1 &&  <div className="flex col-span-4 w-full justify-center text-black">
         <input type="text" name="note" className="border border-black p-2 w-full" id="" value={note}
           onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setNote)}
           placeholder="Note" />
       </div>
-
+}
       <div className="flex col-span-1 justify-center">
 
         <span className='cursor-pointer text-xl text-red-600 p-2' onClick={del.bind(this, index)}>
