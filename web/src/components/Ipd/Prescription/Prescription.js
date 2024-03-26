@@ -310,9 +310,9 @@ const Prescription = ({ ipd, medicines, homoMedicines, frequencies, durations, d
       <div className="shadow-md rounded-md">
 
         <div className="p-2 w-full shadow-sm bg-white ">
-          <div className=" grid grid-cols-4 grid-flow-row gap-x-2 gap-y-2">
+          <div className=" grid grid-cols-6 grid-flow-row gap-x-2 gap-y-2">
 
-            <div className="flex col-span-1 justify-center">Medicine </div>
+            <div className="flex col-span-3 justify-center">Medicine </div>
             <div className="flex col-span-1 justify-center">Dosage</div>
             {/* <div className="flex col-span-1 justify-center">Timing</div> */}
             {/* <div className="flex col-span-1 justify-center">Frequency</div> */}
@@ -324,13 +324,13 @@ const Prescription = ({ ipd, medicines, homoMedicines, frequencies, durations, d
               ipd.IpdPrescription.map((item, index) => {
                 return (
                   <>
-                    <div className="flex col-span-1 justify-center">{item.medicine}</div>
+                    <div className="flex col-span-3 justify-center">{item.medicine}</div>
                     <div className="flex col-span-1 justify-center">{item.dosage}</div>
                     <div className="flex col-span-1 justify-center">{item.timing}</div>
                     {/* <div className="flex col-span-1 justify-center">{item.frequency}</div> */}
                     {/* <div className="flex col-span-1 justify-center">{item.duration}</div> */}
                     <div className="flex col-span-1 justify-center" > {item.quantity}</div>
-                    {<div className="flex col-span-3 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
+                    {<div className="flex col-span-5 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
                     <div className="flex col-span-1 justify-center">    <span className='cursor-pointer text-xl text-red-600'
                       onClick={() => onDeleteClick(item.id)}
                     >
@@ -371,9 +371,9 @@ const Prescription = ({ ipd, medicines, homoMedicines, frequencies, durations, d
 
 
         <div className="p-2 w-full shadow-sm bg-white ">
-          <div className=" grid grid-cols-5 grid-flow-row gap-x-2 gap-y-2">
+          <div className=" grid grid-cols-7 grid-flow-row gap-x-2 gap-y-2">
 
-            <div className="flex col-span-1 justify-center">Medicine </div>
+            <div className="flex col-span-3 justify-center">Medicine </div>
             <div className="flex col-span-1 justify-center">Potency</div>
             <div className="flex col-span-1 justify-center">Dosage</div>
             {/* <div className="flex col-span-1 justify-center">Timing</div> */}
@@ -388,7 +388,7 @@ const Prescription = ({ ipd, medicines, homoMedicines, frequencies, durations, d
                 console.log(item)
                 return (
                   <>
-                    <div className="flex col-span-1 justify-start ">
+                    <div className="flex col-span-3 justify-start ">
                       <span className="font-bold">{index + 1 + ')'}</span>
                       {item.medicine}</div>
                     <div className="flex col-span-1 justify-center">{item.potency}</div>
@@ -397,7 +397,7 @@ const Prescription = ({ ipd, medicines, homoMedicines, frequencies, durations, d
                     {/* <div className="flex col-span-1 justify-center">{item.frequency}</div> */}
                     {/* <div className="flex col-span-1 justify-center">{item.duration}</div> */}
                     <div className="flex col-span-1 justify-center" >{item.rate}</div>
-                    {<div className="flex col-span-4 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
+                    {<div className="flex col-span-6 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
                     <div className="flex col-span-1 justify-center">    <span className='cursor-pointer text-xl text-red-600'
                       onClick={() => onDeleteHomoClick(item.id)}
                     >
@@ -604,7 +604,7 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
   return (
     <>
 
-      <div className=" col-span-1 w-full">
+      <div className=" col-span-3 w-full">
         <Select options={obj} isClearable={true} required onChange={medicineNameChange} value={item.name !== '' ? medicineName : ''}
         />
       </div>
@@ -654,7 +654,7 @@ const MedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptionArr
           onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setQuantity)}
         />
       </div>
-  {index==prescriptionArray.length-1 &&    <div className="flex col-span-3 w-full justify-center text-black">
+  {index==prescriptionArray.length-1 &&    <div className="flex col-span-5 w-full justify-center text-black">
         <input type="text" name="note" className="border border-black p-2 w-full" id="" value={note}
           onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setNote)}
           placeholder="Note" />
@@ -849,7 +849,7 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
   return (
     <>
 
-      <div className=" col-span-1 w-full">
+      <div className=" col-span-3 w-full">
         <Select options={obj} isClearable={true} required onChange={medicineNameChange} value={item.name !== '' ? medicineName : ''}
         />
       </div>
@@ -905,7 +905,7 @@ const HomoMedicationChargeBody = ({ item, prescriptionArray, del, setPrescriptio
           onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setQuantity)}
         />
       </div>
-   { index==prescriptionArray.length-1 &&  <div className="flex col-span-4 w-full justify-center text-black">
+   { index==prescriptionArray.length-1 &&  <div className="flex col-span-6 w-full justify-center text-black">
         <input type="text" name="note" className="border border-black p-2 w-full" id="" value={note}
           onChange={(e) => ipdPrescriptionChange(e.target.name, e.target.value, setNote)}
           placeholder="Note" />
