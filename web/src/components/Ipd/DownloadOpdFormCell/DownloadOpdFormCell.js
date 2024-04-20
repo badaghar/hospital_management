@@ -147,6 +147,12 @@ export const Success = ({ downloadOpdForm }) => {
               </div>
 
 
+
+
+            </div>
+            <div className='px-6'>
+              <span className='font-bold'>Date :- </span>
+              <span>{new Date().toLocaleDateString()}</span>
             </div>
           </section>
 
