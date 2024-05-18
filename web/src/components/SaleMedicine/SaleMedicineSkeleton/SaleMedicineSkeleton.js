@@ -95,7 +95,8 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
                   style={{ width: '19.6cm', height: '7.52cm' ,padding:'0.1cm 0cm' }}
                 >
 
-                  <div className="grid grid-cols-9  font-bold border-b  text-xs border-black">
+                  <div className="grid grid-cols-10  font-bold border-b  text-xs border-black">
+                    <span className="">Sl No.</span>
                     <span className="col-span-3">Medicine Name</span>
                     <span>Batch No</span>
                     <span>Exp Date</span>
@@ -104,11 +105,12 @@ const SaleMedicineSkeleton = ({ saleMedicine }) => {
                     <span>CGST/SGST</span>
                     <span>Amount (₹)</span>
                   </div>
-                  <div className="text-xs grid grid-cols-9 ">
+                  <div className="text-xs grid grid-cols-10 ">
                     {
                       chunks[item].map((med)=>{
                         return(
                           <>
+                          <span>{ind+1}</span>
                           <span className="col-span-3">{med['medicine Name']}</span>
                           <span>{med['batch No'].split('-')[0]}</span>
                           <span>{formate(med['Expiry Date'])}</span>
