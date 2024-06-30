@@ -1,11 +1,15 @@
+import { useState } from 'react'
+
+import axios from 'axios'
+
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import axios from 'axios'
-import { useState } from 'react'
 
 import SaleMedicineForm from 'src/components/SaleMedicine/SaleMedicineForm'
+
 import SaleMedicineNewForm from '../SaleMedicineNewForm/SaleMedicineNewForm'
+import SaleMedicineQrcode from '../SaleMedicineQrcode/SaleMedicineQrcode'
 
 const CREATE_SALE_MEDICINE_MUTATION = gql`
   mutation CreateSaleMedicineMutation($input: CreateSaleMedicineInput!) {
@@ -29,12 +33,11 @@ export const QUERY = gql`
       discount
       created_at
       updated_at
-      pid{
+      pid {
         name
       }
-
     }
-    homoMedicines{
+    homoMedicines {
       id
       name
     }
@@ -48,26 +51,22 @@ export const QUERY = gql`
       created_at
       updated_at
     }
-    users{
+    users {
       id
       name
       roles
-
     }
 
-    compositions{
+    compositions {
       id
       name
-      ProductToComposition{
-        pid{
+      ProductToComposition {
+        pid {
           id
           name
         }
       }
     }
-
-
-
   }
 `
 
@@ -79,9 +78,15 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ medicines, patients, users, compositions,details,homoMedicines }) => {
-
-
+export const Success = ({
+  medicines,
+  patients,
+  users,
+  compositions,
+  details,
+  homoMedicines,
+  qrcode,
+}) => {
   // function getPDF(id) {
   //   return axios.get(
   //     `/.redwood/functions/downloadSaleMedicineBill?id=` +
@@ -95,16 +100,12 @@ export const Success = ({ medicines, patients, users, compositions,details,homoM
   //   )
   // }
   function getPDF(id) {
-    return axios.get(
-      `/.redwood/functions/downloadPrescription?id=` +
-      id,
-      {
-        responseType: 'arraybuffer',
-        headers: {
-          Accept: 'application/pdf',
-        },
-      }
-    )
+    return axios.get(`/.redwood/functions/downloadPrescription?id=` + id, {
+      responseType: 'arraybuffer',
+      headers: {
+        Accept: 'application/pdf',
+      },
+    })
   }
 
   const printPDF = (id) => {
@@ -163,9 +164,6 @@ export const Success = ({ medicines, patients, users, compositions,details,homoM
   //     })
   // }
 
-
-
-
   const [isSave, setIssave] = useState()
   const [createSaleMedicine, { loading, error }] = useMutation(
     CREATE_SALE_MEDICINE_MUTATION,
@@ -175,13 +173,10 @@ export const Success = ({ medicines, patients, users, compositions,details,homoM
 
         if (!isSave) {
           setTimeout(function () {
-            location.reload();
-          }, 1);
+            location.reload()
+          }, 1)
           navigate(routes.saleMedicines())
-
-
-        }
-        else {
+        } else {
           printPDF(details.id)
 
           navigate(routes.saleMedicines())
@@ -206,10 +201,31 @@ export const Success = ({ medicines, patients, users, compositions,details,homoM
         <h2 className="rw-heading rw-heading-secondary">New SaleMedicine</h2>
       </header>
       <div className="rw-segment-main">
-        <SaleMedicineNewForm onSave={onSave} loading={loading} error={error}
-          patients={patients} medicines={medicines} users={users}
-          compositions={compositions} details={details} homoMedicines={homoMedicines}
-        />
+        {qrcode == true ? (
+          <SaleMedicineQrcode
+            onSave={onSave}
+            loading={loading}
+            error={error}
+            patients={patients}
+            medicines={medicines}
+            users={users}
+            compositions={compositions}
+            details={details}
+            homoMedicines={homoMedicines}
+          />
+        ) : (
+          <SaleMedicineNewForm
+            onSave={onSave}
+            loading={loading}
+            error={error}
+            patients={patients}
+            medicines={medicines}
+            users={users}
+            compositions={compositions}
+            details={details}
+            homoMedicines={homoMedicines}
+          />
+        )}
       </div>
     </div>
   )

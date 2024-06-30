@@ -1,9 +1,9 @@
-import { Link, routes, navigate } from '@redwoodjs/router'
-import { useMutation } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
-import { useAuth } from "src/auth"
+import { useEffect, useState, useRef } from 'react'
 
-import { jsonDisplay, timeTag } from 'src/lib/formatters'
+import Multiselect from 'multiselect-react-dropdown'
+import { QRCodeCanvas } from 'qrcode.react'
+import Select from 'react-select'
+
 import {
   Form,
   FormError,
@@ -16,12 +16,15 @@ import {
   Submit,
   DateField,
 } from '@redwoodjs/forms'
-import Multiselect from 'multiselect-react-dropdown'
-import NewPurchaseMedicineTable from '../NewPurchaseMedicineTable/NewPurchaseMedicineTable'
-import { useEffect, useState } from 'react'
-import Select from 'react-select'
-import NewExpiryMedicineTable from '../NewExpiryMedicineTable/NewExpiryMedicineTable'
+import { Link, routes, navigate } from '@redwoodjs/router'
+import { useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
 
+import { useAuth } from 'src/auth'
+import { jsonDisplay, timeTag } from 'src/lib/formatters'
+
+import NewExpiryMedicineTable from '../NewExpiryMedicineTable/NewExpiryMedicineTable'
+import NewPurchaseMedicineTable from '../NewPurchaseMedicineTable/NewPurchaseMedicineTable'
 
 const DELETE_PURCHASE_MEDICINE_MUTATION = gql`
   mutation DeletePurchaseMedicineMutation($id: Int!) {
@@ -32,10 +35,7 @@ const DELETE_PURCHASE_MEDICINE_MUTATION = gql`
 `
 
 const ADD_PURCHASE_MEDICINE_MUTATION = gql`
-  mutation addPurchaseMedicine(
-    $id: Int!
-    $input: AddPurchaseMedicineInput!
-  ) {
+  mutation addPurchaseMedicine($id: Int!, $input: AddPurchaseMedicineInput!) {
     addPurchaseMedicine(id: $id, input: $input) {
       id
       invoiceNo
@@ -94,27 +94,64 @@ const PurchaseMedicine = (props) => {
   // console.log(purchaseMedicine);
   // console.log('====================================');
 
-
-
-
-
-
-
-
-
   const [no_of_medicine, setNoOfMedicine] = useState(0)
   const [show_medicine_heading, setShowMedicineHeading] = useState(false)
   // const [show_medicine_heading, setShowMedicineHeading] = useState(false)
   const [no_of_expiry_medicine, set_no_of_expiry_medicine] = useState(false)
-  const [manufacturersList, setManufacturerList] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [productList, setProductList] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [total_amount_list, set_total_amount_list] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [total_dis_amount_list, set_total_dis_amount_list] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [total_sgst_amount_list, set_total_sgst_amount_list] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [total_cgst_amount_list, set_total_cgst_amount_list] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [medicineObj, setmedicineObj] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [medicineManuObj, setmedicineManuObj] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [permedicineObj, setPermedicineObj] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  const [manufacturersList, setManufacturerList] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ])
+  const [productList, setProductList] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ])
+  const [total_amount_list, set_total_amount_list] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ])
+  const [total_dis_amount_list, set_total_dis_amount_list] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ])
+  const [total_sgst_amount_list, set_total_sgst_amount_list] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ])
+  const [total_cgst_amount_list, set_total_cgst_amount_list] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ])
+  const [medicineObj, setmedicineObj] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ])
+  const [medicineManuObj, setmedicineManuObj] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ])
+  const [permedicineObj, setPermedicineObj] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ])
   const [productForm, setProductForm] = useState(false)
 
   const [total_amount, set_total_amount] = useState(0)
@@ -136,7 +173,13 @@ const PurchaseMedicine = (props) => {
     })
     setSelectDistributer(opt)
     const opt2 = props.manufacturers.map((item) => {
-      return { label: item.name, value: item.id, name: item.name, id: item.id, item }
+      return {
+        label: item.name,
+        value: item.id,
+        name: item.name,
+        id: item.id,
+        item,
+      }
     })
     setManufacturers(opt2)
     const opt3 = props.products.map((item) => {
@@ -144,8 +187,6 @@ const PurchaseMedicine = (props) => {
     })
     setProduct(opt3)
   }, [])
-
-
 
   const modifiyDistributer = (name) => {
     if (name.length === 0) {
@@ -157,19 +198,22 @@ const PurchaseMedicine = (props) => {
     // checkinf]g for dublicate entry [invoiceno,distributer]
     set_no_of_expiry_medicine(false)
     const data = props.returnExpiryMedicines.filter((med) => {
-      return (med.distributerId == name.value && med.return_med == false)
+      return med.distributerId == name.value && med.return_med == false
     })
     // console.log(data,name.value)
     if (data.length == 0) {
       set_no_of_expiry_medicine(false)
-    }
-    else {
+    } else {
       var medicineRows = []
       let total = 0
       for (var i = 0; i < data.length; i++) {
-        medicineRows.push(<NewExpiryMedicineTable key={'purchase_' + i} value={data[i]}
-        // total={set_exp_total}
-        />)
+        medicineRows.push(
+          <NewExpiryMedicineTable
+            key={'purchase_' + i}
+            value={data[i]}
+            // total={set_exp_total}
+          />
+        )
         total += data[i].medicine.net_amount
       }
       set_exp_total(total.toFixed(2))
@@ -219,27 +263,40 @@ const PurchaseMedicine = (props) => {
     set_total_dis_amount(damt)
     set_total_sgst_amount(sgstamt)
     set_total_cgst_amount(cgstamt)
-  }, [total_amount_list, total_dis_amount_list, total_cgst_amount_list, total_sgst_amount_list, exp_total])
+  }, [
+    total_amount_list,
+    total_dis_amount_list,
+    total_cgst_amount_list,
+    total_sgst_amount_list,
+    exp_total,
+  ])
 
   var medicineRows = []
   for (var i = 0; i < no_of_medicine; i++) {
-    medicineRows.push(<NewPurchaseMedicineTable key={'purchase_' + i} value={i}
-      manufacturers={manufacturers} manufacturersList={manufacturersList} products={product} productList={productList}
-      setManufacturerList={setManufacturerList} setProductList={setProductList}
-      set_total_amount_list={set_total_amount_list}
-      set_total_dis_amount_list={set_total_dis_amount_list}
-      set_total_sgst_amount_list={set_total_sgst_amount_list}
-      set_total_cgst_amount_list={set_total_cgst_amount_list}
-      setmedicineObj={setmedicineObj}
-      setPermedicineObj={setPermedicineObj}
-      setmedicineManuObj={setmedicineManuObj}
-
-    />)
+    medicineRows.push(
+      <NewPurchaseMedicineTable
+        key={'purchase_' + i}
+        value={i}
+        manufacturers={manufacturers}
+        manufacturersList={manufacturersList}
+        products={product}
+        productList={productList}
+        setManufacturerList={setManufacturerList}
+        setProductList={setProductList}
+        set_total_amount_list={set_total_amount_list}
+        set_total_dis_amount_list={set_total_dis_amount_list}
+        set_total_sgst_amount_list={set_total_sgst_amount_list}
+        set_total_cgst_amount_list={set_total_cgst_amount_list}
+        setmedicineObj={setmedicineObj}
+        setPermedicineObj={setPermedicineObj}
+        setmedicineManuObj={setmedicineManuObj}
+      />
+    )
   }
 
   const onSub = (data) => {
     data['DistributerId'] = Distributers
-    console.log("here")
+    console.log('here')
 
     // console.log(medicineObj)
     const newmedicine = medicineObj.filter((val) => {
@@ -256,44 +313,44 @@ const PurchaseMedicine = (props) => {
     input = {
       // 'invoiceNo': data['invoiceNo'],
 
-      'distributerId': props.purchaseMedicine.distributerId,
+      distributerId: props.purchaseMedicine.distributerId,
       // 'date': data['date'],
-      'medicine': [...props.purchaseMedicine.medicine,...newmedicine],
+      medicine: [...props.purchaseMedicine.medicine, ...newmedicine],
       // 'return': no_of_expiry_medicine,
-      'total': total_amount + props.purchaseMedicine.total,
-      'discount': total_dis_amount + props.purchaseMedicine.discount,
-      'sgst': total_sgst_amount + props.purchaseMedicine.sgst,
-      'cgst': total_cgst_amount + props.purchaseMedicine.cgst,
-      'grand_total': grand_total + props.purchaseMedicine.grand_total,
-      'permedicine': newperMedicine,
-      'newperMedicineManu': newperMedicineManu,
-
+      total: total_amount + props.purchaseMedicine.total,
+      discount: total_dis_amount + props.purchaseMedicine.discount,
+      sgst: total_sgst_amount + props.purchaseMedicine.sgst,
+      cgst: total_cgst_amount + props.purchaseMedicine.cgst,
+      grand_total: grand_total + props.purchaseMedicine.grand_total,
+      permedicine: newperMedicine,
+      newperMedicineManu: newperMedicineManu,
     }
     // medInput = newperMedicine
     // console.log(props.purchaseMedicine)
 
     console.log(input)
-    addPurchaseMedicine({ variables: { id:props.purchaseMedicine.id, input } })
+    addPurchaseMedicine({ variables: { id: props.purchaseMedicine.id, input } })
 
     // props.onSave(input, props?.purchaseMedicine?.id)
-
   }
 
+  const canvasRefs = useRef([])
 
-
-
-
-
-
-
-
-
-
+  const handleDownloadQR = () => {
+    canvasRefs.current.forEach((ref, index) => {
+      if (ref) {
+        const canvas = ref.querySelector('canvas')
+        const link = document.createElement('a')
+        link.href = canvas.toDataURL('image/png')
+        link.download = `${props.purchaseMedicine.medicine[index].product.name}-${props.purchaseMedicine.medicine[index].batch}.png`
+        link.click()
+      }
+    })
+  }
 
   return (
     <>
-      <div className="bg-white p-6 shadow-lg rounded-lg grid gap-4 grid-cols-2 text-sm">
-
+      <div className="grid grid-cols-2 gap-4 rounded-lg bg-white p-6 text-sm shadow-lg">
         <div className="col-span-2">
           <table className="w-full border border-gray-200 text-center">
             <tbody>
@@ -307,15 +364,25 @@ const PurchaseMedicine = (props) => {
                 <td className="p-4">{props.purchaseMedicine.id}</td>
                 <td className="p-4">{props.purchaseMedicine.invoiceNo}</td>
                 <td className="p-4">{props.purchaseMedicine.did.name}</td>
-                <td className="p-4">{props.purchaseMedicine.date.split('T00:00:00.000Z')}</td>
+                <td className="p-4">
+                  {props.purchaseMedicine.date.split('T00:00:00.000Z')}
+                </td>
               </tr>
-
             </tbody>
           </table>
         </div>
 
+        <div className="flex">
+          <div
+            className="cursor-pointer rounded-md bg-green-600 p-4 text-white"
+            onClick={handleDownloadQR}
+          >
+            Download QR Codes
+          </div>
+        </div>
+
         <div className="col-span-2">
-          <h3 className=" font-bold mb-4">Product Information</h3>
+          <h3 className=" mb-4 font-bold">Product Information</h3>
           <table className="w-full border border-gray-200">
             <thead>
               <tr>
@@ -333,6 +400,7 @@ const PurchaseMedicine = (props) => {
                 <th className="p-4">CGST</th>
                 <th className="p-4">Amount</th>
                 <th className="p-4">Net Amount</th>
+                <th className="p-4">QR Code</th>
               </tr>
             </thead>
             <tbody>
@@ -344,55 +412,95 @@ const PurchaseMedicine = (props) => {
                   <td className="p-4">{item.paid_qty}</td>
                   <td className="p-4">{item.free_qty}</td>
                   <td className="p-4">{item.pack}</td>
-                  <td className="p-4">{item.exp ? item.exp.split('-')[1] + '-' + item.exp.split('-')[0] : '04-2026'} </td>
+                  <td className="p-4">
+                    {item.exp
+                      ? item.exp.split('-')[1] + '-' + item.exp.split('-')[0]
+                      : '04-2026'}{' '}
+                  </td>
                   <td className="p-4">{item.mrp.toFixed(2)}</td>
                   <td className="p-4">{item.rate.toFixed(2)}</td>
                   <td className="p-4">{item.dis.toFixed(2)}</td>
                   <td className="p-4">{item.sgst}</td>
                   <td className="p-4">{item.cgst}</td>
                   <td className="p-4">{item.amount.toFixed(2)}</td>
-                  <td className="p-4">{isNaN(parseFloat(item.net_amount).toFixed(2)) ? (0).toFixed(2) : parseFloat(item.net_amount).toFixed(2)}</td>
+                  <td className="p-4">
+                    {isNaN(parseFloat(item.net_amount).toFixed(2))
+                      ? (0).toFixed(2)
+                      : parseFloat(item.net_amount).toFixed(2)}
+                  </td>
+                  <td>
+                    <div ref={(el) => (canvasRefs.current[index] = el)}>
+                      <QRCodeCanvas
+                        value={`${item.product.name}-${item.batch}`}
+                        size={128}
+                      />
+                    </div>
+                  </td>
                 </tr>
               ))}
 
-              {
-                props.purchaseMedicine.return &&
+              {props.purchaseMedicine.return && (
                 <>
-                  <h3 className=" font-bold mb-4">Return Medicine</h3>
+                  <h3 className=" mb-4 font-bold">Return Medicine</h3>
 
                   {props.purchaseMedicine?.return?.map((item, index) => (
-
                     <tr key={index}>
-                      <td className="p-4">{item.props.value.medicine.mfr.name}</td>
-                      <td className="p-4">{item.props.value.medicine.product.name}</td>
+                      <td className="p-4">
+                        {item.props.value.medicine.mfr.name}
+                      </td>
+                      <td className="p-4">
+                        {item.props.value.medicine.product.name}
+                      </td>
                       <td className="p-4">{item.props.value.medicine.batch}</td>
-                      <td className="p-4">{item.props.value.medicine.paid_qty}</td>
-                      <td className="p-4">{item.props.value.medicine.free_qty}</td>
+                      <td className="p-4">
+                        {item.props.value.medicine.paid_qty}
+                      </td>
+                      <td className="p-4">
+                        {item.props.value.medicine.free_qty}
+                      </td>
                       <td className="p-4">{item.props.value.medicine.pack}</td>
-                      <td className="p-4">{item.props.value.medicine.exp ? item.props.value.medicine.exp.split('-')[1] + '-' + item.props.value.medicine.exp.split('-')[0] : '04-2026'} </td>
-                      <td className="p-4">{item.props.value.medicine.mrp.toFixed(2)}</td>
-                      <td className="p-4">{item.props.value.medicine.rate.toFixed(2)}</td>
-                      <td className="p-4">{item.props.value.medicine.dis.toFixed(2)}</td>
+                      <td className="p-4">
+                        {item.props.value.medicine.exp
+                          ? item.props.value.medicine.exp.split('-')[1] +
+                            '-' +
+                            item.props.value.medicine.exp.split('-')[0]
+                          : '04-2026'}{' '}
+                      </td>
+                      <td className="p-4">
+                        {item.props.value.medicine.mrp.toFixed(2)}
+                      </td>
+                      <td className="p-4">
+                        {item.props.value.medicine.rate.toFixed(2)}
+                      </td>
+                      <td className="p-4">
+                        {item.props.value.medicine.dis.toFixed(2)}
+                      </td>
                       <td className="p-4">{item.props.value.medicine.sgst}</td>
                       <td className="p-4">{item.props.value.medicine.cgst}</td>
-                      <td className="p-4">{item.props.value.medicine.amount.toFixed(2)}</td>
-                      <td className="p-4">{isNaN(parseFloat(item.props.value.medicine.net_amount).toFixed(2)) ? (0).toFixed(2) : parseFloat(item.props.value.medicine.net_amount).toFixed(2)}</td>
+                      <td className="p-4">
+                        {item.props.value.medicine.amount.toFixed(2)}
+                      </td>
+                      <td className="p-4">
+                        {isNaN(
+                          parseFloat(
+                            item.props.value.medicine.net_amount
+                          ).toFixed(2)
+                        )
+                          ? (0).toFixed(2)
+                          : parseFloat(
+                              item.props.value.medicine.net_amount
+                            ).toFixed(2)}
+                      </td>
                     </tr>
                   ))}
-
-
-
                 </>
-              }
+              )}
             </tbody>
           </table>
 
-
-
-
           <div>
             <Form onSubmit={onSub} error={props.error}>
-              <div className='flex items-center mt-3  gap-x-4'>
+              <div className="mt-3 flex items-center  gap-x-4">
                 <Label
                   name="no_of_medicine"
                   className="rw-label mt-0"
@@ -401,7 +509,6 @@ const PurchaseMedicine = (props) => {
                   No Of Medicine
                 </Label>
                 <div className="flex">
-
                   <NumberField
                     name="no_of_medicine"
                     className="rw-input mt-0"
@@ -413,15 +520,18 @@ const PurchaseMedicine = (props) => {
                 <FieldError name="no_of_medicine" className="rw-field-error" />
               </div>
 
-              <div className="p-2 w-full shadow-sm bg-white ">
-                <div className=" grid grid-cols-18 grid-flow-row gap-x-2 gap-y-2">
+              <div className="w-full bg-white p-2 shadow-sm ">
+                <div className=" grid grid-flow-row grid-cols-18 gap-x-2 gap-y-2">
                   {ShowHeadMedicine()}
                   {medicineRows}
                 </div>
               </div>
 
               <div className="rw-button-group">
-                <Submit disabled={props.loading} className="rw-button rw-button-blue">
+                <Submit
+                  disabled={props.loading}
+                  className="rw-button rw-button-blue"
+                >
                   Save
                 </Submit>
               </div>
@@ -429,11 +539,7 @@ const PurchaseMedicine = (props) => {
           </div>
         </div>
 
-
-
-
         <div className="col-span-2">
-
           <table className="w-full border border-gray-200 text-center">
             <tbody>
               <tr>
@@ -445,20 +551,29 @@ const PurchaseMedicine = (props) => {
                 <td className="p-4 font-bold">Created at</td>
               </tr>
 
-              <tr className=''>
+              <tr className="">
                 <td className="p-4">{props.purchaseMedicine.total}</td>
-                <td className="p-4">{props.purchaseMedicine.discount.toFixed(2)}</td>
-                <td className="p-4">{props.purchaseMedicine.sgst.toFixed(2)}</td>
-                <td className="p-4">{props.purchaseMedicine.cgst.toFixed(2)}</td>
-                <td className="p-4">{props.purchaseMedicine.grand_total.toFixed(2)}</td>
-                <td className="p-4">{props.purchaseMedicine.created_at.split('T')[0]}</td>
+                <td className="p-4">
+                  {props.purchaseMedicine.discount.toFixed(2)}
+                </td>
+                <td className="p-4">
+                  {props.purchaseMedicine.sgst.toFixed(2)}
+                </td>
+                <td className="p-4">
+                  {props.purchaseMedicine.cgst.toFixed(2)}
+                </td>
+                <td className="p-4">
+                  {props.purchaseMedicine.grand_total.toFixed(2)}
+                </td>
+                <td className="p-4">
+                  {props.purchaseMedicine.created_at.split('T')[0]}
+                </td>
               </tr>
               {/* {    date = new Date().toLocaleDateString() } */}
-
             </tbody>
           </table>
         </div>
-      </div >
+      </div>
 
       <nav className="rw-button-group">
         {/* <Link
@@ -467,37 +582,37 @@ const PurchaseMedicine = (props) => {
         >
           Edit
         </Link> */}
-        {hasRole('admin') && <button
-          type="button"
-          className="rw-button rw-button-red"
-          onClick={() => onDeleteClick(props.purchaseMedicine.id)}
-        >
-          Delete
-        </button>}
+        {hasRole('admin') && (
+          <button
+            type="button"
+            className="rw-button rw-button-red"
+            onClick={() => onDeleteClick(props.purchaseMedicine.id)}
+          >
+            Delete
+          </button>
+        )}
       </nav>
     </>
   )
 }
 
-
 function MedicineTableHeading() {
   return (
     <>
-
-      <div className="flex col-span-3 justify-center">Mfr</div>
-      <div className="flex col-span-3 justify-center">Product Name</div>
-      <div className="flex col-span-1 justify-center">Batch</div>
-      <div className="flex col-span-1 justify-center">Paid Qty</div>
-      <div className="flex col-span-1 justify-center">Free Qty</div>
-      <div className="flex col-span-1 justify-center">Pack</div>
-      <div className="flex col-span-1 justify-center">Exp</div>
-      <div className="flex col-span-1 justify-center">M.R.P</div>
-      <div className="flex col-span-1 justify-center">PTR</div>
-      <div className="flex col-span-1 justify-center">Dis</div>
-      <div className="flex col-span-1 justify-center">SGST</div>
-      <div className="flex col-span-1 justify-center">CGST</div>
-      <div className="flex col-span-1 justify-center">Amount</div>
-      <div className="flex col-span-1 justify-center">Net Amount</div>
+      <div className="col-span-3 flex justify-center">Mfr</div>
+      <div className="col-span-3 flex justify-center">Product Name</div>
+      <div className="col-span-1 flex justify-center">Batch</div>
+      <div className="col-span-1 flex justify-center">Paid Qty</div>
+      <div className="col-span-1 flex justify-center">Free Qty</div>
+      <div className="col-span-1 flex justify-center">Pack</div>
+      <div className="col-span-1 flex justify-center">Exp</div>
+      <div className="col-span-1 flex justify-center">M.R.P</div>
+      <div className="col-span-1 flex justify-center">PTR</div>
+      <div className="col-span-1 flex justify-center">Dis</div>
+      <div className="col-span-1 flex justify-center">SGST</div>
+      <div className="col-span-1 flex justify-center">CGST</div>
+      <div className="col-span-1 flex justify-center">Amount</div>
+      <div className="col-span-1 flex justify-center">Net Amount</div>
     </>
   )
 }

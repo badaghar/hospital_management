@@ -22,6 +22,10 @@ const Routes = () => {
 
 
 
+
+
+
+
       <Set wrap={ScaffoldLayout} title="IpdHomoPrescriptions" titleTo="ipdHomoPrescriptions" buttonLabel="New IpdHomoPrescription" buttonTo="newIpdHomoPrescription">
 
         <Route path="/ipd-homo-prescriptions/new" page={IpdHomoPrescriptionNewIpdHomoPrescriptionPage} name="newIpdHomoPrescription" />
@@ -146,6 +150,7 @@ const Routes = () => {
             <Route path="/sale-medicines/{id:Int}/edit" page={SaleMedicineEditSaleMedicinePage} name="editSaleMedicine" />
             <Route path="/sale-medicines/{id:Int}" page={SaleMedicineSaleMedicinePage} name="saleMedicine" />
             <Route path="/sale-medicines" page={SaleMedicineSaleMedicinesPage} name="saleMedicines" />
+            <Route path="/qrcode" page={SaleMedicineQrcodePage} name="qrcode" />
           </Set>
           <Set wrap={ScaffoldLayout} title="Medicines" titleTo="medicines" buttonLabel="Medicine Details" buttonTo="medicines">
             <Route path="/medicines/new" page={MedicineNewMedicinePage} name="newMedicine" />
