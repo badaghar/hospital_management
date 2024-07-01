@@ -898,15 +898,17 @@ const AddMedicineBody = ({
     //     value: it.pid.name,
     //   }
     // })
-    let newBatchList1 = newList.map((it) => {
-      return {
-        label: it.pid.name + ' - ' + it.batch + ' - ' + it.quantity,
-        value: it.batch + ' - ' + it.quantity,
-        batch: it.batch,
-        id: it.id,
-        data: it,
-      }
-    })
+    let newBatchList1 = newList
+      .filter((it) => it.quantity > 0)
+      .map((it) => {
+        return {
+          label: it.pid.name + ' - ' + it.batch + ' - ' + it.quantity,
+          value: it.batch + ' - ' + it.quantity,
+          batch: it.batch,
+          id: it.id,
+          data: it,
+        }
+      })
 
     setMedicineList(newBatchList1)
   }, [medicines])
