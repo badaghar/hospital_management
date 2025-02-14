@@ -1,7 +1,7 @@
 import { logger } from 'src/lib/logger'
-import puppeteerExtra from 'puppeteer-extra'
+// import puppeteerExtra from 'puppeteer-extra'
 // import stealthPlugin from 'puppeteer-extra-plugin-stealth'
-import chromium from '@sparticuz/chromium'
+// import chromium from '@sparticuz/chromium'
 // const puppeteer = require('puppeteer')
 // let chrome = {}
 // let puppeteer;
@@ -36,32 +36,33 @@ export const handler = async (event, _context) => {
   )
   const { id } = event.queryStringParameters
 
-  async function printPDF() {
-    // puppeteerExtra.use(stealthPlugin());
+  // async function printPDF() {
+  //   // puppeteerExtra.use(stealthPlugin());
 
-    const browser = await puppeteerExtra.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
-      ignoreHTTPSErrors: true
-    })
-    const page = await browser.newPage()
-    await page.goto(
-      `http://${process.env.IP_ADDRESS}:8910/download-other-charges/${id}`,
-      {
-        waitUntil: 'networkidle0',
-      }
-    )
-    const pdf = await page.pdf({ format: 'A4' })
-    // const pages = await browser.pages()
-    // await Promise.all(pages.map(async (page)=> page.close()));
+  //   const browser = await puppeteerExtra.launch({
+  //     args: chromium.args,
+  //     defaultViewport: chromium.defaultViewport,
+  //     executablePath: await chromium.executablePath(),
+  //     headless: chromium.headless,
+  //     ignoreHTTPSErrors: true
+  //   })
+  //   const page = await browser.newPage()
+  //   await page.goto(
+  //     `http://${process.env.IP_ADDRESS}:8910/download-other-charges/${id}`,
+  //     {
+  //       waitUntil: 'networkidle0',
+  //     }
+  //   )
+  //   const pdf = await page.pdf({ format: 'A4' })
+  //   // const pages = await browser.pages()
+  //   // await Promise.all(pages.map(async (page)=> page.close()));
 
-    await browser.close()
-    return pdf
-  }
+  //   await browser.close()
+  //   return pdf
+  // }
 
-  const file = await printPDF()
+  // const file = await printPDF()
+  const file = 4;
 
   return {
     statusCode: 200,

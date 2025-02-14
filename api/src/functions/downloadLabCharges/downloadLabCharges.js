@@ -1,5 +1,5 @@
 import { logger } from 'src/lib/logger'
-const puppeteer = require('puppeteer')
+// const puppeteer = require('puppeteer')
 /**
  * The handler function is your code that processes http request events.
  * You can use return and throw to send a response or error, respectively.
@@ -22,22 +22,23 @@ export const handler = async (event, _context) => {
   )
   const { id } = event.queryStringParameters
 
-  async function printPDF() {
-    const browser = await puppeteer.launch({ headless: true })
-    const page = await browser.newPage()
-    await page.goto(
-      `http://${process.env.IP_ADDRESS}:8910/download-lab-charges/${id}`,
-      {
-        waitUntil: 'networkidle0',
-      }
-    )
-    const pdf = await page.pdf({ format: 'A4' })
+  // async function printPDF() {
+  //   const browser = await puppeteer.launch({ headless: true })
+  //   const page = await browser.newPage()
+  //   await page.goto(
+  //     `http://${process.env.IP_ADDRESS}:8910/download-lab-charges/${id}`,
+  //     {
+  //       waitUntil: 'networkidle0',
+  //     }
+  //   )
+  //   const pdf = await page.pdf({ format: 'A4' })
 
-    await browser.close()
-    return pdf
-  }
+  //   await browser.close()
+  //   return pdf
+  // }
 
-  const file = await printPDF()
+  // const file = await printPDF()
+  const file = 4;
 
   return {
     statusCode: 200,
