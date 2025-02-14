@@ -52,7 +52,7 @@ const BirthCertificatesList = ({ birthCertificates }) => {
 
   function getPDF(id) {
     return axios.get(
-      `/.redwood/functions/downloadCertificate?id=` +
+      `https://13.235.71.40:1000/downloadCertificate?id=` +
       id,
       {
         responseType: 'arraybuffer',

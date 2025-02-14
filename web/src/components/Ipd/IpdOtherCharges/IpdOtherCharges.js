@@ -54,7 +54,7 @@ const IpdOtherCharges = ({ ipd, users, chargeses }) => {
   // kehnfweijnk,bk
   function getPDF(id) {
     return axios.get(
-      `/.redwood/functions/downloadOtherCharges?id=` +
+      `https://13.235.71.40:1000/downloadOtherCharges?id=` +
       // `${'/api/'}downloadOtherCharges?id=` +
       id,
       {

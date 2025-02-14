@@ -89,7 +89,7 @@ export const Success = ({
 }) => {
   // function getPDF(id) {
   //   return axios.get(
-  //     `/.redwood/functions/downloadSaleMedicineBill?id=` +
+  //     `https://13.235.71.40:1000/downloadSaleMedicineBill?id=` +
   //     id,
   //     {
   //       responseType: 'arraybuffer',
@@ -100,7 +100,7 @@ export const Success = ({
   //   )
   // }
   function getPDF(id) {
-    return axios.get(`/.redwood/functions/downloadPrescription?id=` + id, {
+    return axios.get(`https://13.235.71.40:1000/downloadPrescription?id=` + id, {
       responseType: 'arraybuffer',
       headers: {
         Accept: 'application/pdf',

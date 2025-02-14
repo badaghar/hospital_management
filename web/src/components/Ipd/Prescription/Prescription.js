@@ -86,7 +86,7 @@ const Prescription = ({ ipd, medicines, homoMedicines, frequencies, durations, d
   )
   function getPDF(id) {
     return axios.get(
-      `/.redwood/functions/downloadPrescription?id=` +
+      `https://13.235.71.40:1000/downloadPrescription?id=` +
       id,
       {
         responseType: 'arraybuffer',

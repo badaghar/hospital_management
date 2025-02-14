@@ -72,7 +72,7 @@ export const Success = ({ patients, users, doctorFees, chargeses, beds, floors, 
   const [saveForm, SetSaveForm] = useState(false)
   function getPDF(id) {
     return axios.get(
-      `/.redwood/functions/downloadOpdForm?id=` +
+      `https://13.235.71.40:1000/downloadOpdForm?id=` +
       id,
       {
         responseType: 'arraybuffer',

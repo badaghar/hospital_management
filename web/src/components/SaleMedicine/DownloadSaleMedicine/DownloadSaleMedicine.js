@@ -16,7 +16,7 @@ const DownloadSaleMedicine = ({ saleMedicine,download }) => {
   const [downloadstart, setDownloadstart] = useState(false)
   function getPDF() {
     return axios.get(
-      `/.redwood/functions/downloadSaleMedicineBill?id=` +
+      `https://13.235.71.40:1000/downloadSaleMedicineBill?id=` +
       saleMedicine.id,
       {
         responseType: 'arraybuffer',
