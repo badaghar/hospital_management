@@ -1,7 +1,9 @@
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import { navigate, routes } from '@redwoodjs/router'
 import { useEffect } from 'react'
+
+import dayGridPlugin from '@fullcalendar/daygrid'
+import FullCalendar from '@fullcalendar/react'
+
+import { navigate, routes } from '@redwoodjs/router'
 
 export const QUERY = gql`
   query FindHomePage2Query {
@@ -14,31 +16,31 @@ export const QUERY = gql`
       ipdId
       extra
 
-      ipd{
+      ipd {
         id
-        patient{
-          name,
+        patient {
+          name
           phone_no
         }
       }
-    },
-    ipds(type: "IPD"){
+    }
+    ipds(type: "IPD") {
       id
       created_at
       date_of_admission
     }
-    opds:ipds(type: "OPD"){
+    opds: ipds(type: "OPD") {
       id
       created_at
     }
-    ipdChargeses{
+    ipdChargeses {
       total
-      ipd{
+      ipd {
         patientType
       }
       created_at
     }
-    ipdLabChargeses{
+    ipdLabChargeses {
       amount
       created_at
     }
@@ -47,23 +49,40 @@ export const QUERY = gql`
 
 export const Loading = () => <div>Loading...</div>
 
-export const Empty = () => <div>      <div className=''>
-
-<FullCalendar
-  height={'40rem'}
-  plugins={[dayGridPlugin]}
-  initialView="dayGridMonth"
-
-
-/>
-</div></div>
+export const Empty = () => (
+  <div>
+    {' '}
+    <div className="">
+      <FullCalendar
+        height={'40rem'}
+        plugins={[dayGridPlugin]}
+        initialView="dayGridMonth"
+      />
+    </div>
+  </div>
+)
 
 export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ ipdOperationPayments,ipds,opds,ipdChargeses,ipdLabChargeses }) => {
-  let totalTodayIpd, totalTodayOpd, totalMonthIpd, totalMonthOpd, totalTodayOperation, totalMonthOperation, totalTodayCharges, totalMonthCharges, totalTodayLabCharges, totalMonthLabCharges
+export const Success = ({
+  ipdOperationPayments,
+  ipds,
+  opds,
+  ipdChargeses,
+  ipdLabChargeses,
+}) => {
+  let totalTodayIpd,
+    totalTodayOpd,
+    totalMonthIpd,
+    totalMonthOpd,
+    totalTodayOperation,
+    totalMonthOperation,
+    totalTodayCharges,
+    totalMonthCharges,
+    totalTodayLabCharges,
+    totalMonthLabCharges
 
   const today = new Date()
   const month = new Date()
@@ -73,7 +92,7 @@ export const Success = ({ ipdOperationPayments,ipds,opds,ipdChargeses,ipdLabChar
   today.setSeconds(0)
   const toIPD = ipds.filter((item) => {
     const newDate = new Date(item.date_of_admission)
-    console.log(newDate,today)
+    // console.log(newDate,today)
     return newDate >= today
   })
 
@@ -82,7 +101,7 @@ export const Success = ({ ipdOperationPayments,ipds,opds,ipdChargeses,ipdLabChar
   const toOPD = opds.filter((item) => {
     console.log(item)
     const newDate = new Date(item.created_at)
-    console.log(newDate,today)
+    console.log(newDate, today)
     return newDate >= today
   })
   totalTodayOpd = toOPD.length
@@ -114,88 +133,81 @@ export const Success = ({ ipdOperationPayments,ipds,opds,ipdChargeses,ipdLabChar
   const lenttc = ipdChargeses.filter((item) => {
     const newDate = new Date(item.created_at)
     // console.log(newDate,today)
-    return (newDate >= today  && item.ipd.patientType=='OPD')
+    return newDate >= today && item.ipd.patientType == 'OPD'
   })
-  const todayCharges = lenttc.reduce((prev, item) => prev += item.total, 0)
+  const todayCharges = lenttc.reduce((prev, item) => (prev += item.total), 0)
   totalTodayCharges = todayCharges
-
 
   const lentmc = ipdChargeses.filter((item) => {
     const newDate = new Date(item.created_at)
     // console.log(newDate,today)
-    return (newDate >= month  && item.ipd.patientType=='OPD' )
+    return newDate >= month && item.ipd.patientType == 'OPD'
   })
-  const monthCharges = lentmc.reduce((prev, item) => prev += item.total, 0)
+  const monthCharges = lentmc.reduce((prev, item) => (prev += item.total), 0)
   totalMonthCharges = monthCharges
 
-
-
-
   const events = []
-  for(let i=0;i<ipdOperationPayments.length;i++) {
+  for (let i = 0; i < ipdOperationPayments.length; i++) {
+    let date
+    if (ipdOperationPayments[i]?.extra?.date) {
+      date = new Date(ipdOperationPayments[i].extra['date'])
 
-    let date;
-    if(ipdOperationPayments[i]?.extra?.date)
-    {
-       date = new Date(ipdOperationPayments[i].extra['date'])
+      let month =
+        date.getMonth() + 1 < 10
+          ? `0${date.getMonth() + 1}`
+          : date.getMonth() + 1
+      let day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
 
-       let month = date.getMonth()+1 < 10 ? `0${date.getMonth()+1}` : date.getMonth()+1
-       let day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
-
-       date = `${date.getFullYear()}-${month}-${day}`
+      date = `${date.getFullYear()}-${month}-${day}`
       //  console.log(date)
-
     }
     events.push({
-      title:`${ipdOperationPayments[i].operation_name} - ${ipdOperationPayments[i].ipd.id} `,date
+      title: `${ipdOperationPayments[i].operation_name} - ${ipdOperationPayments[i].ipd.id} `,
+      date,
     })
   }
 
   const handleEventClick = (e) => {
     let data = e.el.innerText.split(' - ')[1]
-    navigate(routes.ipd({id:data}))
+    navigate(routes.ipd({ id: data }))
     // console.log(data)
   }
 
-
-
-
-
   return (
     <>
-
-<div className="flex m-4 flex-wrap relative text-white">
-
+      <div className="relative m-4 flex flex-wrap text-white">
         {/* <div className="flex flex-col bg-purple-700 shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>Today Ipd Patients</h1>
           <p>  {totalTodayIpd} </p>
 
         </div> */}
-        <div className="flex flex-col bg-gray-800  shadow-lg rounded-2xl p-6 items-center m-4">
+        <div className="m-4 flex flex-col  items-center rounded-2xl bg-gray-800 p-6 shadow-lg">
           <h1>Today Opd Patient</h1>
-          <p>  {totalTodayOpd} </p>
-
+          <p> {totalTodayOpd} </p>
         </div>
         {/* <div className="flex flex-col bg-purple-950 shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>This Month Ipd Patients</h1>
           <p>  {totalMonthIpd} </p>
 
         </div> */}
-        <div className="flex flex-col bg-[#AED2FF] shadow-lg rounded-2xl p-6 items-center m-4">
+        <div className="m-4 flex flex-col items-center rounded-2xl bg-[#AED2FF] p-6 shadow-lg">
           <h1>This Month Opd Patient</h1>
-          <p>  {totalMonthOpd} </p>
-
+          <p> {totalMonthOpd} </p>
         </div>
 
-             <div className="flex flex-col bg-[#F6635C] shadow-lg rounded-2xl p-6 items-center m-4">
+        <div className="m-4 flex flex-col items-center rounded-2xl bg-[#F6635C] p-6 shadow-lg">
           <h1>Today's OPD Charges</h1>
-          <p> {lenttc.length} / {totalTodayCharges} </p>
-
+          <p>
+            {' '}
+            {lenttc.length} / {totalTodayCharges}{' '}
+          </p>
         </div>
-        <div className="flex flex-col bg-[#79155B] shadow-lg rounded-2xl p-6 items-center m-4">
+        <div className="m-4 flex flex-col items-center rounded-2xl bg-[#79155B] p-6 shadow-lg">
           <h1>This Month OPD Charges</h1>
-          <p>  {lentmc.length} /  {totalMonthCharges} </p>
-
+          <p>
+            {' '}
+            {lentmc.length} / {totalMonthCharges}{' '}
+          </p>
         </div>
         {/* <div className="flex flex-col bg-[#F6635C] shadow-lg rounded-2xl p-6 items-center m-4">
           <h1>Today Operation</h1>
@@ -207,7 +219,6 @@ export const Success = ({ ipdOperationPayments,ipds,opds,ipdChargeses,ipdLabChar
           <p>  {totalMonthOperation} </p>
 
         </div> */}
-
       </div>
       {/* <div className=''>
 
@@ -225,7 +236,6 @@ export const Success = ({ ipdOperationPayments,ipds,opds,ipdChargeses,ipdLabChar
 
         />
       </div> */}
-
     </>
   )
 }
