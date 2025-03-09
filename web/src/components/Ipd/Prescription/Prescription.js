@@ -101,6 +101,8 @@ const Prescription = ({ ipd, medicines, homoMedicines, frequencies, durations, d
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/pdf' })
         var blobURL = URL.createObjectURL(blob)
+        console.log(blobURL)
+        // window.open(blobURL);
         var iframe = document.createElement('iframe')
         document.body.appendChild(iframe)
         iframe.style.display = 'none'

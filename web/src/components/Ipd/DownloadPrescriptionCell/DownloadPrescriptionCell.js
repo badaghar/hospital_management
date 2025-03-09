@@ -103,7 +103,9 @@ export const Success = ({ downloadPrescription }) => {
           return (
             <section
               className=" text-black"
-              style={{ width: '21cm', height: '29.7cm', padding: '0.7cm 0.7cm' }}
+              style={{ width: '21cm', height: '29.7cm', padding: '0.7cm 0.7cm',
+                // backgroundImage: 'url("/abc.png")', backgroundSize: 'cover',
+              }}
             >
               <section
                 className=""
@@ -121,101 +123,157 @@ export const Success = ({ downloadPrescription }) => {
 
                 </section>
                 <section
-            id="secondLayer"
-            className="text-sm"
-            style={{ width: '19.6cm', height: '2cm', padding: '0cm 0cm' }}
-
-          >
-
-            <div className="flex  justify-between px-6">
-              <div className="space-x-4">
-                <span className="font-bold  ">Pt's Name : </span>
-                <span className="">
-                  {downloadPrescription.patient.name.split('(')[0]}
-                </span>
-              </div>
-              <div className="space-x-4">
-                <span className="font-bold ">Age : </span>
-                <span className="">{downloadPrescription.patient.age}</span>
-              </div>
-              <div className="space-x-4">
-                <span className="font-bold ">B.P : </span>
-                <span className="">{downloadPrescription.extra.thermo.BP} mmhg</span>
-              </div>
-              <div className="space-x-4">
-                <span className="font-bold ">GRBS : </span>
-                <span className="">{downloadPrescription.extra.thermo.Grbs} mg/dl</span>
-              </div>
-
-
-            </div>
-            <div className="flex  justify-between px-6">
-              <div className="space-x-4">
-                <span className="font-bold  ">Gender : </span>
-                <span className="">
-                  {downloadPrescription.patient.gender}
-                </span>
-              </div>
-              <div className="space-x-4">
-                <span className="font-bold ">Weight : </span>
-                <span className="">{downloadPrescription.extra.thermo.Weight}</span>
-              </div>
-              {/* <div className="space-x-4">
-                <span className="font-bold ">Temp : </span>
-                <span className="">{downloadPrescription.extra.thermo.Grbs} </span>
-              </div> */}
-              <div className="space-x-4">
-                <span className="font-bold ">Puls : </span>
-                <span className="">{downloadPrescription.extra.thermo.Pulse} /min</span>
-              </div>
-              <div className="space-x-4">
-                <span className="font-bold ">SPO2 : </span>
-                <span className="">{downloadPrescription.extra.thermo.Saturation} %</span>
-              </div>
-
-
-            </div>
-            <div className='px-6'>
-              <span className='font-bold'>Date :- </span>
-              <span>{new Date().toLocaleDateString()}</span>
-            </div>
-          </section>
-                {/* <section
-                  id="firstLayer"
-                  className="border-b border-black"
-                  style={{ width: '19.6cm', height: '2.8cm' }}
-                >
-                  <div style={{ padding: '0cm 0.1cm' }}>
-                    <img src="/srihos.jpg" alt="" srcset="" />
-                  </div>
-                </section> */}
-                {/* <section
                   id="secondLayer"
-                  className="border-b border-black"
-                  style={{ width: '19.6cm', height: '0.65cm', padding: '0cm 0cm' }}
+                  className="text-sm"
+                  style={{ width: '19.6cm', height: '2cm', padding: '0cm 0cm' }}
 
                 >
 
-                  <div className="flex f justify-between px-6">
-                    <div className="space-x-4">
-                      <span className="font-bold text-xs ">Name : </span> <span className="text-xs">
-                        {downloadPrescription.patient.name.split('(')[0]}
-                      </span>
-                    </div>
-                    <div className="space-x-4">
-                      <span className="font-bold text-xs">Mobile No : </span> <span className="text-xs">{downloadPrescription.patient.phone_no}</span>
-                    </div>
-                    <div className="space-x-4">
-                      <span className="font-bold text-xs">Date : </span> <span className="text-xs">{new Date().toLocaleDateString()}</span>
-                    </div>
 
 
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "4.3cm",
+                    }}
+                  >
+                    {/* First Child */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: "1cm",
+                      }}
+                    >
+                      {downloadPrescription.patient.name.split('(')[0]}
+
+
+                    </div>
+
+                    {/* Second Child */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: "11cm",
+                      }}
+                    >
+
+                      {downloadPrescription.patient.age}
+                    </div>
+
+                    {/* Third Child */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: "14.2cm",
+                      }}
+                    >
+
+                      {downloadPrescription.patient.gender}
+                    </div>
+
+                    {/* Fourth Child */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: "17cm",
+                      }}
+                    >
+                      {new Date().toLocaleDateString()}
+                    </div>
                   </div>
-                </section> */}
+
+
+
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                    }}
+                  >
+                    {/* First Child - Fixed Width 10cm */}
+                    <div
+                      style={{
+                        width: "5cm",
+                        position: "relative",
+                        left: '2cm'
+                      }}
+                    >
+                      <div style={{ position: "absolute", top: "0.8cm" }}>
+                        {downloadPrescription.extra.thermo.BP} mmhg
+                      </div>
+                      <div style={{ position: "absolute", top: "1.8cm" }}>
+                        {downloadPrescription.extra.thermo.Grbs} mg/dl
+                      </div>
+                      <div style={{ position: "absolute", top: "2.9cm" }}>
+                        {downloadPrescription.extra.thermo.Saturation} %
+                      </div>
+                      <div style={{ position: "absolute", top: "4cm" }}>
+                        {downloadPrescription.extra.thermo.Weight}
+                      </div>
+                    </div>
+
+                    {/* Second Child - Takes Remaining Space */}
+                    <div
+                      style={{
+                        flex: 1,
+                        // backgroundColor: 'blue'
+                        position:'relative',
+                        top:'0.8cm'
+
+                      }}
+                    >
+
+                      {/* <div className="grid grid-cols-7  font-bold border-b  text-xs border-black">
+                        <span className="col-span-1">Sl. No</span>
+
+                        <div className=" col-span-1 ">Medicine </div>
+                        <div className=" col-span-1 ">Dosage</div>
+                        <div className=" col-span-1 ">Timing</div>
+                        <div className=" col-span-1 ">Frequency</div>
+                        <div className=" col-span-1 ">Duration</div>
+                        <div className=" col-span-1 ">Quantity</div>
+                      </div> */}
+
+                      <div className="text-sm grid grid-cols-4 ">
+                        {
+                          chunks[item].map((item, ind) => {
+                            let medName = item.medicine.split('-')
+                            medName = medName[medName.length - 1]
+                            return (
+                              <>
+
+                                <span className="col-span-1">{ind + 1}</span>
+                                {<div className=" col-span-1">{medName}</div>}
+                                {<div className=" col-span-1">{item.potency}</div>}
+                                {/* {item.quantity ? <div className=" col-span-1">{[item.medicine.split('-').length-1]}</div> : <div className=" col-span-1">{item.medicine}</div>} */}
+                                <div className=" col-span-1">{item.dosage}</div>
+                                {/* <div className=" col-span-1">{item.timing}</div> */}
+                                {/* <div className=" col-span-1">{item.frequency}</div> */}
+                                {/* <div className=" col-span-1">{item.duration}</div> */}
+                                {item.quantity ? <div className=" col-span-1">{item.quantity}</div> : <div className=" col-span-1">-</div>}
+
+                                {<div className="flex col-span-4 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
+                              </>
+                            )
+
+                          })
+                        }
+
+                      </div>
+
+                    </div>
+                  </div>
+
+
+
+
+
+                </section>
+
                 <section
                   id="thirdLayer"
                   className=" border-black"
-                  style={{ width: '15.6cm', padding: '0.1cm 0cm',paddingLeft:'' }}
+                  style={{ width: '15.6cm', padding: '0.1cm 0cm', paddingLeft: '' }}
                 >
 
                   {/* <div className="grid grid-cols-7  font-bold border-b  text-xs border-black">
@@ -228,32 +286,7 @@ export const Success = ({ downloadPrescription }) => {
                     <div className=" col-span-1 ">Duration</div>
                     <div className=" col-span-1 ">Quantity</div>
                   </div> */}
-                  <div className="text-sm grid grid-cols-4 ">
-                    {
-                      chunks[item].map((item, ind) => {
-                        let medName = item.medicine.split('-')
-                        medName = medName[medName.length - 1]
-                        return (
-                          <>
 
-                            <span className="col-span-1">{ind + 1}</span>
-                            {<div className=" col-span-1">{medName}</div>}
-                            {<div className=" col-span-1">{item.potency}</div>}
-                            {/* {item.quantity ? <div className=" col-span-1">{[item.medicine.split('-').length-1]}</div> : <div className=" col-span-1">{item.medicine}</div>} */}
-                            <div className=" col-span-1">{item.dosage}</div>
-                            {/* <div className=" col-span-1">{item.timing}</div> */}
-                            {/* <div className=" col-span-1">{item.frequency}</div> */}
-                            {/* <div className=" col-span-1">{item.duration}</div> */}
-                            {item.quantity ? <div className=" col-span-1">{item.quantity}</div> : <div className=" col-span-1">-</div>}
-
-                            {<div className="flex col-span-4 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
-                          </>
-                        )
-
-                      })
-                    }
-
-                  </div>
 
 
 
