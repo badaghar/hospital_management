@@ -103,8 +103,9 @@ export const Success = ({ downloadPrescription }) => {
           return (
             <section
               className=" text-black"
-              style={{ width: '21cm', height: '29.7cm', padding: '0.7cm 0.7cm',
-                // backgroundImage: 'url("/abc.png")', backgroundSize: 'cover',
+              style={{
+                width: '21cm', height: '29.7cm', padding: '0.7cm 0.7cm',
+                backgroundImage: 'url("/abc.png")', backgroundSize: 'cover',
               }}
             >
               <section
@@ -134,7 +135,7 @@ export const Success = ({ downloadPrescription }) => {
                   <div
                     style={{
                       position: "absolute",
-                      top: "4.3cm",
+                      top: "3.8cm",
                     }}
                   >
                     {/* First Child */}
@@ -193,21 +194,21 @@ export const Success = ({ downloadPrescription }) => {
                     {/* First Child - Fixed Width 10cm */}
                     <div
                       style={{
-                        width: "5cm",
+                        width: "5.5cm",
                         position: "relative",
                         left: '2cm'
                       }}
                     >
-                      <div style={{ position: "absolute", top: "0.8cm" }}>
+                      <div style={{ position: "absolute", top: "0.3cm" }}>
                         {downloadPrescription.extra.thermo.BP} mmhg
                       </div>
-                      <div style={{ position: "absolute", top: "1.8cm" }}>
+                      <div style={{ position: "absolute", top: "1.3cm" }}>
                         {downloadPrescription.extra.thermo.Grbs} mg/dl
                       </div>
-                      <div style={{ position: "absolute", top: "2.9cm" }}>
+                      <div style={{ position: "absolute", top: "2.4cm" }}>
                         {downloadPrescription.extra.thermo.Saturation} %
                       </div>
-                      <div style={{ position: "absolute", top: "4cm" }}>
+                      <div style={{ position: "absolute", top: "3.5cm" }}>
                         {downloadPrescription.extra.thermo.Weight}
                       </div>
                     </div>
@@ -217,8 +218,8 @@ export const Success = ({ downloadPrescription }) => {
                       style={{
                         flex: 1,
                         // backgroundColor: 'blue'
-                        position:'relative',
-                        top:'0.8cm'
+                        position: 'relative',
+                        top: '0.8cm'
 
                       }}
                     >
@@ -234,32 +235,36 @@ export const Success = ({ downloadPrescription }) => {
                         <div className=" col-span-1 ">Quantity</div>
                       </div> */}
 
-                      <div className="text-sm grid grid-cols-4 ">
-                        {
-                          chunks[item].map((item, ind) => {
-                            let medName = item.medicine.split('-')
-                            medName = medName[medName.length - 1]
+                      <table className="w-full text-base">
+                        <tbody>
+                          {chunks[item].map((item, ind) => {
+                            let medName = item.medicine.split('-').pop(); // Get the last part of the medicine name
+
                             return (
-                              <>
+                              <React.Fragment key={ind}>
+                                {/* Main Row */}
+                                <tr className="align-top">
+                                  <td className="px-3 py-1 w-fit">{ind + 1}</td>
+                                  <td className="px-3 py-1">{medName}</td>
+                                  <td className="px-3 py-1">{item.potency}</td>
+                                  <td className="px-3 py-1">{item.dosage}</td>
+                                  <td className="px-3 py-1">{item.quantity || '-'}</td>
+                                </tr>
 
-                                <span className="col-span-1">{ind + 1}</span>
-                                {<div className=" col-span-1">{medName}</div>}
-                                {<div className=" col-span-1">{item.potency}</div>}
-                                {/* {item.quantity ? <div className=" col-span-1">{[item.medicine.split('-').length-1]}</div> : <div className=" col-span-1">{item.medicine}</div>} */}
-                                <div className=" col-span-1">{item.dosage}</div>
-                                {/* <div className=" col-span-1">{item.timing}</div> */}
-                                {/* <div className=" col-span-1">{item.frequency}</div> */}
-                                {/* <div className=" col-span-1">{item.duration}</div> */}
-                                {item.quantity ? <div className=" col-span-1">{item.quantity}</div> : <div className=" col-span-1">-</div>}
+                                {/* Note Row (If Exists) */}
+                                {item.note && (
+                                  <tr>
+                                    <td colSpan="5" className="px-3 py-1 text-left">
+                                      Note: {item.note}
+                                    </td>
+                                  </tr>
+                                )}
+                              </React.Fragment>
+                            );
+                          })}
+                        </tbody>
+                      </table>
 
-                                {<div className="flex col-span-4 justify-center" > {item.note && 'Note :-'} {item.note}</div>}
-                              </>
-                            )
-
-                          })
-                        }
-
-                      </div>
 
                     </div>
                   </div>
